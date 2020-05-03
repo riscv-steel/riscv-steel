@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////
-// Engineer: Rafael de Oliveira Calçada
+// Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com)
 // 
 // Create Date: 26.04.2020 22:01:22
 // Module Name: imm_generator

@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////
-// Engineer: Rafael de Oliveira Calçada
+// Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com)
 // 
 // Create Date: 30.04.2020 21:30:47
 // Module Name: tb_csr_file
