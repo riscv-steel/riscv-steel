@@ -6,4 +6,4 @@ Steel is a 3-stage in-order 32-bit RV32I softcore, targeted for use in small emb
 The work is currently in progress.
 
 ### Microarchitecture overview
-![riscv-stem-32](https://user-images.githubusercontent.com/22325319/81037520-65e64c00-8e79-11ea-9aad-a8b9c561ea7d.png)
+![riscv-stem-32](https://user-images.githubusercontent.com/22325319/81101168-1b4de980-8ee4-11ea-9250-2f5bfa5ae586.png)
