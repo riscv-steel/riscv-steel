@@ -137,9 +137,9 @@ module steel_top(
     end
     
     // PC Adder and Multiplexer
-    wire [31:0] pc_adder_src;
-    assign pc_adder_src = BRANCH_TAKEN ? IADDER_OUT : 32'h00000004;
-    assign PC_PLUS = pc_adder_src + PC;
+    wire [31:0] pc_adder;
+    assign pc_adder = PC + 32'h00000004;
+    assign PC_PLUS = BRANCH_TAKEN ? IADDER_OUT : pc_adder;
     
     // Program Counter (PC) register
     always @(posedge CLK or posedge RESET)

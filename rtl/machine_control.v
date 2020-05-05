@@ -148,7 +148,7 @@ module machine_control(
             STATE_RESET:
                 begin
                     PC_SRC = `BOOT;
-                    STALL = 1'b0;
+                    STALL = 1'b1;
                     INSTRET_INC = 1'b0;
                     SET_EPC = 1'b0;
                     SET_CAUSE = 1'b0;
