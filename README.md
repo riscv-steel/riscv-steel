@@ -6,5 +6,5 @@ Steel is a 3-stage single-issue 32-bit RV32I softcore, targeted for use in small
 The work is currently in progress.
 
 ### Microarchitecture overview
-![riscv-stem-32](https://user-images.githubusercontent.com/22325319/81739339-8dd54100-9471-11ea-9afa-a3699d393935.png)
+![riscv-stem-32](https://user-images.githubusercontent.com/22325319/81740160-df320000-9472-11ea-9a85-e4620b3e8529.png)
 
