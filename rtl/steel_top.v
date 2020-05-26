@@ -235,7 +235,7 @@ module steel_top(
         .CSR_DATA_IN(RS1_reg),
         .CSR_DATA_OUT(CSR_DATA),
         
-        .PC_PLUS(PC_PLUS),
+        .PC(PC),
         
         .E_IRQ(E_IRQ),
         .T_IRQ(T_IRQ),

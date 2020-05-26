@@ -28,7 +28,7 @@ module csr_file(
     output reg [31:0] CSR_DATA_OUT,
     
     // from pipeline stage 1
-    input wire [31:0] PC_PLUS,
+    input wire [31:0] PC,
     
     // interface with CLIC
     input wire E_IRQ,
@@ -156,7 +156,11 @@ module csr_file(
             MIE <= data_wr[3];
             mpie <= data_wr[7];
         end
-        else if(MIE_CLEAR == 1'b1) MIE <= 1'b0;
+        else if(MIE_CLEAR == 1'b1)
+        begin
+            mpie <= MIE;
+            MIE <= 1'b0;
+        end
         else if(MIE_SET == 1'b1)
         begin
             MIE <= mpie;
@@ -225,7 +229,7 @@ module csr_file(
     always @(posedge CLK or posedge RESET)
     begin
         if(RESET) mepc <= `MEPC_RESET;
-        else if(SET_EPC) mepc <= PC_PLUS;
+        else if(SET_EPC) mepc <= PC;
         else if(CSR_ADDR == `MEPC && WR_EN) mepc <= {data_wr[31:2], 2'b00};
     end
 
