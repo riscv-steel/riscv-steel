@@ -113,11 +113,11 @@ module steel_top(
     wire MEIP_OUT;
     wire MTIP_OUT;
     wire MSIP_OUT;
-    wire STALL;
+    wire FLUSH;
     wire [31:0] LU_OUTPUT;
     wire [31:0] ALU_RESULT;
     reg [31:0] WB_MUX_OUT;
-    wire RESET_OR_STALL;
+    wire RESET_OR_FLUSH;
     
     // ---------------------------------
     // PIPELINE STAGE 1
@@ -299,16 +299,16 @@ module steel_top(
         
         .PC_SRC(PC_SRC),
         
-        .STALL(STALL)
+        .FLUSH(FLUSH)
 
     );
     
-    assign RESET_OR_STALL = RESET | STALL;    
+    assign RESET_OR_FLUSH = RESET | FLUSH;    
     
     // Stages 1/2 interface registers
-    always @(posedge CLK or posedge RESET_OR_STALL)
+    always @(posedge CLK or posedge RESET_OR_FLUSH)
     begin
-        if(RESET_OR_STALL)
+        if(RESET_OR_FLUSH)
         begin
             RD_ADDR_reg <= 5'b00000;
             CSR_ADDR_reg <= 12'b000000000000;

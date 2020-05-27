@@ -61,7 +61,7 @@ module machine_control(
     output reg [1:0] PC_SRC,
     
     // to pipeline stage 2 register
-    output reg STALL
+    output reg FLUSH
 
     );
     
@@ -148,7 +148,7 @@ module machine_control(
             STATE_RESET:
                 begin
                     PC_SRC = `BOOT;
-                    STALL = 1'b1;
+                    FLUSH = 1'b1;
                     INSTRET_INC = 1'b0;
                     SET_EPC = 1'b0;
                     SET_CAUSE = 1'b0;
@@ -158,7 +158,7 @@ module machine_control(
             STATE_OPERATING:
                 begin
                     PC_SRC = `OPERATING;
-                    STALL = 1'b0;
+                    FLUSH = 1'b0;
                     INSTRET_INC = 1'b1;
                     SET_EPC = 1'b0;
                     SET_CAUSE = 1'b0;
@@ -168,7 +168,7 @@ module machine_control(
             STATE_TRAP_TAKEN:
                 begin
                     PC_SRC = `TRAP;
-                    STALL = 1'b1;
+                    FLUSH = 1'b1;
                     INSTRET_INC = 1'b0;
                     SET_EPC = 1'b1;
                     SET_CAUSE = 1'b1;
@@ -178,7 +178,7 @@ module machine_control(
             STATE_TRAP_RETURN:
                 begin
                     PC_SRC = `EPC;
-                    STALL = 1'b1;
+                    FLUSH = 1'b1;
                     INSTRET_INC = 1'b0;
                     SET_EPC = 1'b0;
                     SET_CAUSE = 1'b0;
@@ -188,7 +188,7 @@ module machine_control(
             default:
                 begin
                     PC_SRC = `OPERATING;
-                    STALL = 1'b0;
+                    FLUSH = 1'b0;
                     INSTRET_INC = 1'b1;
                     SET_EPC = 1'b0;
                     SET_CAUSE = 1'b0;
