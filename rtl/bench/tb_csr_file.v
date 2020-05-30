@@ -27,7 +27,7 @@ module tb_csr_file();
     reg [31:0] CSR_DATA_IN;
     wire [31:0] CSR_DATA_OUT;
     
-    reg [31:0] PC_PLUS;
+    reg [31:0] PC;
     
     reg E_IRQ;
     reg T_IRQ;
@@ -65,7 +65,7 @@ module tb_csr_file();
         .CSR_DATA_IN(CSR_DATA_IN),
         .CSR_DATA_OUT(CSR_DATA_OUT),
         
-        .PC_PLUS(PC_PLUS),
+        .PC(PC),
         
         .E_IRQ(E_IRQ),
         .T_IRQ(T_IRQ),
@@ -113,7 +113,7 @@ module tb_csr_file();
         CSR_OP = `CSR_NOP;
         CSR_UIMM = 5'b00000;
         CSR_DATA_IN = 32'h00000000;
-        PC_PLUS = 32'h00000000;
+        PC = 32'h00000000;
         E_IRQ = 1'b0;
         T_IRQ = 1'b0;
         S_IRQ = 1'b0;
@@ -1632,17 +1632,17 @@ module tb_csr_file();
         $display("Testing EPC setup...");
         
         SET_EPC = 1'b1;
-        PC_PLUS = $random;
+        PC = $random;
         CSR_ADDR = `MEPC;             
         #20;        
         SET_EPC = 1'b0;
         
-        if(CSR_DATA_OUT != PC_PLUS)
+        if(CSR_DATA_OUT != PC)
         begin
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(EPC_OUT != PC_PLUS)
+        if(EPC_OUT != PC)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1917,3 +1917,4 @@ module tb_csr_file();
     end
 
 endmodule
+

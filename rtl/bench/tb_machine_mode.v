@@ -52,7 +52,7 @@ module tb_machine_mode();
     
     wire [1:0] PC_SRC;
     
-    wire STALL;
+    wire FLUSH;
     
     machine_control dut(
 
@@ -90,7 +90,7 @@ module tb_machine_mode();
         
         .PC_SRC(PC_SRC),
         
-        .STALL(STALL)
+        .FLUSH(FLUSH)
 
     );
     
@@ -166,7 +166,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b0)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -216,7 +216,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b0)
+        if(FLUSH != 1'b0)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -302,7 +302,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -352,7 +352,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -407,7 +407,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -467,7 +467,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -568,7 +568,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -648,7 +648,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -728,7 +728,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -808,7 +808,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -888,7 +888,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -968,7 +968,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1047,7 +1047,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b1)
+        if(FLUSH != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1099,7 +1099,7 @@ module tb_machine_mode();
             $display("FAIL. Check the results.");
             $finish;
         end
-        if(STALL != 1'b0)
+        if(FLUSH != 1'b0)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1117,3 +1117,4 @@ module tb_machine_mode();
     end    
 
 endmodule
+
