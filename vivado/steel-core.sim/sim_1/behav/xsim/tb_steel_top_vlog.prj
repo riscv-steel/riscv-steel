@@ -1,0 +1,18 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../rtl" \
+"../../../../../rtl/alu.v" \
+"../../../../../rtl/branch_unit.v" \
+"../../../../../rtl/control_unit.v" \
+"../../../../../rtl/csr_file.v" \
+"../../../../../rtl/imm_generator.v" \
+"../../../../../rtl/integer_file.v" \
+"../../../../../rtl/load_unit.v" \
+"../../../../../rtl/machine_control.v" \
+"../../../../../rtl/steel_top.v" \
+"../../../../../rtl/bench/tb_steel_top.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,3 @@
+Vivado Simulator 2019.1
+Time resolution is 1 ps
+$stop called at time : 520 ns : File "/home/rafa/ufrgs/steel-core/rtl/bench/tb_steel_top.v" Line 143
