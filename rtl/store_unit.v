@@ -68,7 +68,7 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 
 module store_unit(
 
-    input wire [2:0] FUNCT3,
+    input wire [1:0] FUNCT3,
     input wire [31:0] IADDER_OUT, 
     input wire [31:0] RS2,
     input wire MEM_WR_REQ,

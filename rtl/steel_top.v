@@ -215,7 +215,7 @@ module steel_top(
     
     store_unit su(
 
-        .FUNCT3(FUNCT3),
+        .FUNCT3(FUNCT3[1:0]),
         .IADDER_OUT(IADDER_OUT), 
         .RS2(RS2),
         .MEM_WR_REQ(MEM_WR_REQ),

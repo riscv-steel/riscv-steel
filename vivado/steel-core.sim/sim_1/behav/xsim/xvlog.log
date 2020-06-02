@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/rafa/ufrgs/steel-core/rtl/store_unit.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module store_unit
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/rafa/ufrgs/steel-core/rtl/bench/tb_store_unit.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_store_unit
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/rafa/ufrgs/steel-core/vivado/steel-core.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
