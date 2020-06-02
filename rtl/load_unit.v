@@ -71,13 +71,57 @@ module load_unit(
     input wire [1:0] LOAD_SIZE,
     input wire LOAD_UNSIGNED,
     input wire [31:0] DATA_IN,
-    output wire [31:0] OUTPUT
+    input wire [1:0] IADDER_OUT_1_TO_0,
+    output reg [31:0] OUTPUT
     
     );    
     
-    assign OUTPUT[7:0] = DATA_IN[7:0];
-    assign OUTPUT[15:8] = LOAD_SIZE[0] | LOAD_SIZE[1] ? DATA_IN[15:8] : (LOAD_UNSIGNED == 1'b1 ? 8'b0 : {8{OUTPUT[7]}}); 
-    assign OUTPUT[31:16] = LOAD_SIZE[1] ? DATA_IN[31:16] : (LOAD_UNSIGNED == 1'b1 ? 16'b0 : {16{OUTPUT[15]}});
+    reg [7:0] byte;
+    reg [15:0] half;    
+    wire [23:0] byte_ext;
+    wire [15:0] half_ext;
     
+    always @*
+    begin
+    
+        case(LOAD_SIZE)
+        
+            2'b00: OUTPUT = {byte_ext, byte};
+            2'b01: OUTPUT = {half_ext, half};
+            2'b10: OUTPUT = DATA_IN;
+            2'b11: OUTPUT = DATA_IN;
+            
+        endcase
+    
+    end
+    
+    always @*
+    begin
+    
+        case(IADDER_OUT_1_TO_0)
+        
+            2'b00: byte = DATA_IN[7:0];
+            2'b01: byte = DATA_IN[15:8];
+            2'b10: byte = DATA_IN[23:16];
+            2'b11: byte = DATA_IN[31:24];
+            
+        endcase
+    
+    end
+    
+    always @*
+    begin
+    
+        case(IADDER_OUT_1_TO_0[1])
+        
+            1'b0: half = DATA_IN[15:0];
+            1'b1: half = DATA_IN[31:16];
+            
+        endcase
+    
+    end
+    
+    assign byte_ext = LOAD_UNSIGNED == 1'b1 ? 24'b0 : {24{byte[7]}};
+    assign half_ext = LOAD_UNSIGNED == 1'b1 ? 16'b0 : {16{half[15]}};
                                                                 
 endmodule

@@ -430,6 +430,7 @@ module steel_top(
         .LOAD_SIZE(LOAD_SIZE_reg),
         .LOAD_UNSIGNED(LOAD_UNSIGNED_reg),
         .DATA_IN(DATA_IN),
+        .IADDER_OUT_1_TO_0(IADDER_OUT_reg[1:0]),
         .OUTPUT(LU_OUTPUT)
     
     );

@@ -72,6 +72,7 @@ module tb_load_unit();
     reg [1:0] LOAD_SIZE;
     reg LOAD_UNSIGNED;
     reg [31:0] DATA_IN;
+    reg [1:0] IADDER_OUT_1_TO_0;
     wire [31:0] OUTPUT;
     
     load_unit dut(
@@ -79,6 +80,7 @@ module tb_load_unit();
         .LOAD_SIZE(LOAD_SIZE),
         .LOAD_UNSIGNED(LOAD_UNSIGNED),
         .DATA_IN(DATA_IN),
+        .IADDER_OUT_1_TO_0(IADDER_OUT_1_TO_0),
         .OUTPUT(OUTPUT)
         
         );
@@ -98,10 +100,26 @@ module tb_load_unit();
         begin
         
             DATA_IN = $random;
+            IADDER_OUT_1_TO_0 = $random;
             
             #10;
             
-            if(OUTPUT != { {24{DATA_IN[7]}} , DATA_IN[7:0]})
+            if(IADDER_OUT_1_TO_0 == 2'b00 & OUTPUT != { {24{DATA_IN[7]}} , DATA_IN[7:0]})
+            begin
+                $display("FAIL. Wrong result.");
+                $finish;
+            end
+            else if(IADDER_OUT_1_TO_0 == 2'b01 & OUTPUT != { {24{DATA_IN[15]}} , DATA_IN[15:8]})
+            begin
+                $display("FAIL. Wrong result.");
+                $finish;
+            end
+            else if(IADDER_OUT_1_TO_0 == 2'b10 & OUTPUT != { {24{DATA_IN[23]}} , DATA_IN[23:16]})
+            begin
+                $display("FAIL. Wrong result.");
+                $finish;
+            end
+            else if(IADDER_OUT_1_TO_0 == 2'b11 & OUTPUT != { {24{DATA_IN[31]}} , DATA_IN[31:24]})
             begin
                 $display("FAIL. Wrong result.");
                 $finish;
@@ -119,10 +137,17 @@ module tb_load_unit();
         begin
         
             DATA_IN = $random;
-            
+            IADDER_OUT_1_TO_0 = $random;
+            IADDER_OUT_1_TO_0[0] = 1'b0;
+                       
             #10;
             
-            if(OUTPUT != { {16{DATA_IN[15]}} , DATA_IN[15:0]})
+            if(IADDER_OUT_1_TO_0[1] == 1'b0 & OUTPUT != { {16{DATA_IN[15]}} , DATA_IN[15:0]})
+            begin
+                $display("FAIL. Wrong result.");
+                $finish;
+            end
+            else if(IADDER_OUT_1_TO_0[1] == 1'b1 & OUTPUT != { {16{DATA_IN[31]}} , DATA_IN[31:16]})
             begin
                 $display("FAIL. Wrong result.");
                 $finish;
@@ -140,6 +165,7 @@ module tb_load_unit();
         begin
         
             DATA_IN = $random;
+            IADDER_OUT_1_TO_0 = 2'b00;
             
             #10;
             
@@ -161,9 +187,26 @@ module tb_load_unit();
         begin
         
             DATA_IN = $random;
+            IADDER_OUT_1_TO_0 = $random;
             
             #10;
-            if(OUTPUT != { 24'b0 , DATA_IN[7:0]})
+            
+            if(IADDER_OUT_1_TO_0 == 2'b00 & OUTPUT != { 24'b0 , DATA_IN[7:0]})
+            begin
+                $display("FAIL. Wrong result.");
+                $finish;
+            end
+            else if(IADDER_OUT_1_TO_0 == 2'b01 & OUTPUT != { 24'b0 , DATA_IN[15:8]})
+            begin
+                $display("FAIL. Wrong result.");
+                $finish;
+            end
+            else if(IADDER_OUT_1_TO_0 == 2'b10 & OUTPUT != { 24'b0 , DATA_IN[23:16]})
+            begin
+                $display("FAIL. Wrong result.");
+                $finish;
+            end
+            else if(IADDER_OUT_1_TO_0 == 2'b11 & OUTPUT != { 24'b0 , DATA_IN[31:24]})
             begin
                 $display("FAIL. Wrong result.");
                 $finish;
@@ -182,10 +225,17 @@ module tb_load_unit();
         begin
         
             DATA_IN = $random;
-            
+            IADDER_OUT_1_TO_0 = $random;
+            IADDER_OUT_1_TO_0[0] = 1'b0;
+                       
             #10;
             
-            if(OUTPUT != { 16'b0 , DATA_IN[15:0]})
+            if(IADDER_OUT_1_TO_0[1] == 1'b0 & OUTPUT != { 16'b0 , DATA_IN[15:0]})
+            begin
+                $display("FAIL. Wrong result.");
+                $finish;
+            end
+            else if(IADDER_OUT_1_TO_0[1] == 1'b1 & OUTPUT != { 16'b0 , DATA_IN[31:16]})
             begin
                 $display("FAIL. Wrong result.");
                 $finish;
