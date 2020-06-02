@@ -71,10 +71,10 @@ module control_unit(
     input wire [6:0] OPCODE,
     input wire FUNCT7_5,
     input wire [2:0] FUNCT3,
+    input wire [1:0] IADDER_OUT_1_TO_0,
     
     output wire [3:0] ALU_OPCODE,
     output wire MEM_WR_REQ,
-    output wire [3:0] MEM_WR_MASK,
     output wire [1:0] LOAD_SIZE,
     output wire LOAD_UNSIGNED,
     output wire ALU_SRC,
@@ -84,7 +84,9 @@ module control_unit(
     output wire [2:0] WB_MUX_SEL,
     output wire [2:0] IMM_TYPE,
     output wire [2:0] CSR_OP,
-    output wire ILLEGAL_INSTR
+    output wire ILLEGAL_INSTR,
+    output wire MISALIGNED_LOAD,
+    output wire MISALIGNED_STORE
 
     );
     
@@ -108,12 +110,10 @@ module control_unit(
     wire is_xori;
     wire is_addiw;
     wire is_implemented_instr;
+    wire mal_word;
+    wire mal_half;
+    wire misaligned;
         
-    assign MEM_WR_REQ = ~OPCODE[6] & OPCODE[5] & ~OPCODE[4] & ~OPCODE[3] & ~OPCODE[2];
-    assign MEM_WR_MASK[0] = 1'b1;
-    assign MEM_WR_MASK[1] = FUNCT3[1] | FUNCT3[0];
-    assign MEM_WR_MASK[2] = FUNCT3[1];
-    assign MEM_WR_MASK[3] = FUNCT3[1];
     assign LOAD_SIZE[0] = FUNCT3[0];
     assign LOAD_SIZE[1] = FUNCT3[1];
     assign LOAD_UNSIGNED = FUNCT3[2];
@@ -135,7 +135,7 @@ module control_unit(
     assign is_store = ~OPCODE[6] & OPCODE[5] & ~OPCODE[4] & ~OPCODE[3] & ~OPCODE[2];
     assign is_system = OPCODE[6] & OPCODE[5] & OPCODE[4] & ~OPCODE[3] & ~OPCODE[2];
     assign is_misc_mem = ~OPCODE[6] & ~OPCODE[5] & ~OPCODE[4] & OPCODE[3] & OPCODE[2];
-    assign is_csr = is_system & (FUNCT3[2] | FUNCT3[1] | FUNCT3[0]);
+    assign is_csr = is_system & (FUNCT3[2] | FUNCT3[1] | FUNCT3[0]);    
     assign IADDER_SRC = is_load | is_store | is_jalr;
     assign RF_WR_EN = is_lui | is_auipc | is_jalr | is_jal | is_op | is_load | is_csr | is_op_imm;
     assign CSR_WR_EN = is_csr;
@@ -150,5 +150,12 @@ module control_unit(
     assign CSR_OP = FUNCT3;
     assign is_implemented_instr = is_op | is_op_imm | is_branch | is_jal | is_jalr | is_auipc | is_lui | is_system | is_misc_mem | is_load | is_store;
     assign ILLEGAL_INSTR = ~OPCODE[1] | ~OPCODE[0] | ~is_implemented_instr;
+    assign mal_word = FUNCT3[1] & ~FUNCT3[0] & (IADDER_OUT_1_TO_0[1] | IADDER_OUT_1_TO_0[0]);
+    assign mal_half = ~FUNCT3[1] & FUNCT3[0] & IADDER_OUT_1_TO_0[0];
+    assign misaligned = mal_word | mal_half;
+    assign MISALIGNED_STORE = is_store & misaligned;
+    assign MISALIGNED_LOAD = is_load & misaligned;
+    assign MEM_WR_REQ = is_store & ~misaligned;
+    
     
 endmodule

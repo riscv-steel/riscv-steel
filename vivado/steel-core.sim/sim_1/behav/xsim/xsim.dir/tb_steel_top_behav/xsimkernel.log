@@ -1,7 +1,0 @@
-Running: xsim.dir/tb_steel_top_behav/xsimk -simmode gui -wdb tb_steel_top_behav.wdb -simrunnum 0 -socket 51837
-Design successfully loaded
-Design Loading Memory Usage: 33816 KB (Peak: 33816 KB)
-Design Loading CPU Usage: 30 ms
-Simulation completed
-Simulation Memory Usage: 120628 KB (Peak: 173084 KB)
-Simulation CPU Usage: 60 ms

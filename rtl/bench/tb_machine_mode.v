@@ -73,6 +73,8 @@ module tb_machine_mode();
     
     reg ILLEGAL_INSTR;
     reg MISALIGNED_INSTR;
+    reg MISALIGNED_LOAD;
+    reg MISALIGNED_STORE;
     
     reg [6:2] OPCODE_6_TO_2;
     reg [2:0] FUNCT3;
@@ -112,6 +114,8 @@ module tb_machine_mode();
         
         .ILLEGAL_INSTR(ILLEGAL_INSTR),
         .MISALIGNED_INSTR(MISALIGNED_INSTR),
+        .MISALIGNED_LOAD(MISALIGNED_LOAD),
+        .MISALIGNED_STORE(MISALIGNED_STORE),
         
         .OPCODE_6_TO_2(OPCODE_6_TO_2),
         .FUNCT3(FUNCT3),
@@ -414,6 +418,106 @@ module tb_machine_mode();
             $finish;
         end
         MISALIGNED_INSTR = 1'b0;
+        #20;
+        if(PC_SRC != `OPERATING)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end           
+           
+        MISALIGNED_LOAD = 1'b1;
+        #20;
+        if(PC_SRC != `TRAP)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(MIE_CLEAR != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(SET_EPC != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(SET_CAUSE != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(CAUSE != 4'b0100)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(I_OR_E != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(FLUSH != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(INSTRET_INC != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        MISALIGNED_LOAD = 1'b0;
+        #20;
+        if(PC_SRC != `OPERATING)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+           
+        MISALIGNED_STORE = 1'b1;
+        #20;
+        if(PC_SRC != `TRAP)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(MIE_CLEAR != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(SET_EPC != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(SET_CAUSE != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(CAUSE != 4'b0110)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(I_OR_E != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(FLUSH != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        if(INSTRET_INC != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        MISALIGNED_STORE = 1'b0;
         #20;
         if(PC_SRC != `OPERATING)
         begin

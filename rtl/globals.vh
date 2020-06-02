@@ -72,7 +72,7 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 // -------------------------------------------------------------------------------
 
 // Boot address
-`define BOOT_ADDRESS        32'h00000000
+`define BOOT_ADDRESS        32'h0000000F
 
 // CSR registers reset values
 `define MCYCLE_RESET        32'h00000000

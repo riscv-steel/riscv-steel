@@ -1,21 +1,13 @@
 Vivado Simulator 2019.1
 Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
-Running: /tools/Xilinx/Vivado/2019.1/bin/unwrapped/lnx64.o/xelab -wto b8561a63f69e41d98a2e12d383a11daf --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_steel_top_behav xil_defaultlib.tb_steel_top xil_defaultlib.glbl -log elaborate.log 
+Running: /tools/Xilinx/Vivado/2019.1/bin/unwrapped/lnx64.o/xelab -wto b8561a63f69e41d98a2e12d383a11daf --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_machine_mode_behav xil_defaultlib.tb_machine_mode xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.control_unit
-Compiling module xil_defaultlib.imm_generator
-Compiling module xil_defaultlib.branch_unit
-Compiling module xil_defaultlib.integer_file
-Compiling module xil_defaultlib.csr_file
 Compiling module xil_defaultlib.machine_control
-Compiling module xil_defaultlib.load_unit
-Compiling module xil_defaultlib.alu
-Compiling module xil_defaultlib.steel_top
-Compiling module xil_defaultlib.tb_steel_top
+Compiling module xil_defaultlib.tb_machine_mode
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot tb_steel_top_behav
+Built simulation snapshot tb_machine_mode_behav

@@ -1,0 +1,10 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../rtl" \
+"../../../../../rtl/machine_control.v" \
+"../../../../../rtl/bench/tb_machine_mode.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

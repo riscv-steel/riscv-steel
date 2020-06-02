@@ -11,6 +11,15 @@ init:
 	
 iseq:
 	sw	x2, 1024(x0)
+	j suc
 
 fim:
 	j fim
+	nop
+	nop
+	nop
+	nop
+	nop
+
+suc:
+	j suc

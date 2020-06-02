@@ -72,10 +72,10 @@ module tb_control_unit();
     reg [6:0] OPCODE;
     reg FUNCT7_5;
     reg [2:0] FUNCT3;
+    reg [1:0] IADDER_OUT_1_TO_0;
     
     wire [3:0] ALU_OPCODE;
     wire MEM_WR_REQ;
-    wire [3:0] MEM_WR_MASK;
     wire [1:0] LOAD_SIZE;
     wire LOAD_UNSIGNED;
     wire ALU_SRC;
@@ -86,15 +86,17 @@ module tb_control_unit();
     wire [2:0] IMM_TYPE;
     wire [2:0] CSR_OP;
     wire ILLEGAL_INSTR;
+    wire MISALIGNED_LOAD;
+    wire MISALIGNED_STORE;
     
     control_unit dut(
         
         .OPCODE(OPCODE),
         .FUNCT7_5(FUNCT7_5),
-        .FUNCT3(FUNCT3),        
+        .FUNCT3(FUNCT3),
+        .IADDER_OUT_1_TO_0(IADDER_OUT_1_TO_0),        
         .ALU_OPCODE(ALU_OPCODE),
         .MEM_WR_REQ(MEM_WR_REQ),
-        .MEM_WR_MASK(MEM_WR_MASK),
         .LOAD_SIZE(LOAD_SIZE),
         .LOAD_UNSIGNED(LOAD_UNSIGNED),
         .ALU_SRC(ALU_SRC),
@@ -104,7 +106,9 @@ module tb_control_unit();
         .WB_MUX_SEL(WB_MUX_SEL),
         .IMM_TYPE(IMM_TYPE),
         .CSR_OP(CSR_OP),
-        .ILLEGAL_INSTR(ILLEGAL_INSTR)
+        .ILLEGAL_INSTR(ILLEGAL_INSTR),
+        .MISALIGNED_LOAD(MISALIGNED_LOAD),
+        .MISALIGNED_STORE(MISALIGNED_STORE)
         
     );
         
@@ -122,9 +126,20 @@ module tb_control_unit();
         
         opcode_6_to_2 = `OPCODE_OP;
         OPCODE = {opcode_6_to_2, 2'b11};
+        IADDER_OUT_1_TO_0 = 2'b00;
         
         #10;
         if(MEM_WR_REQ != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        if(MISALIGNED_STORE != 1'b0)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -292,6 +307,16 @@ module tb_control_unit();
         
         #10;
         if(MEM_WR_REQ != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end        
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        if(MISALIGNED_STORE != 1'b0)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -504,6 +529,16 @@ module tb_control_unit();
             $display("FAIL. Check the results.");
             $finish;
         end
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        if(MISALIGNED_STORE != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end        
         if(ILLEGAL_INSTR != 1'b0)
         begin
             $display("FAIL. Check the results.");
@@ -551,10 +586,45 @@ module tb_control_unit();
             $display("FAIL. Check the results.");
             $finish;
         end
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
         
         $display("Load unit signals for LB... OK.");
         
+        $display("Testing signal MISALIGNED_LOAD for LB...");
+        
+        FUNCT3 = `FUNCT3_BYTE;
+        IADDER_OUT_1_TO_0 = 2'b01;
+        #10;
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        FUNCT3 = `FUNCT3_BYTE;
+        IADDER_OUT_1_TO_0 = 2'b10;
+        #10;
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        FUNCT3 = `FUNCT3_BYTE;
+        IADDER_OUT_1_TO_0 = 2'b11;
+        #10;
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        
+        $display("MISALIGNED_LOAD generation for LB OK.");
+        
         FUNCT3 = `FUNCT3_HALF;
+        IADDER_OUT_1_TO_0 = 2'b00;
         #10;
         if(LOAD_SIZE != `LOAD_HALF)
         begin
@@ -566,10 +636,45 @@ module tb_control_unit();
             $display("FAIL. Check the results.");
             $finish;
         end
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
         
         $display("Load unit signals for LH... OK.");
         
+        $display("Testing signal MISALIGNED_LOAD for LH...");
+        
+        FUNCT3 = `FUNCT3_HALF;
+        IADDER_OUT_1_TO_0 = 2'b01;
+        #10;
+        if(MISALIGNED_LOAD != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        FUNCT3 = `FUNCT3_HALF;
+        IADDER_OUT_1_TO_0 = 2'b10;
+        #10;
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        FUNCT3 = `FUNCT3_HALF;
+        IADDER_OUT_1_TO_0 = 2'b11;
+        #10;
+        if(MISALIGNED_LOAD != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        
+        $display("MISALIGNED_LOAD generation for LH OK.");
+        
         FUNCT3 = `FUNCT3_WORD;
+        IADDER_OUT_1_TO_0 = 2'b00;
         #10;
         if(LOAD_SIZE != `LOAD_WORD)
         begin
@@ -581,10 +686,45 @@ module tb_control_unit();
             $display("FAIL. Check the results.");
             $finish;
         end
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
         
         $display("Load unit signals for LW... OK.");
         
+        $display("Testing signal MISALIGNED_LOAD for LW...");
+        
+        FUNCT3 = `FUNCT3_WORD;
+        IADDER_OUT_1_TO_0 = 2'b01;
+        #10;
+        if(MISALIGNED_LOAD != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        FUNCT3 = `FUNCT3_WORD;
+        IADDER_OUT_1_TO_0 = 2'b10;
+        #10;
+        if(MISALIGNED_LOAD != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        FUNCT3 = `FUNCT3_WORD;
+        IADDER_OUT_1_TO_0 = 2'b11;
+        #10;
+        if(MISALIGNED_LOAD != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        
+        $display("MISALIGNED_LOAD generation for LW OK.");
+        
         FUNCT3 = `FUNCT3_BYTE_U;
+        IADDER_OUT_1_TO_0 = 2'b00;
         #10;
         if(LOAD_SIZE != `LOAD_BYTE)
         begin
@@ -596,10 +736,45 @@ module tb_control_unit();
             $display("FAIL. Check the results.");
             $finish;
         end
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
         
         $display("Load unit signals for LBU... OK.");
         
+        $display("Testing signal MISALIGNED_LOAD for LBU...");
+        
+        FUNCT3 = `FUNCT3_BYTE_U;
+        IADDER_OUT_1_TO_0 = 2'b01;
+        #10;
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        FUNCT3 = `FUNCT3_BYTE_U;
+        IADDER_OUT_1_TO_0 = 2'b10;
+        #10;
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        FUNCT3 = `FUNCT3_BYTE_U;
+        IADDER_OUT_1_TO_0 = 2'b11;
+        #10;
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        
+        $display("MISALIGNED_LOAD generation for LBU OK.");
+        
         FUNCT3 = `FUNCT3_HALF_U;
+        IADDER_OUT_1_TO_0 = 2'b00;
         #10;
         if(LOAD_SIZE != `LOAD_HALF)
         begin
@@ -611,8 +786,42 @@ module tb_control_unit();
             $display("FAIL. Check the results.");
             $finish;
         end        
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
         
         $display("Load unit signals for LHU... OK.");
+        
+        $display("Testing signal MISALIGNED_LOAD for LHU...");
+        
+        FUNCT3 = `FUNCT3_HALF_U;
+        IADDER_OUT_1_TO_0 = 2'b01;
+        #10;
+        if(MISALIGNED_LOAD != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        FUNCT3 = `FUNCT3_HALF_U;
+        IADDER_OUT_1_TO_0 = 2'b10;
+        #10;
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        FUNCT3 = `FUNCT3_HALF_U;
+        IADDER_OUT_1_TO_0 = 2'b11;
+        #10;
+        if(MISALIGNED_LOAD != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        
+        $display("MISALIGNED_LOAD generation for LHU OK.");
         
         $display("Signals for load unit successfuly tested.");
         
@@ -624,13 +833,24 @@ module tb_control_unit();
         
         opcode_6_to_2 = `OPCODE_STORE;
         OPCODE = {opcode_6_to_2, 2'b11};
+        IADDER_OUT_1_TO_0 = 2'b00;
         
         #10;
         if(MEM_WR_REQ != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
-        end      
+        end
+        if(MISALIGNED_LOAD != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        if(MISALIGNED_STORE != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end              
         if(ILLEGAL_INSTR != 1'b0)
         begin
             $display("FAIL. Check the results.");
@@ -657,49 +877,127 @@ module tb_control_unit();
             $finish;
         end
         
-        $display("STORE control signals common to all instructions successfully tested.");               
+        $display("STORE control signals common to all instructions successfully tested.");
         
-        $display("Testing cache control signals generation...");
+        $display("Testing signal MISALIGNED_STORE for SB...");
         
         FUNCT3 = `FUNCT3_BYTE;
+        IADDER_OUT_1_TO_0 = 2'b00;
         #10;
-        if(MEM_WR_MASK != `WR_MASK_BYTE)
+        if(MISALIGNED_STORE != 1'b0)
         begin
             $display("FAIL. Check the results.");
             $finish;
         end
+        FUNCT3 = `FUNCT3_BYTE;
+        IADDER_OUT_1_TO_0 = 2'b01;
+        #10;
+        if(MISALIGNED_STORE != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        FUNCT3 = `FUNCT3_BYTE;
+        IADDER_OUT_1_TO_0 = 2'b10;
+        #10;
+        if(MISALIGNED_STORE != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        FUNCT3 = `FUNCT3_BYTE;
+        IADDER_OUT_1_TO_0 = 2'b11;
+        #10;
+        if(MISALIGNED_STORE != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
         
-        $display("Data cache signals for SB... OK.");
+        $display("MISALIGNED_STORE generation for SB OK.");                       
+        
+        $display("Testing signal MISALIGNED_STORE for SH...");
         
         FUNCT3 = `FUNCT3_HALF;
+        IADDER_OUT_1_TO_0 = 2'b00;
         #10;
-        if(MEM_WR_MASK != `WR_MASK_HALF)
+        if(MISALIGNED_STORE != 1'b0)
         begin
             $display("FAIL. Check the results.");
             $finish;
         end
-        
-        $display("Data cache signals for SH... OK.");
-        
-        FUNCT3 = `FUNCT3_WORD;
+        FUNCT3 = `FUNCT3_HALF;
+        IADDER_OUT_1_TO_0 = 2'b01;
         #10;
-        if(MEM_WR_MASK != `WR_MASK_WORD)
+        if(MISALIGNED_STORE != 1'b1)
         begin
             $display("FAIL. Check the results.");
             $finish;
-        end        
+        end
+        FUNCT3 = `FUNCT3_HALF;
+        IADDER_OUT_1_TO_0 = 2'b10;
+        #10;
+        if(MISALIGNED_STORE != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        FUNCT3 = `FUNCT3_HALF;
+        IADDER_OUT_1_TO_0 = 2'b11;
+        #10;
+        if(MISALIGNED_STORE != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
         
-        $display("Data cache signals for SW... OK.");
+        $display("MISALIGNED_STORE generation for SH OK.");
         
-        $display("Signals for data cache successfuly tested.");
+        $display("Testing signal MISALIGNED_STORE for SW...");
         
+        FUNCT3 = `FUNCT3_WORD;
+        IADDER_OUT_1_TO_0 = 2'b00;
+        #10;
+        if(MISALIGNED_STORE != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        FUNCT3 = `FUNCT3_WORD;
+        IADDER_OUT_1_TO_0 = 2'b01;
+        #10;
+        if(MISALIGNED_STORE != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        FUNCT3 = `FUNCT3_WORD;
+        IADDER_OUT_1_TO_0 = 2'b10;
+        #10;
+        if(MISALIGNED_STORE != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        FUNCT3 = `FUNCT3_WORD;
+        IADDER_OUT_1_TO_0 = 2'b11;
+        #10;
+        if(MISALIGNED_STORE != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end    
+        
+        $display("MISALIGNED_STORE generation for SW OK.");
+                      
         $display("STORE operation successfully tested.");
         
         $display("Testing BRANCH opcode signals generation...");
         
         opcode_6_to_2 = `OPCODE_BRANCH;
         OPCODE = {opcode_6_to_2, 2'b11};
-        
+        IADDER_OUT_1_TO_0 = 2'b00;
+               
         #10;
         if(MEM_WR_REQ != 1'b0)
         begin
@@ -1128,7 +1426,7 @@ module tb_control_unit();
         
         $display("CSRRSI successfully tested.");
         
-        $display("SYSteel Core control signals successfully tested.");
+        $display("Steel Core control signals successfully tested.");
         
         $display("Testing illegal instructions...");
         

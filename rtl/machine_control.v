@@ -73,6 +73,8 @@ module machine_control(
     
     // from control unit
     input wire ILLEGAL_INSTR,
+    input wire MISALIGNED_LOAD,
+    input wire MISALIGNED_STORE,
     
     // from pipeline stage 1
     input wire MISALIGNED_INSTR,
@@ -172,7 +174,7 @@ module machine_control(
     assign tip = MTIE & (T_IRQ | MTIP);
     assign sip = MSIE & (S_IRQ | MSIP);
     assign ip = eip | tip | sip;
-    assign exception = ILLEGAL_INSTR | MISALIGNED_INSTR;
+    assign exception = ILLEGAL_INSTR | MISALIGNED_INSTR | MISALIGNED_LOAD | MISALIGNED_STORE;
     
     always @*
     begin
@@ -300,6 +302,16 @@ module machine_control(
             else if(ebreak)
             begin
                 CAUSE <= 4'b0011; // Breakpoint
+                I_OR_E <= 1'b0;
+            end
+            else if(MISALIGNED_STORE)
+            begin
+                CAUSE <= 4'b0110; // Store address misaligned
+                I_OR_E <= 1'b0;
+            end
+            else if(MISALIGNED_LOAD)
+            begin
+                CAUSE <= 4'b0100; // Load address misaligned
                 I_OR_E <= 1'b0;
             end
         end        

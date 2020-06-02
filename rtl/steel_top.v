@@ -148,6 +148,8 @@ module steel_top(
     wire [2:0] CSR_OP;
     reg [2:0] CSR_OP_reg;
     wire ILLEGAL_INSTR;
+    wire MISALIGNED_LOAD;
+    wire MISALIGNED_STORE;
     wire [31:0] IMM;
     reg [31:0] IMM_reg;
     wire I_OR_E;
@@ -169,6 +171,10 @@ module steel_top(
     wire [31:0] ALU_RESULT;
     reg [31:0] WB_MUX_OUT;
     wire RESET_OR_FLUSH;
+    wire [31:0] SU_DATA_OUT;
+    wire [31:0] SU_D_ADDR;
+    wire [3:0] SU_WR_MASK;
+    wire SU_WR_REQ;
     
     // ---------------------------------
     // PIPELINE STAGE 1
@@ -207,15 +213,29 @@ module steel_top(
     assign FUNCT3 = INSTR[14:12];
     assign FUNCT7 = INSTR[31:25];
     
+    store_unit su(
+
+        .FUNCT3(FUNCT3),
+        .IADDER_OUT(IADDER_OUT), 
+        .RS2(RS2),
+        .MEM_WR_REQ(MEM_WR_REQ),
+        
+        .DATA_OUT(SU_DATA_OUT),
+        .D_ADDR(SU_D_ADDR),
+        .WR_MASK(SU_WR_MASK),
+        .WR_REQ(SU_WR_REQ)
+    
+    );
+    
     control_unit ctrlunit(
     
         .OPCODE(OPCODE),
         .FUNCT7_5(FUNCT7[5]),
         .FUNCT3(FUNCT3),
+        .IADDER_OUT_1_TO_0(IADDER_OUT[1:0]),
         
         .ALU_OPCODE(ALU_OPCODE),
         .MEM_WR_REQ(MEM_WR_REQ),
-        .MEM_WR_MASK(MEM_WR_MASK),
         .LOAD_SIZE(LOAD_SIZE),
         .LOAD_UNSIGNED(LOAD_UNSIGNED),
         .ALU_SRC(ALU_SRC),
@@ -225,7 +245,9 @@ module steel_top(
         .WB_MUX_SEL(WB_MUX_SEL),
         .IMM_TYPE(IMM_TYPE),
         .CSR_OP(CSR_OP),
-        .ILLEGAL_INSTR(ILLEGAL_INSTR)
+        .ILLEGAL_INSTR(ILLEGAL_INSTR),
+        .MISALIGNED_LOAD(MISALIGNED_LOAD),
+        .MISALIGNED_STORE(MISALIGNED_STORE)
         
     );
     
@@ -321,6 +343,8 @@ module steel_top(
         
         .ILLEGAL_INSTR(ILLEGAL_INSTR),
         .MISALIGNED_INSTR(PC_MUX_OUT[1] | PC_MUX_OUT[0]),
+        .MISALIGNED_LOAD(MISALIGNED_LOAD),
+        .MISALIGNED_STORE(MISALIGNED_STORE),
         
         .OPCODE_6_TO_2(OPCODE[6:2]),
         .FUNCT3(FUNCT3),
@@ -440,9 +464,9 @@ module steel_top(
     // ---------------------------------
     
     assign I_ADDR = PC_MUX_OUT;
-    assign WR_REQ = MEM_WR_REQ;
-    assign WR_MASK = MEM_WR_MASK;
-    assign D_ADDR = IADDER_OUT;
-    assign DATA_OUT = RS2;
+    assign WR_REQ = SU_WR_REQ;
+    assign WR_MASK = SU_WR_MASK;
+    assign D_ADDR = SU_D_ADDR;
+    assign DATA_OUT = SU_DATA_OUT;
     
 endmodule

@@ -2,15 +2,9 @@
 2019.1
 May 24 2019
 14:51:52
-/home/rafa/ufrgs/steel-core/rtl/alu.v,1590879530,verilog,,/home/rafa/ufrgs/steel-core/rtl/branch_unit.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,alu,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/bench/tb_steel_top.v,1590990497,verilog,,,/home/rafa/ufrgs/steel-core/rtl/globals.vh,tb_steel_top,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/branch_unit.v,1590879523,verilog,,/home/rafa/ufrgs/steel-core/rtl/control_unit.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,branch_unit,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/control_unit.v,1590879411,verilog,,/home/rafa/ufrgs/steel-core/rtl/csr_file.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,control_unit,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/csr_file.v,1590879514,verilog,,/home/rafa/ufrgs/steel-core/rtl/imm_generator.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,csr_file,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/globals.vh,1590879449,verilog,,,,,,,,,,,,
-/home/rafa/ufrgs/steel-core/rtl/imm_generator.v,1590879504,verilog,,/home/rafa/ufrgs/steel-core/rtl/integer_file.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,imm_generator,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/integer_file.v,1590879497,verilog,,/home/rafa/ufrgs/steel-core/rtl/load_unit.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,integer_file,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/load_unit.v,1590879490,verilog,,/home/rafa/ufrgs/steel-core/rtl/machine_control.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,load_unit,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/machine_control.v,1590879482,verilog,,/home/rafa/ufrgs/steel-core/rtl/steel_top.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,machine_control,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/steel_top.v,1590879424,verilog,,/home/rafa/ufrgs/steel-core/rtl/bench/tb_steel_top.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,steel_top,,,../../../../../rtl,,,,,
+/home/rafa/ufrgs/steel-core/rtl/bench/tb_machine_mode.v,1591129672,verilog,,,/home/rafa/ufrgs/steel-core/rtl/globals.vh,tb_machine_mode,,,../../../../../rtl,,,,,
+/home/rafa/ufrgs/steel-core/rtl/globals.vh,1591069886,verilog,,,,,,,,,,,,
+/home/rafa/ufrgs/steel-core/rtl/machine_control.v,1591071420,verilog,,/home/rafa/ufrgs/steel-core/rtl/bench/tb_machine_mode.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,machine_control,,,../../../../../rtl,,,,,
 /home/rafa/ufrgs/steel-core/vivado/steel-core.sim/sim_1/behav/xsim/glbl.v,1558713910,verilog,,,,glbl,,,,,,,,
+/home/rafa/ufrgs/steel-core/vivado/steel-core.srcs/sim_1/new/tb_store_unit.v,1591129140,verilog,,,/home/rafa/ufrgs/steel-core/rtl/globals.vh,tb_store_unit,,,../../../../../rtl,,,,,
+/home/rafa/ufrgs/steel-core/vivado/steel-core.srcs/sources_1/new/store_unit.v,1591126930,verilog,,/home/rafa/ufrgs/steel-core/vivado/steel-core.srcs/sim_1/new/tb_store_unit.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,store_unit,,,../../../../../rtl,,,,,
