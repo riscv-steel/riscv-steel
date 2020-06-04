@@ -2,9 +2,9 @@
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com)
 // 
 // Create Date: 26.04.2020 20:52:25
-// Module Name: tb_load_unit
+// Module Name: tb_steel_top
 // Project Name: Steel Core
-// Description: RISC-V Steel Core Load Unit testbench
+// Description: RISC-V Steel Core testbench
 // 
 // Dependencies: load_unit.v
 // 
@@ -71,12 +71,12 @@ module tb_steel_top();
     reg CLK;
     reg RESET;              
     wire [31:0] I_ADDR;
-    wire [31:0] INSTR;        
+    reg [31:0] INSTR;        
     wire [31:0] D_ADDR;
     wire [31:0] DATA_OUT;
     wire WR_REQ;
     wire [3:0] WR_MASK;
-    wire [31:0] DATA_IN;        
+    reg [31:0] DATA_IN;        
     reg E_IRQ;
     reg T_IRQ;
     reg S_IRQ;
@@ -106,21 +106,7 @@ module tb_steel_top();
     wire [12:0] eff_d_addr;
     
     assign eff_i_addr = I_ADDR[12:0];
-    assign eff_d_addr = D_ADDR[12:0];
-    
-    bram bram_i
-       (.BRAM_PORTA_0_addr(I_ADDR),
-        .BRAM_PORTA_0_clk(CLK),
-        .BRAM_PORTA_0_din(32'b0),
-        .BRAM_PORTA_0_dout(INSTR),
-        .BRAM_PORTA_0_en(1'b1),
-        .BRAM_PORTA_0_we(4'b0),
-        .BRAM_PORTB_0_addr(D_ADDR),
-        .BRAM_PORTB_0_clk(CLK),
-        .BRAM_PORTB_0_din(DATA_OUT),
-        .BRAM_PORTB_0_dout(DATA_IN),
-        .BRAM_PORTB_0_en(WR_REQ),
-        .BRAM_PORTB_0_we(WR_MASK));
+    assign eff_d_addr = D_ADDR[12:0];    
     
     always
     begin
@@ -130,11 +116,11 @@ module tb_steel_top();
     initial
     begin
     
-        f = $fopen("../../../../../mem/lbu.txt","w");
-    /*    
+        f = $fopen("../../../../../mem/bgeu.txt","w");
+        
         // LOADS PROGRAM INTO MEMORY 
         for(i = 0; i < 65535; i=i+1) ram[i] = 8'b0;
-        $readmemh("lbu.mem",ram);*/
+        $readmemh("bgeu.mem",ram);
         
         // INITIAL VALUES
         RESET = 1'b0;        
@@ -144,20 +130,20 @@ module tb_steel_top();
         S_IRQ = 1'b0;
         
         // RESET
-        #505;
+        #5;
         RESET = 1'b1;
         #15;
         RESET = 1'b0;
                    
-        #500;
+        #800;
         
         $fwrite(f, "%d", ram[1024]);
-        $fclose(f);
+        $fclose(f);        
         
         $stop;
         
     end
-    /*
+    
     always @(posedge CLK or posedge RESET)
     begin
         if(RESET)
@@ -190,6 +176,6 @@ module tb_steel_top();
                 DATA_IN = {ram[eff_d_addr+3],ram[eff_d_addr+2],ram[eff_d_addr+1],ram[eff_d_addr]};
             end
         end
-    end*/
+    end
 
 endmodule

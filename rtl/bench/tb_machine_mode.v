@@ -2,9 +2,9 @@
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com)
 // 
 // Create Date: 02.05.2020 15:45:27
-// Module Name: tb_csr_file
+// Module Name: tb_machine_mode
 // Project Name: Steel Core
-// Description: RISC-V Steel Core CSR File testbench
+// Description: RISC-V Steel Core Machine Mode testbench
 // 
 // Dependencies: csr_file.v
 // 

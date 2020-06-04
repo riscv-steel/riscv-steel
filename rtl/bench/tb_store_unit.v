@@ -2,7 +2,7 @@
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com)
 // 
 // Create Date: 02.06.2020 16:03:55
-// Module Name: tb_load_unit
+// Module Name: tb_store_unit
 // Project Name: Steel Core
 // Description: RISC-V Steel Core Store Unit testbench
 // 

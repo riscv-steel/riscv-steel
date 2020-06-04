@@ -1,8 +1,0 @@
-0.6
-2019.1
-May 24 2019
-14:51:52
-/home/rafa/ufrgs/steel-core/rtl/bench/tb_store_unit.v,1591135173,verilog,,,/home/rafa/ufrgs/steel-core/rtl/globals.vh,tb_store_unit,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/rtl/globals.vh,1591069886,verilog,,,,,,,,,,,,
-/home/rafa/ufrgs/steel-core/rtl/store_unit.v,1591135122,verilog,,/home/rafa/ufrgs/steel-core/rtl/bench/tb_store_unit.v,/home/rafa/ufrgs/steel-core/rtl/globals.vh,store_unit,,,../../../../../rtl,,,,,
-/home/rafa/ufrgs/steel-core/vivado/steel-core.sim/sim_1/behav/xsim/glbl.v,1558713910,verilog,,,,glbl,,,,,,,,

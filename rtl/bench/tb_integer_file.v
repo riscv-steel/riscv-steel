@@ -2,7 +2,7 @@
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com)
 // 
 // Create Date: 03.04.2020 18:35:35
-// Module Name: tb_register_file
+// Module Name: tb_integer_file
 // Project Name: Steel Core
 // Description: RISC-V Steel Core 32-bit Integer Register File testbench
 // 
