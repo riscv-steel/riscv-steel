@@ -191,7 +191,7 @@ module tb_machine_mode();
         #15;
         RESET = 1'b0;
         
-        if(PC_SRC != `BOOT)
+        if(PC_SRC != `PC_BOOT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -241,7 +241,7 @@ module tb_machine_mode();
         
         $display("Testing OPERATING state...");
         
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -291,7 +291,7 @@ module tb_machine_mode();
         
         E_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -300,7 +300,7 @@ module tb_machine_mode();
         
         T_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -309,7 +309,7 @@ module tb_machine_mode();
         
         S_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -327,7 +327,7 @@ module tb_machine_mode();
         MIE = 1'b0;
         ILLEGAL_INSTR = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -369,7 +369,7 @@ module tb_machine_mode();
         end
         ILLEGAL_INSTR = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -377,7 +377,7 @@ module tb_machine_mode();
         
         MISALIGNED_INSTR = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -419,7 +419,7 @@ module tb_machine_mode();
         end
         MISALIGNED_INSTR = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -427,7 +427,7 @@ module tb_machine_mode();
            
         MISALIGNED_LOAD = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -469,7 +469,7 @@ module tb_machine_mode();
         end
         MISALIGNED_LOAD = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -477,7 +477,7 @@ module tb_machine_mode();
            
         MISALIGNED_STORE = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -519,7 +519,7 @@ module tb_machine_mode();
         end
         MISALIGNED_STORE = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -532,7 +532,7 @@ module tb_machine_mode();
         RS2_ADDR = `RS2_ECALL;
         RD_ADDR = `RD_ECALL;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -579,7 +579,7 @@ module tb_machine_mode();
         RS2_ADDR = 5'b00000;
         RD_ADDR = 5'b00000;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -592,7 +592,7 @@ module tb_machine_mode();
         RS2_ADDR = `RS2_EBREAK;
         RD_ADDR = `RD_EBREAK;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -639,7 +639,7 @@ module tb_machine_mode();
         RS2_ADDR = 5'b00000;
         RD_ADDR = 5'b00000;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -656,7 +656,7 @@ module tb_machine_mode();
         MIE = 1'b1;
         E_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -665,7 +665,7 @@ module tb_machine_mode();
         
         T_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -674,7 +674,7 @@ module tb_machine_mode();
         
         S_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -693,7 +693,7 @@ module tb_machine_mode();
         MEIE = 1'b1;
         E_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -735,7 +735,7 @@ module tb_machine_mode();
         end
         E_IRQ = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -743,7 +743,7 @@ module tb_machine_mode();
         
         T_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -752,7 +752,7 @@ module tb_machine_mode();
         
         S_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -773,7 +773,7 @@ module tb_machine_mode();
         MTIE = 1'b1;
         T_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -815,7 +815,7 @@ module tb_machine_mode();
         end
         T_IRQ = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -823,7 +823,7 @@ module tb_machine_mode();
         
         E_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -832,7 +832,7 @@ module tb_machine_mode();
         
         S_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -853,7 +853,7 @@ module tb_machine_mode();
         MSIE = 1'b1;
         S_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -895,7 +895,7 @@ module tb_machine_mode();
         end
         S_IRQ = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -903,7 +903,7 @@ module tb_machine_mode();
         
         T_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -912,7 +912,7 @@ module tb_machine_mode();
         
         E_IRQ = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -933,7 +933,7 @@ module tb_machine_mode();
         MEIE = 1'b1;
         MEIP = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -975,7 +975,7 @@ module tb_machine_mode();
         end
         MEIP = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -983,7 +983,7 @@ module tb_machine_mode();
         
         MTIP = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -992,7 +992,7 @@ module tb_machine_mode();
         
         MSIP = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1013,7 +1013,7 @@ module tb_machine_mode();
         MTIE = 1'b1;
         MTIP = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1055,7 +1055,7 @@ module tb_machine_mode();
         end
         MTIP = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1063,7 +1063,7 @@ module tb_machine_mode();
         
         MEIP = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1072,7 +1072,7 @@ module tb_machine_mode();
         
         MSIP = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1093,7 +1093,7 @@ module tb_machine_mode();
         MSIE = 1'b1;
         MSIP = 1'b1;
         #20;
-        if(PC_SRC != `TRAP)
+        if(PC_SRC != `PC_TRAP)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1135,7 +1135,7 @@ module tb_machine_mode();
         end
         MSIP = 1'b0;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1143,7 +1143,7 @@ module tb_machine_mode();
         
         MTIP = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1152,7 +1152,7 @@ module tb_machine_mode();
         
         MEIP = 1'b1;
         #20;
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1177,7 +1177,7 @@ module tb_machine_mode();
         RD_ADDR = `RD_MRET;
         #20;
         
-        if(PC_SRC != `EPC)
+        if(PC_SRC != `PC_EPC)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1229,7 +1229,7 @@ module tb_machine_mode();
         
         $display("Testing transition from TRAP RETURN to OPERATING...");
         
-        if(PC_SRC != `OPERATING)
+        if(PC_SRC != `PC_NEXT)
         begin
             $display("FAIL. Check the results.");
             $finish;

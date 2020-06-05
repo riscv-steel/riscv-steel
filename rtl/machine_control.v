@@ -200,7 +200,7 @@ module machine_control(
         case(curr_state)
             STATE_RESET:
                 begin
-                    PC_SRC = `BOOT;
+                    PC_SRC = `PC_BOOT;
                     FLUSH = 1'b1;
                     INSTRET_INC = 1'b0;
                     SET_EPC = 1'b0;
@@ -210,7 +210,7 @@ module machine_control(
                 end
             STATE_OPERATING:
                 begin
-                    PC_SRC = `OPERATING;
+                    PC_SRC = `PC_NEXT;
                     FLUSH = 1'b0;
                     INSTRET_INC = 1'b1;
                     SET_EPC = 1'b0;
@@ -220,7 +220,7 @@ module machine_control(
                 end
             STATE_TRAP_TAKEN:
                 begin
-                    PC_SRC = `TRAP;
+                    PC_SRC = `PC_TRAP;
                     FLUSH = 1'b1;
                     INSTRET_INC = 1'b0;
                     SET_EPC = 1'b1;
@@ -230,7 +230,7 @@ module machine_control(
                 end
             STATE_TRAP_RETURN:
                 begin
-                    PC_SRC = `EPC;
+                    PC_SRC = `PC_EPC;
                     FLUSH = 1'b1;
                     INSTRET_INC = 1'b0;
                     SET_EPC = 1'b0;
@@ -240,7 +240,7 @@ module machine_control(
                 end
             default:
                 begin
-                    PC_SRC = `OPERATING;
+                    PC_SRC = `PC_NEXT;
                     FLUSH = 1'b0;
                     INSTRET_INC = 1'b1;
                     SET_EPC = 1'b0;

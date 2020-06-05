@@ -555,7 +555,7 @@ module tb_csr_file();
         
         CSR_ADDR = `MCAUSE;
         #20;        
-        if(CSR_DATA_OUT != 32'h00000000)
+        if(CSR_DATA_OUT != 32'hFFFFFFFF)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -564,7 +564,7 @@ module tb_csr_file();
         
         CSR_ADDR = `MTVAL;
         #20;        
-        if(CSR_DATA_OUT != 32'h00000000)
+        if(CSR_DATA_OUT != 32'hFFFFFFFF)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -753,7 +753,7 @@ module tb_csr_file();
         
         CSR_ADDR = `MCAUSE;
         #20;        
-        if(CSR_DATA_OUT != 32'h00000000)
+        if(CSR_DATA_OUT != 32'hFFFFFFFF)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -762,7 +762,7 @@ module tb_csr_file();
         
         CSR_ADDR = `MTVAL;
         #20;        
-        if(CSR_DATA_OUT != 32'h00000000)
+        if(CSR_DATA_OUT != 32'hFFFFFFFF)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1139,7 +1139,7 @@ module tb_csr_file();
         
         CSR_ADDR = `MCAUSE;
         #20;        
-        if(CSR_DATA_OUT != 32'h00000000)
+        if(CSR_DATA_OUT != 32'h0000001F)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1148,7 +1148,7 @@ module tb_csr_file();
         
         CSR_ADDR = `MTVAL;
         #20;        
-        if(CSR_DATA_OUT != 32'h00000000)
+        if(CSR_DATA_OUT != 32'h0000001F)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1337,7 +1337,7 @@ module tb_csr_file();
         
         CSR_ADDR = `MCAUSE;
         #20;        
-        if(CSR_DATA_OUT != 32'h00000000)
+        if(CSR_DATA_OUT != 32'h0000001F)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -1346,7 +1346,7 @@ module tb_csr_file();
         
         CSR_ADDR = `MTVAL;
         #20;        
-        if(CSR_DATA_OUT != 32'h00000000)
+        if(CSR_DATA_OUT != 32'h0000001F)
         begin
             $display("FAIL. Check the results.");
             $finish;

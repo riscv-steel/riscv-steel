@@ -116,11 +116,11 @@ module tb_steel_top();
     initial
     begin
     
-        f = $fopen("../../../../../mem/bgeu.txt","w");
+        f = $fopen("../../../../../mem/mret.txt","w");
         
         // LOADS PROGRAM INTO MEMORY 
         for(i = 0; i < 65535; i=i+1) ram[i] = 8'b0;
-        $readmemh("bgeu.mem",ram);
+        $readmemh("mret.mem",ram);
         
         // INITIAL VALUES
         RESET = 1'b0;        

@@ -116,8 +116,9 @@ module steel_top(
     wire [31:0] RS2;
     reg [31:0] RS2_reg;
     reg [31:0] PC;
-    wire [31:0] PC_PLUS;
-    reg [31:0] PC_PLUS_reg;
+    wire [31:0] NEXT_PC;
+    wire [31:0] PC_PLUS_4;
+    reg [31:0] PC_PLUS_4_reg;
     wire BRANCH_TAKEN;
     wire [31:0] IADDER_OUT;
     reg [31:0] IADDER_OUT_reg;
@@ -186,17 +187,16 @@ module steel_top(
     always @*
     begin
         case (PC_SRC)
-            `BOOT:      PC_MUX_OUT = `BOOT_ADDRESS;
-            `EPC:       PC_MUX_OUT = EPC;
-            `TRAP:      PC_MUX_OUT = TRAP_ADDRESS;
-            `OPERATING: PC_MUX_OUT = PC_PLUS;
+            `PC_BOOT:      PC_MUX_OUT = `BOOT_ADDRESS;
+            `PC_EPC:       PC_MUX_OUT = EPC;
+            `PC_TRAP:      PC_MUX_OUT = TRAP_ADDRESS;
+            `PC_NEXT:      PC_MUX_OUT = NEXT_PC;
         endcase
     end
     
     // PC Adder and Multiplexer
-    wire [31:0] pc_adder;
-    assign pc_adder = PC + 32'h00000004;
-    assign PC_PLUS = BRANCH_TAKEN ? IADDER_OUT : pc_adder;
+    assign PC_PLUS_4 = PC + 32'h00000004;
+    assign NEXT_PC = BRANCH_TAKEN ? {IADDER_OUT[31:1], 1'b0} : PC_PLUS_4;
     
     // Program Counter (PC) register
     always @(posedge CLK or posedge RESET)
@@ -207,11 +207,14 @@ module steel_top(
     
     // ---------------------------------
     // PIPELINE STAGE 2
-    // ---------------------------------
+    // ---------------------------------       
     
-    assign OPCODE = INSTR[6:0];
-    assign FUNCT3 = INSTR[14:12];
-    assign FUNCT7 = INSTR[31:25];
+    wire [31:0] INSTR_mux;
+    assign INSTR_mux = FLUSH == 1'b1 ? 32'h00000013 : INSTR;
+    
+    assign OPCODE = INSTR_mux[6:0];
+    assign FUNCT3 = INSTR_mux[14:12];
+    assign FUNCT7 = INSTR_mux[31:25];
     
     store_unit su(
 
@@ -253,7 +256,7 @@ module steel_top(
     
     imm_generator immgen(
     
-        .INSTR(INSTR[31:7]),
+        .INSTR(INSTR_mux[31:7]),
         .IMM_TYPE(IMM_TYPE),
         .IMM(IMM)
     
@@ -274,9 +277,9 @@ module steel_top(
     
     );
     
-    assign RS1_ADDR = INSTR[19:15];
-    assign RS2_ADDR = INSTR[24:20];
-    assign RD_ADDR = INSTR[11:7];
+    assign RS1_ADDR = INSTR_mux[19:15];
+    assign RS2_ADDR = INSTR_mux[24:20];
+    assign RD_ADDR = INSTR_mux[11:7];
     
     integer_file irf(
     
@@ -294,7 +297,7 @@ module steel_top(
 
     );
     
-    assign CSR_ADDR = INSTR[31:20]; 
+    assign CSR_ADDR = INSTR_mux[31:20]; 
     
     csr_file csrf(
 
@@ -342,7 +345,7 @@ module steel_top(
         .RESET(RESET),
         
         .ILLEGAL_INSTR(ILLEGAL_INSTR),
-        .MISALIGNED_INSTR(PC_MUX_OUT[1] | PC_MUX_OUT[0]),
+        .MISALIGNED_INSTR(BRANCH_TAKEN & NEXT_PC[1]),
         .MISALIGNED_LOAD(MISALIGNED_LOAD),
         .MISALIGNED_STORE(MISALIGNED_STORE),
         
@@ -389,7 +392,7 @@ module steel_top(
             CSR_ADDR_reg <= 12'b000000000000;
             RS1_reg <= 32'h00000000;
             RS2_reg <= 32'h00000000;
-            PC_PLUS_reg <= 32'h00000000;
+            PC_PLUS_4_reg <= 32'h00000000;
             IADDER_OUT_reg <= 32'h00000000;
             ALU_OPCODE_reg <= 4'b0000;
             LOAD_SIZE_reg <= 2'b00;
@@ -407,7 +410,7 @@ module steel_top(
             CSR_ADDR_reg <= CSR_ADDR;
             RS1_reg <= RS1;
             RS2_reg <= RS2;
-            PC_PLUS_reg <= PC_PLUS;
+            PC_PLUS_4_reg <= PC_PLUS_4;
             IADDER_OUT_reg <= IADDER_OUT;
             ALU_OPCODE_reg <= ALU_OPCODE;
             LOAD_SIZE_reg <= LOAD_SIZE;
@@ -455,7 +458,7 @@ module steel_top(
             `WB_IMM:        WB_MUX_OUT = IMM_reg;
             `WB_IADDER_OUT: WB_MUX_OUT = IADDER_OUT_reg;
             `WB_CSR:        WB_MUX_OUT = CSR_DATA;
-            `WB_PC_PLUS:    WB_MUX_OUT = PC_PLUS_reg;
+            `WB_PC_PLUS:    WB_MUX_OUT = PC_PLUS_4_reg;
             default:        WB_MUX_OUT = ALU_RESULT;
         endcase
     end

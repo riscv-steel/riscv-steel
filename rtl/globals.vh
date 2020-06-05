@@ -222,10 +222,10 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 
 // PC MUX selection
 
-`define BOOT                2'b00
-`define EPC                 2'b01
-`define TRAP                2'b10
-`define OPERATING           2'b11
+`define PC_BOOT             2'b00
+`define PC_EPC              2'b01
+`define PC_TRAP             2'b10
+`define PC_NEXT             2'b11
 
 // mask for byte-writes
 

@@ -133,6 +133,7 @@ module csr_file(
     wire [31:0] mip_reg; // machine interrupt pending register
     reg int_or_exc; // interrupt or exception signal
     reg [3:0] cause; // interrupt cause
+    reg [26:0] cause_rem; // remaining bits of mcause register 
     reg meip; // mach. external interrupt pending
     reg mtip; // mach. timer interrupt pending
     reg msip; // mach. software interrupt pending
@@ -181,7 +182,7 @@ module csr_file(
             `MSCRATCH:      CSR_DATA_OUT = mscratch;
             `MEPC:          CSR_DATA_OUT = mepc;
             `MCAUSE:        CSR_DATA_OUT = mcause;
-            `MTVAL:         CSR_DATA_OUT = 32'b0;
+            `MTVAL:         CSR_DATA_OUT = mtval;
             `MIP:           CSR_DATA_OUT = mip_reg;
             `MCYCLE:        CSR_DATA_OUT = mcycle[31:0];
             `MCYCLEH:       CSR_DATA_OUT = mcycle[63:32];
@@ -285,18 +286,27 @@ module csr_file(
     end
 
     // MCAUSE register
-    assign mcause = {int_or_exc, 27'b0, cause};
+    assign mcause = {int_or_exc, cause_rem, cause};
     always @(posedge CLK or posedge RESET)
     begin
         if(RESET) 
         begin
             cause <= 4'b0000;
+            cause_rem <= 27'b0;
             int_or_exc <= 1'b0;
         end
         else if(SET_CAUSE)
         begin
             cause <= CAUSE_IN;
+            cause_rem <= 27'b0;
             int_or_exc <= I_OR_E;
+        end
+        else if(CSR_ADDR == `MCAUSE && WR_EN)
+        begin
+            cause <= data_wr[3:0];
+            cause_rem <= data_wr[30:4];
+            int_or_exc <= data_wr[31];
+            
         end
     end
     
@@ -320,6 +330,14 @@ module csr_file(
             msip <= S_IRQ;
         end
     end    
+    
+    // MTVAL register
+    always @(posedge CLK or posedge RESET)
+    begin
+        if(RESET) mtval <= 32'b0;
+        else if(SET_CAUSE) mtval <= 32'b0;
+        else if(CSR_ADDR == `MTVAL && WR_EN) mtval <= data_wr;
+    end
     
     // MCOUNTINHIBIT register
     assign mcountinhibit = {29'b0, mcountinhibit_ir, 1'b0, mcountinhibit_cy};
