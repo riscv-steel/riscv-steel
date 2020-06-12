@@ -362,7 +362,7 @@ module csr_file(
         begin
             mcycle <= {`MCYCLEH_RESET, `MCYCLE_RESET};
             minstret <= {`MINSTRETH_RESET, `MINSTRET_RESET};
-            mtime <= {`MTIMEH_RESET, `MTIME_RESET};
+            mtime <= {`TIMEH_RESET, `TIME_RESET};
         end
         else
         begin

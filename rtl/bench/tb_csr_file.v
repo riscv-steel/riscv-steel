@@ -215,7 +215,7 @@ module tb_csr_file();
         RESET = 1'b0;
         CSR_ADDR = `TIME;
         #5;
-        if(CSR_DATA_OUT != `MTIME_RESET)
+        if(CSR_DATA_OUT != `TIME_RESET)
         begin
             $display("FAIL. Check the results.");
             $finish;
@@ -228,7 +228,7 @@ module tb_csr_file();
         RESET = 1'b0;
         CSR_ADDR = `TIMEH;
         #5;
-        if(CSR_DATA_OUT != `MTIMEH_RESET)
+        if(CSR_DATA_OUT != `TIMEH_RESET)
         begin
             $display("FAIL. Check the results.");
             $finish;
