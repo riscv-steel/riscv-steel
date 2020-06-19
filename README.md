@@ -39,21 +39,21 @@ To use Steel in your project you must import all files from `rtl` directory to i
 ```
 steel_top core(
 
-        .CLK(  ),
-        .RESET(  ),        
-        .REAL_TIME(  ),        
-        .I_ADDR(  ),
-        .INSTR(  ),        
-        .D_ADDR(  ),
-        .DATA_OUT(  ),
-        .WR_REQ(  ),
-        .WR_MASK(  ),
-        .DATA_IN(  ),        
-        .E_IRQ(  ),
-        .T_IRQ(  ),
-        .S_IRQ(  )
+    .CLK(  ),
+    .RESET(  ),        
+    .REAL_TIME(  ),        
+    .I_ADDR(  ),
+    .INSTR(  ),        
+    .D_ADDR(  ),
+    .DATA_OUT(  ),
+    .WR_REQ(  ),
+    .WR_MASK(  ),
+    .DATA_IN(  ),        
+    .E_IRQ(  ),
+    .T_IRQ(  ),
+    .S_IRQ(  )
 
-    );
+);
 ```
 Steel must be connected to a word-addressed memory with read/write latency of 1 clock cycle. It can be optionally connected to an interrupt controller and a real-time counter. Read the documentation to learn how integrate the core to these devices.
 
