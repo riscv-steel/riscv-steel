@@ -1,6 +1,19 @@
-# Steel Core
+<h2 align="center">Steel Core</h2>
 
-### About
-Steel is a 3-stage single-issue 32-bit RV32I softcore, targeted for use in small embedded designs. It aims to be compliant with RV32I and Zicsr specifications and to support M-mode. 
 
-This work is in progress.
+
+<!-- TABLE OF CONTENTS -->
+### Table of Contents
+
+* [About the Project](#about-the-project)
+* [Licensing](#dependencies)
+* [Documentation](#installation)
+* [Usage](#usage)
+* [License](#license)
+* [Contact](#contact)
+* [Acknowledgments](#acknowledgments)
+
+### About the Project
+
+Steel is a 3-stage single-issue in-order RISC-V microprocessor core designed to be simple and easy to use. It can be used as processing unit in microcontrollers and embedded systems.
+
