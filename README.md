@@ -16,13 +16,7 @@ Steel is a RISC-V microprocessor softcore designed to be simple and easy to use.
 
 ## Licence
 
-Steel is distributed under the MIT License.
+Steel is distributed under the MIT License. To read it, see [LICENCE.md] file.
 
-## Microarchitecture
-
-Steel has 3 pipeline stages, a single execution thread and issues only one instruction per clock cycle. Therefore, all instructions are executed in program order. The figure below shows the tasks performed by each pipeline stage. Detailed information about Steel microarchitecture can be found in the documentation.
-
-<p align="left">
-  <img width="700" src="https://user-images.githubusercontent.com/22325319/85181650-d5af6b00-b25c-11ea-8f36-e68600e4c248.png" caption="Blablalbal">
-</p>
+## Documentation
 
