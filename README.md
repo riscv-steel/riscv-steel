@@ -1,4 +1,6 @@
-<img src="https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png" align="center">
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png">
+</p>
 <h2 align="center">Steel Core</h2>
 
 
