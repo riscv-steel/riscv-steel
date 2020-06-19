@@ -16,7 +16,7 @@ Steel is a RISC-V microprocessor softcore designed to be simple and easy to use.
 
 ## Licence
 
-Steel is distributed under the MIT License. To read it, see the `LICENCE.md` file.
+Steel is distributed under the MIT License. See the `LICENCE.md` file.
 
 ## Documentation
 
