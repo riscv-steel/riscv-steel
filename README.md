@@ -1,5 +1,5 @@
 <h2 align="left">About Steel Core</h2>
-<p align="center">
+<p align="left">
   <img width="100" src="https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png">
 </p>
 Steel is a RISC-V microprocessor softcore designed to be simple and easy to use. It can be used as processing unit in microcontrollers and embedded systems.
