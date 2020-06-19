@@ -1,4 +1,4 @@
-<p align="center">![steel-logo](https://user-images.githubusercontent.com/22325319/85178899-0344e600-b256-11ea-8801-08105fbfe281.png)</p>
+![steel-logo](https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png?style=centerme)
 <h2 align="center">Steel Core</h2>
 
 
