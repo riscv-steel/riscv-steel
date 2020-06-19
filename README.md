@@ -20,7 +20,7 @@ Steel is distributed under the MIT License. See the `LICENCE.md` file.
 
 ## Documentation
 
-Steel documentation is in the file `steel_docs.pdf` and provides the following information:
+Steel documentation (`steel_docs.pdf` file) provides information on:
 * Steel configuration
 * Memory alignment rules
 * Integration with other devices
