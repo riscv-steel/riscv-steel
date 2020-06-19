@@ -17,10 +17,18 @@ Steel is a RISC-V microprocessor softcore designed to be simple and easy to use.
 <!-- TABLE OF CONTENTS -->
 ### Table of Contents
 
-* [Documentation](#about-the-project)
+* [Microarchitecture overview](#microarchitecture-overview)
 * [License](#dependencies)
 * [Contact](#contact)
 * [Acknowledgments](#acknowledgments)
 
-### Documentation
+### Microarchitecture overview
+
+Steel has 3 pipeline stages, a single execution thread and issues only one instruction per clock cycle. Therefore, all instructions are executed in program order. The figure below shows the tasks performed by each pipeline stage. In the first stage, the core generates the program counter and fetches the instruction from memory. In the second, the instruction is decoded and the control signals for all units are generated. Branches, jumps and stores are executed in advance in this stage, which also generates the immediates and fetches the data from memory for load instructions. The last stage executes all other instructions and writes back the results in the register file. More information about Steel microarchitecture can be found in the documentation.
+
+<p align="left">
+  <img width="700" src="https://user-images.githubusercontent.com/22325319/85181650-d5af6b00-b25c-11ea-8f36-e68600e4c248.png" caption="Blablalbal">
+</p>
+
+
 
