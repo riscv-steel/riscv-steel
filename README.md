@@ -59,7 +59,7 @@ Steel must be connected to a word-addressed memory with read/write latency of 1 
 
 ## Running the project in Vivado
 
-The `vivado` directory contains a project created in Vivado for an Artix-7 FPGA. To run it, simply open it in Vivado. To run it on another device, change the project settings.
+The `vivado` directory has a project created in Vivado for an Artix-7 FPGA. To run it, simply open it in Vivado. To run it on another device, change the project settings.
 
 ## About the author
 
