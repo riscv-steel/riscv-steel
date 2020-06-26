@@ -107,6 +107,8 @@ module tb_machine_mode();
     
     wire FLUSH;
     
+    wire TRAP_TAKEN;
+    
     machine_control dut(
 
         .CLK(CLK),
@@ -145,7 +147,9 @@ module tb_machine_mode();
         
         .PC_SRC(PC_SRC),
         
-        .FLUSH(FLUSH)
+        .FLUSH(FLUSH),
+        
+        .TRAP_TAKEN(TRAP_TAKEN)
 
     );
     
@@ -164,6 +168,8 @@ module tb_machine_mode();
         
         ILLEGAL_INSTR = 1'b0;
         MISALIGNED_INSTR = 1'b0;
+        MISALIGNED_LOAD = 1'b0;
+        MISALIGNED_STORE = 1'b0;
                 
         OPCODE_6_TO_2 = `OPCODE_OP;
         FUNCT3 = `FUNCT3_ADD;
@@ -1266,6 +1272,253 @@ module tb_machine_mode();
         end
         
         $display("Test OK.");
+        
+        $display("Testing TRAP_TAKEN signal...");
+        
+        OPCODE_6_TO_2 = `OPCODE_OP;
+        FUNCT3 = `FUNCT3_ADD;
+        FUNCT7 = `FUNCT7_ADD;
+        RS1_ADDR = 5'b00000;
+        RS2_ADDR = 5'b00000;
+        RD_ADDR = 5'b00000;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        OPCODE_6_TO_2 = `OPCODE_SYSTEM;
+        FUNCT3 = `FUNCT3_EBREAK;
+        FUNCT7 = `FUNCT7_EBREAK;
+        RS1_ADDR = `RS1_EBREAK;
+        RS2_ADDR = `RS2_EBREAK;
+        RD_ADDR = `RD_EBREAK;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        OPCODE_6_TO_2 = `OPCODE_OP;
+        FUNCT3 = `FUNCT3_ADD;
+        FUNCT7 = `FUNCT7_ADD;
+        RS1_ADDR = 5'b00000;
+        RS2_ADDR = 5'b00000;
+        RD_ADDR = 5'b00000;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        OPCODE_6_TO_2 = `OPCODE_SYSTEM;
+        FUNCT3 = `FUNCT3_ECALL;
+        FUNCT7 = `FUNCT7_ECALL;
+        RS1_ADDR = `RS1_ECALL;
+        RS2_ADDR = `RS2_ECALL;
+        RD_ADDR = `RD_ECALL;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        OPCODE_6_TO_2 = `OPCODE_OP;
+        FUNCT3 = `FUNCT3_ADD;
+        FUNCT7 = `FUNCT7_ADD;
+        RS1_ADDR = 5'b00000;
+        RS2_ADDR = 5'b00000;
+        RD_ADDR = 5'b00000;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        ILLEGAL_INSTR = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        ILLEGAL_INSTR = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        MISALIGNED_INSTR = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        MISALIGNED_INSTR = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        MISALIGNED_LOAD = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        MISALIGNED_LOAD = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        MISALIGNED_STORE = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        MISALIGNED_STORE = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        MIE = 1'b1;
+        MEIE = 1'b1;
+        MTIE = 1'b1;
+        MSIE = 1'b1;
+        
+        E_IRQ = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        E_IRQ = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        T_IRQ = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        T_IRQ = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        S_IRQ = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        S_IRQ = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        MEIP = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        MEIP = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        MTIP = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        MTIP = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        
+        MSIP = 1'b1;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b1)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        MSIP = 1'b0;
+        #20;
+        
+        if(TRAP_TAKEN != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
         
         $display("Machine Mode Control module successfully tested.");
     

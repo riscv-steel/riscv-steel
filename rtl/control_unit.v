@@ -72,6 +72,7 @@ module control_unit(
     input wire FUNCT7_5,
     input wire [2:0] FUNCT3,
     input wire [1:0] IADDER_OUT_1_TO_0,
+    input wire TRAP_TAKEN,
     
     output wire [3:0] ALU_OPCODE,
     output wire MEM_WR_REQ,
@@ -155,7 +156,7 @@ module control_unit(
     assign misaligned = mal_word | mal_half;
     assign MISALIGNED_STORE = is_store & misaligned;
     assign MISALIGNED_LOAD = is_load & misaligned;
-    assign MEM_WR_REQ = is_store & ~misaligned;
+    assign MEM_WR_REQ = is_store & ~misaligned & ~TRAP_TAKEN;
     
     
 endmodule

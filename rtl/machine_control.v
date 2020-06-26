@@ -114,7 +114,10 @@ module machine_control(
     output reg [1:0] PC_SRC,
     
     // to pipeline stage 2 register
-    output reg FLUSH
+    output reg FLUSH,
+    
+    // to Control Unit
+    output wire TRAP_TAKEN
 
     );
     
@@ -138,14 +141,11 @@ module machine_control(
     wire RS1_ADDR_zero;
     wire RS2_ADDR_zero;
     wire rd_zero;
-    wire RS2_ADDR_wfi;
     wire RS2_ADDR_mret;
     wire RS2_ADDR_ebreak;
     wire FUNCT3_zero;
     wire FUNCT7_zero;
-    wire FUNCT7_wfi;
     wire FUNCT7_mret;
-    wire wfi;
     wire csr;
     wire mret;
     wire ecall;
@@ -165,7 +165,6 @@ module machine_control(
     assign RS2_ADDR_wfi = ~RS2_ADDR[4] & ~RS2_ADDR[3] & RS2_ADDR[2] & ~RS2_ADDR[1] & RS2_ADDR[0];
     assign RS2_ADDR_mret = ~RS2_ADDR[4] & ~RS2_ADDR[3] & ~RS2_ADDR[2] & RS2_ADDR[1] & ~RS2_ADDR[0];
     assign RS2_ADDR_ebreak = ~RS2_ADDR[4] & ~RS2_ADDR[3] & ~RS2_ADDR[2] & ~RS2_ADDR[1] & RS2_ADDR[0];
-    assign wfi = is_system & FUNCT7_wfi & RS2_ADDR_wfi & RS1_ADDR_zero & FUNCT3_zero & rd_zero;
     assign mret = is_system & FUNCT7_mret & RS2_ADDR_mret & RS1_ADDR_zero & FUNCT3_zero & rd_zero;
     assign ecall = is_system & FUNCT7_zero & RS2_ADDR_zero & RS1_ADDR_zero & FUNCT3_zero & rd_zero;
     assign ebreak = is_system & FUNCT7_zero & RS2_ADDR_ebreak & RS1_ADDR_zero & FUNCT3_zero & rd_zero;
@@ -175,6 +174,7 @@ module machine_control(
     assign sip = MSIE & (S_IRQ | MSIP);
     assign ip = eip | tip | sip;
     assign exception = ILLEGAL_INSTR | MISALIGNED_INSTR | MISALIGNED_LOAD | MISALIGNED_STORE;
+    assign TRAP_TAKEN = (MIE & ip) | exception | ecall | ebreak;
     
     always @*
     begin
@@ -182,7 +182,7 @@ module machine_control(
             STATE_RESET:
                 next_state = STATE_OPERATING;
             STATE_OPERATING: 
-                if((MIE & ip) | exception | ecall | ebreak) next_state = STATE_TRAP_TAKEN;
+                if(TRAP_TAKEN) next_state = STATE_TRAP_TAKEN;
                 else if(mret) next_state = STATE_TRAP_RETURN;
                 else next_state = STATE_OPERATING;
             STATE_TRAP_TAKEN:

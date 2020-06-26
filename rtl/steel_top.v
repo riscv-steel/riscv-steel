@@ -15,6 +15,7 @@
 //               csr_file.v
 //               imm_generator.v
 //               load_unit.v
+//               store_unit.v
 // 
 // Version 0.01
 // 
@@ -176,6 +177,7 @@ module steel_top(
     wire [31:0] SU_D_ADDR;
     wire [3:0] SU_WR_MASK;
     wire SU_WR_REQ;
+    wire TRAP_TAKEN;
     
     // ---------------------------------
     // PIPELINE STAGE 1
@@ -236,6 +238,7 @@ module steel_top(
         .FUNCT7_5(FUNCT7[5]),
         .FUNCT3(FUNCT3),
         .IADDER_OUT_1_TO_0(IADDER_OUT[1:0]),
+        .TRAP_TAKEN(TRAP_TAKEN),
         
         .ALU_OPCODE(ALU_OPCODE),
         .MEM_WR_REQ(MEM_WR_REQ),
@@ -377,7 +380,9 @@ module steel_top(
         
         .PC_SRC(PC_SRC),
         
-        .FLUSH(FLUSH)
+        .FLUSH(FLUSH),
+        
+        .TRAP_TAKEN(TRAP_TAKEN)
 
     );
     

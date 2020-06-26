@@ -73,6 +73,7 @@ module tb_control_unit();
     reg FUNCT7_5;
     reg [2:0] FUNCT3;
     reg [1:0] IADDER_OUT_1_TO_0;
+    reg TRAP_TAKEN;
     
     wire [3:0] ALU_OPCODE;
     wire MEM_WR_REQ;
@@ -94,7 +95,8 @@ module tb_control_unit();
         .OPCODE(OPCODE),
         .FUNCT7_5(FUNCT7_5),
         .FUNCT3(FUNCT3),
-        .IADDER_OUT_1_TO_0(IADDER_OUT_1_TO_0),        
+        .IADDER_OUT_1_TO_0(IADDER_OUT_1_TO_0),
+        .TRAP_TAKEN(TRAP_TAKEN),        
         .ALU_OPCODE(ALU_OPCODE),
         .MEM_WR_REQ(MEM_WR_REQ),
         .LOAD_SIZE(LOAD_SIZE),
@@ -127,6 +129,7 @@ module tb_control_unit();
         opcode_6_to_2 = `OPCODE_OP;
         OPCODE = {opcode_6_to_2, 2'b11};
         IADDER_OUT_1_TO_0 = 2'b00;
+        TRAP_TAKEN = 1'b0;
         
         #10;
         if(MEM_WR_REQ != 1'b0)
@@ -876,6 +879,15 @@ module tb_control_unit();
             $display("FAIL. Check the results.");
             $finish;
         end
+        
+        TRAP_TAKEN = 1'b1;
+        #10;
+        if(MEM_WR_REQ != 1'b0)
+        begin
+            $display("FAIL. Check the results.");
+            $finish;
+        end
+        TRAP_TAKEN = 1'b0;
         
         $display("STORE control signals common to all instructions successfully tested.");
         
