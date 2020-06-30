@@ -1,0 +1,17 @@
+site_name: Steel Core Documentation
+site_author: Rafael de Oliveira Calcada
+repo_url: https://github.com/rafaelcalcada/steel-core
+markdown_extensions:
+    - tables
+theme: 
+    name: readthedocs
+extra_css: [extra.css]
+nav:
+    - Overview: 'index.md'
+    - Getting Started: 'getting.md'
+    - Microarchitecture: 'uarch.md'
+    - Configuration: 'config.md'
+    - Input and Output Signals: 'steelio.md'
+    - Timing Diagrams: 'timing.md'
+    - Exceptions and Interrupts: 'traps.md'
+    - Implementation Details: 'details.md'
