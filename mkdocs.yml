@@ -3,9 +3,12 @@ site_author: Rafael de Oliveira Calcada
 repo_url: https://github.com/rafaelcalcada/steel-core
 markdown_extensions:
     - tables
+extra:
+    logo: images/steel-logo.svg
 theme: 
     name: readthedocs
 extra_css: [extra.css]
+extra_javascript: [extra.js]
 nav:
     - Overview: 'index.md'
     - Getting Started: 'getting.md'
