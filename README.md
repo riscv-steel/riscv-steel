@@ -31,8 +31,6 @@ Steel documentation ([https://rafaelcalcada.github.io/steel-core/](https://rafae
 * Timing diagrams for instruction fetch, data fetch, data writing and interrupt request processes
 * Input and output signals
 
-Read the docs carefully before using the core.
-
 ## Using Steel in your project
 
 To use Steel in your project you must import all files from `rtl` directory to it. Then instantiate Steel using the following template:
