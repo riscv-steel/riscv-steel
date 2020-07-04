@@ -77,8 +77,8 @@ module tb_alu();
 
         .OP_1(          OP_1),
         .OP_2(          OP_2),
-        .OPCODE(            OPCODE),
-        .RESULT(        RESULT)
+        .OPCODE(      OPCODE),
+        .RESULT(      RESULT)
     
     );
     

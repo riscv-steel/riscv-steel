@@ -69,7 +69,6 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 module tb_integer_file();
 
     reg CLK;
-    reg RESET;
     
     reg [4:0] RS_1_ADDR;
     reg [4:0] RS_2_ADDR;
@@ -83,7 +82,6 @@ module tb_integer_file();
     integer_file dut(
     
         .CLK(               CLK),
-        .RESET(             RESET),
         
         .RS_1_ADDR(         RS_1_ADDR),
         .RS_2_ADDR(         RS_2_ADDR),
@@ -109,23 +107,14 @@ module tb_integer_file();
         $display("Testing Integer Register File...");
     
         CLK = 1'b0;
-        RESET = 1'b0;
         
         RS_1_ADDR = 5'b00000;
         RS_2_ADDR = 5'b00000;
         RD_ADDR = 5'b00000;
         WR_EN = 1'b0;
-        RD = 32'b0;        
+        RD = 32'b0;
         
-        #5;
-        
-        RESET = 1'b1;
-        
-        #15;
-        
-        RESET = 1'b0;
-        
-        $display("Testing values after reset...");
+        $display("Testing values on power up...");
         
         for(i = 0; i < 32; i=i+1)
         begin
@@ -142,7 +131,7 @@ module tb_integer_file();
         
         end
         
-        $display("Reset values OK.");        
+        $display("Power up values OK.");        
         
         $display("Testing write operation...");
             

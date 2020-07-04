@@ -287,7 +287,6 @@ module steel_top(
     integer_file irf(
     
         .CLK(CLK),
-        .RESET(RESET),
         
         .RS_1_ADDR(RS1_ADDR),
         .RS_2_ADDR(RS2_ADDR),    

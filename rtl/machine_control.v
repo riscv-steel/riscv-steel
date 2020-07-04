@@ -126,10 +126,10 @@ module machine_control(
     reg [3:0] next_state;
     
     // machine states
-    parameter STATE_RESET         = 2'b00; 
-    parameter STATE_OPERATING     = 2'b01;
-    parameter STATE_TRAP_TAKEN    = 2'b10;    
-    parameter STATE_TRAP_RETURN   = 2'b11;
+    parameter STATE_RESET         = 4'b0001; 
+    parameter STATE_OPERATING     = 4'b0010;
+    parameter STATE_TRAP_TAKEN    = 4'b0100;    
+    parameter STATE_TRAP_RETURN   = 4'b1000;
     
     // internal control signals
     wire exception;
