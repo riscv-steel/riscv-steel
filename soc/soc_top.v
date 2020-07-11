@@ -100,7 +100,7 @@ module soc_top(
     
         .CLK(CLK),
         .RESET(RESET),
-        .REAL_TIME(timer),
+        .REAL_TIME(64'b0),
         .I_ADDR(i_addr),
         .INSTR(instr),
         .D_ADDR(daddr_core),
@@ -112,14 +112,6 @@ module soc_top(
         .T_IRQ(1'b0),
         .S_IRQ(1'b0)
         
-        );
-    
-    timer timer0(
-    
-        .CLK(CLK),
-        .RESET(RESET),
-        .TIME(timer)
-         
         );
         
     bus_arbiter ba(

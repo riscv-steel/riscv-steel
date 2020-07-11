@@ -2,7 +2,7 @@
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com) 
 // 
 // Create Date: 25.04.2020 14:49:16
-// Module Name: control_unit
+// Module Name: decoder
 // Project Name: Steel Core 
 // Description: Decodes the instruction and generates control signals 
 // 
@@ -66,7 +66,7 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 `timescale 1ns / 1ps
 `include "globals.vh"
 
-module control_unit(
+module decoder(
 
     input wire [6:0] OPCODE,
     input wire FUNCT7_5,

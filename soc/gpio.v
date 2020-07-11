@@ -91,7 +91,7 @@ module gpio(
     end
     endgenerate
 
-    always @ (posedge CLK or posedge RESET)
+    always @ (posedge CLK)
     begin
         invec <= GPIO;
         if(RESET)
@@ -104,7 +104,7 @@ module gpio(
         end       
     end
     
-    always @ (posedge CLK or posedge RESET)
+    always @ (posedge CLK)
     begin
         if(RESET)
         begin            
@@ -116,7 +116,7 @@ module gpio(
         end       
     end
     
-    always @ (posedge CLK or posedge RESET)
+    always @ (posedge CLK)
     begin
         if(RESET)
         begin            
@@ -140,7 +140,7 @@ module gpio(
     genvar j;
     generate
     for (j = 0; j < 16; j = j+1)
-    begin
+    begin : ios
     
         always @*
         begin
@@ -190,7 +190,7 @@ module gpio(
             endcase
         end
         
-        always @(posedge CLK or posedge RESET)
+        always @(posedge CLK)
         begin
             if(RESET) curr_state[j] <= STATE_INIT;
             else curr_state[j] <= next_state[j];

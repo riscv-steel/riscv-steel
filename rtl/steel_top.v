@@ -11,7 +11,7 @@
 //               alu.v
 //               integer_file.v
 //               branch_unit.v
-//               control_unit.v
+//               decoder.v
 //               csr_file.v
 //               imm_generator.v
 //               load_unit.v
@@ -172,7 +172,6 @@ module steel_top(
     wire [31:0] LU_OUTPUT;
     wire [31:0] ALU_RESULT;
     reg [31:0] WB_MUX_OUT;
-    wire RESET_OR_FLUSH;
     wire [31:0] SU_DATA_OUT;
     wire [31:0] SU_D_ADDR;
     wire [3:0] SU_WR_MASK;
@@ -201,7 +200,7 @@ module steel_top(
     assign NEXT_PC = BRANCH_TAKEN ? {IADDER_OUT[31:1], 1'b0} : PC_PLUS_4;
     
     // Program Counter (PC) register
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET) PC <= `BOOT_ADDRESS;
         else PC <= PC_MUX_OUT;
@@ -232,7 +231,7 @@ module steel_top(
     
     );
     
-    control_unit ctrlunit(
+    decoder dec(
     
         .OPCODE(OPCODE),
         .FUNCT7_5(FUNCT7[5]),
@@ -294,7 +293,7 @@ module steel_top(
         .RS_2(RS2),
         
         .RD_ADDR(RD_ADDR_reg),
-        .WR_EN(RF_WR_EN_reg),
+        .WR_EN(FLUSH ? 1'b0 : RF_WR_EN_reg),
         .RD(WB_MUX_OUT)
 
     );
@@ -306,7 +305,7 @@ module steel_top(
         .CLK(CLK),
         .RESET(RESET),
         
-        .WR_EN(CSR_WR_EN_reg),
+        .WR_EN(FLUSH ? 1'b0 : CSR_WR_EN_reg),
         .CSR_ADDR(CSR_ADDR_reg),
         .CSR_OP(CSR_OP_reg),
         .CSR_UIMM(IMM_reg[4:0]),
@@ -383,14 +382,12 @@ module steel_top(
         
         .TRAP_TAKEN(TRAP_TAKEN)
 
-    );
-    
-    assign RESET_OR_FLUSH = RESET | FLUSH;    
+    );        
     
     // Stages 1/2 interface registers
-    always @(posedge CLK or posedge RESET_OR_FLUSH)
+    always @(posedge CLK)
     begin
-        if(RESET_OR_FLUSH)
+        if(RESET)
         begin
             RD_ADDR_reg <= 5'b00000;
             CSR_ADDR_reg <= 12'b000000000000;
@@ -471,7 +468,7 @@ module steel_top(
     // OUTPUT ASSIGNMENTS
     // ---------------------------------
     
-    assign I_ADDR = PC_MUX_OUT;
+    assign I_ADDR = RESET ? `BOOT_ADDRESS : PC_MUX_OUT;
     assign WR_REQ = SU_WR_REQ;
     assign WR_MASK = SU_WR_MASK;
     assign D_ADDR = SU_D_ADDR;

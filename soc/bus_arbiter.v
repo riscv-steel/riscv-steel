@@ -94,7 +94,7 @@ module bus_arbiter(
     reg last_access;
     wire gpio_access = &D_ADDR[31:10];
     
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET) last_access <= 1'b0;
         else last_access <= gpio_access;

@@ -196,7 +196,7 @@ module csr_file(
     // MSTATUS register
     //                       MPP           
     assign mstatus = {19'b0, 2'b11, 3'b0, mpie, 3'b0 , MIE, 3'b0};
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET)
         begin
@@ -230,7 +230,7 @@ module csr_file(
     assign MEIE_OUT = meie;
     assign MTIE_OUT = mtie;
     assign MSIE_OUT = msie;
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET)
         begin
@@ -255,7 +255,7 @@ module csr_file(
     assign trap_mux_out = int_or_exc ? vec_mux_out : {mtvec_base, 2'b00};
     assign vec_mux_out = mtvec[0] ? {mtvec_base, 2'b00} + base_offset : {mtvec_base, 2'b00};
     assign TRAP_ADDRESS = trap_mux_out;
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET)
         begin
@@ -270,7 +270,7 @@ module csr_file(
     end
     
     // MSCRATCH register
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET) mscratch <= `MSCRATCH_RESET;
         else if(CSR_ADDR == `MSCRATCH && WR_EN) mscratch <= data_wr;
@@ -278,7 +278,7 @@ module csr_file(
     
     // MEPC register
     assign EPC_OUT = mepc;
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET) mepc <= `MEPC_RESET;
         else if(SET_EPC) mepc <= PC;
@@ -287,7 +287,7 @@ module csr_file(
 
     // MCAUSE register
     assign mcause = {int_or_exc, cause_rem, cause};
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET) 
         begin
@@ -315,7 +315,7 @@ module csr_file(
     assign MEIP_OUT = meip;
     assign MTIP_OUT = mtip;
     assign MSIP_OUT = msip;
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET)
         begin
@@ -332,7 +332,7 @@ module csr_file(
     end    
     
     // MTVAL register
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET) mtval <= 32'b0;
         else if(SET_CAUSE) mtval <= 32'b0;
@@ -341,7 +341,7 @@ module csr_file(
     
     // MCOUNTINHIBIT register
     assign mcountinhibit = {29'b0, mcountinhibit_ir, 1'b0, mcountinhibit_cy};
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET)
         begin
@@ -356,7 +356,7 @@ module csr_file(
     end
     
     // Counters
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET)
         begin

@@ -254,13 +254,13 @@ module machine_control(
     
     // SEQUENTIAL LOGIC -------------------------------------------
     
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET) curr_state <= STATE_RESET;
         else curr_state <= next_state;
     end    
     
-    always @(posedge CLK or posedge RESET)
+    always @(posedge CLK)
     begin
         if(RESET)
         begin

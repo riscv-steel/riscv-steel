@@ -2,11 +2,11 @@
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com)
 // 
 // Create Date: 03.04.2020 18:35:35
-// Module Name: tb_control_unit
+// Module Name: tb_decoder
 // Project Name: Steel Core
-// Description: RISC-V Steel Core Control Unit testbench
+// Description: RISC-V Steel Core Decoder testbench
 // 
-// Dependencies: control_unit.v
+// Dependencies: decoder.v
 // 
 // Version 0.01
 // 
@@ -67,7 +67,7 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 `include "../globals.vh"
 
 
-module tb_control_unit();
+module tb_decoder();
 
     reg [6:0] OPCODE;
     reg FUNCT7_5;
@@ -90,7 +90,7 @@ module tb_control_unit();
     wire MISALIGNED_LOAD;
     wire MISALIGNED_STORE;
     
-    control_unit dut(
+    decoder dut(
         
         .OPCODE(OPCODE),
         .FUNCT7_5(FUNCT7_5),
@@ -120,7 +120,7 @@ module tb_control_unit();
     initial
     begin
     
-        $display("Testing Control Unit...");
+        $display("Testing Decoder...");
         
         $display("Testing OP opcode control signals...");
 
@@ -1468,7 +1468,7 @@ module tb_control_unit();
         
         $display("Illegal instructions successfully tested.");
         
-        $display("Control Unit successfully tested.");
+        $display("Decoder successfully tested.");
     
     end
 
