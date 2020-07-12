@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Sun Jul 12 17:35:46 2020
+# Process ID: 26302
+# Current directory: /home/rafa/ufrgs/steel-core/vivado/steel-core.runs/synth_1
+# Command line: vivado -log soc_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source soc_top.tcl
+# Log file: /home/rafa/ufrgs/steel-core/vivado/steel-core.runs/synth_1/soc_top.vds
+# Journal file: /home/rafa/ufrgs/steel-core/vivado/steel-core.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source soc_top.tcl -notrace

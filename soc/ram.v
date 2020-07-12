@@ -84,9 +84,10 @@ module ram(
     
     integer i;
     
+    // MEMORY INITIALIZATION
     initial
     begin
-        //$readmemh("yourprogram.mem", ram);
+        $readmemh("gpio.mem", ram);
     end
     
     always @(posedge CLK) prev_addra <= ADDRA;

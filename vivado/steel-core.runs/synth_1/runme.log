@@ -1,0 +1,647 @@
+
+*** Running vivado
+    with args -log soc_top.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source soc_top.tcl
+
+
+****** Vivado v2019.2 (64-bit)
+  **** SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
+  **** IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+source soc_top.tcl -notrace
+Command: synth_design -top soc_top -part xc7a35tcpg236-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35t'
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 26371 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1809.344 ; gain = 202.719 ; free physical = 1865 ; free virtual = 6193
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'soc_top' [/home/rafa/ufrgs/steel-core/soc/soc_top.v:71]
+INFO: [Synth 8-6157] synthesizing module 'steel_top' [/home/rafa/ufrgs/steel-core/rtl/steel_top.v:78]
+INFO: [Synth 8-6157] synthesizing module 'store_unit' [/home/rafa/ufrgs/steel-core/rtl/store_unit.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'store_unit' (1#1) [/home/rafa/ufrgs/steel-core/rtl/store_unit.v:69]
+INFO: [Synth 8-6157] synthesizing module 'decoder' [/home/rafa/ufrgs/steel-core/rtl/decoder.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'decoder' (2#1) [/home/rafa/ufrgs/steel-core/rtl/decoder.v:69]
+INFO: [Synth 8-6157] synthesizing module 'imm_generator' [/home/rafa/ufrgs/steel-core/rtl/imm_generator.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'imm_generator' (3#1) [/home/rafa/ufrgs/steel-core/rtl/imm_generator.v:69]
+INFO: [Synth 8-6157] synthesizing module 'branch_unit' [/home/rafa/ufrgs/steel-core/rtl/branch_unit.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'branch_unit' (4#1) [/home/rafa/ufrgs/steel-core/rtl/branch_unit.v:69]
+INFO: [Synth 8-6157] synthesizing module 'integer_file' [/home/rafa/ufrgs/steel-core/rtl/integer_file.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'integer_file' (5#1) [/home/rafa/ufrgs/steel-core/rtl/integer_file.v:69]
+INFO: [Synth 8-6157] synthesizing module 'csr_file' [/home/rafa/ufrgs/steel-core/rtl/csr_file.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'csr_file' (6#1) [/home/rafa/ufrgs/steel-core/rtl/csr_file.v:69]
+INFO: [Synth 8-6157] synthesizing module 'machine_control' [/home/rafa/ufrgs/steel-core/rtl/machine_control.v:69]
+	Parameter STATE_RESET bound to: 4'b0001 
+	Parameter STATE_OPERATING bound to: 4'b0010 
+	Parameter STATE_TRAP_TAKEN bound to: 4'b0100 
+	Parameter STATE_TRAP_RETURN bound to: 4'b1000 
+INFO: [Synth 8-6155] done synthesizing module 'machine_control' (7#1) [/home/rafa/ufrgs/steel-core/rtl/machine_control.v:69]
+INFO: [Synth 8-6157] synthesizing module 'load_unit' [/home/rafa/ufrgs/steel-core/rtl/load_unit.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'load_unit' (8#1) [/home/rafa/ufrgs/steel-core/rtl/load_unit.v:69]
+INFO: [Synth 8-6157] synthesizing module 'alu' [/home/rafa/ufrgs/steel-core/rtl/alu.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'alu' (9#1) [/home/rafa/ufrgs/steel-core/rtl/alu.v:69]
+INFO: [Synth 8-6155] done synthesizing module 'steel_top' (10#1) [/home/rafa/ufrgs/steel-core/rtl/steel_top.v:78]
+INFO: [Synth 8-6157] synthesizing module 'bus_arbiter' [/home/rafa/ufrgs/steel-core/soc/bus_arbiter.v:68]
+INFO: [Synth 8-6155] done synthesizing module 'bus_arbiter' (11#1) [/home/rafa/ufrgs/steel-core/soc/bus_arbiter.v:68]
+INFO: [Synth 8-6157] synthesizing module 'ram' [/home/rafa/ufrgs/steel-core/soc/ram.v:68]
+INFO: [Synth 8-3876] $readmem data file 'gpio.mem' is read successfully [/home/rafa/ufrgs/steel-core/soc/ram.v:90]
+INFO: [Synth 8-6155] done synthesizing module 'ram' (12#1) [/home/rafa/ufrgs/steel-core/soc/ram.v:68]
+INFO: [Synth 8-6157] synthesizing module 'gpio' [/home/rafa/ufrgs/steel-core/soc/gpio.v:68]
+	Parameter STATE_INIT bound to: 2'b10 
+	Parameter STATE_CHANGE bound to: 2'b11 
+	Parameter STATE_LOW bound to: 2'b00 
+	Parameter STATE_HIGH bound to: 2'b01 
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:147]
+INFO: [Synth 8-226] default block is never used [/home/rafa/ufrgs/steel-core/soc/gpio.v:184]
+INFO: [Synth 8-6155] done synthesizing module 'gpio' (13#1) [/home/rafa/ufrgs/steel-core/soc/gpio.v:68]
+INFO: [Synth 8-6155] done synthesizing module 'soc_top' (14#1) [/home/rafa/ufrgs/steel-core/soc/soc_top.v:71]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1872.094 ; gain = 265.469 ; free physical = 1891 ; free virtual = 6220
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 1875.062 ; gain = 268.438 ; free physical = 1889 ; free virtual = 6218
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 1875.062 ; gain = 268.438 ; free physical = 1889 ; free virtual = 6218
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1875.062 ; gain = 0.000 ; free physical = 1882 ; free virtual = 6211
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/rafa/ufrgs/steel-core/vivado/steel-core.srcs/constrs_1/new/contraints.xdc]
+Finished Parsing XDC File [/home/rafa/ufrgs/steel-core/vivado/steel-core.srcs/constrs_1/new/contraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/rafa/ufrgs/steel-core/vivado/steel-core.srcs/constrs_1/new/contraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/soc_top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/soc_top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2012.797 ; gain = 0.000 ; free physical = 1790 ; free virtual = 6119
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2012.797 ; gain = 0.000 ; free physical = 1790 ; free virtual = 6119
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:15 ; elapsed = 00:00:18 . Memory (MB): peak = 2012.797 ; gain = 406.172 ; free physical = 1860 ; free virtual = 6193
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35tcpg236-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:15 ; elapsed = 00:00:18 . Memory (MB): peak = 2012.797 ; gain = 406.172 ; free physical = 1860 ; free virtual = 6193
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:18 . Memory (MB): peak = 2012.797 ; gain = 406.172 ; free physical = 1860 ; free virtual = 6193
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'curr_state_reg' in module 'machine_control'
+INFO: [Synth 8-5544] ROM "PC_SRC" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "PC_SRC" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/rafa/ufrgs/steel-core/rtl/alu.v:91]
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+             STATE_RESET |                             0001 |                             0001
+         STATE_OPERATING |                             0010 |                             0010
+        STATE_TRAP_TAKEN |                             0100 |                             0100
+       STATE_TRAP_RETURN |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'curr_state_reg' in module 'machine_control'
+INFO: [Synth 8-6430] The Block RAM "ram:/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:20 . Memory (MB): peak = 2012.797 ; gain = 406.172 ; free physical = 1850 ; free virtual = 6183
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     64 Bit       Adders := 2     
+	   2 Input     32 Bit       Adders := 3     
+	   3 Input     32 Bit       Adders := 1     
++---XORs : 
+	   2 Input     32 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 2     
++---Registers : 
+	               64 Bit    Registers := 3     
+	               32 Bit    Registers := 9     
+	               30 Bit    Registers := 1     
+	               27 Bit    Registers := 1     
+	               16 Bit    Registers := 4     
+	               12 Bit    Registers := 1     
+	               10 Bit    Registers := 2     
+	                5 Bit    Registers := 1     
+	                4 Bit    Registers := 3     
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 18    
+	                1 Bit    Registers := 17    
++---RAMs : 
+	              32K Bit         RAMs := 1     
++---Muxes : 
+	   4 Input     64 Bit        Muxes := 2     
+	   2 Input     64 Bit        Muxes := 4     
+	   4 Input     32 Bit        Muxes := 20    
+	   2 Input     32 Bit        Muxes := 41    
+	  17 Input     32 Bit        Muxes := 1     
+	   2 Input     24 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 5     
+	   4 Input      8 Bit        Muxes := 1     
+	   2 Input      8 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 2     
+	  21 Input      5 Bit        Muxes := 1     
+	   4 Input      4 Bit        Muxes := 2     
+	   2 Input      4 Bit        Muxes := 8     
+	   9 Input      4 Bit        Muxes := 2     
+	   5 Input      4 Bit        Muxes := 1     
+	   3 Input      3 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 1     
+	   5 Input      2 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 64    
+	   6 Input      2 Bit        Muxes := 16    
+	   2 Input      1 Bit        Muxes := 17    
+	   9 Input      1 Bit        Muxes := 1     
+	   5 Input      1 Bit        Muxes := 4     
+	   4 Input      1 Bit        Muxes := 16    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module store_unit 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input     32 Bit        Muxes := 2     
+	   2 Input     32 Bit        Muxes := 1     
+	   4 Input      4 Bit        Muxes := 2     
+	   2 Input      4 Bit        Muxes := 1     
+Module branch_unit 
+Detailed RTL Component Info : 
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---Muxes : 
+	   2 Input      1 Bit        Muxes := 2     
+Module integer_file 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 4     
+Module csr_file 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     64 Bit       Adders := 2     
+	   2 Input     32 Bit       Adders := 1     
++---Registers : 
+	               64 Bit    Registers := 3     
+	               32 Bit    Registers := 3     
+	               30 Bit    Registers := 1     
+	               27 Bit    Registers := 1     
+	                4 Bit    Registers := 1     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 11    
++---Muxes : 
+	   4 Input     64 Bit        Muxes := 2     
+	   2 Input     64 Bit        Muxes := 4     
+	   2 Input     32 Bit        Muxes := 19    
+	   4 Input     32 Bit        Muxes := 16    
+	  17 Input     32 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 2     
+	  21 Input      5 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 11    
+Module machine_control 
+Detailed RTL Component Info : 
++---Registers : 
+	                4 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   9 Input      4 Bit        Muxes := 2     
+	   2 Input      4 Bit        Muxes := 4     
+	   5 Input      4 Bit        Muxes := 1     
+	   3 Input      3 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 1     
+	   5 Input      2 Bit        Muxes := 1     
+	   9 Input      1 Bit        Muxes := 1     
+	   5 Input      1 Bit        Muxes := 4     
+	   2 Input      1 Bit        Muxes := 3     
+Module load_unit 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input     32 Bit        Muxes := 1     
+	   2 Input     24 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 2     
+	   4 Input      8 Bit        Muxes := 1     
+Module alu 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     32 Bit       Adders := 1     
++---XORs : 
+	   2 Input     32 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 1     
+Module steel_top 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 2     
++---Registers : 
+	               32 Bit    Registers := 6     
+	               12 Bit    Registers := 1     
+	                5 Bit    Registers := 1     
+	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 4     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 4     
+	   4 Input     32 Bit        Muxes := 1     
+Module bus_arbiter 
+Detailed RTL Component Info : 
++---Registers : 
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 5     
+	   2 Input      4 Bit        Muxes := 2     
+Module ram 
+Detailed RTL Component Info : 
++---Registers : 
+	               10 Bit    Registers := 2     
++---RAMs : 
+	              32K Bit         RAMs := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 6     
+	   2 Input      8 Bit        Muxes := 1     
+Module gpio 
+Detailed RTL Component Info : 
++---Registers : 
+	               16 Bit    Registers := 4     
+	                2 Bit    Registers := 16    
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 3     
+	   2 Input      2 Bit        Muxes := 64    
+	   6 Input      2 Bit        Muxes := 16    
+	   4 Input      1 Bit        Muxes := 16    
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+RAM Pipeline Warning: Read Address Register Found For RAM mem/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM mem/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+INFO: [Synth 8-6430] The Block RAM "soc_top/mem/ram_reg" may get memory collision error if read and write address collide. Use attribute (* rw_addr_collision= "yes" *) to avoid collision 
+RAM Pipeline Warning: Read Address Register Found For RAM mem/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+INFO: [Synth 8-3886] merging instance 'core/CSR_OP_reg_reg[2]' (FDR) to 'core/LOAD_UNSIGNED_reg_reg'
+INFO: [Synth 8-3886] merging instance 'core/CSR_OP_reg_reg[0]' (FDR) to 'core/ALU_OPCODE_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/CSR_OP_reg_reg[1]' (FDR) to 'core/ALU_OPCODE_reg_reg[1]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/msip_reg' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[35]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[3]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[36]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[4]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[37]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[5]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[38]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[6]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtip_reg' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[39]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[7]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[40]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[8]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[41]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[9]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[42]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[10]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[43]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[11]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[44]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[12]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[45]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[13]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[46]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[14]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[47]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[15]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[48]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[16]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[49]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[17]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[50]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[18]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[51]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[19]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[52]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[20]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[53]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[21]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[54]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[22]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[55]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[23]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[56]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[24]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[57]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[25]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[58]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[26]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[59]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[27]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[60]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[28]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[61]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[29]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[62]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[30]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/LOAD_UNSIGNED_reg_reg' (FDR) to 'core/ALU_OPCODE_reg_reg[2]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[63]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[31]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[32]' (FDR) to 'core/csrf/mtime_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[0]' (FDR) to 'core/csrf/mtime_reg[1]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[33]' (FDR) to 'core/csrf/mtime_reg[1]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[1]' (FDR) to 'core/csrf/mtime_reg[2]'
+INFO: [Synth 8-3886] merging instance 'core/LOAD_SIZE_reg_reg[0]' (FDR) to 'core/ALU_OPCODE_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'core/LOAD_SIZE_reg_reg[1]' (FDR) to 'core/ALU_OPCODE_reg_reg[1]'
+INFO: [Synth 8-3886] merging instance 'core/csrf/mtime_reg[34]' (FDR) to 'core/csrf/mtime_reg[2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\core/csrf/mtime_reg[2] )
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:32 ; elapsed = 00:00:37 . Memory (MB): peak = 2012.797 ; gain = 406.172 ; free physical = 1823 ; free virtual = 6157
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping	Report (see note below)
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object  | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|soc_top     | mem/ram_reg | 1 K x 32(WRITE_FIRST)  | W | R | 1 K x 32(WRITE_FIRST)  |   | R | Port A and B     | 0      | 1      | 
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+
+Distributed RAM: Preliminary Mapping	Report (see note below)
++------------+----------------+-----------+----------------------+--------------+
+|Module Name | RTL Object     | Inference | Size (Depth x Width) | Primitives   | 
++------------+----------------+-----------+----------------------+--------------+
+|soc_top     | core/irf/Q_reg | Implied   | 32 x 32              | RAM32M x 12	 | 
++------------+----------------+-----------+----------------------+--------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:40 ; elapsed = 00:00:47 . Memory (MB): peak = 2012.797 ; gain = 406.172 ; free physical = 1693 ; free virtual = 6041
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:51 ; elapsed = 00:00:58 . Memory (MB): peak = 2083.797 ; gain = 477.172 ; free physical = 1664 ; free virtual = 5998
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping	Report
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object  | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|soc_top     | mem/ram_reg | 1 K x 32(WRITE_FIRST)  | W | R | 1 K x 32(WRITE_FIRST)  |   | R | Port A and B     | 0      | 1      | 
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+
+Distributed RAM: Final Mapping	Report
++------------+----------------+-----------+----------------------+--------------+
+|Module Name | RTL Object     | Inference | Size (Depth x Width) | Primitives   | 
++------------+----------------+-----------+----------------------+--------------+
+|soc_top     | core/irf/Q_reg | Implied   | 32 x 32              | RAM32M x 12	 | 
++------------+----------------+-----------+----------------------+--------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7053] The timing for the instance mem/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7053] The timing for the instance mem/ram_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:52 ; elapsed = 00:00:59 . Memory (MB): peak = 2091.805 ; gain = 485.180 ; free physical = 1661 ; free virtual = 5995
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:56 ; elapsed = 00:01:03 . Memory (MB): peak = 2091.805 ; gain = 485.180 ; free physical = 1661 ; free virtual = 5995
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:56 ; elapsed = 00:01:03 . Memory (MB): peak = 2091.805 ; gain = 485.180 ; free physical = 1661 ; free virtual = 5995
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:56 ; elapsed = 00:01:03 . Memory (MB): peak = 2091.805 ; gain = 485.180 ; free physical = 1661 ; free virtual = 5995
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:56 ; elapsed = 00:01:03 . Memory (MB): peak = 2091.805 ; gain = 485.180 ; free physical = 1661 ; free virtual = 5995
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:56 ; elapsed = 00:01:03 . Memory (MB): peak = 2091.805 ; gain = 485.180 ; free physical = 1661 ; free virtual = 5995
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:56 ; elapsed = 00:01:03 . Memory (MB): peak = 2091.805 ; gain = 485.180 ; free physical = 1661 ; free virtual = 5995
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUFG     |     1|
+|2     |CARRY4   |    75|
+|3     |LUT1     |    55|
+|4     |LUT2     |    34|
+|5     |LUT3     |   249|
+|6     |LUT4     |   269|
+|7     |LUT5     |   334|
+|8     |LUT6     |   703|
+|9     |RAM32M   |    12|
+|10    |RAMB36E1 |     1|
+|11    |FDRE     |   601|
+|12    |FDSE     |    17|
+|13    |IBUF     |     2|
+|14    |IOBUF    |    16|
++------+---------+------+
+
+Report Instance Areas: 
++------+----------+----------------+------+
+|      |Instance  |Module          |Cells |
++------+----------+----------------+------+
+|1     |top       |                |  2369|
+|2     |  ba      |bus_arbiter     |     1|
+|3     |  core    |steel_top       |  2059|
+|4     |    alu   |alu             |   178|
+|5     |    bunit |branch_unit     |   269|
+|6     |    csrf  |csr_file        |   721|
+|7     |    irf   |integer_file    |    80|
+|8     |    mc    |machine_control |   549|
+|9     |  io      |gpio            |   227|
+|10    |  mem     |ram             |    63|
++------+----------+----------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:56 ; elapsed = 00:01:03 . Memory (MB): peak = 2091.805 ; gain = 485.180 ; free physical = 1661 ; free virtual = 5995
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:54 ; elapsed = 00:01:00 . Memory (MB): peak = 2091.805 ; gain = 347.445 ; free physical = 1715 ; free virtual = 6049
+Synthesis Optimization Complete : Time (s): cpu = 00:00:56 ; elapsed = 00:01:04 . Memory (MB): peak = 2091.812 ; gain = 485.180 ; free physical = 1715 ; free virtual = 6049
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2091.812 ; gain = 0.000 ; free physical = 1784 ; free virtual = 6118
+INFO: [Netlist 29-17] Analyzing 104 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2091.812 ; gain = 0.000 ; free physical = 1734 ; free virtual = 6068
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 28 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 16 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 12 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+154 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:06 ; elapsed = 00:01:14 . Memory (MB): peak = 2091.812 ; gain = 630.438 ; free physical = 1886 ; free virtual = 6220
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2091.812 ; gain = 0.000 ; free physical = 1886 ; free virtual = 6220
+INFO: [Common 17-1381] The checkpoint '/home/rafa/ufrgs/steel-core/vivado/steel-core.runs/synth_1/soc_top.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file soc_top_utilization_synth.rpt -pb soc_top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sun Jul 12 17:37:10 2020...

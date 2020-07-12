@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com) 
 // 
-// Create Date: 06.07.2020 21:38:42
-// Module Name: ram
+// Create Date: 11.07.2020 14:55:12
+// Module Name: tb_soc_top
 // Project Name: Steel SoC 
-// Description: 4 KByte Random Access Memory 
+// Description: Example SoC testbench 
 // 
-// Dependencies: -
+// Dependencies: steel_top.v
 // 
 // Version 0.01
 // 
@@ -63,44 +63,42 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 
 ********************************************************************************/
 
-`timescale 1ns / 1ps
+module tb_soc_top();
 
-module ram(
-
-    input wire CLK,
+    reg CLK;
+    reg RESET;
+    wire [15:0] GPIO;
     
-    input wire [9:0] ADDRA,
-    input wire [9:0] ADDRB,
-    input wire [31:0] DINA,
-    input wire [3:0] WEA,
-    output wire [31:0] DOUTA,
-    output wire [31:0] DOUTB
-     
+    soc_top dut(
+        .CLK(CLK),
+        .RESET(RESET),
+        .GPIO(GPIO)
     );
     
-    reg [31:0] ram [0:1023];
-    reg [9:0] prev_addra;
-    reg [9:0] prev_addrb;
+    /* -------------------------------------------------------------------------
     
-    integer i;
+    The main memory (ram.v) was initialized with a program that
+    configures GPIO port #1 as an output and then enters in a loop
+    that keeps swaping its value.
     
+    You can initialize the memory with other program modifying the
+    initial block inside the ram.v file.
+    
+    The 'util' folder has a script (mengen.sh) that compiles and
+    transforms an assembly file (*.s) into an .hex file
+    
+    This testbench verifies if GPIO port 1 keeps swaping its value.
+
+    ------------------------------------------------------------------------- */
+    
+    always #10 CLK = !CLK;
     initial
     begin
-        $readmemh("gpio.mem", ram);
-    end
-    
-    always @(posedge CLK) prev_addra <= ADDRA;
-    always @(posedge CLK) prev_addrb <= ADDRB;
-    
-    always @(posedge CLK)
-    begin 
-        if(WEA[0]) ram[ADDRA][7:0] <= DINA[7:0];
-        if(WEA[1]) ram[ADDRA][15:8] <= DINA[15:8];
-        if(WEA[2]) ram[ADDRA][23:16] <= DINA[23:16];
-        if(WEA[3]) ram[ADDRA][31:24] <= DINA[31:24];
-    end
-    
-    assign DOUTA = ram[prev_addra];
-    assign DOUTB = ram[prev_addrb];
+        CLK = 1'b0;
+        RESET = 1'b1;
+        #20;
+        RESET = 1'b0;
+        $stop;
+    end            
     
 endmodule

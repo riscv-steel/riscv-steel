@@ -7,9 +7,8 @@
 // Description: An example system built with Steel Core 
 // 
 // Dependencies: steel_top.v
-//               timer.v
 //               bus_arbiter.v
-//               clic.v
+//               ram.v
 //               gpio.v
 // 
 // Version 0.01
@@ -88,6 +87,7 @@ module soc_top(
     wire [31:0] dout_mem;
     wire wr_req_gpio;
     wire wr_req_core;
+	wire wr_req_mem;
     wire [31:0] din_gpio;
     wire [31:0] din_core;
     wire [31:0] din_mem;
@@ -95,7 +95,7 @@ module soc_top(
     wire [3:0] wr_mask_mem;
     wire [31:0] i_addr;
     wire [31:0] instr;
-    
+	 
     steel_top core(
     
         .CLK(CLK),
@@ -132,7 +132,7 @@ module soc_top(
         
         .D_ADDR_2(daddr_mem),
         .DATA_OUT_2(dout_mem),
-        .WR_REQ_2(),
+        .WR_REQ_2(wr_req_mem),
         .WR_MASK_2(wr_mask_mem),
         .DATA_IN_2(din_mem)     
         
@@ -148,8 +148,21 @@ module soc_top(
         .DOUTA(din_mem),
         .DOUTB(instr)
         
-        );
+        ); 
     
+	/*ram ram_inst(
+			.address_a ( i_addr[6:2] ),
+			.address_b ( daddr_mem[6:2] ),
+			.byteena_b ( wr_mask_mem ),
+			.clock ( CLK ),
+			.data_a ( 32'b0 ),
+			.data_b ( dout_mem ),
+			.wren_a ( 1'b0 ),
+			.wren_b ( wr_req_mem ),
+			.q_a ( instr ),
+			.q_b ( din_mem )
+			);*/
+	 
     gpio io(
     
         .CLK(CLK),

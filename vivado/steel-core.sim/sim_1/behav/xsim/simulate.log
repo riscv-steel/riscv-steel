@@ -1,0 +1,3 @@
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+$stop called at time : 20 ns : File "/home/rafa/ufrgs/steel-core/soc/bench/tb_soc_top.v" Line 101
