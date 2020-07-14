@@ -30,17 +30,17 @@ The control and status registers implemented in Steel are shown in table 1, belo
 
 ## Modules
 
-### Control Unit
+### Decoder
 
-The Control Unit (**control_unit.v**) decodes the instruction and generates the signals that control the memory, the Load Unit, the Store Unit, the ALU, the two register files (Integer and CSR), the Immediate Generator and the Writeback Multiplexer. The description of its input and output signals are shown in table 2, below.
+The Decoder (**decoder.v**) decodes the instruction and generates the signals that control the memory, the Load Unit, the Store Unit, the ALU, the two register files (Integer and CSR), the Immediate Generator and the Writeback Multiplexer. The description of its input and output signals are shown in table 2, below.
 
 <p align=left>
-<strong>Table 2.</strong> Branch Unit input/output signals
+<strong>Table 2.</strong> Decoder input/output signals
 </p>
 
 | **Signal name**                       | **Width**  | **Direction**  | **Description**                                                                                                       |
 | :------------------------------------ | :--------- | :------------- | :-------------------------------------------------------------------------------------------------------------------- |
-| **OPCODE\_7\_TO\_2**                     | 5 bits     | Input          | Connected to the instruction *opcode* field.                                                                          |
+| **OPCODE\_6\_TO\_2**                     | 5 bits     | Input          | Connected to the instruction *opcode* field.                                                                          |
 | **FUNCT7\_5**                          | 1 bit      | Input          | Connected to the instruction *funct7* field.                                                                          |
 | **FUNCT3**                            | 3 bits     | Input          | Connected to the instruction *funct3* field.                                                                          |
 | **IADDER\_OUT\_1\_TO\_0**                 | 2 bits     | Input          | Used to verify the alignment of loads and stores.                                                                     |
@@ -129,7 +129,7 @@ The Branch Unit (**branch\_unit.v**) decides if a branch instruction must be tak
 
 | **Signal name**       | **Width**  | **Direction**  | **Description**                                          |
 | :-------------------- | :--------- | :------------- | :------------------------------------------------------- |
-| **OPCODE\_7\_TO\_2**     | 5 bits     | Input          | Connected to the *opcode* instruction field.             |
+| **OPCODE\_6\_TO\_2**     | 5 bits     | Input          | Connected to the *opcode* instruction field.             |
 | **FUNCT3**            | 3 bits     | Input          | Connected to the *funct3* instruction field.             |
 | **RS1**               | 32 bits    | Input          | Connected to the Integer Register File 1st operand source.       |
 | **RS2**               | 32 bits    | Input          | Connected to the Integer Register File 2nd operand source.       |
@@ -259,7 +259,7 @@ Internally, the module implements the finite state machine shown in figure 1 (be
 | **MISALIGNED\_INSTR**                 | 1 bit      | Input          | *Misaligned instruction*. When set high indicates an attempt to fetch an instruction which address is in disagreement with the memory alignment rules.  |
 | **MISALIGNED\_LOAD**                  | 1 bit      | Input          | *Misaligned load*. When set high indicates an attempt to read data in disagreement with the memory alignment rules.                                    |
 | **MISALIGNED\_STORE**                 | 1 bit      | Input          | *Misaligned store*. When set high indicates an attempt to write data to memory in disagreement with the memory alignment rules.                        |
-| **OPCODE\_7\_TO\_2**                    | 5 bits     | Input          | Value of the *opcode* instruction field.                                                                                                                          |
+| **OPCODE\_6\_TO\_2**                    | 5 bits     | Input          | Value of the *opcode* instruction field.                                                                                                                          |
 | **FUNCT3**                           | 3 bits     | Input          | Value of the *funct3* instruction field.                                                                                                                          |
 | **FUNCT7**                           | 7 bits     | Input          | Value of the *funct7* instruction field.                                                                                                                          |
 | **RS1\_ADDR**                         | 5 bits     | Input          | Value of the *rs1* instruction field.                                                                                                                             |
