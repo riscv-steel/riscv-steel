@@ -7,7 +7,7 @@ init:
 	li	x2, 0xFFFFFF40	# GPIO 1 configuration register address
 	li	x3, 0xFFFFFF00	# GPIO 1 output register address
 	sw	x1, 0(x2)		# configures GPIO 1 as output
-	li	x4, 50000000	# x4 holds the number of clock cycles the LED stands on/off
+	li	x4, 5000000000	# x4 holds the number of clock cycles the LED stands on/off
 begin:	
 	sw	x1, 0(x3)		# sets GPIO 1 output to 1
 	csrw	mcycle, x0	# clears mcycle CSR
