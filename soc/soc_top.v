@@ -77,7 +77,6 @@ module soc_top(
     
     );
     
-    wire [63:0] timer;
     wire e_irq;
     wire [31:0] daddr_gpio;
     wire [31:0] daddr_core;

@@ -98,7 +98,6 @@ module tb_soc_top();
         RESET = 1'b1;
         #20;
         RESET = 1'b0;
-        $stop;
     end            
     
 endmodule

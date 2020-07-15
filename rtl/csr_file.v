@@ -367,30 +367,39 @@ module csr_file(
         else
         begin
             mtime <= REAL_TIME;
+            
             if(CSR_ADDR == `MCYCLE && WR_EN)
-            begin            
-                mcycle[31:0] <= data_wr;
+            begin
+                if(mcountinhibit_cy == 1'b0) mcycle <= {mcycle[63:32], data_wr} + 1;
+                else mcycle <= {mcycle[63:32], data_wr};
             end
             else if(CSR_ADDR == `MCYCLEH && WR_EN)
-            begin            
-                mcycle[63:32] <= data_wr;
+            begin
+                if(mcountinhibit_cy == 1'b0) mcycle <= {data_wr, mcycle[31:0]} + 1;
+                else mcycle <= {data_wr, mcycle[31:0]};
             end
             else
             begin
                 if(mcountinhibit_cy == 1'b0) mcycle <= mcycle + 1;
+                else mcycle <= mcycle;
             end
+            
             if(CSR_ADDR == `MINSTRET && WR_EN)
             begin
-                minstret[31:0] <= data_wr;
+                if(mcountinhibit_ir == 1'b0) minstret <= {minstret[63:32], data_wr} + INSTRET_INC;
+                else minstret <= {minstret[63:32], data_wr};
             end
             else if(CSR_ADDR == `MINSTRETH && WR_EN)
             begin
-                minstret[63:32] <= data_wr;
+                if(mcountinhibit_ir == 1'b0) minstret <= {data_wr, minstret[31:0]} + INSTRET_INC;
+                else minstret <= {data_wr, minstret[31:0]};
             end
             else
             begin
                 if(mcountinhibit_ir == 1'b0) minstret <= minstret + INSTRET_INC;
+                else minstret <= minstret;
             end
+            
         end
     end 
     
