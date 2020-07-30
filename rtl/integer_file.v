@@ -102,8 +102,8 @@ module integer_file(
     
     assign rs1_addr_is_x0 = RS_1_ADDR == 5'b00000;
     assign rs2_addr_is_x0 = RS_2_ADDR == 5'b00000;
-    assign fwd_op1_enable = RS_1_ADDR == RD_ADDR ? 1'b1 : 1'b0;
-    assign fwd_op2_enable = RS_2_ADDR == RD_ADDR ? 1'b1 : 1'b0;
+    assign fwd_op1_enable = (RS_1_ADDR == RD_ADDR && WR_EN == 1'b1) ? 1'b1 : 1'b0;
+    assign fwd_op2_enable = (RS_2_ADDR == RD_ADDR && WR_EN == 1'b1) ? 1'b1 : 1'b0;
     assign op1_zero = rs1_addr_is_x0 == 1'b1 ? 1'b1 : 1'b0;
     assign op2_zero = rs2_addr_is_x0 == 1'b1 ? 1'b1 : 1'b0;
     assign rs1_wire = fwd_op1_enable == 1'b1 ? RD : Q[RS_1_ADDR];

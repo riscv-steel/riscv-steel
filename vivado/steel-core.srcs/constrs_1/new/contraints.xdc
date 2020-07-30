@@ -1,4 +1,4 @@
-create_clock -period 13.300 -name CLK -waveform {0.000 6.650} [get_ports CLK]
+create_clock -period 15.000 -name CLK -waveform {0.000 7.500} [get_ports CLK]
 
 set_property PACKAGE_PIN V14 [get_ports {GPIO[1]}]
 set_property PACKAGE_PIN M18 [get_ports CLK]

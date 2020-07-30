@@ -80,6 +80,48 @@ module tb_steel_top();
     reg E_IRQ;
     reg T_IRQ;
     reg S_IRQ;
+    
+    reg [8*20:0] tests [0:38] = {
+        "rv32ui-p-addi.mem",
+        "rv32ui-p-bgeu.mem",
+        "rv32ui-p-lb.mem",
+        "rv32ui-p-or.mem",
+        "rv32ui-p-sltiu.mem",
+        "rv32ui-p-sub.mem",
+        "rv32ui-p-add.mem",
+        "rv32ui-p-blt.mem",
+        "rv32ui-p-lbu.mem",
+        "rv32ui-p-sb.mem",
+        "rv32ui-p-slt.mem",
+        "rv32ui-p-sw.mem",
+        "rv32ui-p-andi.mem",
+        "rv32ui-p-bltu.mem",
+        "rv32ui-p-lh.mem",
+        "rv32ui-p-sh.mem",
+        "rv32ui-p-sltu.mem",
+        "rv32ui-p-xori.mem",
+        "rv32ui-p-and.mem",
+        "rv32ui-p-bne.mem",
+        "rv32ui-p-lhu.mem",
+        "rv32ui-p-simple.mem",
+        "rv32ui-p-srai.mem",
+        "rv32ui-p-xor.mem",
+        "rv32ui-p-auipc.mem",
+        "rv32ui-p-fence_i.mem",
+        "rv32ui-p-lui.mem",
+        "rv32ui-p-slli.mem",
+        "rv32ui-p-sra.mem",
+        "rv32ui-p-beq.mem",
+        "rv32ui-p-jal.mem",
+        "rv32ui-p-lw.mem",
+        "rv32ui-p-sll.mem",
+        "rv32ui-p-srli.mem",
+        "rv32ui-p-bge.mem",
+        "rv32ui-p-jalr.mem",
+        "rv32ui-p-ori.mem",
+        "rv32ui-p-slti.mem",
+        "rv32ui-p-srl.mem"
+        };
 
     steel_top dut(
 
@@ -99,14 +141,10 @@ module tb_steel_top();
 
     );
     
-    reg [7:0] ram [0:65535]; // 8KB RAM
+    reg [31:0] ram [0:16383]; // 4KB RAM
     integer i;
-    integer f;
-    wire [12:0] eff_i_addr;
-    wire [12:0] eff_d_addr;
-    
-    assign eff_i_addr = I_ADDR[12:0];
-    assign eff_d_addr = D_ADDR[12:0];    
+    integer j;
+    integer k;    
     
     always
     begin
@@ -116,31 +154,40 @@ module tb_steel_top();
     initial
     begin
     
-        f = $fopen("../../../../../mem/mret.txt","w");
-        
-        // LOADS PROGRAM INTO MEMORY 
-        for(i = 0; i < 65535; i=i+1) ram[i] = 8'b0;
-        $readmemh("mret.mem",ram);
-        
-        // INITIAL VALUES
-        RESET = 1'b0;        
-        CLK = 1'b0;        
-        E_IRQ = 1'b0;
-        T_IRQ = 1'b0;
-        S_IRQ = 1'b0;
-        
-        // RESET
-        #5;
-        RESET = 1'b1;
-        #15;
-        RESET = 1'b0;
-                   
-        #800;
-        
-        $fwrite(f, "%d", ram[1024]);
-        $fclose(f);        
-        
-        $stop;
+        for(k = 0; k < 39; k=k+1)
+        begin
+    
+            // LOADS PROGRAM INTO MEMORY 
+            for(i = 0; i < 65535; i=i+1) ram[i] = 8'b0;
+            $display("Running %s...", tests[k]);
+            $readmemh(tests[k],ram);            
+            
+            // INITIAL VALUES
+            RESET = 1'b0;        
+            CLK = 1'b0;        
+            E_IRQ = 1'b0;
+            T_IRQ = 1'b0;
+            S_IRQ = 1'b0;
+            
+            // RESET
+            #5;
+            RESET = 1'b1;
+            #15;
+            RESET = 1'b0;
+            
+            // one second loop
+            for(j = 0; j < 50000000; j = j + 1)
+            begin
+                #20;
+                if(WR_REQ == 1'b1 && D_ADDR == 32'h00001000)
+                begin
+                    $display("Result: %h", DATA_OUT);
+                    #20;
+                    j = 50000000;
+                end
+            end
+            
+        end
         
     end
     
@@ -148,32 +195,31 @@ module tb_steel_top();
     begin
         if(RESET)
         begin
-            INSTR = {ram[eff_i_addr+3],ram[eff_i_addr+2],ram[eff_i_addr+1],ram[eff_i_addr]};
-            DATA_IN = {ram[eff_d_addr+3],ram[eff_d_addr+2],ram[eff_d_addr+1],ram[eff_d_addr]};
+            INSTR = ram[I_ADDR[16:2]];
+            DATA_IN = ram[D_ADDR[16:2]];
         end
         else
         begin
-            INSTR = {ram[eff_i_addr+3],ram[eff_i_addr+2],ram[eff_i_addr+1],ram[eff_i_addr]};
-            DATA_IN = {ram[eff_d_addr+3],ram[eff_d_addr+2],ram[eff_d_addr+1],ram[eff_d_addr]};
+            INSTR = ram[I_ADDR[16:2]];
+            DATA_IN = ram[D_ADDR[16:2]];
             if(WR_REQ)
             begin
-                ram[eff_d_addr] <= DATA_OUT[7:0];
+                if(WR_MASK[0])
+                begin
+                    ram[D_ADDR[16:2]][7:0] <= DATA_OUT[7:0];
+                end
                 if(WR_MASK[1])
                 begin
-                    ram[eff_d_addr+1] <= DATA_OUT[15:8];
+                    ram[D_ADDR[16:2]][15:8] <= DATA_OUT[15:8];
                 end
                 if(WR_MASK[2])
                 begin
-                    ram[eff_d_addr+2] <= DATA_OUT[23:16];
+                    ram[D_ADDR[16:2]][23:16] <= DATA_OUT[23:16];
                 end
                 if(WR_MASK[3])
                 begin
-                    ram[eff_d_addr+3] <= DATA_OUT[31:24];
+                    ram[D_ADDR[16:2]][31:24] <= DATA_OUT[31:24];
                 end
-            end
-            else
-            begin                
-                DATA_IN = {ram[eff_d_addr+3],ram[eff_d_addr+2],ram[eff_d_addr+1],ram[eff_d_addr]};
             end
         end
     end
