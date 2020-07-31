@@ -13,6 +13,7 @@ Steel is a RISC-V microprocessor softcore designed to be simple and easy to use.
 * M-mode support
 * Targeted for use in FPGAs
 * Full documentation
+* Passed all RV32I tests from RISC-V test and compliance suites
 
 ## Licence
 
