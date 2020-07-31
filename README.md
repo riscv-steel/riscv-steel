@@ -23,7 +23,6 @@ Steel is distributed under the MIT License. See the `LICENCE.md` file.
 
 Steel documentation ([https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/)) provides information on:
 * Steel configuration
-* Memory alignment rules
 * Integration with other devices
 * Implemented extensions and CSRs
 * Supported exceptions and interrupts
