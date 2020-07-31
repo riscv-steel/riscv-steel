@@ -129,7 +129,13 @@ module tb_compliance();
         "I-LW-01.elf.mem",
         "I-RF_x0-01.elf.mem",
         "I-SLTU-01.elf.mem",
-        "I-XORI-01.elf.mem"
+        "I-XORI-01.elf.mem",
+        "I-CSRRC-01.elf.mem",
+        "I-CSRRCI-01.elf.mem",
+        "I-CSRRS-01.elf.mem",
+        "I-CSRRSI-01.elf.mem",
+        "I-CSRRW-01.elf.mem",
+        "I-CSRRWI-01.elf.mem"
         };
         
     reg [8*256:0] signatures [0:47] = {
@@ -180,7 +186,13 @@ module tb_compliance();
         "../../../../../compliance/I-LW-01.signature.output",
         "../../../../../compliance/I-RF_x0-01.signature.output",
         "../../../../../compliance/I-SLTU-01.signature.output",
-        "../../../../../compliance/I-XORI-01.signature.output"
+        "../../../../../compliance/I-XORI-01.signature.output",
+        "../../../../../compliance/I-CSRRC-01.signature.output",
+        "../../../../../compliance/I-CSRRCI-01.signature.output",
+        "../../../../../compliance/I-CSRRS-01.signature.output",
+        "../../../../../compliance/I-CSRRSI-01.signature.output",
+        "../../../../../compliance/I-CSRRW-01.signature.output",
+        "../../../../../compliance/I-CSRRWI-01.signature.output"
         };
 
     steel_top dut(
