@@ -13,6 +13,7 @@ Steel is a RISC-V microprocessor softcore designed to be simple and easy to use.
 * M-mode support
 * Targeted for use in FPGAs
 * Full documentation
+* Passed all RV32I tests from RISC-V test and compliance suites
 
 ## Licence
 
@@ -22,7 +23,6 @@ Steel is distributed under the MIT License. See the `LICENCE.md` file.
 
 Steel documentation ([https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/)) provides information on:
 * Steel configuration
-* Memory alignment rules
 * Integration with other devices
 * Implemented extensions and CSRs
 * Supported exceptions and interrupts
