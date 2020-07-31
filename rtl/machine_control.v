@@ -109,6 +109,7 @@ module machine_control(
     output reg INSTRET_INC,
     output reg MIE_CLEAR,
     output reg MIE_SET,
+    output reg MISALIGNED_EXCEPTION,
     
     // to PC MUX
     output reg [1:0] PC_SRC,
@@ -259,6 +260,12 @@ module machine_control(
         if(RESET) curr_state <= STATE_RESET;
         else curr_state <= next_state;
     end    
+    
+    always @(posedge CLK)
+    begin
+        if(RESET) MISALIGNED_EXCEPTION <= 1'b0;
+        else MISALIGNED_EXCEPTION <= MISALIGNED_INSTR | MISALIGNED_LOAD | MISALIGNED_STORE;
+    end
     
     always @(posedge CLK)
     begin

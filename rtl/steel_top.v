@@ -117,6 +117,7 @@ module steel_top(
     wire [31:0] RS2;
     reg [31:0] RS2_reg;
     reg [31:0] PC;
+    reg [31:0] PC_reg;
     wire [31:0] NEXT_PC;
     wire [31:0] PC_PLUS_4;
     reg [31:0] PC_PLUS_4_reg;
@@ -177,6 +178,7 @@ module steel_top(
     wire [3:0] SU_WR_MASK;
     wire SU_WR_REQ;
     wire TRAP_TAKEN;
+    wire MISALIGNED_EXCEPTION;
     
     // ---------------------------------
     // PIPELINE STAGE 1
@@ -312,7 +314,8 @@ module steel_top(
         .CSR_DATA_IN(RS1_reg),
         .CSR_DATA_OUT(CSR_DATA),
         
-        .PC(PC),
+        .PC(PC_reg),
+        .IADDER_OUT(IADDER_OUT_reg),
         
         .E_IRQ(E_IRQ),
         .T_IRQ(T_IRQ),
@@ -325,6 +328,7 @@ module steel_top(
         .INSTRET_INC(INSTRET_INC),
         .MIE_CLEAR(MIE_CLEAR),
         .MIE_SET(MIE_SET),
+        .MISALIGNED_EXCEPTION(MISALIGNED_EXCEPTION),
         .MIE(MIE),
         .MEIE_OUT(MEIE_OUT),
         .MTIE_OUT(MTIE_OUT),
@@ -368,6 +372,7 @@ module steel_top(
         .INSTRET_INC(INSTRET_INC),
         .MIE_CLEAR(MIE_CLEAR),
         .MIE_SET(MIE_SET),
+        .MISALIGNED_EXCEPTION(MISALIGNED_EXCEPTION),
         .MIE(MIE),
         .MEIE(MEIE_OUT),
         .MTIE(MTIE_OUT),
@@ -393,6 +398,7 @@ module steel_top(
             CSR_ADDR_reg <= 12'b000000000000;
             RS1_reg <= 32'h00000000;
             RS2_reg <= 32'h00000000;
+            PC_reg <= `BOOT_ADDRESS;
             PC_PLUS_4_reg <= 32'h00000000;
             IADDER_OUT_reg <= 32'h00000000;
             ALU_OPCODE_reg <= 4'b0000;
@@ -411,8 +417,10 @@ module steel_top(
             CSR_ADDR_reg <= CSR_ADDR;
             RS1_reg <= RS1;
             RS2_reg <= RS2;
+            PC_reg <= PC;
             PC_PLUS_4_reg <= PC_PLUS_4;
-            IADDER_OUT_reg <= IADDER_OUT;
+            IADDER_OUT_reg[31:1] <= IADDER_OUT[31:1];
+            IADDER_OUT_reg[0] <= BRANCH_TAKEN ? 1'b0 : IADDER_OUT[0];
             ALU_OPCODE_reg <= ALU_OPCODE;
             LOAD_SIZE_reg <= LOAD_SIZE;
             LOAD_UNSIGNED_reg <= LOAD_UNSIGNED;

@@ -23,8 +23,9 @@ Steel is distributed under the [MIT License](https://en.wikipedia.org/wiki/MIT_L
 
 Steel aims to be compliant with the following RISC-V specifications:
 
-* Version **20191213** of RISC-V Unprivileged ISA
-* Version **20190608-Priv-MSU-Ratified** of RISC-V Privileged Architecture
+* Base ISA RV32I version **2.1**
+* Zicsr extension version **2.0**
+* Machine ISA version **1.11**
 
 ## Online repository
 

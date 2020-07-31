@@ -81,6 +81,9 @@ module csr_file(
     // from pipeline stage 1
     input wire [31:0] PC,
     
+    // from pipeline stage 3
+    input wire [31:0] IADDER_OUT,
+    
     // interface with CLIC
     input wire E_IRQ,
     input wire T_IRQ,
@@ -94,6 +97,7 @@ module csr_file(
     input wire INSTRET_INC,
     input wire MIE_CLEAR,
     input wire MIE_SET,
+    input wire MISALIGNED_EXCEPTION,
     output reg MIE,
     output wire MEIE_OUT,
     output wire MTIE_OUT,
@@ -335,7 +339,11 @@ module csr_file(
     always @(posedge CLK)
     begin
         if(RESET) mtval <= 32'b0;
-        else if(SET_CAUSE) mtval <= 32'b0;
+        else if(SET_CAUSE)
+        begin
+            if(MISALIGNED_EXCEPTION) mtval <= IADDER_OUT;
+            else mtval <= 32'b0;
+        end
         else if(CSR_ADDR == `MTVAL && WR_EN) mtval <= data_wr;
     end
     
