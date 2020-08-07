@@ -62,9 +62,9 @@ The Decoder (**decoder.v**) decodes the instruction and generates the signals th
 
 ### ALU
 
-The ALU (**alu.v**) applies ten distinct logical and arithmetic operations in parallel to two 32-bit operands, outputting the result selected by `OPCODE`. The ALU input/output signals and the opcodes are shown in tables 3 and 4, below.
+The ALU (**alu.v**) applies ten distinct logical and arithmetic operations in parallel to two 32-bit operands, outputting the result selected by **OPCODE**. The ALU input/output signals and the opcodes are shown in tables 3 and 4, below.
 
-The opcode values were assigned to facilitate instruction translation. The most significant bit of `OPCODE` matches with the second most significant bit in the instruction **funct7** field. The remaining three bits match with the instruction **funct3** field.
+The opcode values were assigned to facilitate instruction translation. The most significant bit of **OPCODE** matches with the second most significant bit in the instruction **funct7** field. The remaining three bits match with the instruction **funct3** field.
 
 <p align=left>
 <strong>Table 3.</strong> ALU input/output signals
@@ -104,8 +104,8 @@ The Integer Register File (**integer\_file.v**) has 32 general-purpose registers
 
 | **Signal name**        | **Width**  | **Direction**  | **Description**                                                                                                                                                         |
 | :--------------------- | :--------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **RS\_1\_ADDR**          | 5 bits     | Input          | *Register source 1 address*. The data is placed at `RS_1` immediately after an address change.                                                                            |
-| **RS\_2\_ADDR**          | 5 bits     | Input          | *Register source 2 address*. The data is placed at `RS_2` immediately after an address change.                                                                            |
+| **RS\_1\_ADDR**          | 5 bits     | Input          | *Register source 1 address*. The data is placed at **RS_1** immediately after an address change.                                                                            |
+| **RS\_2\_ADDR**          | 5 bits     | Input          | *Register source 2 address*. The data is placed at **RS_2** immediately after an address change.                                                                            |
 | **RS\_1**               | 32 bits    | Output         | Data read (source 1).                                                                                                                                                   |
 | **RS\_2**               | 32 bits    | Output         | Data read (source 2).                                                                                                                                                   |
 
@@ -137,7 +137,7 @@ The Branch Unit (**branch\_unit.v**) decides if a branch instruction must be tak
 
 ### Load Unit
 
-The Load Unit (**load\_unit.v**) reads `DATA_IN` input signal and forms a 32-bit value based on the load instruction type (encoded in the *funct3* field). The formed value (placed on `OUTPUT`) can then be written in the Integer Register File. The module input and output signals are shown in table 8. The value of OUTPUT is formed as shown in table 9.
+The Load Unit (**load\_unit.v**) reads the **DATA_IN** input signal and forms a 32-bit value based on the load instruction type (encoded in the *funct3* field). The formed value (placed on **OUTPUT**) can then be written in the Integer Register File. The module input and output signals are shown in table 8. The value of OUTPUT is formed as shown in table 9.
 
 <p align=left>
 <strong>Table 8.</strong> Load Unit input/output signals
@@ -148,7 +148,7 @@ The Load Unit (**load\_unit.v**) reads `DATA_IN` input signal and forms a 32-bit
 | **LOAD\_SIZE**                | 2 bits     | Input          | Connected to the two least significant bits of the *funct3* instruction field.                                                                             |
 | **LOAD\_UNSIGNED**            | 1 bit      | Input          | Connected to the most significant bit of the *funct3* instruction field.                                                                                   |
 | **DATA\_IN**                  | 32 bits    | Input          | 32-bit word read from memory.                                                                                                                              |
-| **IADDER\_OUT\_1\_TO\_0**        | 2 bits     | Input          | Indicates the byte/halfword position in `DATA_IN`. Used only with load byte/halfword instructions.                                                           |
+| **IADDER\_OUT\_1\_TO\_0**        | 2 bits     | Input          | Indicates the byte/halfword position in **DATA_IN**. Used only with load byte/halfword instructions.                                                           |
 | **OUTPUT**                   | 32 bits    | Output         | 32-bit value to be written in the Integer Register File.                                                                                                   |
 
 <p align=left>
@@ -157,17 +157,17 @@ The Load Unit (**load\_unit.v**) reads `DATA_IN` input signal and forms a 32-bit
 
 | **LOAD\_SIZE**               | **Effect on OUTPUT**                                                                                                                                                                   |
 | :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **2'b00**                   | The byte in the position indicated by `IADDER_OUT_1_TO_0` is placed on the least significant byte of `OUTPUT`. The upper 24 bits are filled according to the `LOAD_UNSIGNED` signal.         |
-| **2'b01**                   | The halfword in the position indicated by `IADDER_OUT_1_TO_0` is placed on the least significant halfword of `OUTPUT`. The upper 16 bits are filled according to the `LOAD_UNSIGNED` signal. |
-| **2'b10**                   | All bits of `DATA_IN` are placed on OUTPUT.                                                                                                                                              |
-| **2'b11**                   | All bits of `DATA_IN` are placed on OUTPUT.                                                                                                                                              |
+| **2'b00**                   | The byte in the position indicated by **IADDER_OUT_1_TO_0** is placed on the least significant byte of **OUTPUT**. The upper 24 bits are filled according to the **LOAD_UNSIGNED** signal.         |
+| **2'b01**                   | The halfword in the position indicated by **IADDER_OUT_1_TO_0** is placed on the least significant halfword of **OUTPUT**. The upper 16 bits are filled according to the **LOAD_UNSIGNED** signal. |
+| **2'b10**                   | All bits of **DATA_IN** are placed on OUTPUT.                                                                                                                                              |
+| **2'b11**                   | All bits of **DATA_IN** are placed on OUTPUT.                                                                                                                                              |
 | **LOAD\_UNSIGNED**           | **Effect on OUTPUT**                                                                                                                                                                   |
-| **1'b0**                    | The remaining bits of `OUTPUT` are filled with the sign bit.                                                                                                                             |
-| **1'b1**                    | The remaining bits of `OUTPUT` are filled with zeros.                                                                                                                                    |
+| **1'b0**                    | The remaining bits of **OUTPUT** are filled with the sign bit.                                                                                                                             |
+| **1'b1**                    | The remaining bits of **OUTPUT** are filled with zeros.                                                                                                                                    |
 
 ### Store Unit
 
-The Store Unit (**store\_unit.v**) drives the signals that interface with memory. It places the data to be written (which can be a byte, halfword or word) in the right position in `DATA_OUT` and sets the value of `WR_MASK` in an appropriate way. Table 10 (below) shows the unit input and output signals.
+The Store Unit (**store\_unit.v**) drives the signals that interface with memory. It places the data to be written (which can be a byte, halfword or word) in the right position in **DATA_OUT** and sets the value of **WR_MASK** in an appropriate way. Table 10 (below) shows the unit input and output signals.
 
 <p align=left>
 <strong>Table 10.</strong> Store Unit input/output signals
@@ -181,12 +181,12 @@ The Store Unit (**store\_unit.v**) drives the signals that interface with memory
 | **MEM\_WR\_REQ**        | 1 bit      | Input          | Control signal generated by the Control Unit. When set high indicates a request to write to memory.                                                                           |
 | **DATA\_OUT**          | 32 bits    | Output         | Contains the data to be written in the right position.                                                                                                                    |
 | **D\_ADDR**            | 32 bits    | Output         | Contains the address (aligned) where the data must be written.                                                                                                            |
-| **WR\_MASK**           | 4 bits     | Output         | A bitmask that indicates which bytes of `DATA_OUT` must be written.   |
+| **WR\_MASK**           | 4 bits     | Output         | A bitmask that indicates which bytes of **DATA_OUT** must be written.   |
 | **WR\_REQ**            | 1 bit      | Output         | When set high indicates a request to write to memory. |
 
 ### Immediate Generator
 
-The Immediate Generator (**imm\_generator.v**) rearranges the immediate bits contained in the instruction and, if necessary, sign-extends it to form a 32-bit value. The unit is controlled by the `IMM_TYPE` signal, generated by the Control Unit. Table 11 shows the unit input and output signals.
+The Immediate Generator (**imm\_generator.v**) rearranges the immediate bits contained in the instruction and, if necessary, sign-extends it to form a 32-bit value. The unit is controlled by the **IMM_TYPE** signal, generated by the Control Unit. Table 11 shows the unit input and output signals.
 
 <p align=left>
 <strong>Table 11.</strong> Immediate Generator input/output signals
@@ -208,18 +208,18 @@ The CSR Register File (**csr_file.v**) has the control and status registers requ
 
 | **Signal name**                | **Width**  | **Direction**  | **Description**                                                                                                                                |
 | :----------------------------- | :--------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-| **WR\_EN**                      | 1 bit      | Input          | *Write enable*. When set high, updates the CSR addressed by `CSR_ADDR` at the next clock rising edge according to the operation selected by `CSR_OP`.  |
+| **WR\_EN**                      | 1 bit      | Input          | *Write enable*. When set high, updates the CSR addressed by **CSR_ADDR** at the next clock rising edge according to the operation selected by **CSR_OP**.  |
 | **CSR\_ADDR**                   | 12 bits    | Input          | Address of the CSR to read/write/modify.                                                                                                       |
 | **CSR\_OP**                     | 3 bits     | Input          | Control signal generated by the Control Unit. Selects the operation to be performed (read/write, set, clear or no operation).                  |
 | **CSR\_UIMM**                   | 5 bits     | Input          | *Unsigned immediate*. Connected to the five least significant bits from the Immediate Generator output.                                        |
 | **CSR\_DATA\_IN**                | 32 bits    | Input          | In write operations, contains the data to be written. In set or clear operations, contains a bit mask.                                         |
-| **PC**                         | 32 bits    | Input          | *Program counter* value. Used to update the `mepc` CSR.                                                                                          |
-| **E\_IRQ**                      | 1 bit      | Input          | *External interrupt request*. Used to update the MEIP bit of `mip` CSR.                                                                          |
-| **T\_IRQ**                      | 1 bit      | Input          | *Timer interrupt request*. Used to update the MTIP bit of `mip` CSR.                                                                             |
-| **S\_IRQ**                      | 1 bit      | Input          | *Software interrupt request*. Used to update the MSIP bit of `mip` CSR.                                                                          |
-| **REAL\_TIME**                  | 64 bits    | Input          | Current value of the real time counter. Used to update the `time` and `timeh` CSRs.                                                                |
-| **CSR\_DATA\_OUT**               | 32 bits    | Output         | Contains the data read from the CSR addressed by `CSR_ADDR`.                                                                                     |
-| **EPC\_OUT**                    | 32 bits    | Output         | Current value of the `mepc` CSR.                                                                                                                 |
+| **PC**                         | 32 bits    | Input          | *Program counter* value. Used to update the **mepc** CSR.                                                                                          |
+| **E\_IRQ**                      | 1 bit      | Input          | *External interrupt request*. Used to update the MEIP bit of **mip** CSR.                                                                          |
+| **T\_IRQ**                      | 1 bit      | Input          | *Timer interrupt request*. Used to update the MTIP bit of **mip** CSR.                                                                             |
+| **S\_IRQ**                      | 1 bit      | Input          | *Software interrupt request*. Used to update the MSIP bit of **mip** CSR.                                                                          |
+| **REAL\_TIME**                  | 64 bits    | Input          | Current value of the real time counter. Used to update the **time** and **timeh** CSRs.                                                                |
+| **CSR\_DATA\_OUT**               | 32 bits    | Output         | Contains the data read from the CSR addressed by **CSR_ADDR**.                                                                                     |
+| **EPC\_OUT**                    | 32 bits    | Output         | Current value of the **mepc** CSR.                                                                                                                 |
 | **TRAP\_ADDRESS**               | 32 bits    | Output         | Address of the trap handler first instruction.                                                                                                 |
 
 <p align=left>
@@ -228,20 +228,20 @@ The CSR Register File (**csr_file.v**) has the control and status registers requ
 
 | **Signal name**                                                                                                    | **Width**  | **Direction**  | **Description**                                                                                                                                            |
 | :----------------------------------------------------------------------------------------------------------------- | :--------- | :----------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **I\_OR\_E**                                                                                                         | 1 bit      | Input              | *Interrupt or exception*. When set high indicates an interrupt, otherwise indicates an exception. Used to update the most significant bit of `mcause` register.  |
-| **CAUSE\_IN**                                                                                                       | 4 bits     | Input              | Contains the exception code. Used to update the `mcause` register.                                                                               |
-| **SET\_CAUSE**                                                                                                      | 1 bit      | Input              | When set high updates the `mcause` register with the values of `I_OR_E` and `CAUSE_IN`.                                                                              |
-| **SET\_EPC**                                                                                                        | 1 bit      | Input              | When set high, updates the `mepc` register with the value of PC.                                                                                                 |
+| **I\_OR\_E**                                                                                                         | 1 bit      | Input              | *Interrupt or exception*. When set high indicates an interrupt, otherwise indicates an exception. Used to update the most significant bit of **mcause** register.  |
+| **CAUSE\_IN**                                                                                                       | 4 bits     | Input              | Contains the exception code. Used to update the **mcause** register.                                                                               |
+| **SET\_CAUSE**                                                                                                      | 1 bit      | Input              | When set high updates the **mcause** register with the values of **I_OR_E** and **CAUSE_IN**.                                                                              |
+| **SET\_EPC**                                                                                                        | 1 bit      | Input              | When set high, updates the **mepc** register with the value of PC.                                                                                                 |
 | **INSTRET\_INC**                                                                                                    | 1 bit      | Input              | When set high enables the instructions retired counting.                                                                                                       |
-| **MIE\_CLEAR**                                                                                                      | 1 bit      | Input              | When set high sets the MIE bit of `mstatus` to zero (which globally disables interrupts). The old value of MIE is saved in the `mstatus` MPIE field.               |
-| **MIE\_SET**                                                                                                        | 1 bit      | Input              | When set high sets the MPIE bit of `mstatus` to one. The old value of MPIE is saved in the `mstatus` MIE field.                                                    |
-| **MIE**                                                                                                            | 1 bit      | Output             | Current value of MIE bit of `mstatus` CSR.                                                                                                                   |
-| **MEIE\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MEIE bit of `mie` CSR.                                                                                                                      |
-| **MTIE\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MTIE bit of `mie` CSR.                                                                                                                      |
-| **MSIE\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MSIE bit of `mie` CSR.                                                                                                                      |
-| **MEIP\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MEIP bit of `mip` CSR.                                                                                                                      |
-| **MTIP\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MTIP bit of `mip` CSR.                                                                                                                      |
-| **MSIP\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MSIP bit of `mip` CSR.                                                                                                                      |
+| **MIE\_CLEAR**                                                                                                      | 1 bit      | Input              | When set high sets the MIE bit of **mstatus** to zero (which globally disables interrupts). The old value of MIE is saved in the **mstatus** MPIE field.               |
+| **MIE\_SET**                                                                                                        | 1 bit      | Input              | When set high sets the MPIE bit of **mstatus** to one. The old value of MPIE is saved in the **mstatus** MIE field.                                                    |
+| **MIE**                                                                                                            | 1 bit      | Output             | Current value of MIE bit of **mstatus** CSR.                                                                                                                   |
+| **MEIE\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MEIE bit of **mie** CSR.                                                                                                                      |
+| **MTIE\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MTIE bit of **mie** CSR.                                                                                                                      |
+| **MSIE\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MSIE bit of **mie** CSR.                                                                                                                      |
+| **MEIP\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MEIP bit of **mip** CSR.                                                                                                                      |
+| **MTIP\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MTIP bit of **mip** CSR.                                                                                                                      |
+| **MSIP\_OUT**                                                                                                       | 1 bit      | Output             | Current value of MSIP bit of **mip** CSR.                                                                                                                      |
 
 ### Machine Control
 

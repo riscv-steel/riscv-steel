@@ -1,14 +1,14 @@
 # Input and Output Signals
 
-The figure below shows Steel input and output signals (except CLK and RESET). The following sections explain their functions in detail. 
+The figure below shows Steel input and output signals (except **CLK** and **RESET**). The following sections explain their functions in detail. 
 
-The interfaces to fetch instructions and to read/write data can be connected to any type of memory, but were designed to facilitate integration with Block RAMs in FPGAs.
+The interfaces to fetch instructions and to read/write data can be connected to any type of memory, but were designed to facilitate integration with FPGAs Block RAMs and memory arrays.
 
 ![Steel IO](images/steel-interface.png)
 
 ## Interrupt controller interface
 
-The interrupt controller interface has three signals used to request external, timer and software interrupts, shown in the table below. The interrupt request process is explained in the sections [Exceptions and Interrupts](traps.md) and [Timing Diagrams / Interrupt Request](timing.md#interrupt-request).
+The interrupt controller interface has three signals used to request external, timer and software interrupts, shown in the table below. The interrupt request process is explained in the sections [Exceptions and Interrupts](traps.md) and [Interrupt Request](timing.md#interrupt-request).
 
 | **Signal**         | **Width**  | **Direction**  | **Description**                                                                                                                                                                        |
 | :----------------- | :--------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -18,7 +18,7 @@ The interrupt controller interface has three signals used to request external, t
 
 ## Instruction fetch interface
 
-The instruction fetch interface has two signals used in the instruction fetch process, shown in the table below. The process of fetching instructions is explained in the section [Timing Diagrams / Instruction Fetch](timing.md#instruction-fetch).
+The instruction fetch interface has two signals used in the instruction fetch process, shown in the table below. The process of fetching instructions is explained in the section [Instruction Fetch](timing.md#instruction-fetch).
 
 | **Signal**        | **Width**  | **Direction**  | **Description**                                                                                                                                                                        |
 | :---------------- | :--------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,7 +27,7 @@ The instruction fetch interface has two signals used in the instruction fetch pr
 
 ## Data read/write interface
 
-The data read/write interface has five signals used in the process of reading/writing data from/to memory. The signals are shown in the table below. The process of fetching data from memory is explained in the section [Timing Diagrams / Data fetch](timing.md#data-fetch). The process of writing data is explained in the section [Timing Diagrams / Data writing](timing.md#data-writing).
+The data read/write interface has five signals used in the process of reading/writing data from/to memory. The signals are shown in the table below. The process of fetching data from memory is explained in the section [Data Fetch](timing.md#data-fetch). The process of writing data is explained in the section [Data Writing](timing.md#data-writing).
 
 | **Signal**        | **Width**  | **Direction**  | **Description**                                                                                                                                                                                                                                                                               |
 | :---------------- | :--------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -39,7 +39,7 @@ The data read/write interface has five signals used in the process of reading/wr
 
 ## Real-time counter interface
 
-The real time counter interface has just one signal used to update the `time` CSR, shown in the table below. The process of updating the `time` register is explained in the section [Timing Diagrams / time CSR update](timing.md#time-csr-update).
+The real time counter interface has just one signal used to update the **time** CSR, shown in the table below. The process of updating the **time** register is explained in the section [Time CSR update](timing.md#time-csr-update).
 
 | **Signal**  | **Width**  | **Direction**  | **Description**                                                                                                                                                                        |
 | :---------- | :--------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -47,4 +47,4 @@ The real time counter interface has just one signal used to update the `time` CS
 
 ## CLK and RESET signals
 
-The core also has the `CLK` and `RESET` input signals, which are not shown in the figure above. The `CLK` signal must be connected to a clock source. The `RESET` signal is active high and resets the core asynchronously.
+The core also has the **CLK** and **RESET** input signals, which are not shown in the figure above. The **CLK** signal must be connected to a clock source. The **RESET** signal is active high and resets the core synchronously.
