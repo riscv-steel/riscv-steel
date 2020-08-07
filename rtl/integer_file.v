@@ -97,6 +97,13 @@ module integer_file(
     wire rs2_addr_is_x0;
     reg [31:0] Q [31:1];
     
+    integer i;
+    
+    initial
+    begin
+        for(i = 1; i < 32; i = i+1) Q[i] <= 32'b0;
+    end     
+    
     always @(posedge CLK)
         if(WR_EN) Q[RD_ADDR] <= RD;
     

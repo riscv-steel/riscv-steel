@@ -69,8 +69,8 @@ module ram(
 
     input wire CLK,
     
-    input wire [9:0] ADDRA,
-    input wire [9:0] ADDRB,
+    input wire [10:0] ADDRA,
+    input wire [10:0] ADDRB,
     input wire [31:0] DINA,
     input wire [3:0] WEA,
     output wire [31:0] DOUTA,
@@ -78,16 +78,17 @@ module ram(
      
     );
     
-    reg [31:0] ram [0:1023];
-    reg [9:0] prev_addra;
-    reg [9:0] prev_addrb;
+    reg [31:0] ram [0:2047];
+    reg [10:0] prev_addra;
+    reg [10:0] prev_addrb;
     
     integer i;
     
     // MEMORY INITIALIZATION
     initial
     begin
-        $readmemh("gpio.mem", ram);
+        for(i = 0; i < 2048;i = i+1) ram[i] = 32'b0;
+        $readmemh("hello.mem", ram);
     end
     
     always @(posedge CLK) prev_addra <= ADDRA;

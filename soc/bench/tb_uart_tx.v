@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com) 
 // 
-// Create Date: 11.07.2020 14:55:12
-// Module Name: tb_soc_top
+// Create Date: 05.08.2020 19:57:30
+// Module Name: tb_uart_tx
 // Project Name: Steel SoC 
-// Description: Example SoC testbench 
+// Description: UART transmitter testbench (9600 baud, 1 stop bit, no parity) 
 // 
-// Dependencies: steel_top.v
+// Dependencies: -
 // 
 // Version 0.01
 // 
@@ -63,26 +63,41 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 
 ********************************************************************************/
 
-module tb_soc_top();
+`timescale 1ns / 1ps
+
+module tb_uart_tx();
 
     reg CLK;
-    reg RESET;
-    wire UART_TX;
+    reg [7:0] WDATA;
+    reg WR_EN;
+    wire [31:0] RDATA;
+    wire TX;
     
-    soc_top dut(
+    uart_tx dut(
         .CLK(CLK),
-        .RESET(RESET),
-        .UART_TX(UART_TX)
+        .WDATA(WDATA),
+        .WR_EN(WR_EN),
+        .RDATA(RDATA),
+        .TX(TX)
     );
     
-    always #10 CLK = !CLK;
+    always
+    begin
+        #10 CLK = !CLK;
+    end
+    
     initial
     begin
+        
+        $display("Testing UART transmitter unit...");
+        
         CLK = 1'b0;
-        RESET = 1'b1;
-        #100;
-        RESET = 1'b0;
+        WR_EN = 1'b0;
+        WDATA = 8'h55;
+        
+        #20;
+        WR_EN = 1'b1;
         $stop;
-    end            
-    
+    end
+
 endmodule

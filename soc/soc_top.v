@@ -9,7 +9,7 @@
 // Dependencies: steel_top.v
 //               bus_arbiter.v
 //               ram.v
-//               gpio.v
+//               uart_tx.v
 // 
 // Version 0.01
 // 
@@ -70,34 +70,37 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 
 module soc_top(
 
-    input wire CLK,
+    input wire CLK, // 100MHz (Nexys4 clock speed)
     input wire RESET,
     
-    inout wire [15:0] GPIO
+    output wire UART_TX
     
     );
     
     wire e_irq;
-    wire [31:0] daddr_gpio;
+    wire [31:0] daddr_uart;
     wire [31:0] daddr_core;
     wire [31:0] daddr_mem;
-    wire [31:0] dout_gpio;
+    wire [31:0] dout_uart;
     wire [31:0] dout_core;
     wire [31:0] dout_mem;
-    wire wr_req_gpio;
+    wire wr_req_uart;
     wire wr_req_core;
 	wire wr_req_mem;
-    wire [31:0] din_gpio;
+    wire [31:0] din_uart;
     wire [31:0] din_core;
     wire [31:0] din_mem;
     wire [3:0] wr_mask_core;
     wire [3:0] wr_mask_mem;
     wire [31:0] i_addr;
-    wire [31:0] instr;
-	 
+    wire [31:0] instr;		
+	
+	reg clk50mhz = 1'b0;
+	always @(posedge CLK) clk50mhz <= !clk50mhz;
+	
     steel_top core(
     
-        .CLK(CLK),
+        .CLK(clk50mhz),
         .RESET(RESET),
         .REAL_TIME(64'b0),
         .I_ADDR(i_addr),
@@ -107,7 +110,7 @@ module soc_top(
         .WR_REQ(wr_req_core),
         .WR_MASK(wr_mask_core),
         .DATA_IN(din_core),
-        .E_IRQ(e_irq),
+        .E_IRQ(1'b0),
         .T_IRQ(1'b0),
         .S_IRQ(1'b0)
         
@@ -115,7 +118,7 @@ module soc_top(
         
     bus_arbiter ba(
         
-        .CLK(CLK),
+        .CLK(clk50mhz),
         .RESET(RESET),
         .D_ADDR(daddr_core),
         .DATA_OUT(dout_core),
@@ -123,11 +126,11 @@ module soc_top(
         .WR_MASK(wr_mask_core),
         .DATA_IN(din_core),
         
-        .D_ADDR_1(daddr_gpio),
-        .DATA_OUT_1(dout_gpio),
+        .D_ADDR_1(daddr_uart),
+        .DATA_OUT_1(dout_uart),
         .WR_MASK_1(),
-        .WR_REQ_1(wr_req_gpio),
-        .DATA_IN_1(din_gpio),
+        .WR_REQ_1(wr_req_uart),
+        .DATA_IN_1(din_uart),
         
         .D_ADDR_2(daddr_mem),
         .DATA_OUT_2(dout_mem),
@@ -139,39 +142,24 @@ module soc_top(
         
     ram mem(
         
-        .CLK(CLK),
-        .ADDRA(daddr_mem[11:2]),
-        .ADDRB(i_addr[11:2]),
+        .CLK(clk50mhz),
+        .ADDRA(daddr_mem[12:2]),
+        .ADDRB(i_addr[12:2]),
         .DINA(dout_mem),
         .WEA(wr_mask_mem),
         .DOUTA(din_mem),
         .DOUTB(instr)
         
-        ); 
-    
-	/*ram ram_inst(
-			.address_a ( i_addr[6:2] ),
-			.address_b ( daddr_mem[6:2] ),
-			.byteena_b ( wr_mask_mem ),
-			.clock ( CLK ),
-			.data_a ( 32'b0 ),
-			.data_b ( dout_mem ),
-			.wren_a ( 1'b0 ),
-			.wren_b ( wr_req_mem ),
-			.q_a ( instr ),
-			.q_b ( din_mem )
-			);*/
+        );    
 	 
-    gpio io(
+    uart_tx utx(
     
-        .CLK(CLK),
-        .RESET(RESET),
-        .WDATA(dout_gpio[0]),
-        .WADDR(daddr_gpio[7:2]),
-        .WR_EN(wr_req_gpio),
-        .RDATA(din_gpio),
-        .IRQ(e_irq),
-        .GPIO(GPIO)
+        .CLK(clk50mhz),
+        .WDATA(dout_uart[7:0]),
+        .WR_EN(wr_req_uart),
+        .RDATA(din_uart),
+        .TX(UART_TX)
+        
         );
     
 endmodule

@@ -76,7 +76,7 @@ module bus_arbiter(
     input wire [3:0] WR_MASK,
     output wire [31:0] DATA_IN,
     
-    // PORT #1 - Connected to GPIO
+    // PORT #1 - Connected to UART
     output wire [31:0] D_ADDR_1,
     output wire [31:0] DATA_OUT_1,
     output wire WR_REQ_1,
@@ -92,23 +92,23 @@ module bus_arbiter(
     );
     
     reg last_access;
-    wire gpio_access = &D_ADDR[31:10];
+    wire uart_access = D_ADDR == 32'h00010000;
     
     always @(posedge CLK)
     begin
         if(RESET) last_access <= 1'b0;
-        else last_access <= gpio_access;
+        else last_access <= uart_access;
     end
     
-    assign D_ADDR_1 = gpio_access ? D_ADDR : 32'b0;
-    assign DATA_OUT_1 = gpio_access ? DATA_OUT : 32'b0;
-    assign WR_REQ_1 = gpio_access ? WR_REQ : 1'b0;
-    assign WR_MASK_1 = gpio_access ? WR_MASK : 4'b0;
+    assign D_ADDR_1 = uart_access ? D_ADDR : 32'b0;
+    assign DATA_OUT_1 = uart_access ? DATA_OUT : 32'b0;
+    assign WR_REQ_1 = uart_access ? WR_REQ : 1'b0;
+    assign WR_MASK_1 = uart_access ? WR_MASK : 4'b0;
     
-    assign D_ADDR_2 = ~gpio_access ? D_ADDR : 32'b0;
-    assign DATA_OUT_2 = ~gpio_access ? DATA_OUT : 32'b0;
-    assign WR_REQ_2 = ~gpio_access ? WR_REQ : 1'b0;
-    assign WR_MASK_2 = ~gpio_access ? WR_MASK : 4'b0;
+    assign D_ADDR_2 = ~uart_access ? D_ADDR : 32'b0;
+    assign DATA_OUT_2 = ~uart_access ? DATA_OUT : 32'b0;
+    assign WR_REQ_2 = ~uart_access ? WR_REQ : 1'b0;
+    assign WR_MASK_2 = ~uart_access ? WR_MASK : 4'b0;
     
     assign DATA_IN = last_access ? DATA_IN_1 : DATA_IN_2;
     
