@@ -3,8 +3,8 @@
 // 
 // Create Date: 30.03.2020 17:28:42
 // Module Name: -
-// Project Name: STEM 
-// Description: RISC-V STEM Global Definitions
+// Project Name: Steel 
+// Description: Steel Core global definitions
 // 
 // Dependencies: -
 // 
@@ -37,42 +37,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
------------------------------------------------------------------------------
-
-Licença MIT
-
-Copyright (c) 2019 Rafael de Oliveira Calçada
-
-Permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma
-cópia deste software e dos arquivos de documentação associados
-(o "Software"), para negociar sobre o Software sem restrições, incluindo,
-sem limitação, os direitos de uso, cópia, modificação, fusão, publicação, 
-distribuição, sublicenciamento e/ou venda de cópias do Software e o direito
-de permitir que pessoas a quem o Software seja fornecido o façam, sob as
-seguintes condições:
-
-O aviso de direitos autorais acima e este aviso de permissão devem ser
-incluídos em todas as cópias ou partes substanciais do Software.
-
-O SOFTWARE É FORNECIDO "TAL COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO,
-EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO A GARANTIAS DE
-COMERCIALIZAÇÃO, ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA E NÃO INFRAÇÃO.
-EM NENHUM CASO OS AUTORES OU TITULARES DE DIREITOS AUTORAIS SERÃO
-RESPONSÁVEIS POR QUALQUER REIVINDICAÇÃO, DANOS OU OUTRA RESPONSABILIDADE,
-SEJA EM AÇÕES CIVIS, PENAIS OU OUTRAS, PROVENIENTE, FORA OU EM CONEXÃO
-COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
-
 ********************************************************************************/
 
 `ifndef GLOBALS_H
 `define GLOBALS_H
-
-// -------------------------------------------------------------------------------
-// SETUP
-// -------------------------------------------------------------------------------
-
-// Boot address
-`define BOOT_ADDRESS        32'h00000000
 
 // CSR registers reset values
 `define MCYCLE_RESET        32'h00000000
@@ -88,9 +56,8 @@ COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 `define MCOUNTINHIBIT_CY_RESET  1'b0 
 `define MCOUNTINHIBIT_IR_RESET  1'b0
 
-
 // -------------------------------------------------------------------------------
-// WARNING: THE VALUES BELOW MUST NOT BE MODIFIED
+// WARNING: ALL VALUES BELOW MUST NOT BE MODIFIED
 // -------------------------------------------------------------------------------
 
 // Implemented instructions opcodes

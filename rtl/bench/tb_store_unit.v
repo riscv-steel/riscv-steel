@@ -4,9 +4,10 @@
 // Create Date: 02.06.2020 16:03:55
 // Module Name: tb_store_unit
 // Project Name: Steel Core
-// Description: RISC-V Steel Core Store Unit testbench
+// Description: Store Unit testbench
 // 
-// Dependencies: store_unit.v
+// Dependencies: globals.vh
+//               store_unit.v
 // 
 // Version 0.01
 // 
@@ -36,35 +37,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
------------------------------------------------------------------------------
-
-Licença MIT
-
-Copyright (c) 2019 Rafael de Oliveira Calçada
-
-Permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma
-cópia deste software e dos arquivos de documentação associados
-(o "Software"), para negociar sobre o Software sem restrições, incluindo,
-sem limitação, os direitos de uso, cópia, modificação, fusão, publicação, 
-distribuição, sublicenciamento e/ou venda de cópias do Software e o direito
-de permitir que pessoas a quem o Software seja fornecido o façam, sob as
-seguintes condições:
-
-O aviso de direitos autorais acima e este aviso de permissão devem ser
-incluídos em todas as cópias ou partes substanciais do Software.
-
-O SOFTWARE É FORNECIDO "TAL COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO,
-EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO A GARANTIAS DE
-COMERCIALIZAÇÃO, ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA E NÃO INFRAÇÃO.
-EM NENHUM CASO OS AUTORES OU TITULARES DE DIREITOS AUTORAIS SERÃO
-RESPONSÁVEIS POR QUALQUER REIVINDICAÇÃO, DANOS OU OUTRA RESPONSABILIDADE,
-SEJA EM AÇÕES CIVIS, PENAIS OU OUTRAS, PROVENIENTE, FORA OU EM CONEXÃO
-COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
-
 ********************************************************************************/
 
 `timescale 1ns / 1ps
-`include "globals.vh"
+`include "../globals.vh"
 
 
 module tb_store_unit();
@@ -291,6 +267,8 @@ module tb_store_unit();
         end
         
         $display("SW signals generation successfully tested.");
+        
+        $display("Store Unit successfully tested.");
         
     end
 

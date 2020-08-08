@@ -15,6 +15,7 @@ Steel is a 3-stage single-issue in-order RISC-V microprocessor core designed to 
 * Single-issue
 * Fully documented
 * Passed all RV32IZicsr tests from RISC-V test and compliance suites
+* 0.46 CoreMarks / MHz
 
 ## Licensing
 

@@ -4,9 +4,19 @@
 // Create Date: 04.07.2020 20:56:52
 // Module Name: soc_top
 // Project Name: Steel SoC 
-// Description: An example system built with Steel Core 
+// Description: Example system built with Steel Core 
 // 
-// Dependencies: steel_top.v
+// Dependencies: globals.vh
+//               machine_control.v
+//               alu.v
+//               integer_file.v
+//               branch_unit.v
+//               decoder.v
+//               csr_file.v
+//               imm_generator.v
+//               load_unit.v
+//               store_unit.v
+//               steel_top.v
 //               bus_arbiter.v
 //               ram.v
 //               uart_tx.v
@@ -39,36 +49,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
------------------------------------------------------------------------------
-
-Licença MIT
-
-Copyright (c) 2019 Rafael de Oliveira Calçada
-
-Permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma
-cópia deste software e dos arquivos de documentação associados
-(o "Software"), para negociar sobre o Software sem restrições, incluindo,
-sem limitação, os direitos de uso, cópia, modificação, fusão, publicação, 
-distribuição, sublicenciamento e/ou venda de cópias do Software e o direito
-de permitir que pessoas a quem o Software seja fornecido o façam, sob as
-seguintes condições:
-
-O aviso de direitos autorais acima e este aviso de permissão devem ser
-incluídos em todas as cópias ou partes substanciais do Software.
-
-O SOFTWARE É FORNECIDO "TAL COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO,
-EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO A GARANTIAS DE
-COMERCIALIZAÇÃO, ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA E NÃO INFRAÇÃO.
-EM NENHUM CASO OS AUTORES OU TITULARES DE DIREITOS AUTORAIS SERÃO
-RESPONSÁVEIS POR QUALQUER REIVINDICAÇÃO, DANOS OU OUTRA RESPONSABILIDADE,
-SEJA EM AÇÕES CIVIS, PENAIS OU OUTRAS, PROVENIENTE, FORA OU EM CONEXÃO
-COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
-
 ********************************************************************************/
 
 `timescale 1ns / 1ps
 
-module soc_top(
+module soc_top #(
+
+    parameter BOOT_ADDRESS = 32'h00000000
+    
+    )(
 
     input wire CLK, // 100MHz (Nexys4 clock speed)
     input wire RESET,
@@ -98,7 +87,11 @@ module soc_top(
 	reg clk50mhz = 1'b0;
 	always @(posedge CLK) clk50mhz <= !clk50mhz;
 	
-    steel_top core(
+    steel_top #(
+    
+        .BOOT_ADDRESS(BOOT_ADDRESS)
+    
+        ) core (
     
         .CLK(clk50mhz),
         .RESET(RESET),

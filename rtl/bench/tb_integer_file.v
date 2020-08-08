@@ -4,9 +4,10 @@
 // Create Date: 03.04.2020 18:35:35
 // Module Name: tb_integer_file
 // Project Name: Steel Core
-// Description: RISC-V Steel Core 32-bit Integer Register File testbench
+// Description: 32-bit Integer Register File testbench
 // 
-// Dependencies: register_file.v
+// Dependencies: globals.vh
+//               integer_file.v
 // 
 // Version 0.01
 // 
@@ -35,31 +36,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
------------------------------------------------------------------------------
-
-Licença MIT
-
-Copyright (c) 2019 Rafael de Oliveira Calçada
-
-Permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma
-cópia deste software e dos arquivos de documentação associados
-(o "Software"), para negociar sobre o Software sem restrições, incluindo,
-sem limitação, os direitos de uso, cópia, modificação, fusão, publicação, 
-distribuição, sublicenciamento e/ou venda de cópias do Software e o direito
-de permitir que pessoas a quem o Software seja fornecido o façam, sob as
-seguintes condições:
-
-O aviso de direitos autorais acima e este aviso de permissão devem ser
-incluídos em todas as cópias ou partes substanciais do Software.
-
-O SOFTWARE É FORNECIDO "TAL COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO,
-EXPRESSA OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO A GARANTIAS DE
-COMERCIALIZAÇÃO, ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA E NÃO INFRAÇÃO.
-EM NENHUM CASO OS AUTORES OU TITULARES DE DIREITOS AUTORAIS SERÃO
-RESPONSÁVEIS POR QUALQUER REIVINDICAÇÃO, DANOS OU OUTRA RESPONSABILIDADE,
-SEJA EM AÇÕES CIVIS, PENAIS OU OUTRAS, PROVENIENTE, FORA OU EM CONEXÃO
-COM O SOFTWARE OU O USO RELACIONADO AO SOFTWARE.
 
 ********************************************************************************/
 
