@@ -2,7 +2,7 @@
 
 ## What you need to know first
 
-Steel must be connected to a word-addressed memory with 1 clock cycle read/write latency, which means that the memory takes 1 clock cycle to complete both read and write operations. The signals used to fetch instructions and to read/write data were designed to facilitate the integration with FPGA Block RAMs and memory arrays.
+Steel must be connected to a word-addressed memory with 1 clock cycle read/write latency, which means that the memory should take 1 clock cycle to complete both read and write operations. The signals used to fetch instructions and to read/write data were designed to facilitate the integration with FPGA Block RAMs and memory arrays.
 
 ## Using Steel in your project
 
