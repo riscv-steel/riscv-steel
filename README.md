@@ -35,25 +35,31 @@ Steel documentation ([https://rafaelcalcada.github.io/steel-core/](https://rafae
 
 To use Steel in your project you must import all files from `rtl` directory to it. Then instantiate Steel using the following template:
 ```
-steel_top core(
+steel_top #(
 
-    .CLK(  ),
-    .RESET(  ),        
-    .REAL_TIME(  ),        
-    .I_ADDR(  ),
-    .INSTR(  ),        
-    .D_ADDR(  ),
-    .DATA_OUT(  ),
-    .WR_REQ(  ),
-    .WR_MASK(  ),
-    .DATA_IN(  ),        
-    .E_IRQ(  ),
-    .T_IRQ(  ),
-    .S_IRQ(  )
-
+    .BOOT_ADDRESS()     // You must provide a 32-bit value. If omitted the core will use
+                        // its default value, 32'h00000000.
+    ) core (
+    
+    // Optional inputs must be hardwired to zero if not used.
+    
+    .CLK(),             // Clock source (required, input, 1-bit)
+    .RESET(),           // Reset (required, input, synchronous, active high, 1-bit)
+    .REAL_TIME(),       // Value read from a real time counter (optional, input, 64-bit)
+    .I_ADDR(),          // Instruction address (output, 32-bit)
+    .INSTR(),           // Instruction data (required, input, 32-bit)
+    .D_ADDR(),          // Data address (output, 32-bit)
+    .DATA_OUT(),        // Data to be written (output, 32-bit)
+    .WR_REQ(),          // Write enable (output, 1-bit)
+    .WR_MASK(),         // Write mask (output, 4-bit). Also known as "write strobe"
+    .DATA_IN(),         // Data read from memory (required, input, 32-bit)
+    .E_IRQ(),           // External interrupt request (optional, active-high, input, 1-bit)
+    .T_IRQ(),           // Timer interrupt request (optional, active-high, input, 1-bit)
+    .S_IRQ()            // Software interrupt request (optional, active-high, input, 1-bit)
+    
 );
 ```
-Steel must be connected to a word-addressed memory with read/write latency of 1 clock cycle. It can be optionally connected to an interrupt controller and a real-time counter. Read the documentation to learn how integrate the core to these devices.
+Steel must be connected to a word-addressed memory with 1 clock cycle read/write latency, which means that the memory should take 1 clock cycle to complete both read and write operations. The signals used to fetch instructions and to read/write data were designed to facilitate the integration with FPGA Block RAMs and memory arrays. Read the documentation to learn how integrate the core to these devices.
 
 ## Running the project in Vivado
 
