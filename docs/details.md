@@ -4,7 +4,7 @@ This section contains information on implementation details. It is intended for 
 
 ## Implemented CSRs
 
-The control and status registers implemented in Steel are shown in table 1, below. The required M-mode registers not shown in the table return the hardwired value predicted by the specifications when read.
+The control and status registers implemented in Steel are shown in table 1, below. The required M-mode registers not shown in the table return the hardwired value predicted by RISC-V specifications when read.
 
 <p align=left>
 <strong>Table 1.</strong> Implemented CSRs
@@ -64,7 +64,7 @@ The Decoder (**decoder.v**) decodes the instruction and generates the signals th
 
 The ALU (**alu.v**) applies ten distinct logical and arithmetic operations in parallel to two 32-bit operands, outputting the result selected by **OPCODE**. The ALU input/output signals and the opcodes are shown in tables 3 and 4, below.
 
-The opcode values were assigned to facilitate instruction translation. The most significant bit of **OPCODE** matches with the second most significant bit in the instruction **funct7** field. The remaining three bits match with the instruction **funct3** field.
+The opcode values were assigned to facilitate instruction decoding. The most significant bit of **OPCODE** matches with the second most significant bit in the instruction **funct7** field. The remaining three bits match with the instruction **funct3** field.
 
 <p align=left>
 <strong>Table 3.</strong> ALU input/output signals
@@ -96,7 +96,7 @@ The opcode values were assigned to facilitate instruction translation. The most 
 
 ### Integer Register File
 
-The Integer Register File (**integer\_file.v**) has 32 general-purpose registers and supports read and write operations. Reads are requested in the pipeline stage 2 and provide data from one or two registers. Writes are requested in the pipeline stage 3 and put the data coming from the Writeback Multiplexer into the selected register. If stage 3 requests to write to a register being read by stage 2, the data to be written is immediately forwarded to stage 2. Each operation is driven by a distinct set of signals, shown in the tables 5 and 6, below.
+The Integer Register File (**integer\_file.v**) has 32 general-purpose registers and supports read and write operations. Reads are requested by pipeline stage 2 and provide data from one or two registers. Writes are requested by stage 3 and put the data coming from the Writeback Multiplexer into the selected register. If stage 3 requests to write to a register being read by stage 2, the data to be written is immediately forwarded to stage 2. Each operation is driven by a distinct set of signals, shown in the tables 5 and 6, below.
 
 <p align=left>
 <strong>Table 5.</strong> Integer Register File signals for read
@@ -137,7 +137,7 @@ The Branch Unit (**branch\_unit.v**) decides if a branch instruction must be tak
 
 ### Load Unit
 
-The Load Unit (**load\_unit.v**) reads the **DATA_IN** input signal and forms a 32-bit value based on the load instruction type (encoded in the *funct3* field). The formed value (placed on **OUTPUT**) can then be written in the Integer Register File. The module input and output signals are shown in table 8. The value of OUTPUT is formed as shown in table 9.
+The Load Unit (**load\_unit.v**) reads the **DATA_IN** input signal and forms a 32-bit value based on the load instruction type (encoded in the *funct3* field). The formed value (placed on **OUTPUT**) can then be written in the Integer Register File. The module input and output signals are shown in table 8. The value of **OUTPUT** is formed as shown in table 9.
 
 <p align=left>
 <strong>Table 8.</strong> Load Unit input/output signals

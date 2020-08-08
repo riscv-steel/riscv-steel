@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="100" src="images/steel-logo.png">
+</p>
+
 # Overview
 
 ## About Steel Core
