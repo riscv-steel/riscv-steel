@@ -1,7 +1,7 @@
 <p align="center">
   <img width="100" src="https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png">
 </p>
-Steel is a RISC-V microprocessor softcore designed to be simple and easy to use. It is intended for use in FPGAs as a processing unit in embedded systems projects.
+Steel is a RISC-V microprocessor softcore designed to be simple and easy to use. It is intended for use as a processing unit in embedded systems projects.
 <p align="center"></p>
 
 **Key features:**
