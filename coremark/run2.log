@@ -1,0 +1,1 @@
+Please set LOAD to the process of running the executable (e.g. via jtag, or board reset) ./coremark.bin 0x3415 0x3415 0x66 0 7 1 2000
