@@ -67,7 +67,7 @@ module bus_arbiter(
     );
     
     reg last_access;
-    wire uart_access = D_ADDR == 32'h00010000;
+    wire uart_access = D_ADDR[31:12] == 20'h00010;
     
     always @(posedge CLK)
     begin
