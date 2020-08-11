@@ -6,7 +6,7 @@
 
 ## About Steel Core
 
-Steel is a 3-stage single-issue in-order RISC-V microprocessor core designed to be simple and easy to use. It is intended for use in FPGAs as a processing unit in embedded systems projects.
+Steel is a 3-stage single-issue in-order RISC-V microprocessor core designed to be simple and easy to use. It is intended for use as a processing unit in embedded systems projects.
 
 **Key features:**
 
