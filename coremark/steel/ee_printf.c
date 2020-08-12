@@ -659,13 +659,13 @@ ee_vsprintf(char *buf, const char *fmt, va_list args)
     return str - buf;
 }
 
-void
+void __attribute__((noinline))
 uart_send_char(char c)
 {
-char* UART_CONTROL_ADDRESS = (char*)0x00010000;
-char* UART_DATA_ADDRESS = (char*)0x00010004;
-while( (*UART_CONTROL_ADDRESS) != 1);
-(*UART_DATA_ADDRESS) = c;
+volatile char* UART_ADDRESS = (char*)0x00010000;
+volatile char uart_status = (*UART_ADDRESS);
+while( uart_status != 1);
+(*UART_ADDRESS) = c;
 //#error "You must implement the method uart_send_char to use this file!\n";
     /*	Output of a char to a UART usually follows the following model:
             Wait until UART is ready
