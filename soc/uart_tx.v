@@ -54,7 +54,7 @@ module uart_tx(
     // Regs and wires
     wire done;
     reg [9:0] data;
-    reg [13:0] timer;
+    reg [14:0] timer;
     reg [3:0] index;
     
     // States
@@ -90,8 +90,8 @@ module uart_tx(
     // Timer
     always @(posedge CLK)
     begin
-        if(tx_state == STATE_READY) timer <= 14'b0;
-        else if(done) timer <= 14'b0;
+        if(tx_state == STATE_READY) timer <= 15'b0;
+        else if(done) timer <= 15'b0;
         else timer <= timer + 1;
     end
     

@@ -28,6 +28,8 @@ set_msg_config  -id {filemgmt 56-12}  -string {{WARNING: [filemgmt 56-12] File '
 set_msg_config  -id {USF-XSim-62}  -string {{ERROR: [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or '/home/rafa/ufrgs/steel-core/vivado/steel-core.sim/sim_1/behav/xsim/elaborate.log' file for more information.}}  -suppress 
 set_msg_config  -id {Vivado 12-4473}  -string {{ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.}}  -suppress 
 set_msg_config  -id {filemgmt 56-3}  -string {{WARNING: [filemgmt 56-3] IPUserFilesDir: Could not find the directory '/home/rafa/ufrgs/steel-core/vivado/steel-core.ip_user_files'.}}  -suppress 
+set_msg_config  -id {Synth 8-6841}  -string {{WARNING: [Synth 8-6841] Block RAM (mem/ram_reg) originally specified as a Byte Wide Write Enable RAM cannot take advantage of ByteWide feature and is implemented with single write enable per RAM due to following reason.
+(address width (13) is more than optimal threshold of 12. Implementing using BWWE will require more logic and timing would be suboptimal. Please use attribute ram_decomp = power if BWWE is desired.)}}  -suppress 
 create_project -in_memory -part xc7a100tcsg324-1
 
 set_param project.singleFileAddWarning.threshold 0
