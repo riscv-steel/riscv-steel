@@ -59,7 +59,7 @@ module tb_soc_top();
     
     soc_top #(
         
-        .BOOT_ADDRESS(32'h00000000)
+        .BOOT_ADDRESS(32'h00000018)
         
         ) dut (
         
@@ -78,6 +78,7 @@ module tb_soc_top();
         RESET = 1'b1;
         #100;
         RESET = 1'b0;
+        $stop();
     end            
     
 endmodule
