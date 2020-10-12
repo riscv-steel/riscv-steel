@@ -1,6 +1,6 @@
 Vivado Simulator 2019.2
 Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
-Running: /home/rafa/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto b8561a63f69e41d98a2e12d383a11daf --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_soc_top_behav xil_defaultlib.tb_soc_top xil_defaultlib.glbl -log elaborate.log 
+Running: /home/rafa/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto b8561a63f69e41d98a2e12d383a11daf --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_compliance_behav xil_defaultlib.tb_compliance xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
@@ -17,11 +17,7 @@ Compiling module xil_defaultlib.csr_file
 Compiling module xil_defaultlib.machine_control
 Compiling module xil_defaultlib.load_unit
 Compiling module xil_defaultlib.alu
-Compiling module xil_defaultlib.steel_top(BOOT_ADDRESS=32'b01100...
-Compiling module xil_defaultlib.bus_arbiter
-Compiling module xil_defaultlib.ram
-Compiling module xil_defaultlib.uart_tx
-Compiling module xil_defaultlib.soc_top
-Compiling module xil_defaultlib.tb_soc_top
+Compiling module xil_defaultlib.steel_top
+Compiling module xil_defaultlib.tb_compliance
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot tb_soc_top_behav
+Built simulation snapshot tb_compliance_behav

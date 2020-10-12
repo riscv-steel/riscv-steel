@@ -56,6 +56,6 @@ else
     echo -n "FAIL: ${FAIL}/${RUN} "
     status=1
 fi
-echo "RISCV_TARGET=ISim RISCV_DEVICE=steel RISCV_ISA=rv32i"
+echo "RISCV_TARGET=XSim RISCV_DEVICE=Steel RISCV_ISA=RV32IZicsr"
 echo
 exit ${status}

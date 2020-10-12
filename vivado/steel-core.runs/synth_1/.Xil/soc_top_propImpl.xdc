@@ -1,7 +1,0 @@
-set_property SRC_FILE_INFO {cfile:/home/rafa/ufrgs/steel-core/vivado/steel-core.srcs/constrs_1/new/contraints.xdc rfile:../../../steel-core.srcs/constrs_1/new/contraints.xdc id:1} [current_design]
-set_property src_info {type:XDC file:1 line:1 export:INPUT save:INPUT read:READ} [current_design]
-set_property PACKAGE_PIN E3 [get_ports CLK]
-set_property src_info {type:XDC file:1 line:5 export:INPUT save:INPUT read:READ} [current_design]
-set_property PACKAGE_PIN U9 [get_ports RESET]
-set_property src_info {type:XDC file:1 line:8 export:INPUT save:INPUT read:READ} [current_design]
-set_property PACKAGE_PIN D4 [get_ports UART_TX]

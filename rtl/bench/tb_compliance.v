@@ -244,7 +244,7 @@ module tb_compliance();
             begin
                 #20;
                 if(WR_REQ == 1'b1 && D_ADDR == 32'h00001000)
-                begin                    
+                begin           
                     m = ram[2047][16:2];
                     n = ram[2046][16:2];
                     for(m = ram[2047][16:2]; m < n; m=m+1)
