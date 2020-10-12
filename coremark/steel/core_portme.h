@@ -70,7 +70,7 @@ Original Author: Shay Gal-on
 #endif
 #ifndef COMPILER_FLAGS
 #define COMPILER_FLAGS \
-    FLAGS_STR "-O0 -Ttext 0x00000000 -e main"
+    FLAGS_STR ""
 #endif
 #ifndef MEM_LOCATION
 #define MEM_LOCATION "STACK"
