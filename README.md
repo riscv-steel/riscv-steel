@@ -9,7 +9,7 @@
 * [Documentation](#documentation)
 * [License](#license)
 * [About the Author](#about-the-author)
-* [Acknowledgements](#acknowledegments)
+* [Acknowledgements](#acknowledgements)
 
 ## About Steel
 
@@ -87,7 +87,7 @@ Steel docs are available at [https://rafaelcalcada.github.io/steel-core/](https:
 * Timing diagrams
 * Testing
 
-## Licence
+## License
 
 Steel is distributed under the MIT License. Read the `LICENCE.md` file carefully before using Steel.
 
