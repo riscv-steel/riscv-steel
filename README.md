@@ -61,19 +61,6 @@ steel_top #(
     
 );
 ```
-Steel has 4 communication interfaces, shown in the figure below:
-
-<p align="center">
-  <img width="75%" src="https://user-images.githubusercontent.com/22325319/95912803-b1cae480-0d79-11eb-87de-299f408f0d63.png">
-</p>
-
-The core was designed to be connected to a dual-port memory with one clock cycle read/write latency, which means that the memory should take one clock cycle to complete both read and write operations. You must connect the instruction fetch and data read/write interfaces to memory.
-
-The interrupt request interface has signals to request for external, timer and software interrupts, respectively. They can be connected to a single device or to an interrupt controller managing interrupt requests from several devices. If your system does not need interrupts you should hardwire these signals to zero.
-
-The real-time counter interface provides a 64-bit bus to read the value from a real-time counter. If your system does not need hardware timers, you should hardwire this signal to zero.
-
-[Read the docs](https://rafaelcalcada.github.io/steel-core/) for instructions on how to compile and run software for Steel.
 
 ## Documentation
 
