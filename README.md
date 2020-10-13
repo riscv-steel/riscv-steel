@@ -30,7 +30,8 @@ To use Steel in your project, import all files from the **rtl** directory to it 
 ```verilog
 steel_top #(
 
-    .BOOT_ADDRESS() // You must provide a 32-bit value. If omitted the boot address is set to 0x00000000
+    .BOOT_ADDRESS() // You must provide a 32-bit value. If omitted the boot
+                    // address is set to 0x00000000
     
     ) core (
     
