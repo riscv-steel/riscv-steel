@@ -17,7 +17,7 @@ Steel is a microprocessor core that implements the instruction sets RV32I and Zi
 ## Documentation
 
 Steel documentation are available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
-* How to import to your project
+* How to import Steel to your project
 * How to compile software for Steel
 * I/O signals and communication to other devices
 * Configuration
