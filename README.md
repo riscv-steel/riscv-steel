@@ -62,7 +62,7 @@ steel_top #(
 ```
 Steel has 4 communication interfaces, shown in the figure below:
 
-![Steel IO](![steel-interface](https://user-images.githubusercontent.com/22325319/95912803-b1cae480-0d79-11eb-87de-299f408f0d63.png))
+![steel-interface](https://user-images.githubusercontent.com/22325319/95912803-b1cae480-0d79-11eb-87de-299f408f0d63.png)
 
 The core was designed to be connected to a dual-port memory with one clock cycle read/write latency, which means that the memory should take one clock cycle to complete both read and write operations. You must connect the instruction fetch and data read/write interfaces to memory.
 
