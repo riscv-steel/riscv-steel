@@ -31,7 +31,7 @@ You must connect Steel to a memory that meets the following requirements:
 * One clock cycle read/write latency, which means that the memory should take one clock cycle to complete both read and write operations;
 * The data bus width must be 32 bits long;
 
-There are three signals to request for external, timer or software interrupts, respectively. They can be connected to a single device or to an interrupt controller managing interrupt requests from several devices. If your system does not need interrupts you should hardwire these signals to zero.
+There are three signals to request for external, timer and software interrupts, respectively. They can be connected to a single device or to an interrupt controller managing interrupt requests from several devices. If your system does not need interrupts you should hardwire these signals to zero.
 
 There is a 64-bit bus to read the value from a real-time counter. If your system does not need hardware timers, you should hardwire this signal to zero.
 
