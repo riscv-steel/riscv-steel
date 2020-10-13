@@ -78,6 +78,7 @@ The real-time counter interface provides a 64-bit bus to read the value from a r
 ## Documentation
 
 Steel docs are available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
+* Compiling software for Steel
 * I/O signals
 * Integration to other devices
 * Configuration
