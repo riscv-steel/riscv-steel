@@ -30,33 +30,33 @@ To use Steel in your project, import all files from the **rtl** directory to it 
 ```verilog
 steel_top #(
 
-    .BOOT_ADDRESS()     // You must provide a 32-bit value. If omitted the boot address is set to 0x00000000
+    .BOOT_ADDRESS() // You must provide a 32-bit value. If omitted the boot address is set to 0x00000000
     
     ) core (
     
-    // -----------------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------
     // REMEMBER: optional inputs, if unused, must be hardwired to zero
-    // -----------------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------
     
-    .CLK(),             // System clock                         (required, input, 1-bit)
-    .RESET(),           // System reset                         (required, input, 1-bit, synchronous, active high)
+    .CLK(),         // System clock (required, 1-bit)
+    .RESET(),       // System reset (required, 1-bit, synchronous, active high)
 
-    // INPUTS ----------------------------------------------------------------------------------------------------
+    // INPUTS ---------------------------------------------------------------------
 
-    .INSTR(),           // Instruction data                     (required, input, 32-bit)    
-    .DATA_IN(),         // Data read from memory                (required, input, 32-bit)
-    .REAL_TIME(),       // Value read from a real-time counter  (optional, input, 64-bit)
-    .E_IRQ(),           // External interrupt request           (optional, active high, input, 1-bit)
-    .T_IRQ(),           // Timer interrupt request              (optional, active high, input, 1-bit)
-    .S_IRQ()            // Software interrupt request           (optional, active high, input, 1-bit)
+    .INSTR(),       // Instruction data (required, 32-bit)    
+    .DATA_IN(),     // Data read from memory (required, 32-bit)
+    .REAL_TIME(),   // Value read from a real-time counter (optional, 64-bit)
+    .E_IRQ(),       // External interrupt request (optional, active high, 1-bit)
+    .T_IRQ(),       // Timer interrupt request (optional, active high, 1-bit)
+    .S_IRQ()        // Software interrupt request (optional, active high, 1-bit)
 
-    // OUTPUTS ---------------------------------------------------------------------------------------------------
+    // OUTPUTS --------------------------------------------------------------------
 
-    .I_ADDR(),          // Instruction address                  (output, 32-bit)
-    .D_ADDR(),          // Data address                         (output, 32-bit)
-    .DATA_OUT(),        // Data to be written                   (output, 32-bit)
-    .WR_REQ(),          // Write enable                         (output, 1-bit)
-    .WR_MASK(),         // Write mask                           (output, 4-bit)
+    .I_ADDR(),      // Instruction address (32-bit)
+    .D_ADDR(),      // Data address (32-bit)
+    .DATA_OUT(),    // Data to be written (32-bit)
+    .WR_REQ(),      // Write enable (1-bit)
+    .WR_MASK(),     // Write mask (4-bit)
     
 );
 ```
