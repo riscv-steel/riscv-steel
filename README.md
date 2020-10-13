@@ -61,7 +61,6 @@ Steel documentation is available at [https://rafaelcalcada.github.io/steel-core/
 * Exceptions, interrupts and trap handling
 * Implementation details
 * Timing diagrams
-* Benchmarks
 
 ## License
 
