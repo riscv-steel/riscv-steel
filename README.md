@@ -4,7 +4,7 @@
 
 Steel is a microprocessor core that implements the instruction sets RV32I and Zicsr of the RISC-V specifications. It was designed to be simple and easy to use and is targeted for embedded systems projects.
 
-**Key features:**
+## Key features
 
 * Simple and easy to use
 * Implements the RV32I base instruction set + Zicsr extension + M-mode
