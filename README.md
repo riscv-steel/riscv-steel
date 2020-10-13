@@ -89,7 +89,7 @@ Steel docs are available at [https://rafaelcalcada.github.io/steel-core/](https:
 
 ## License
 
-Steel is distributed under the MIT License. Read the `LICENCE.md` file carefully before using Steel.
+Steel is distributed under the MIT License. Read the `LICENSE.md` file carefully before using Steel.
 
 ## About the author
 
