@@ -72,6 +72,9 @@ steel_top #(
     
 );
 ```
+
+[Read the docs](https://rafaelcalcada.github.io/steel-core/) for instructions on how to compile and run software for Steel.
+
 ## Documentation
 
 Steel docs are available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
