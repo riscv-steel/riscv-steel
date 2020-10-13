@@ -23,22 +23,7 @@ Steel is a RISC-V core that implements the instruction sets RV32I and Zicsr from
 * [About the Author](#about-the-author)
 * [Acknowledgements](#acknowledgements)
 
-# Getting Started
-
-This is a quick start guide on how to use Steel in your own project.
-
-## Introduction
-
-Steel needs to be connected to memory to work. In your project, you can implement this memory as a ROM or a RAM. You can also have separate memories for instructions and data or a single dual-port memory. However, there are a few requirements that the memory needs to meet:
-
-* It must have one clock cycle read/write latency, which means that the memory should take one clock cycle to complete both read and write operations;
-* The data bus width must be 32 bits long;
-
-Steel has signals to request for external, timer and software interrupts, respectively. They can be connected to a single device or to an interrupt controller managing interrupt requests from several devices. If your system does not need interrupts you should hardwire these signals to zero.
-
-Steel provides a 64-bit bus to read the value from a real-time counter. If your system does not need hardware timers, you should hardwire this signal to zero.
-
-## Instantiating Steel
+## Getting Started
 
 To use Steel in your project, import all files from the **rtl** directory to it and then instantiate Steel using the following template:
 
