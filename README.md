@@ -54,7 +54,7 @@ steel_top #(
 
 ## Documentation
 
-Steel documentation are available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
+Steel documentation is available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
 * How to compile software for Steel
 * I/O signals and communication to other devices
 * Configuration
