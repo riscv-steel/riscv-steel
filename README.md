@@ -14,65 +14,17 @@ Steel is a microprocessor core that implements the instruction sets RV32I and Zi
 * Passed all RISC-V Compliance Suite tests
 * 1.36 CoreMarks/MHz
 
-## Table of Contents
-
-* [Getting Started](#getting-started)
-* [Documentation](#documentation)
-* [License](#license)
-* [About the Author](#about-the-author)
-* [Acknowledgements](#acknowledgements)
-
-## Getting Started
-
-To use Steel in your project, import all files from the **rtl** directory to it and then instantiate Steel using the following template:
-
-```verilog
-steel_top #(
-
-    .BOOT_ADDRESS() // You must provide a 32-bit value. If omitted the boot
-                    // address is set to 0x00000000
-    
-    ) core (
-    
-    // ----------------------------------------------------------------------------
-    // REMEMBER: optional inputs, if unused, must be hardwired to zero
-    // ----------------------------------------------------------------------------
-    
-    .CLK(),         // System clock (required, 1-bit)
-    .RESET(),       // System reset (required, 1-bit, synchronous, active high)
-
-    // INPUTS ---------------------------------------------------------------------
-
-    .INSTR(),       // Instruction data (required, 32-bit)    
-    .DATA_IN(),     // Data read from memory (required, 32-bit)
-    .REAL_TIME(),   // Value read from a real-time counter (optional, 64-bit)
-    .E_IRQ(),       // External interrupt request (optional, active high, 1-bit)
-    .T_IRQ(),       // Timer interrupt request (optional, active high, 1-bit)
-    .S_IRQ()        // Software interrupt request (optional, active high, 1-bit)
-
-    // OUTPUTS --------------------------------------------------------------------
-
-    .I_ADDR(),      // Instruction address (32-bit)
-    .D_ADDR(),      // Data address (32-bit)
-    .DATA_OUT(),    // Data to be written (32-bit)
-    .WR_REQ(),      // Write enable (1-bit)
-    .WR_MASK(),     // Write mask (4-bit)
-    
-);
-```
-
 ## Documentation
 
-Steel docs are available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
-* Compiling software for Steel
-* I/O signals
-* Integration to other devices
+Steel documentation are available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
+* How to import to your project
+* How to compile software for Steel
+* I/O signals and communication to other devices
 * Configuration
-* Exceptions and interrupts
-* Trap handling
+* Exceptions, interrupts and trap handling
 * Implementation details
 * Timing diagrams
-* Testing
+* Benchmarks
 
 ## License
 
