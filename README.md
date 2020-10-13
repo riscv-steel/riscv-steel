@@ -45,7 +45,7 @@ Before instantiating you must import all files from the **rtl** directory to you
 ```verilog
 steel_top #(
 
-    .BOOT_ADDRESS()		// You must provide a 32-bit value. If omitted the boot address is set to 0x00000000
+    .BOOT_ADDRESS()     // You must provide a 32-bit value. If omitted the boot address is set to 0x00000000
     
     ) core (
     
@@ -53,29 +53,28 @@ steel_top #(
     // REMEMBER: optional inputs, if unused, must be hardwired to zero
     // -----------------------------------------------------------------------------------------------------------
     
-    .CLK(),             // System clock 						(required, input, 1-bit)
-    .RESET(),           // System reset 						(required, input, 1-bit, synchronous, active high)
+    .CLK(),             // System clock                         (required, input, 1-bit)
+    .RESET(),           // System reset                         (required, input, 1-bit, synchronous, active high)
 
     // INPUTS ----------------------------------------------------------------------------------------------------
 
-    .INSTR(),           // Instruction data 					(required, input, 32-bit)    
-    .DATA_IN(),         // Data read from memory 				(required, input, 32-bit)
-    .REAL_TIME(),       // Value read from a real-time counter 	(optional, input, 64-bit)
-    .E_IRQ(),           // External interrupt request 			(optional, active high, input, 1-bit)
-    .T_IRQ(),           // Timer interrupt request 				(optional, active high, input, 1-bit)
-    .S_IRQ()            // Software interrupt request 			(optional, active high, input, 1-bit)
+    .INSTR(),           // Instruction data                     (required, input, 32-bit)    
+    .DATA_IN(),         // Data read from memory                (required, input, 32-bit)
+    .REAL_TIME(),       // Value read from a real-time counter  (optional, input, 64-bit)
+    .E_IRQ(),           // External interrupt request           (optional, active high, input, 1-bit)
+    .T_IRQ(),           // Timer interrupt request              (optional, active high, input, 1-bit)
+    .S_IRQ()            // Software interrupt request           (optional, active high, input, 1-bit)
 
     // OUTPUTS ---------------------------------------------------------------------------------------------------
 
-    .I_ADDR(),          // Instruction address 					(output, 32-bit)
-    .D_ADDR(),          // Data address 						(output, 32-bit)
-    .DATA_OUT(),        // Data to be written 					(output, 32-bit)
-    .WR_REQ(),          // Write enable 						(output, 1-bit)
-    .WR_MASK(),         // Write mask 							(output, 4-bit)
+    .I_ADDR(),          // Instruction address                  (output, 32-bit)
+    .D_ADDR(),          // Data address                         (output, 32-bit)
+    .DATA_OUT(),        // Data to be written                   (output, 32-bit)
+    .WR_REQ(),          // Write enable                         (output, 1-bit)
+    .WR_MASK(),         // Write mask                           (output, 4-bit)
     
 );
 ```
-
 ## Documentation
 
 Steel docs are available on [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
