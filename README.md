@@ -7,10 +7,9 @@ Steel is a microprocessor core that implements the instruction sets RV32I and Zi
 **Key features:**
 
 * Simple and easy to use
-* Implements the RV32I base instruction set + Zicsr extension
-* M-mode privilege level support
+* Implements the RV32I base instruction set + Zicsr extension + M-mode
+* 3 pipeline stages, single-issue
 * Hardware described in Verilog
-* 3 pipeline stages
 * Full documentation
 * Passed all RV32I and Zicsr tests from RISC-V Test and Compliance suites
 * 1.36 CoreMarks/MHz
