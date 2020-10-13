@@ -77,15 +77,15 @@ steel_top #(
 ```
 ## Documentation
 
-Steel docs are available on [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
-* Input and output signals
+Steel docs are available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
+* I/O signals
 * Integration to other devices
 * Configuration
-* Implemented CSRs
-* Supported exceptions and interrupts
+* Exceptions and interrupts
 * Trap handling
 * Implementation details
 * Timing diagrams
+* Testing
 
 ## Licence
 
