@@ -2,17 +2,6 @@
   <img width="100" src="https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png">
 </p>
 
-## Table of Contents
-
-* [About Steel](#about-steel)
-* [Getting Started](#getting-started)
-* [Documentation](#documentation)
-* [License](#license)
-* [About the Author](#about-the-author)
-* [Acknowledgements](#acknowledgements)
-
-## About Steel
-
 Steel is a RISC-V core that implements the instruction sets RV32I and Zicsr from RISC-V specifications. It was designed to be simple and easy to use.
 
 **Key features:**
@@ -25,6 +14,14 @@ Steel is a RISC-V core that implements the instruction sets RV32I and Zicsr from
 * Full documentation
 * Passed all RV32I and Zicsr tests from RISC-V Test and Compliance suites
 * 1.36 CoreMarks/MHz
+
+## Table of Contents
+
+* [Getting Started](#getting-started)
+* [Documentation](#documentation)
+* [License](#license)
+* [About the Author](#about-the-author)
+* [Acknowledgements](#acknowledgements)
 
 ## Getting Started
 
