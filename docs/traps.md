@@ -1,4 +1,4 @@
-# Exceptions and Interrupts
+# Exceptions and interrupts
 
 ## Supported exceptions and interrupts
 
@@ -20,7 +20,7 @@ Exceptions always cause a trap to be taken. An interrupt will cause a trap only 
 
 ## Trap handling in Steel
 
-Exceptions and interrupts are handled by a trap handler routine stored in memory (your software must provide one). The address of the trap handler first instruction is configured using the **mtvec** register. Steel supports both direct and vectorized interrupt modes. More information on interrupt modes and configuration of the **mtvec** register can be found in [RISC-V specifications](https://riscv.org/specifications/).
+Exceptions and interrupts are handled by a trap handler routine stored in memory. The address of the trap handler first instruction is configured using the **mtvec** register. Steel supports both direct and vectorized interrupt modes.
 
 When a trap is taken, the core proceeds as follows:
 

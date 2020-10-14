@@ -2,7 +2,7 @@
   <img width="100" src="https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png">
 </p>
 
-Steel is a microprocessor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications, designed to be simple and easy to use. It is targeted for embedded systems projects.
+Steel is a microprocessor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications. It is designed to be easy to use and targeted for embedded systems projects.
 
 ## Key features
 
@@ -16,38 +16,56 @@ Steel is a microprocessor core that implements the RV32I and Zicsr instruction s
 
 ## Getting started
 
-To start using Steel in your project, import all files inside the **rtl** directory to it. Then instantiate the core using the following template:
+
+Follow the steps:
+
+1. Import all files inside the **rtl** directory into your project
+2. Instantiate the core into a Verilog/SystemVerilog module (an instantiation template is provided below)
+3. Connect Steel to a clock source, a reset signal and memory. There is an interface to fetch instructions and another to read/write data, so we recommend a dual-port memory
+
+There are also interfaces to request for interrupts and to update the time register. The signals of these interfaces must be hardwired to zero if unused. [Read the docs](https://rafaelcalcada.github.com/steel-core/) for more information about this signals.
 
 ```verilog
 steel_top #(
 
-    .BOOT_ADDRESS() // You must provide a 32-bit value. If omitted the boot
-                    // address is set to 0x00000000
-    ) core (
-    
-    // ----------------------------------------------------------------------------
-    // REMEMBER: optional inputs, if unused, must be hardwired to zero
-    // ----------------------------------------------------------------------------
-    
-    .CLK(),         // System clock (required, 1-bit)
-    .RESET(),       // System reset (required, 1-bit, synchronous, active high)
+    // You must provide a 32-bit value. If omitted the boot address is set to 0x00000000
+    // ---------------------------------------------------------------------------------
 
-    // INPUTS ---------------------------------------------------------------------
+    .BOOT_ADDRESS() 
+                  
+    ) core (    
+    
+    // Clock source and reset
+    // ---------------------------------------------------------------------------------
+    
+    .CLK(),         // System clock (input, required, 1-bit)
+    .RESET(),       // System reset (input, required, 1-bit, synchronous, active high)
 
-    .INSTR(),       // Instruction data (required, 32-bit)    
-    .DATA_IN(),     // Data read from memory (required, 32-bit)
-    .REAL_TIME(),   // Value read from a real-time counter (optional, 64-bit)
+    // Instruction fetch interface
+    // ---------------------------------------------------------------------------------
+    .I_ADDR(),      // Instruction address (output, 32-bit)
+    .INSTR(),       // Instruction data (input, required, 32-bit)
+    
+    // Data read/write interface
+    // ---------------------------------------------------------------------------------
+
+    .D_ADDR(),      // Data address (output, 32-bit)    
+    .DATA_IN(),     // Data read from memory (input, required, 32-bit)
+    .DATA_OUT(),    // Data to write into memory (output, 32-bit)
+    .WR_REQ(),      // Write enable (output, 1-bit)
+    .WR_MASK(),     // Write byte mask (output, 4-bit)
+    
+    // Interrupt request interface (hardwire to zero if unused)
+    // ---------------------------------------------------------------------------------
+    
     .E_IRQ(),       // External interrupt request (optional, active high, 1-bit)
     .T_IRQ(),       // Timer interrupt request (optional, active high, 1-bit)
     .S_IRQ()        // Software interrupt request (optional, active high, 1-bit)
 
-    // OUTPUTS --------------------------------------------------------------------
+    // Time register update interface (hardwire to zero if unused)
+    // ---------------------------------------------------------------------------------
 
-    .I_ADDR(),      // Instruction address (32-bit)
-    .D_ADDR(),      // Data address (32-bit)
-    .DATA_OUT(),    // Data to be written (32-bit)
-    .WR_REQ(),      // Write enable (1-bit)
-    .WR_MASK(),     // Write mask (4-bit)
+    .REAL_TIME(),   // Value read from a real-time counter (optional, 64-bit)
     
 );
 ```

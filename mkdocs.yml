@@ -11,10 +11,12 @@ extra_css: [extra.css]
 extra_javascript: [extra.js]
 nav:
     - Overview: 'index.md'
-    - Getting Started: 'getting.md'
-    - Microarchitecture: 'uarch.md'
+    - Getting started: 'getting.md'
     - Configuration: 'config.md'
-    - Input and Output Signals: 'steelio.md'
-    - Timing Diagrams: 'timing.md'
-    - Exceptions and Interrupts: 'traps.md'
-    - Implementation Details: 'details.md'
+    - I/O signals: 'steelio.md'
+    - Timing diagrams: 'timing.md'
+    - Compiling software for Steel: 'software.md'
+    - Example system: 'examplesoc.md'
+    - Exceptions and interrupts: 'traps.md'
+    - Microarchitecture: 'uarch.md'
+    - Implementation details: 'details.md'

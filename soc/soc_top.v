@@ -55,7 +55,7 @@ SOFTWARE.
 
 module soc_top #(
 
-    parameter BOOT_ADDRESS = 32'h00000764
+    parameter BOOT_ADDRESS = 32'h00000014
     
     )(
 
@@ -136,8 +136,8 @@ module soc_top #(
     ram mem(
         
         .CLK(clk50mhz),
-        .ADDRA(daddr_mem[14:2]),
-        .ADDRB(i_addr[14:2]),
+        .ADDRA(daddr_mem[12:2]),
+        .ADDRB(i_addr[12:2]),
         .DINA(dout_mem),
         .WEA(wr_mask_mem),
         .DOUTA(din_mem),

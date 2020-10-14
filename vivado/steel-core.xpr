@@ -723,14 +723,10 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../util/hello.mem">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../util/coremark.mem">
-        <FileInfo>
+      <File Path="$PSRCDIR/sources_1/imports/util/hello.hex">
+        <FileInfo SFType="MEM">
+          <Attr Name="ImportPath" Val="$PPRDIR/../util/hello.hex"/>
+          <Attr Name="ImportTime" Val="1602685950"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -755,112 +751,140 @@
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
       <Filter Type="Srcs"/>
-      <File Path="$PPRDIR/../rtl/bench/tb_compliance.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_compliance.v">
         <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_compliance.v"/>
+          <Attr Name="ImportTime" Val="1602395046"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../soc/bench/tb_soc_top.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/soc/bench/tb_soc_top.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../soc/bench/tb_soc_top.v"/>
+          <Attr Name="ImportTime" Val="1602098745"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../soc/bench/tb_uart_tx.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/soc/bench/tb_uart_tx.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../soc/bench/tb_uart_tx.v"/>
+          <Attr Name="ImportTime" Val="1596916719"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_store_unit.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_store_unit.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_store_unit.v"/>
+          <Attr Name="ImportTime" Val="1596916485"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_steel_top.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_steel_top.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_steel_top.v"/>
+          <Attr Name="ImportTime" Val="1596916305"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../soc/bench/tb_ram.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/soc/bench/tb_ram.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../soc/bench/tb_ram.v"/>
+          <Attr Name="ImportTime" Val="1596915858"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_machine_mode.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_machine_mode.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_machine_mode.v"/>
+          <Attr Name="ImportTime" Val="1596915615"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_load_unit.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_load_unit.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_load_unit.v"/>
+          <Attr Name="ImportTime" Val="1596915437"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_integer_file.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_integer_file.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_integer_file.v"/>
+          <Attr Name="ImportTime" Val="1596915303"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_decoder.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_decoder.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_decoder.v"/>
+          <Attr Name="ImportTime" Val="1596915065"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_csr_file.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_csr_file.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_csr_file.v"/>
+          <Attr Name="ImportTime" Val="1596914932"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_branch_unit.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_branch_unit.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_branch_unit.v"/>
+          <Attr Name="ImportTime" Val="1596914033"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_alu.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_alu.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_alu.v"/>
+          <Attr Name="ImportTime" Val="1596913924"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../rtl/bench/tb_imm_generator.v">
+      <File Path="$PSRCDIR/sim_1/imports/steel-core/rtl/bench/tb_imm_generator.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
+          <Attr Name="ImportPath" Val="$PPRDIR/../rtl/bench/tb_imm_generator.v"/>
+          <Attr Name="ImportTime" Val="1596913804"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>

@@ -1,14 +1,20 @@
-# Input and Output Signals
+# I/O signals
 
-The figure below shows Steel input and output signals (except **CLK** and **RESET**). The following sections explain their functions in detail. 
-
-The interfaces to fetch instructions and to read/write data can be connected to any type of memory, but were designed to facilitate integration with FPGAs Block RAMs and memory arrays.
+Steel has 4 communication interfaces, shown in the figure below:
 
 ![Steel IO](images/steel-interface.png)
 
+The core was designed to be connected to a memory with one clock cycle read/write latency, which means that the memory should take one clock cycle to complete both read and write operations.
+
+The interrupt request interface has signals to request for external, timer and software interrupts, respectively. They can be connected to a single device or to an interrupt controller managing interrupt requests from several devices. If your system does not need interrupts you should hardwire these signals to zero.
+
+The real-time counter interface provides a 64-bit bus to read the value from a real-time counter and update the time register. If your system does not need hardware timers, you should hardwire this signal to zero.
+
+To learn about the core's communication with the devices mentioned above, read the section [Timing diagrams](timing.md).
+
 ## Interrupt controller interface
 
-The interrupt controller interface has three signals used to request external, timer and software interrupts, shown in the table below. The interrupt request process is explained in the sections [Exceptions and Interrupts](traps.md) and [Interrupt Request](timing.md#interrupt-request).
+The interrupt controller interface has three signals used to request external, timer and software interrupts, shown in the table below. The interrupt request process is explained in the sections [Exceptions and interrupts](traps.md) and [Timing diagrams](timing.md#interrupt-request).
 
 | **Signal**         | **Width**  | **Direction**  | **Description**                                                                                                                                                                        |
 | :----------------- | :--------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -18,7 +24,7 @@ The interrupt controller interface has three signals used to request external, t
 
 ## Instruction fetch interface
 
-The instruction fetch interface has two signals used in the instruction fetch process, shown in the table below. The process of fetching instructions is explained in the section [Instruction Fetch](timing.md#instruction-fetch).
+The instruction fetch interface has two signals used in the instruction fetch process, shown in the table below. The process of fetching instructions is explained in the section [Timing diagrams](timing.md#instruction-fetch).
 
 | **Signal**        | **Width**  | **Direction**  | **Description**                                                                                                                                                                        |
 | :---------------- | :--------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,7 +33,7 @@ The instruction fetch interface has two signals used in the instruction fetch pr
 
 ## Data read/write interface
 
-The data read/write interface has five signals used in the process of reading/writing data from/to memory. The signals are shown in the table below. The process of fetching data from memory is explained in the section [Data Fetch](timing.md#data-fetch). The process of writing data is explained in the section [Data Writing](timing.md#data-writing).
+The data read/write interface has five signals used in the process of reading/writing data from/to memory. The signals are shown in the table below. The processes of fetching and writing data to memory are explained in the section [Timing diagrams](timing.md#data-writing).
 
 | **Signal**        | **Width**  | **Direction**  | **Description**                                                                                                                                                                                                                                                                               |
 | :---------------- | :--------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -39,7 +45,7 @@ The data read/write interface has five signals used in the process of reading/wr
 
 ## Real-time counter interface
 
-The real time counter interface has just one signal used to update the **time** CSR, shown in the table below. The process of updating the **time** register is explained in the section [Time CSR update](timing.md#time-csr-update).
+The real time counter interface has just one signal used to update the **time** CSR, shown in the table below. The process of updating the **time** register is explained in the section [Timing diagrams](timing.md#time-csr-update).
 
 | **Signal**  | **Width**  | **Direction**  | **Description**                                                                                                                                                                        |
 | :---------- | :--------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -47,4 +53,4 @@ The real time counter interface has just one signal used to update the **time** 
 
 ## CLK and RESET signals
 
-The core also has the **CLK** and **RESET** input signals, which are not shown in the figure above. The **CLK** signal must be connected to a clock source. The **RESET** signal is active high and resets the core synchronously.
+The core has **CLK** and **RESET** input signals, which were not shown in the figure presented above. The **CLK** signal must be connected to a clock source. The **RESET** signal is active high and resets the core synchronously.

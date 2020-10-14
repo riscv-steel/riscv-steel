@@ -31,3 +31,22 @@ img.logo {
     color: #fcfcfc;
     margin-bottom: .809em;
 }
+
+.wy-nav-side {
+	background-color: #1A1A1A;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 12px 10px .1em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+}
+.rst-content blockquote {
+	margin-left: 0px;
+}
+
+.rst-content blockquote p {
+	margin-bottom: 10px;
+}

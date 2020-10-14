@@ -38,8 +38,8 @@ module ram(
 
     input wire CLK,
     
-    input wire [12:0] ADDRA,
-    input wire [12:0] ADDRB,
+    input wire [10:0] ADDRA,
+    input wire [10:0] ADDRB,
     input wire [31:0] DINA,
     input wire [3:0] WEA,
     output wire [31:0] DOUTA,
@@ -48,16 +48,16 @@ module ram(
     );
     
     reg [31:0] ram [0:8191];
-    reg [12:0] prev_addra;
-    reg [12:0] prev_addrb;
+    reg [10:0] prev_addra;
+    reg [10:0] prev_addrb;
     
     integer i;
     
     // MEMORY INITIALIZATION
     initial
     begin
-        for(i = 0; i < 8192;i = i+1) ram[i] = 32'b0;
-        $readmemh("coremark.mem", ram);
+        for(i = 0; i < 2048;i = i+1) ram[i] = 32'b0;
+        $readmemh("hello.hex", ram);
     end
     
     always @(posedge CLK) prev_addra <= ADDRA;

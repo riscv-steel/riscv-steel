@@ -4,35 +4,32 @@
 
 # Overview
 
-## About Steel Core
+## Introduction
 
-Steel is a 3-stage single-issue in-order RISC-V microprocessor core designed to be simple and easy to use. It is intended for use as a processing unit in embedded systems projects.
+Steel is a microprocessor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications. It is designed to be easy to use and targeted for embedded systems projects.
 
-**Key features:**
+## Key features
 
-* Easy to use
-* Targeted for use in FPGAs
-* Implements the RV32I base instruction set + Zicsr extension
-* M-mode privilege level support
+* Simple and easy to use
+* Implements the RV32I base instruction set + Zicsr extension + M-mode privileged architecture
+* 3 pipeline stages, single-issue
 * Hardware described in Verilog
-* 3 pipeline stages
-* Single-issue
-* Fully documented
-* Passed all RV32IZicsr tests from RISC-V test and compliance suites
-* 1.36 CoreMarks / MHz
+* Full documentation
+* Passed all RISC-V Compliance Suite tests for the RV32I and Zicsr instruction sets
+* 1.36 CoreMarks/MHz
 
 ## Licensing
 
-Steel is distributed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License). The license text is reproduced in the `LICENCE.md` file. Read it carefully and make sure you understand its terms before using Steel in your own projects.
+Steel is distributed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License). The license text is reproduced in the `LICENCE.md` file. Read it carefully and make sure you understand its terms before using Steel in your projects.
 
-## Specifications version
+## Specifications
 
-Steel aims to be compliant with the following RISC-V specifications:
+Steel aims to be compliant with the following versions of the RISC-V specifications:
 
 * Base ISA RV32I version **2.1**
 * Zicsr extension version **2.0**
 * Machine ISA version **1.11**
 
-## Online repository
+## GitHub repo
 
 Steel files and documentation are available at GitHub ([github.com/rafaelcalcada/steel-core](https://github.com/rafaelcalcada/steel-core)).

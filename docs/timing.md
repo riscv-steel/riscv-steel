@@ -37,7 +37,7 @@ The figure below shows the timing diagram of the interrupt request process. Sinc
 <img src="../images/irq_wave.png" width="80%"></img>
 </p>
 
-## *time* CSR update
+## Time CSR update
 
 When connected to a real-time counter, the core updates the **time** CSR with the value placed on **REAL_TIME** at each clock rising edge, as shown in the figure below. **timeX** denotes arbitrary time values.
 

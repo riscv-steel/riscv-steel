@@ -7,7 +7,6 @@ int main()
     {
         while((*UART_ADDRESS) != 1);
         (*UART_ADDRESS) = hello[i];
-        while((*UART_ADDRESS) != 1);
     }
     for(;;);
 }

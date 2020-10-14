@@ -1,10 +1,10 @@
-# Implementation Details
+# Implementation details
 
 This section contains information on implementation details. It is intended for those who want to know more about how Steel works.
 
 ## Implemented CSRs
 
-The control and status registers implemented in Steel are shown in table 1, below. The required M-mode registers not shown in the table return the hardwired value predicted by RISC-V specifications when read.
+The control and status registers implemented in Steel are shown in table 1, below. Other M-mode registers not shown in the table return the hardwired value defined by the RISC-V specifications when read.
 
 <p align=left>
 <strong>Table 1.</strong> Implemented CSRs
@@ -272,8 +272,10 @@ Internally, the module implements the finite state machine shown in figure 1 (be
 | **FLUSH**                            | 1 bit      | Output         | Flushes the pipeline when set.                                                                                                                                    |
 | **TRAP\_TAKEN**                       | 1 bit      | Output         | When set high indicates that a trap will be taken in the next clock cycle.                                                                                            |
 
-<p align=center>
-<strong>Figure 1.</strong> Machine Control finite state machine
+<p align="center">
+<img src="../images/steel-fsm.png" width="80%"></img>
+</br>
+</br>
+<strong>Fig. 1:</strong> Machine Control finite state machine
 </p>
-
-![Machine Control FSM](images/steel-fsm.png)
+![Machine Control FSM]()
