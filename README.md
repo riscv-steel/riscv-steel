@@ -2,7 +2,7 @@
   <img width="100" src="https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png">
 </p>
 
-Steel is a microprocessor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications, designed to be simple and easy to use and. It is targeted for embedded systems projects.
+Steel is a microprocessor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications, designed to be simple and easy to use. It is targeted for embedded systems projects.
 
 ## Key features
 
