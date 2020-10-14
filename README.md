@@ -23,7 +23,7 @@ Follow the steps:
 2. Instantiate the core into a Verilog/SystemVerilog module (an instantiation template is provided below)
 3. Connect Steel to a clock source, a reset signal and memory. There is an interface to fetch instructions and another to read/write data, so we recommend a dual-port memory
 
-There are also interfaces to request for interrupts and to update the time register. The signals of these interfaces must be hardwired to zero if unused. [Read the docs](https://rafaelcalcada.github.com/steel-core/) for more information about this signals.
+There are also interfaces to request for interrupts and to update the time register. The signals of these interfaces must be hardwired to zero if unused. [Read the docs](https://rafaelcalcada.github.io/steel-core/) for more information about this signals.
 
 ```verilog
 steel_top #(
