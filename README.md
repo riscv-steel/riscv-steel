@@ -16,8 +16,7 @@ Steel is a microprocessor core that implements the RV32I and Zicsr instruction s
 
 ## Getting started
 
-
-Follow the steps:
+To start using Steel, follow these steps:
 
 1. Import all files inside the **rtl** directory into your project
 2. Instantiate the core into a Verilog/SystemVerilog module (an instantiation template is provided below)
