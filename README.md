@@ -73,7 +73,7 @@ steel_top #(
 
 Steel documentation is available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/) and provides information on:
 * How to compile software for Steel
-* I/O signals and communication to other devices
+* I/O signals and communication with other devices
 * Configuration
 * Exceptions, interrupts and trap handling
 * Implementation details
