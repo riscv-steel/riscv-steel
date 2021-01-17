@@ -83,9 +83,9 @@ Steel documentation is available at [https://rafaelcalcada.github.io/steel-core/
 
 Steel is distributed under the MIT License. Read the `LICENSE.md` file before using Steel.
 
-## About the author
+## About
 
-The author is a computer engineering student at UFRGS (graduates at the end of 2020).
+Steel was developed for the author's bachelor's thesis in Computer Engineering. 
 
 Contact: rafaelcalcada@gmail.com / rafaelcalcada@hotmail.com
 
