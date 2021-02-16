@@ -87,7 +87,7 @@ Steel is distributed under the MIT License. Read the `LICENSE.md` file before us
 
 Steel was developed for the author's Bachelor's thesis in Computer Engineering. 
 
-Contact: rafaelcalcada@gmail.com / rafaelcalcada@hotmail.com
+Contact: rafaelcalcada@gmail.com
 
 ## Acknowledgements
 
