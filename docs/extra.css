@@ -50,3 +50,9 @@ blockquote {
 .rst-content blockquote p {
 	margin-bottom: 10px;
 }
+
+code, .rst-content tt, .rst-content code {
+    white-space: pre;
+    word-wrap:normal;
+
+}
