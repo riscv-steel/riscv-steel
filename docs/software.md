@@ -1,5 +1,3 @@
-# Compiling software for Steel
-
 The [RISC-V GNU Toolchain](https://github.com/riscv/riscv-gnu-toolchain) provides the Newlib cross-compiler, which can be used to compile software for Steel. To configure the compiler for Steel and install it follow these steps:
 
 **1 - Clone the toolchain repo and all its submodules:**
@@ -39,22 +37,22 @@ $ make
 A program can be compiled to run on Steel with the following command (assuming you have installed the toolchain in the path `/opt/riscv`):
 ```
 $ cd /opt/riscv/bin
-$ riscv32-unknown-elf-gcc --with-arch=rv32i --with-abi=ilp32 myprogram.c -o myprogram
+$ riscv32-unknown-elf-gcc -march=rv32i -mabi=ilp32 myprogram.c -o myprogram
 ```
-The compiler will output an ELF file named **myprogram**. The flags `--with-arch=rv32i` and `--with-abi=ilp32` are optional if you have configured the compiler following the instructions in the section above.
+The compiler will output an ELF file named **myprogram**. The flags `-march=rv32i` and `-mabi=ilp32` are optional if you have configured the compiler following the instructions in the section above.
 
 To relocate the code to start at a specific address you can use the flag `-Ttext`. For example:
 ```
 $ cd /opt/riscv/bin
-$ riscv32-unknown-elf-gcc --with-arch=rv32i --with-abi=ilp32 -Ttext 0x00000000 myprogram.c -o myprogram
+$ riscv32-unknown-elf-gcc -march=rv32i -mabi=ilp32 -Ttext 0x00000000 myprogram.c -o myprogram
 ```
 
-> **Tip:** If you are using an FPGA and your system's RAM is an array of memory, you may need to transform your program (which is an ELF file) into an .hex file. By doing this, you can use the .hex file with Verilog's **$readmemh** function to fill the memory array. To generate an .hex file from your compiled program, execute the following commands:
+> **Tip:** To load a RAM memory array in an FPGA you need to transform the compiled program (which is an ELF file) into an .hex file, so that you can use the Verilog **$readmemh** system task to fill the memory array. You can generate the .hex file from your compiled program executing the following commands:
 ```
 $ cd /opt/riscv/bin
 $ riscv32-unknown-elf-objcopy -O binary myprogram myprogram.bin
-$ od -t x4 -v -An -w1 myprogram.bin > myprogram.dump
+$ od -t x4 -v -An -w4 myprogram.bin > myprogram.dump
 $ cut -c2- myprogram.dump > myprogram.hex
 $ rm myprogram.bin myprogram.dump
 ```
-> The **util** directory has a script called **elf2hex** that transforms an ELF into an .hex file. See the contents of the file **soc/ram.v** to learn how to build a RAM memory using Verilog arrays.
+> The **software** directory has a script called **elf2hex** that transforms an ELF into an .hex file. Check the contents of the file **soc/ram.v** to learn how to build and load a RAM memory using Verilog arrays.

@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Webtalk v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Fri May 21 22:13:53 2021
+# Process ID: 55105
+# Current directory: /home/rafa/ufrgs/steel-core/vivado/steel_core.sim/sim_1/behav/xsim
+# Command line: wbtcv -mode batch -source /home/rafa/ufrgs/steel-core/vivado/steel_core.sim/sim_1/behav/xsim/xsim.dir/store_unit_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/rafa/ufrgs/steel-core/vivado/steel_core.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: /home/rafa/ufrgs/steel-core/vivado/steel_core.sim/sim_1/behav/xsim/webtalk.jou
+#-----------------------------------------------------------
+source /home/rafa/ufrgs/steel-core/vivado/steel_core.sim/sim_1/behav/xsim/xsim.dir/store_unit_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-186] '/home/rafa/ufrgs/steel-core/vivado/steel_core.sim/sim_1/behav/xsim/xsim.dir/store_unit_tb_behav/webtalk/usage_statistics_ext_xsim.xml' has been successfully sent to Xilinx on Fri May 21 22:13:57 2021. For additional details about this file, please refer to the WebTalk help file at /tools/Xilinx/Vivado/2020.2/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Fri May 21 22:13:57 2021...

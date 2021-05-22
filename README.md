@@ -2,39 +2,43 @@
   <img width="100" src="https://user-images.githubusercontent.com/22325319/85179004-38513880-b256-11ea-9a1a-4d204183bb13.png">
 </p>
 
-Steel is a microprocessor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications. It is designed to be easy to use and targeted for embedded systems projects.
+Steel is a RISC-V processor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications. It is designed to be simple and easy to use.
 
 ## Key features
 
-* Simple and easy to use
-* Implements the RV32I base instruction set + Zicsr extension + M-mode privileged architecture
+* Simple, easy to use
+* RV32I base instruction set + Zicsr extension + M-mode privileged architecture
 * 3 pipeline stages, single-issue
 * Hardware described in Verilog
 * Full documentation
-* Passed all RISC-V Compliance Suite tests for the RV32I and Zicsr instruction sets
+* RISC-V compliant
 * 1.36 CoreMarks/MHz
 
 ## Getting started
 
-To start using Steel, follow these steps:
+A microprocessor by itself does not form a computer system, so you need to connect Steel to memory and peripherals to build a system that can do work for you. The **soc** folder has the project of a small example system that uses Steel, formed by Steel + RAM + UART interface. This project was built using the free version of Vivado ([link](https://www.xilinx.com/products/design-tools/vivado.html)), an Artix-7 FPGA (Digilent Arty-A7 35T board, [link](https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/)), and it sends a "Hello World!" message through the UART interface. The Arty-A7 board has a USB-UART bridge that enables you to connect the system to your computer using a USB cable, and then see this "Hello World!" message on the screen. Instructions to build and run this project can be found in the section "Example system" from [Steel Docs]((https://rafaelcalcada.github.io/steel-core/)).
 
-1. Import all files inside the **rtl** directory into your project
-2. Instantiate the core into a Verilog/SystemVerilog module (an instantiation template is provided below)
-3. Connect Steel to a clock source, a reset signal and memory. There is an interface to fetch instructions and another to read/write data, so we recommend a dual-port memory
+To use Steel as the microprocessor unit of your project, follow the steps below:
 
-There are also interfaces to request for interrupts and to update the time register. The signals of these interfaces must be hardwired to zero if unused. [Read the docs](https://rafaelcalcada.github.io/steel-core/) for more information about this signals.
+1. Import the file **steel_core.v** to your project - this is the only file you need
+2. Instantiate the core into a Verilog module (the instantiation template is provided below)
+3. Connect Steel to a clock source, a reset signal and memory. There is an interface to fetch instructions and another to read/write data, so it is recommended a dual-port RAM memory
+
+There are also interfaces to request for interrupts and to update the internal time register. The signals of these interfaces must be hardwired to zero if unused. [Read the docs](https://rafaelcalcada.github.io/steel-core/) for more information about this signals.
+
+You can write and compile programs for Steel using [RISC-V GNU Toolchain](https://github.com/riscv/riscv-gnu-toolchain). More information can be found in the [documentation](https://rafaelcalcada.github.io/steel-core/).
 
 ```verilog
 steel_top #(
 
-    // You must provide a 32-bit value. If omitted the boot address is set to 0x00000000
+    // The address of the first instruction the core will fetch
     // ---------------------------------------------------------------------------------
 
-    .BOOT_ADDRESS() 
+    .BOOT_ADDRESS(32'h00000000) 
                   
     ) core (    
     
-    // Clock source and reset
+    // Clock and reset inputs
     // ---------------------------------------------------------------------------------
     
     .CLK(),         // System clock (input, required, 1-bit)
@@ -43,7 +47,7 @@ steel_top #(
     // Instruction fetch interface
     // ---------------------------------------------------------------------------------
     .I_ADDR(),      // Instruction address (output, 32-bit)
-    .INSTR(),       // Instruction data (input, required, 32-bit)
+    .INSTR(),       // Instruction itself (input, required, 32-bit)
     
     // Data read/write interface
     // ---------------------------------------------------------------------------------
@@ -51,20 +55,20 @@ steel_top #(
     .D_ADDR(),      // Data address (output, 32-bit)    
     .DATA_IN(),     // Data read from memory (input, required, 32-bit)
     .DATA_OUT(),    // Data to write into memory (output, 32-bit)
-    .WR_REQ(),      // Write enable (output, 1-bit)
-    .WR_MASK(),     // Write byte mask (output, 4-bit)
+    .WR_REQ(),      // Write enable/request (output, 1-bit)
+    .WR_MASK(),     // Byte-write enable mask (output, 4-bit)
     
     // Interrupt request interface (hardwire to zero if unused)
     // ---------------------------------------------------------------------------------
     
     .E_IRQ(),       // External interrupt request (optional, active high, 1-bit)
     .T_IRQ(),       // Timer interrupt request (optional, active high, 1-bit)
-    .S_IRQ()        // Software interrupt request (optional, active high, 1-bit)
+    .S_IRQ(),       // Software interrupt request (optional, active high, 1-bit)
 
     // Time register update interface (hardwire to zero if unused)
     // ---------------------------------------------------------------------------------
 
-    .REAL_TIME(),   // Value read from a real-time counter (optional, 64-bit)
+    .REAL_TIME()   // Value read from a real-time counter (optional, 64-bit)
     
 );
 ```

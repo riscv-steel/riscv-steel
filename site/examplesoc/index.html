@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Rafael de Oliveira Calcada">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Example system - Steel Core Documentation</title>
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Example system";
+    var mkdocs_page_input_path = "examplesoc.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Steel Core Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Overview</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../getting/">Getting started</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../config/">Configuration</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../steelio/">I/O signals</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../timing/">Timing diagrams</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../software/">Compiling software for Steel</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Example system</a>
+    <ul class="subnav">
+            
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../traps/">Exceptions and interrupts</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../uarch/">Microarchitecture</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../details/">Implementation details</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Steel Core Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Example system</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rafaelcalcada/steel-core/edit/master/docs/examplesoc.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>The figure below shows the architecture of an example system that uses Steel, built with the free edition of Vivado (<a href="https://www.xilinx.com/products/design-tools/vivado.html">link</a>) for an Artix-7 FPGA (Digilent Arty-A7 35T board, <a href="https://store.digilentinc.com/arty-a7-artix-7-fpga-development-board/">link</a>). This project files are stored at <strong>soc/vivado</strong> and, of course, you need Vivado installed on your machine and an Arty A7-35T board to run this project.</p>
+<p>The system is formed by Steel + RAM + UART interface. The UART interface was designed to have 9600 baud rate, 1 stop bit, no parity and no control.</p>
+<p align="center">
+<img src="../images/steel-soc.png" width="70%"></img>
+</br>
+</br>
+<strong>Example system built with Steel</strong>
+</p>
+
+<p>Note that the RAM and the UART share the processor interface to read/write data. A bus arbiter is used to multiplex this interface signals according to the address the core wants to access. In this example, the address 0x00010000 is used to access the UART transmitter. The address 0x00020000 is used to access the UART receiver. RAM addresses start at 0x00000000 and end at 0x00001fff. All other addresses are invalid.</p>
+<p>A program compiled to run with this project is stored at the <strong>software</strong> directory. The program sends the string "Hello World, Steel!" through the UART transmitter.</p>
+<p>If you have an Arty A7-35T board and Vivado you can run the project following these instructions:</p>
+<ol>
+<li>Run Vivado and open the project (the file named <strong>example_soc.xpr</strong> at <strong>soc/vivado</strong> folder)</li>
+<li>Connect the board to your computer using a USB cable</li>
+<li>Find the name that your system gave to the board USB-UART interface. In Windows it should be something like COMX, and in Linux systems something like /dev/ttyUSBX (X is a number given by the OS)</li>
+<li>Download a program to emulate a serial terminal, like PuTTY (available for Windows and Linux systems)</li>
+<li>Configure a serial connection for the USB-UART interface to 9600 baud rate, 8 data bits, 1 stop bit, no parity and no control</li>
+<li>Open the serial terminal after configuration</li>
+<li>Generate the bitstream and program the board in Vivado</li>
+</ol>
+<p>After that you should see this message on the terminal:</p>
+<p><img alt="Hello World, Steel!" src="../images/steel-hello.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../traps/" class="btn btn-neutral float-right" title="Exceptions and interrupts">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../software/" class="btn btn-neutral" title="Compiling software for Steel"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/rafaelcalcada/steel-core/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../software/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../traps/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../extra.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

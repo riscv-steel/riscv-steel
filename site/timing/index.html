@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Rafael de Oliveira Calcada">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Timing diagrams - Steel Core Documentation</title>
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Timing diagrams";
+    var mkdocs_page_input_path = "timing.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Steel Core Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Overview</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../getting/">Getting started</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../config/">Configuration</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../steelio/">I/O signals</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Timing diagrams</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#instruction-fetch">Instruction fetch</a></li>
+    
+
+    <li class="toctree-l2"><a href="#data-fetch">Data fetch</a></li>
+    
+
+    <li class="toctree-l2"><a href="#data-writing">Data writing</a></li>
+    
+
+    <li class="toctree-l2"><a href="#interrupt-request">Interrupt request</a></li>
+    
+
+    <li class="toctree-l2"><a href="#time-csr-update">Time CSR update</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../software/">Compiling software for Steel</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../examplesoc/">Example system</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../traps/">Exceptions and interrupts</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../uarch/">Microarchitecture</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../details/">Implementation details</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Steel Core Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Timing diagrams</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rafaelcalcada/steel-core/edit/master/docs/timing.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="instruction-fetch">Instruction fetch</h2>
+<p>To fetch an instruction, the core places the instruction address on the <strong>I_ADDR</strong> bus. The memory must place the instruction on the <strong>INSTR</strong> bus at the next clock rising edge. The figure below shows the timing diagram of this process. In the figure, <strong>mem[addrX]</strong> denotes the instruction stored at the memory position <strong>addrX</strong>.</p>
+<p><img alt="Instruction fetch timing diagram" src="../images/ifetch_wave.png" /></p>
+<h2 id="data-fetch">Data fetch</h2>
+<p>To fetch data from memory, the core puts the data address on the <strong>D_ADDR</strong> bus. The memory must place the data on the <strong>DATA_IN</strong> bus at the next clock rising edge. The figure below shows the timing diagram of this process. In the figure, <strong>mem[addrX]</strong> denotes the data stored at the memory position <strong>addrX</strong>.</p>
+<p><img alt="Data fetch timing diagram" src="../images/dfetch_wave.png" /></p>
+<h2 id="data-writing">Data writing</h2>
+<p>To write data to memory, the core drives the <strong>D_ADDR</strong>, <strong>DATA_OUT</strong>, <strong>WR_REQ</strong> and <strong>WR_MASK</strong> signals as follows:</p>
+<ul>
+<li><strong>D_ADDR</strong> holds the address of the memory position where the data must be written;</li>
+<li><strong>DATA_OUT</strong> holds the data to be written;</li>
+<li><strong>WR_REQ</strong> is set high;</li>
+<li><strong>WR_MASK</strong> holds a byte-write enable mask that indicates which bytes of <strong>DATA_OUT</strong> must be written.</li>
+</ul>
+<p>The memory must perform the write operation at the next clock rising edge. The core can request to write bytes, halfwords and words.</p>
+<p>The figure below shows the process of writing data to memory. The <strong>DATA_IN</strong> bus is not used in the process and appears only to show the memory contents after writing. The figure shows five clock cycles, in which the core requests to write in the second, third and fourth cycles. In the second clock cycle, the core requests to write the word <strong>0x12345678</strong> at the address <strong>addr2</strong>. In the third, requests to write the halfword <strong>0xABCD</strong> at the upper half of <strong>addr2</strong>, and in the fourth requests to write the byte <strong>0xEF</strong> at the second least significant byte of <strong>addr2</strong>. The value stored at <strong>addr2</strong> after each of these operations appears on <strong>DATA_IN</strong> bus and are highlighted in blue.</p>
+<p><img alt="Data writing timing diagram" src="../images/dwrite_wave.png" /></p>
+<h2 id="interrupt-request">Interrupt request</h2>
+<p>An external device (or an interrupt controller managing interrupt requests from several devices) can request interrupts by setting high the appropriate IRQ signal, which is <strong>E_IRQ</strong> for external interrupts, <strong>T_IRQ</strong> for timer interrupts and <strong>S_IRQ</strong> for software interrupts. The IRQ signal of the requested interrupt must be set high for one clock cycle and set low for the next.</p>
+<p>The figure below shows the timing diagram of the interrupt request process. Since the process is the same for all types of interrupt, <strong>X_IRQ</strong> is used to denote <strong>E_IRQ</strong>, <strong>T_IRQ</strong> or <strong>S_IRQ</strong>. <strong>TRAP_ADDR</strong> denotes the address of the trap handler first instruction.</p>
+<p align="center">
+<img src="../images/irq_wave.png" width="80%"></img>
+</p>
+
+<h2 id="time-csr-update">Time CSR update</h2>
+<p>When connected to a real-time counter, the core updates the <strong>time</strong> CSR (Control and Status Register) with the value put on the <strong>REAL_TIME</strong> bus at each clock rising edge, as shown in the figure below. <strong>timeX</strong> denotes arbitrary time values.</p>
+<p align="center">
+<img src="../images/timeup_wave.png" width="80%"></img>
+</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../software/" class="btn btn-neutral float-right" title="Compiling software for Steel">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../steelio/" class="btn btn-neutral" title="I/O signals"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/rafaelcalcada/steel-core/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../steelio/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../software/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../extra.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

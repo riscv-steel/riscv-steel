@@ -1,5 +1,3 @@
-# Implementation details
-
 This section contains information on implementation details. It is intended for those who want to know more about how Steel works.
 
 ## Implemented CSRs

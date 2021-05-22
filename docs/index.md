@@ -2,20 +2,18 @@
   <img width="100" src="images/steel-logo.png">
 </p>
 
-# Overview
-
 ## Introduction
 
-Steel is a microprocessor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications. It is designed to be easy to use and targeted for embedded systems projects.
+Steel is a RISC-V processor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications. It is designed to be simple and easy to use.
 
 ## Key features
 
-* Simple and easy to use
-* Implements the RV32I base instruction set + Zicsr extension + M-mode privileged architecture
+* Simple, easy to use
+* RV32I base instruction set + Zicsr extension + M-mode privileged architecture
 * 3 pipeline stages, single-issue
 * Hardware described in Verilog
 * Full documentation
-* Passed all RISC-V Compliance Suite tests for the RV32I and Zicsr instruction sets
+* RISC-V compliant
 * 1.36 CoreMarks/MHz
 
 ## Licensing

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Rafael de Oliveira Calcada">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Exceptions and interrupts - Steel Core Documentation</title>
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../extra.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Exceptions and interrupts";
+    var mkdocs_page_input_path = "traps.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Steel Core Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Overview</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../getting/">Getting started</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../config/">Configuration</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../steelio/">I/O signals</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../timing/">Timing diagrams</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../software/">Compiling software for Steel</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../examplesoc/">Example system</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Exceptions and interrupts</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#supported-exceptions-and-interrupts">Supported exceptions and interrupts</a></li>
+    
+
+    <li class="toctree-l2"><a href="#trap-handling-in-steel">Trap handling in Steel</a></li>
+    
+
+    <li class="toctree-l2"><a href="#nested-interrupts-capability">Nested interrupts capability</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../uarch/">Microarchitecture</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../details/">Implementation details</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Steel Core Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Exceptions and interrupts</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/rafaelcalcada/steel-core/edit/master/docs/traps.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="supported-exceptions-and-interrupts">Supported exceptions and interrupts</h2>
+<p>Steel supports the exceptions and interrupts shown in the table below. They are listed in descending priority order (the highest priority is at the top of the table). If two or more exceptions/interrupts occur at the same time, the one with the highest priority is taken.</p>
+<p>Exceptions always cause a trap to be taken. An interrupt will cause a trap only if enabled. Each type of interrupt has an interrupt-enable bit in the <strong>mie</strong> register. Interrupts are globally enable/disabled by setting the MIE bit of <strong>mstatus</strong> register.</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Exception / Interrupt</strong></th>
+<th align="right"><strong><em>mcause</em></strong> <strong>interrupt bit</strong></th>
+<th align="right"><strong><em>mcause</em></strong> <strong>exception code</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Machine external interrupt</td>
+<td align="right">1</td>
+<td align="right">11</td>
+</tr>
+<tr>
+<td align="left">Machine software interrupt</td>
+<td align="right">1</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="left">Machine timer interrupt</td>
+<td align="right">1</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td align="left">Illegal instruction exception</td>
+<td align="right">0</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="left">Instruction address-misaligned exception</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">Environment call from M-mode exception</td>
+<td align="right">0</td>
+<td align="right">11</td>
+</tr>
+<tr>
+<td align="left">Environment break exception</td>
+<td align="right">0</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="left">Store address-misaligned exception</td>
+<td align="right">0</td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td align="left">Load address-misaligned exception</td>
+<td align="right">0</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+<h2 id="trap-handling-in-steel">Trap handling in Steel</h2>
+<p>Exceptions and interrupts are handled by a trap handler routine stored in memory. The address of the trap handler first instruction is configured using the <strong>mtvec</strong> register. Steel supports both direct and vectorized interrupt modes.</p>
+<p>When a trap is taken, the core proceeds as follows:</p>
+<ul>
+<li>the address of the interrupted instruction (or the instruction that encountered the exception) is saved in the <strong>mepc</strong> register;</li>
+<li>the value of the <strong>mtval</strong> register is set to:<ul>
+<li>the misaligned address that caused the exception for all types of address-misaligned exceptions, or</li>
+<li>zero otherwise;</li>
+</ul>
+</li>
+<li>the value of the <strong>mstatus</strong> MIE bit is saved in the MPIE field and then set to zero;</li>
+<li>the program counter is set to the address of the trap handler first instruction.</li>
+</ul>
+<p>The <strong>mret</strong> instruction is used to return from traps. When executed, the core proceeds as follows:</p>
+<ul>
+<li>the value of the <strong>mstatus</strong> MPIE bit is saved in the MIE field and then set to one;</li>
+<li>the program counter is set to the value of <strong>mepc</strong> register.</li>
+</ul>
+<h2 id="nested-interrupts-capability">Nested interrupts capability</h2>
+<p>The core globally disables new interrupts when takes into a trap. The trap handler can re-enable interrupts by setting the <strong>mstatus</strong> MIE bit to one, thus enabling nested interrupts. To return from nested traps, the trap handler must stack and manage the values of the <strong>mepc</strong> register in memory.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../uarch/" class="btn btn-neutral float-right" title="Microarchitecture">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../examplesoc/" class="btn btn-neutral" title="Example system"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/rafaelcalcada/steel-core/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../examplesoc/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../uarch/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../extra.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

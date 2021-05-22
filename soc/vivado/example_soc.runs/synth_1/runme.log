@@ -1,0 +1,395 @@
+
+*** Running vivado
+    with args -log soc_top.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source soc_top.tcl
+
+
+****** Vivado v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source soc_top.tcl -notrace
+Command: synth_design -top soc_top -part xc7a35ticsg324-1L
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
+INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 76067
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2286.430 ; gain = 0.000 ; free physical = 4007 ; free virtual = 11281
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'soc_top' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/soc_top.v:47]
+	Parameter BOOT_ADDRESS bound to: 20 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'steel_top' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:243]
+	Parameter BOOT_ADDRESS bound to: 20 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'store_unit' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:796]
+INFO: [Synth 8-6155] done synthesizing module 'store_unit' (1#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:796]
+INFO: [Synth 8-6157] synthesizing module 'decoder' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:1300]
+INFO: [Synth 8-6155] done synthesizing module 'decoder' (2#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:1300]
+INFO: [Synth 8-6157] synthesizing module 'imm_generator' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:758]
+INFO: [Synth 8-6155] done synthesizing module 'imm_generator' (3#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:758]
+INFO: [Synth 8-6157] synthesizing module 'branch_unit' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:705]
+INFO: [Synth 8-6155] done synthesizing module 'branch_unit' (4#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:705]
+INFO: [Synth 8-6157] synthesizing module 'integer_file' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:1246]
+INFO: [Synth 8-6155] done synthesizing module 'integer_file' (5#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:1246]
+INFO: [Synth 8-6157] synthesizing module 'csr_file' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:899]
+INFO: [Synth 8-6155] done synthesizing module 'csr_file' (6#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:899]
+INFO: [Synth 8-6157] synthesizing module 'machine_control' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:1454]
+	Parameter STATE_RESET bound to: 4'b0001 
+	Parameter STATE_OPERATING bound to: 4'b0010 
+	Parameter STATE_TRAP_TAKEN bound to: 4'b0100 
+	Parameter STATE_TRAP_RETURN bound to: 4'b1000 
+INFO: [Synth 8-6155] done synthesizing module 'machine_control' (7#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:1454]
+INFO: [Synth 8-6157] synthesizing module 'load_unit' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:1394]
+INFO: [Synth 8-6155] done synthesizing module 'load_unit' (8#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:1394]
+INFO: [Synth 8-6157] synthesizing module 'alu' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:656]
+INFO: [Synth 8-6155] done synthesizing module 'alu' (9#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:656]
+INFO: [Synth 8-6155] done synthesizing module 'steel_top' (10#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/steel_core.v:243]
+INFO: [Synth 8-6157] synthesizing module 'bus_arbiter' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/bus_arbiter.v:43]
+INFO: [Synth 8-6155] done synthesizing module 'bus_arbiter' (11#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/bus_arbiter.v:43]
+INFO: [Synth 8-6157] synthesizing module 'ram' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/ram.v:37]
+INFO: [Synth 8-3876] $readmem data file 'hello.hex' is read successfully [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/ram.v:59]
+INFO: [Synth 8-6155] done synthesizing module 'ram' (12#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/ram.v:37]
+INFO: [Synth 8-6157] synthesizing module 'uart_tx' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/uart_tx.v:44]
+	Parameter STATE_READY bound to: 2'b01 
+	Parameter STATE_LOAD bound to: 2'b10 
+	Parameter STATE_SEND bound to: 2'b00 
+INFO: [Synth 8-6155] done synthesizing module 'uart_tx' (13#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/uart_tx.v:44]
+INFO: [Synth 8-6157] synthesizing module 'uart_rx' [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/uart_rx.v:43]
+	Parameter TICKS_PER_BIT bound to: 5208 - type: integer 
+	Parameter TPB_HALF bound to: 2604 - type: integer 
+	Parameter STATE_READY bound to: 3'b001 
+	Parameter STATE_RECEIVE bound to: 3'b010 
+	Parameter STATE_DONE bound to: 3'b100 
+INFO: [Synth 8-6155] done synthesizing module 'uart_rx' (14#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/uart_rx.v:43]
+INFO: [Synth 8-6155] done synthesizing module 'soc_top' (15#1) [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/sources_1/imports/steel-core/soc/soc_top.v:47]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2286.430 ; gain = 0.000 ; free physical = 4793 ; free virtual = 12068
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2286.430 ; gain = 0.000 ; free physical = 4791 ; free virtual = 12065
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2286.430 ; gain = 0.000 ; free physical = 4791 ; free virtual = 12065
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2286.430 ; gain = 0.000 ; free physical = 4784 ; free virtual = 12058
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/constrs_1/new/constraints.xdc]
+Finished Parsing XDC File [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/constrs_1/new/constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.srcs/constrs_1/new/constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/soc_top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/soc_top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2318.312 ; gain = 0.000 ; free physical = 4696 ; free virtual = 11970
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2318.312 ; gain = 0.000 ; free physical = 4695 ; free virtual = 11970
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 2318.312 ; gain = 31.883 ; free physical = 4779 ; free virtual = 12055
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35ticsg324-1L
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 2318.312 ; gain = 31.883 ; free physical = 4779 ; free virtual = 12055
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 2318.312 ; gain = 31.883 ; free physical = 4779 ; free virtual = 12055
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'curr_state_reg' in module 'machine_control'
+INFO: [Synth 8-802] inferred FSM for state register 'tx_state_reg' in module 'uart_tx'
+INFO: [Synth 8-802] inferred FSM for state register 'rx_state_reg' in module 'uart_rx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+             STATE_RESET |                             0001 |                             0001
+         STATE_OPERATING |                             0010 |                             0010
+        STATE_TRAP_TAKEN |                             0100 |                             0100
+       STATE_TRAP_RETURN |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'curr_state_reg' in module 'machine_control'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+             STATE_READY |                              001 |                              001
+              STATE_LOAD |                              010 |                              010
+              STATE_SEND |                              100 |                              000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'tx_state_reg' using encoding 'one-hot' in module 'uart_tx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+             STATE_READY |                              001 |                              001
+           STATE_RECEIVE |                              010 |                              010
+              STATE_DONE |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'rx_state_reg' in module 'uart_rx'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 2318.312 ; gain = 31.883 ; free physical = 4758 ; free virtual = 12033
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   64 Bit       Adders := 4     
+	   2 Input   32 Bit       Adders := 3     
+	   3 Input   32 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 2     
++---XORs : 
+	   2 Input     32 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 2     
++---Registers : 
+	               64 Bit    Registers := 3     
+	               32 Bit    Registers := 12    
+	               30 Bit    Registers := 1     
+	               27 Bit    Registers := 1     
+	               12 Bit    Registers := 3     
+	               10 Bit    Registers := 1     
+	                8 Bit    Registers := 1     
+	                5 Bit    Registers := 1     
+	                4 Bit    Registers := 5     
+	                3 Bit    Registers := 3     
+	                2 Bit    Registers := 3     
+	                1 Bit    Registers := 19    
++---RAMs : 
+	             128K Bit	(4096 X 32 bit)          RAMs := 1     
++---Muxes : 
+	   6 Input   64 Bit        Muxes := 2     
+	   2 Input   64 Bit        Muxes := 2     
+	   4 Input   32 Bit        Muxes := 21    
+	   2 Input   32 Bit        Muxes := 44    
+	  17 Input   32 Bit        Muxes := 1     
+	   3 Input   32 Bit        Muxes := 1     
+	   2 Input   24 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 2     
+	   2 Input   10 Bit        Muxes := 1     
+	   4 Input    8 Bit        Muxes := 2     
+	   2 Input    8 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 2     
+	  21 Input    5 Bit        Muxes := 1     
+	   4 Input    4 Bit        Muxes := 2     
+	   2 Input    4 Bit        Muxes := 7     
+	   9 Input    4 Bit        Muxes := 2     
+	   5 Input    4 Bit        Muxes := 1     
+	   3 Input    3 Bit        Muxes := 2     
+	   2 Input    3 Bit        Muxes := 5     
+	   4 Input    3 Bit        Muxes := 1     
+	   5 Input    2 Bit        Muxes := 2     
+	   3 Input    2 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 27    
+	   9 Input    1 Bit        Muxes := 1     
+	   5 Input    1 Bit        Muxes := 4     
+	   3 Input    1 Bit        Muxes := 1     
+	   4 Input    1 Bit        Muxes := 3     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+RAM Pipeline Warning: Read Address Register Found For RAM mem/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM mem/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+RAM Pipeline Warning: Read Address Register Found For RAM mem/ram_reg. We will not be able to pipeline it. This may degrade performance. 
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 2318.312 ; gain = 31.883 ; free physical = 4721 ; free virtual = 12003
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping	Report (see note below)
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object  | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|soc_top     | mem/ram_reg | 4 K x 32(WRITE_FIRST)  | W | R | 4 K x 32(WRITE_FIRST)  |   | R | Port A and B     | 0      | 4      | 
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+
+Distributed RAM: Preliminary Mapping	Report (see note below)
++------------+------------+-----------+----------------------+--------------+
+|Module Name | RTL Object | Inference | Size (Depth x Width) | Primitives   | 
++------------+------------+-----------+----------------------+--------------+
+|core        | irf/Q_reg  | Implied   | 32 x 32              | RAM32M x 12	 | 
++------------+------------+-----------+----------------------+--------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:36 ; elapsed = 00:00:39 . Memory (MB): peak = 2318.312 ; gain = 31.883 ; free physical = 4610 ; free virtual = 11890
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:48 ; elapsed = 00:00:51 . Memory (MB): peak = 2321.312 ; gain = 34.883 ; free physical = 4588 ; free virtual = 11868
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping	Report
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name | RTL Object  | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|soc_top     | mem/ram_reg | 4 K x 32(WRITE_FIRST)  | W | R | 4 K x 32(WRITE_FIRST)  |   | R | Port A and B     | 0      | 4      | 
++------------+-------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+
+Distributed RAM: Final Mapping	Report
++------------+------------+-----------+----------------------+--------------+
+|Module Name | RTL Object | Inference | Size (Depth x Width) | Primitives   | 
++------------+------------+-----------+----------------------+--------------+
+|core        | irf/Q_reg  | Implied   | 32 x 32              | RAM32M x 12	 | 
++------------+------------+-----------+----------------------+--------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance mem/ram_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance mem/ram_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance mem/ram_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance mem/ram_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance mem/ram_reg_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance mem/ram_reg_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance mem/ram_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance mem/ram_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:50 ; elapsed = 00:00:53 . Memory (MB): peak = 2329.320 ; gain = 42.891 ; free physical = 4589 ; free virtual = 11869
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:53 ; elapsed = 00:00:56 . Memory (MB): peak = 2329.320 ; gain = 42.891 ; free physical = 4589 ; free virtual = 11869
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:53 ; elapsed = 00:00:56 . Memory (MB): peak = 2329.320 ; gain = 42.891 ; free physical = 4589 ; free virtual = 11869
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2329.320 ; gain = 42.891 ; free physical = 4589 ; free virtual = 11869
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2329.320 ; gain = 42.891 ; free physical = 4589 ; free virtual = 11869
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2329.320 ; gain = 42.891 ; free physical = 4589 ; free virtual = 11869
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2329.320 ; gain = 42.891 ; free physical = 4589 ; free virtual = 11869
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUFG     |     2|
+|2     |CARRY4   |   151|
+|3     |LUT1     |     8|
+|4     |LUT2     |    54|
+|5     |LUT3     |   108|
+|6     |LUT4     |   302|
+|7     |LUT5     |   537|
+|8     |LUT6     |   696|
+|9     |MUXF7    |     8|
+|10    |RAM32M   |    12|
+|11    |RAMB36E1 |     4|
+|15    |FDRE     |   633|
+|16    |FDSE     |    12|
+|17    |IBUF     |     3|
+|18    |OBUF     |     1|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2329.320 ; gain = 42.891 ; free physical = 4589 ; free virtual = 11869
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:51 ; elapsed = 00:00:54 . Memory (MB): peak = 2329.320 ; gain = 11.008 ; free physical = 4638 ; free virtual = 11918
+Synthesis Optimization Complete : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2329.328 ; gain = 42.891 ; free physical = 4638 ; free virtual = 11918
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2329.328 ; gain = 0.000 ; free physical = 4725 ; free virtual = 12005
+INFO: [Netlist 29-17] Analyzing 175 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2329.328 ; gain = 0.000 ; free physical = 4673 ; free virtual = 11953
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 12 instances were transformed.
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 12 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+60 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:05 ; elapsed = 00:01:03 . Memory (MB): peak = 2329.328 ; gain = 43.031 ; free physical = 4839 ; free virtual = 12119
+INFO: [Common 17-1381] The checkpoint '/home/rafa/ufrgs/steel-core/soc/vivado/example_soc.runs/synth_1/soc_top.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file soc_top_utilization_synth.rpt -pb soc_top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sat May 22 00:20:16 2021...

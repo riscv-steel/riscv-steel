@@ -1,5 +1,3 @@
-# Exceptions and interrupts
-
 ## Supported exceptions and interrupts
 
 Steel supports the exceptions and interrupts shown in the table below. They are listed in descending priority order (the highest priority is at the top of the table). If two or more exceptions/interrupts occur at the same time, the one with the highest priority is taken.
