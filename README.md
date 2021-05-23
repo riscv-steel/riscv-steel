@@ -7,6 +7,7 @@ Steel is a RISC-V processor core that implements the RV32I and Zicsr instruction
 ## Key features
 
 * Simple, easy to use
+* Free, open-source
 * RV32I base instruction set + Zicsr extension + M-mode privileged architecture
 * 3 pipeline stages, single-issue
 * Hardware described in Verilog
