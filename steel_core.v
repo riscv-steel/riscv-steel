@@ -211,6 +211,10 @@ SOFTWARE.
 
 // CSR ADDRESSES ----------------------------
 
+// Machine Information Registers
+`define MARCHID         12'hF12
+`define MIMPID          12'hF13
+
 // Performance Counters
 `define CYCLE           12'hC00
 `define TIME            12'hC01
@@ -1004,6 +1008,8 @@ module csr_file(
     always @*
     begin
         case(CSR_ADDR)
+            `MARCHID:       CSR_DATA_OUT = 32'h00000018; // Decimal value: 24
+            `MIMPID:        CSR_DATA_OUT = 32'h00000001; // First version
             `CYCLE:         CSR_DATA_OUT = mcycle[31:0];
             `CYCLEH:        CSR_DATA_OUT = mcycle[63:32];
             `TIME:          CSR_DATA_OUT = mtime[31:0];
