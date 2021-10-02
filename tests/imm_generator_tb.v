@@ -17,7 +17,7 @@
 
 MIT License
 
-Copyright (c) 2020 Rafael de Oliveira Calçada
+Copyright (c) 2020 Rafael de Oliveira Calcada
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

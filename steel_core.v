@@ -16,7 +16,7 @@
 
 MIT License
 
-Copyright (c) 2020 Rafael de Oliveira Calçada
+Copyright (c) 2020 Rafael de Oliveira Calcada
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,8 +48,7 @@ SOFTWARE.
 `define MCYCLEH_RESET       32'h00000000
 `define TIMEH_RESET         32'h00000000
 `define MINSTRETH_RESET     32'h00000000
-`define MTVEC_BASE_RESET    30'b00000000_00000000_00000000_000000
-`define MTVEC_MODE_RESET    2'b00
+`define MTVEC_RESET         32'h00000000
 `define MSCRATCH_RESET      32'h00000000
 `define MEPC_RESET          32'h00000000
 `define MCOUNTINHIBIT_CY_RESET  1'b0 
@@ -57,7 +56,7 @@ SOFTWARE.
 
 // Implemented instructions opcodes
 
-`define NOP_INSTR           32'b000000000000_00000_000_00000_0010011
+`define NOP_INSTR           32'h00000013
 `define OPCODE_OP           5'b01100
 `define OPCODE_OP_IMM       5'b00100
 `define OPCODE_LOAD         5'b00000
@@ -1092,6 +1091,7 @@ module csr_file(
     wire [31:0] trap_mux_out;
     wire [31:0] vec_mux_out;
     wire [31:0] base_offset;
+    wire [31:0] mtvec_reset_value = `MTVEC_RESET;
     assign base_offset = cause << 2;
     assign trap_mux_out = int_or_exc ? vec_mux_out : {mtvec_base, 2'b00};
     assign vec_mux_out = mtvec[0] ? {mtvec_base, 2'b00} + base_offset : {mtvec_base, 2'b00};
@@ -1100,8 +1100,8 @@ module csr_file(
     begin
         if(RESET)
         begin
-            mtvec_mode <= `MTVEC_MODE_RESET;
-            mtvec_base <= `MTVEC_BASE_RESET;
+            mtvec_mode <= mtvec_reset_value[1:0];
+            mtvec_base <= mtvec_reset_value[31:2];
         end
         else if(CSR_ADDR == `MTVEC && WR_EN)
         begin            
