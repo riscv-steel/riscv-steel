@@ -82,7 +82,7 @@ module soc_top #(
 	reg clk50mhz = 1'b0;
 	always @(posedge CLK) clk50mhz <= !clk50mhz;
 	
-    steel_top #(
+    steel_core_top #(
     
         .BOOT_ADDRESS(BOOT_ADDRESS)
     

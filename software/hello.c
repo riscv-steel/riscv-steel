@@ -3,7 +3,7 @@
 // FUNCTION DECLARATIONS
 void uart_send_string(const char* str);
 void uart_send_char(const char c);
-void interrupt_handler();
+void my_interrupt_handler();
 
 // ADDRESS MAP
 char* UART_TX_ADDRESS = (char*)0x00010000;
@@ -14,12 +14,32 @@ char* UART_RX_ADDRESS_READY = (char*)0x00020004;
 char buffer[100];
 char cbuf[2];
 int count = 0;
+int set = 0;
+void (*int_handler)() = 0x00000000;
+
+void set_interrupt_handler_routine(void (*my_handler)())
+{
+  set = 1;
+  int_handler = my_handler;
+  asm ("auipc t1, 0x0");
+  asm ("addi t1, t1, 12");
+  asm ("csrw mtvec, t1");
+  if(set == 0)
+  {
+    (*int_handler)();
+    asm ("mret");
+  }
+  else
+  {
+    set = 0;
+  }
+}
 
 int main()
 {
 
-  // Small delay for safe startup of UART transmitter
-  for(int i = 0; i < 500000; i++);
+  set_interrupt_handler_routine(my_interrupt_handler);
+
   uart_send_string("\n\rHello World, Steel!\n\r\n\rType something and press enter: ");
   buffer[0] = '\0';    
   cbuf[1] = '\0';
@@ -34,7 +54,7 @@ int main()
   
 }
 
-void interrupt_handler()
+void my_interrupt_handler()
 {
   
   // Read data from UART receiver and put it in READY state again

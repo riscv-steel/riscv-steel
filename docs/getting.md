@@ -7,7 +7,7 @@ To use Steel as the microprocessor unit of your project, follow the steps below:
 3. Connect Steel to a clock source, a reset signal and memory. There is an interface to fetch instructions and another to read/write data, so it is recommended a dual-port RAM memory
 
 ```verilog
-steel_top #(
+steel_core_top #(
 
     // The address of the first instruction the core will fetch
     // ---------------------------------------------------------------------------------

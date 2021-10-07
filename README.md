@@ -30,7 +30,7 @@ There are also interfaces to request for interrupts and to update the internal t
 You can write and compile programs for Steel using [RISC-V GNU Toolchain](https://github.com/riscv/riscv-gnu-toolchain). More information can be found in the [documentation](https://rafaelcalcada.github.io/steel-core/).
 
 ```verilog
-steel_top #(
+steel_core_top #(
 
     // The address of the first instruction the core will fetch
     // ---------------------------------------------------------------------------------

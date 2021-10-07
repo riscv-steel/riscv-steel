@@ -244,7 +244,7 @@ SOFTWARE.
 // Machine Counter Setup
 `define MCOUNTINHIBIT   12'h320
 
-module steel_top #(
+module steel_core_top #(
 
     parameter BOOT_ADDRESS = 32'h00000000
     
