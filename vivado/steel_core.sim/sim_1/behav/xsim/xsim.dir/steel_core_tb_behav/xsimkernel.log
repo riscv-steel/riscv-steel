@@ -1,7 +1,7 @@
-Running: xsim.dir/steel_core_tb_behav/xsimk -simmode gui -wdb steel_core_tb_behav.wdb -simrunnum 0 -socket 34641
+Running: xsim.dir/steel_core_tb_behav/xsimk.exe -simmode gui -wdb steel_core_tb_behav.wdb -simrunnum 0 -socket 59021
 Design successfully loaded
-Design Loading Memory Usage: 34008 KB (Peak: 34008 KB)
-Design Loading CPU Usage: 20 ms
+Design Loading Memory Usage: 10132 KB (Peak: 10132 KB)
+Design Loading CPU Usage: 62 ms
 Simulation completed
-Simulation Memory Usage: 120820 KB (Peak: 173276 KB)
-Simulation CPU Usage: 2270 ms
+Simulation Memory Usage: 19704 KB (Peak: 19704 KB)
+Simulation CPU Usage: 1078 ms

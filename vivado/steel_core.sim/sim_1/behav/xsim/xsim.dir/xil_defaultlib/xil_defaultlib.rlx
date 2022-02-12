@@ -1,17 +1,7 @@
 0.7
 2020.2
-Nov 18 2020
-09:20:35
-/home/rafa/ufrgs/steel-core/steel_core.v,1621641818,verilog,,/home/rafa/ufrgs/steel-core/tests/store_unit_tb.v,,alu;branch_unit;csr_file;decoder;imm_generator;integer_file;load_unit;machine_control;steel_top;store_unit,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/alu_tb.v,1621644853,verilog,,,,alu_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/branch_unit_tb.v,1621644915,verilog,,,,branch_unit_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/compliance_tb.v,1621644750,verilog,,,,compliance_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/csr_file_tb.v,1621645130,verilog,,,,csr_file_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/decoder_tb.v,1621645199,verilog,,,,decoder_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/imm_generator_tb.v,1621644779,verilog,,,,imm_generator_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/integer_file_tb.v,1621645273,verilog,,,,integer_file_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/load_unit_tb.v,1621645366,verilog,,,,load_unit_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/machine_mode_tb.v,1621645475,verilog,,,,machine_mode_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/steel_core_tb.v,1621645673,verilog,,,,steel_core_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/tests/store_unit_tb.v,1621646014,verilog,,,,store_unit_tb,,,,,,,,
-/home/rafa/ufrgs/steel-core/vivado/steel_core.sim/sim_1/behav/xsim/glbl.v,1605673889,verilog,,,,glbl,,,,,,,,
+Oct 19 2021
+03:16:22
+C:/Users/rafcal0v/steel-core/tests/compliance_tb.v,1644685603,verilog,,,,compliance_tb,,,,,,,,
+C:/Users/rafcal0v/steel-core/tests/steel_core_tb.v,1644685603,verilog,,,,steel_core_tb,,,,,,,,
+C:/Users/rafcal0v/steel-core/vivado/steel_core.sim/sim_1/behav/xsim/glbl.v,1644685604,verilog,,,,glbl,,,,,,,,
