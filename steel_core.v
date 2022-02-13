@@ -468,7 +468,7 @@ module steel_core_top #(
         .RS_2(RS2),
         
         .RD_ADDR(RD_ADDR_reg),
-        .WR_EN(FLUSH ? 1'b0 : RF_WR_EN_reg),
+        .WR_EN((FLUSH | TRAP_TAKEN) ? 1'b0 : RF_WR_EN_reg),
         .RD(WB_MUX_OUT)
 
     );
@@ -480,7 +480,7 @@ module steel_core_top #(
         .CLK(CLK),
         .RESET(RESET),
         
-        .WR_EN(FLUSH ? 1'b0 : CSR_WR_EN_reg),
+        .WR_EN((FLUSH | TRAP_TAKEN) ? 1'b0 : CSR_WR_EN_reg),
         .CSR_ADDR(CSR_ADDR_reg),
         .CSR_OP(CSR_OP_reg),
         .CSR_UIMM(IMM_reg[4:0]),
@@ -912,10 +912,8 @@ module csr_file(
     input wire [31:0] CSR_DATA_IN,
     output reg [31:0] CSR_DATA_OUT,
     
-    // from pipeline stage 1
-    input wire [31:0] PC,
-    
     // from pipeline stage 3
+    input wire [31:0] PC,
     input wire [31:0] IADDER_OUT,
     
     // interface with CLIC
