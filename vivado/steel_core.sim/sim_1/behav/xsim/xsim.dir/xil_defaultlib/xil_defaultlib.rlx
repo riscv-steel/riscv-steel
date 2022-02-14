@@ -1,9 +1,0 @@
-0.7
-2020.2
-Oct 19 2021
-03:16:22
-C:/Users/rafcal0v/steel-core/steel_core.v,1644790079,verilog,,C:/Users/rafcal0v/steel-core/tests/store_unit_tb.v,,alu;branch_unit;csr_file;decoder;imm_generator;integer_file;load_unit;machine_control;steel_core_top;store_unit,,,,,,,,
-C:/Users/rafcal0v/steel-core/tests/compliance_tb.v,1644685603,verilog,,,,compliance_tb,,,,,,,,
-C:/Users/rafcal0v/steel-core/tests/steel_core_tb.v,1644685603,verilog,,,,steel_core_tb,,,,,,,,
-C:/Users/rafcal0v/steel-core/tests/store_unit_tb.v,1644685603,verilog,,,,store_unit_tb,,,,,,,,
-C:/Users/rafcal0v/steel-core/vivado/steel_core.sim/sim_1/behav/xsim/glbl.v,1644685604,verilog,,,,glbl,,,,,,,,
