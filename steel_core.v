@@ -291,6 +291,7 @@ module steel_core_top #(
     reg [31:0] RS2_reg;
     reg [31:0] PC;
     reg [31:0] PC_reg;
+    reg [31:0] PC_reg_reg;
     wire [31:0] NEXT_PC;
     wire [31:0] PC_PLUS_4;
     reg [31:0] PC_PLUS_4_reg;
@@ -487,7 +488,7 @@ module steel_core_top #(
         .CSR_DATA_IN(RS1_reg),
         .CSR_DATA_OUT(CSR_DATA),
         
-        .PC(PC_reg),
+        .PC(PC_reg_reg),
         .IADDER_OUT(IADDER_OUT_reg),
         
         .E_IRQ(E_IRQ),
@@ -631,6 +632,18 @@ module steel_core_top #(
         .RESULT(ALU_RESULT)
 
     );    
+    
+    always @(posedge CLK)
+    begin
+        if(RESET)
+        begin
+            PC_reg_reg <= BOOT_ADDRESS;
+        end
+        else
+        begin
+            PC_reg_reg <= PC_reg;
+        end
+    end
     
     always @*
     begin
