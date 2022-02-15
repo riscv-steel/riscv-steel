@@ -56,7 +56,7 @@
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
     <Option Name="DSABoardId" Val="arty-a7-35"/>
-    <Option Name="WTXSimLaunchSim" Val="21"/>
+    <Option Name="WTXSimLaunchSim" Val="19"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -665,14 +665,14 @@
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1" RelGenDir="$PGENDIR/sim_1">
       <Filter Type="Srcs"/>
-      <File Path="$PPRDIR/../tests/compliance_tb.v">
+      <File Path="$PPRDIR/../tests/steel_core_tb.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../tests/steel_core_tb.v">
+      <File Path="$PPRDIR/../tests/store_unit_tb.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -680,7 +680,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../tests/store_unit_tb.v">
+      <File Path="$PPRDIR/../tests/compliance_tb.v">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -754,7 +754,7 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="compliance_tb"/>
+        <Option Name="TopModule" Val="steel_core_tb"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>
@@ -832,7 +832,7 @@
     <MsgAttr Name="Note" Val=""/>
     <MsgAttr Name="Author" Val=""/>
     <MsgAttr Name="CreatedTimestamp" Val=""/>
-    <MsgAttr Name="StringsToMatch" Val="WARNING: [filemgmt 56-3] Default IP Output Path : Could not find the directory &apos;C:/Users/Rafael/Documents/GitHub/steel-soc/fpga-implementations/digilent-arty-a7-35t-board/steel_soc.gen/sources_1&apos;."/>
+    <MsgAttr Name="StringsToMatch" Val="WARNING: [filemgmt 56-3] Default IP Output Path : Could not find the directory &apos;/home/rafa/ufrgs/steel-core/vivado/steel_core.gen/sources_1&apos;."/>
   </MsgRule>
   <Board/>
   <DashboardSummary Version="1" Minor="0">
