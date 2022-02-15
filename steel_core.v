@@ -1092,7 +1092,7 @@ module csr_file(
     wire [31:0] vec_mux_out;
     wire [31:0] base_offset;
     wire [31:0] mtvec_reset_value = `MTVEC_RESET;
-    assign base_offset = CAUSE_IN << 2;
+    assign base_offset = cause << 2;
     assign trap_mux_out = int_or_exc ? vec_mux_out : {mtvec_base, 2'b00};
     assign vec_mux_out = mtvec[0] ? {mtvec_base, 2'b00} + base_offset : {mtvec_base, 2'b00};
     assign TRAP_ADDRESS = trap_mux_out;
