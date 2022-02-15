@@ -169,7 +169,7 @@ module compliance_tb();
         "../../../../../riscv-compliance/I-CSRRWI-01.signature.output"
         };
 
-    steel_top #(
+    steel_core_top #(
         
         .BOOT_ADDRESS(32'h00000000)
         

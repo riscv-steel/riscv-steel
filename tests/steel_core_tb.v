@@ -97,7 +97,7 @@ module steel_core_tb();
         "rv32ui-p-srl.mem"
         };
 
-    steel_top #(
+    steel_core_top #(
         
         .BOOT_ADDRESS(32'h00000000)
         
