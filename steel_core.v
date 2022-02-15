@@ -604,7 +604,7 @@ module steel_core_top #(
             CSR_OP_reg <= CSR_OP;
             IMM_reg <= IMM;
         end
-    end
+    end    
     
     // ---------------------------------
     // PIPELINE STAGE 3
@@ -619,7 +619,7 @@ module steel_core_top #(
         .OUTPUT(LU_OUTPUT)
     
     );
-    
+        
     wire [31:0] alu_2nd_src_mux;
     assign alu_2nd_src_mux = ALU_SRC_reg ? RS2_reg : IMM_reg;
     
@@ -1092,7 +1092,7 @@ module csr_file(
     wire [31:0] vec_mux_out;
     wire [31:0] base_offset;
     wire [31:0] mtvec_reset_value = `MTVEC_RESET;
-    assign base_offset = cause << 2;
+    assign base_offset = CAUSE_IN << 2;
     assign trap_mux_out = int_or_exc ? vec_mux_out : {mtvec_base, 2'b00};
     assign vec_mux_out = mtvec[0] ? {mtvec_base, 2'b00} + base_offset : {mtvec_base, 2'b00};
     assign TRAP_ADDRESS = trap_mux_out;
