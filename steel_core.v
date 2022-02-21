@@ -2,7 +2,7 @@
 // Engineer: Rafael de Oliveira Calçada (rafaelcalcada@gmail.com) 
 // 
 // Create Date: 30.04.2020 02:39:50
-// Module Name: steel_top
+// Module Name: steel_core_top
 // Project Name: Steel Core 
 // Description: Steel Core top module 
 // 
