@@ -90,7 +90,7 @@ Steel is distributed under the MIT License. Read the `LICENSE.md` file before us
 
 ## About
 
-Steel was developed for the author's Bachelor's thesis in Computer Engineering. 
+Steel was developed as the author's final year project in Computer Engineering. 
 
 Contact: rafaelcalcada@gmail.com
 
