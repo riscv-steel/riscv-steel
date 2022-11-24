@@ -1,3 +1,1 @@
-/vivado/steel_core.*/
-/vivado/vivado*
-/riscv-compliance/*.signature.output
+/vivado/rv32i_steel_core.*/
