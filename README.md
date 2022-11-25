@@ -1,4 +1,4 @@
-![steel-core-small](https://user-images.githubusercontent.com/22325319/203923859-29f27dac-dd01-4c72-b7c7-c04a7639fe13.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/22325319/203923859-29f27dac-dd01-4c72-b7c7-c04a7639fe13.png"></p>
 
 Steel is a RISC-V processor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications. It is designed to be simple and easy to use.
 
