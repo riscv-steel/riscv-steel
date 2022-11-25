@@ -1,4 +1,4 @@
-<p><img src="https://user-images.githubusercontent.com/22325319/203945687-53910363-5be9-46f9-96fc-c31c78419ccf.png" width="150"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/22325319/203945687-53910363-5be9-46f9-96fc-c31c78419ccf.png" width="150"></p>
 
 **Steel** is a RISC-V processor core. It implements the `RV32I` base instruction set, the `Zicsr` extension, and the `M-mode` privileged architecture of the [RISC-V ISA specifications](https://riscv.org/technical/specifications/).
 
