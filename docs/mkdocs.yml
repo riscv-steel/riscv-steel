@@ -9,6 +9,7 @@ theme:
     name: readthedocs
 extra_css: [extra.css]
 extra_javascript: [extra.js]
+docs_dir: source/
 nav:
     - Overview: 'index.md'
     - Getting started: 'getting.md'

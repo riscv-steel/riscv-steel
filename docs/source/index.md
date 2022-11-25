@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100" src="images/steel-logo.png">
+  <img width="200" src="images/steel-logo-2.png">
 </p>
 
 ## Introduction
