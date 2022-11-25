@@ -1,7 +1,3 @@
-<p align="center">
-  <img width="200" src="images/steel-logo-2.png">
-</p>
-
 ## Introduction
 
 Steel is a RISC-V processor core that implements the RV32I and Zicsr instruction sets of the RISC-V specifications. It is designed to be simple and easy to use.
