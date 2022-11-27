@@ -228,7 +228,24 @@ module riscv_steel_core (
   // ----------------------------------------------------------------------------------------------
   
   reg   [31:0]  program_counter;
+  reg   [31:0]  next_program_counter;
   reg   [31:0]  writeback_multiplexer_output;
+  reg   [4:0 ]  instruction_rd_address_stage3;  
+  reg   [11:0]  instruction_csr_address_stage3;  
+  reg   [31:0]  rs1_data_stage3;  
+  reg   [31:0]  rs2_data_stage3;
+  reg   [31:0]  program_counter_stage3;
+  reg   [31:0]  program_counter_plus_4_stage3;    
+  reg   [31:0]  target_address_adder_stage3;  
+  reg   [3:0 ]  alu_operation_code_stage3;
+  reg   [1:0 ]  load_size_stage3;
+  reg   [2:0 ]  writeback_mux_selector_stage3;  
+  reg   [2:0 ]  csr_operation_stage3;  
+  reg   [31:0]  immediate_stage3;
+  reg           load_unsigned_stage3;  
+  reg           alu_2nd_operand_source_stage3;
+  reg           csr_file_write_enable_stage3;
+  reg           integer_file_write_enable_stage3;  
   
   wire  [1:0 ]  program_counter_source;
   wire  [31:0]  exception_program_counter;
@@ -263,7 +280,7 @@ module riscv_steel_core (
   wire          target_address_source;
   wire          take_branch;
   wire          take_trap;
-  wire          abort;
+  wire          flush_pipeline;
   wire          ecall;
   wire          ebreak;
   wire          mret;
@@ -277,18 +294,18 @@ module riscv_steel_core (
   // PIPELINE STAGE 1
   // ----------------------------------------------------------------------------------------------
   
-  assign instruction_address = program_counter;   
+  assign instruction_address =
+    reset ?
+    boot_address :
+    next_program_counter;   
     
-  always @(posedge clock) begin
-    if (reset) program_counter <= boot_address;
-    else begin
-      case (program_counter_source)
-        `PC_BOOT: program_counter <= boot_address;
-        `PC_EPC:  program_counter <= exception_program_counter;
-        `PC_TRAP: program_counter <= trap_address;
-        `PC_NEXT: program_counter <= next_address;
-      endcase
-    end
+  always @* begin : next_program_counter_mux
+    case (program_counter_source)
+      `PC_BOOT: next_program_counter = boot_address;
+      `PC_EPC:  next_program_counter = exception_program_counter;
+      `PC_TRAP: next_program_counter = trap_address;
+      `PC_NEXT: next_program_counter = next_address;
+    endcase
   end
     
   assign program_counter_plus_4 =
@@ -302,9 +319,20 @@ module riscv_steel_core (
    branch_target_address :
    program_counter_plus_4;
     
-  assign instruction = 
-    abort ?
-    `NOP_INSTRUCTION :
+  always @(posedge clock) begin : program_counter_reg_implementation
+    if(reset)
+      program_counter <= boot_address;
+    else
+      program_counter <= next_program_counter;
+  end
+    
+  // ----------------------------------------------------------------------------------------------
+  // PIPELINE STAGE 2
+  // ----------------------------------------------------------------------------------------------
+    
+  assign instruction =
+    flush_pipeline == 1'b1 ?
+    32'h00000013 :
     instruction_data;
   
   assign instruction_opcode       = instruction[6:0  ];
@@ -331,18 +359,6 @@ module riscv_steel_core (
   assign misaligned = misaligned_word | misaligned_half;
   assign misaligned_store = store & misaligned;
   assign misaligned_load  = load  & misaligned;
-
-  always @* begin
-    case (writeback_mux_selector)
-      `WB_ALU:          writeback_multiplexer_output = alu_output;
-      `WB_LOAD_UNIT:    writeback_multiplexer_output = load_data;
-      `WB_UPPER_IMM:    writeback_multiplexer_output = immediate;
-      `WB_TARGET_ADDER: writeback_multiplexer_output = target_address_adder;
-      `WB_CSR:          writeback_multiplexer_output = csr_data_read;
-      `WB_PC_PLUS_4:    writeback_multiplexer_output = program_counter_plus_4;
-      default:          writeback_multiplexer_output = alu_output;
-    endcase
-  end
 
   data_fetch_store_unit data_fetch_store_unit_instance (
 
@@ -409,10 +425,10 @@ module riscv_steel_core (
     .clock         (clock                                 ),
     .rs1_addr      (instruction_rs1_address               ),
     .rs2_addr      (instruction_rs2_address               ),    
-    .rd_addr       (instruction_rd_address                ),
-    .write_enable  (abort ?
+    .rd_addr       (instruction_rd_address_stage3         ),
+    .write_enable  (flush_pipeline ?
                     1'b0 :
-                    integer_file_write_enable             ),
+                    integer_file_write_enable_stage3      ),
     .rd_data       (writeback_multiplexer_output          ),
     .rs1_data      (rs1_data                              ),
     .rs2_data      (rs2_data                              )
@@ -423,16 +439,16 @@ module riscv_steel_core (
 
     .clock                          (clock                          ),
     .reset                          (reset                          ),    
-    .write_enable                   (abort ?
+    .write_enable                   (flush_pipeline ?
                                      1'b0 :
-                                     csr_file_write_enable          ),
-    .csr_address                    (instruction_csr_address        ),
-    .csr_operation                  (csr_operation                  ),
-    .immediate_data_4_to_0          (immediate       [4:0]          ),
-    .csr_write_data                 (rs1_data                       ),
+                                     csr_file_write_enable_stage3   ),
+    .csr_address                    (instruction_csr_address_stage3 ),
+    .csr_operation                  (csr_operation_stage3           ),
+    .immediate_data_4_to_0          (immediate_stage3[4:0]          ),
+    .csr_write_data                 (rs1_data_stage3                ),
     .csr_read_data                  (csr_data_read                  ),    
-    .program_counter                (program_counter                ),
-    .target_address_adder           (target_address_adder           ),    
+    .program_counter_stage3         (program_counter_stage3         ),
+    .target_address_adder_stage3    (target_address_adder_stage3    ),    
     .interrupt_request_external     (interrupt_request_external     ),
     .interrupt_request_timer        (interrupt_request_timer        ),
     .interrupt_request_software     (interrupt_request_software     ),    
@@ -446,29 +462,84 @@ module riscv_steel_core (
     .real_time                      (real_time                      ),    
     .exception_program_counter      (exception_program_counter      ),
     .program_counter_source         (program_counter_source         ),
-    .abort                          (abort                          ),
+    .flush_pipeline                 (flush_pipeline                 ),
     .trap_address                   (trap_address                   ),
     .take_trap                      (take_trap                      )
 
-  );  
+  );
+       
+  always @(posedge clock) begin
+    if(reset) begin
+      instruction_rd_address_stage3     <= 5'b00000;
+      instruction_csr_address_stage3    <= 12'b000000000000;
+      rs1_data_stage3                   <= 32'h00000000;
+      rs2_data_stage3                   <= 32'h00000000;
+      program_counter_stage3            <= boot_address;
+      program_counter_plus_4_stage3     <= 32'h00000000;
+      target_address_adder_stage3       <= 32'h00000000;
+      alu_operation_code_stage3         <= 4'b0000;
+      load_size_stage3                  <= 2'b00;
+      load_unsigned_stage3              <= 1'b0;
+      alu_2nd_operand_source_stage3     <= 1'b0;
+      csr_file_write_enable_stage3      <= 1'b0;
+      integer_file_write_enable_stage3  <= 1'b0;
+      writeback_mux_selector_stage3     <= `WB_ALU;
+      csr_operation_stage3              <= 3'b000;
+      immediate_stage3                  <= 32'h00000000;
+    end
+    else begin
+      instruction_rd_address_stage3     <= instruction_rd_address;
+      instruction_csr_address_stage3    <= instruction_csr_address;
+      rs1_data_stage3                   <= rs1_data;
+      rs2_data_stage3                   <= rs2_data;
+      program_counter_stage3            <= program_counter;
+      program_counter_plus_4_stage3     <= program_counter_plus_4;
+      target_address_adder_stage3       <= target_address_adder;
+      alu_operation_code_stage3         <= alu_operation_code;
+      load_size_stage3                  <= load_size;
+      load_unsigned_stage3              <= load_unsigned;
+      alu_2nd_operand_source_stage3     <= alu_2nd_operand_source;
+      csr_file_write_enable_stage3      <= csr_file_write_enable;
+      integer_file_write_enable_stage3  <= integer_file_write_enable;
+      writeback_mux_selector_stage3     <= writeback_mux_selector;
+      csr_operation_stage3              <= csr_operation;
+      immediate_stage3                  <= immediate;
+    end
+  end    
+    
+  // ----------------------------------------------------------------------------------------------
+  // PIPELINE STAGE 2
+  // ----------------------------------------------------------------------------------------------
+  
+  always @* begin
+    case (writeback_mux_selector_stage3)
+      `WB_ALU:          writeback_multiplexer_output = alu_output;
+      `WB_LOAD_UNIT:    writeback_multiplexer_output = load_data;
+      `WB_UPPER_IMM:    writeback_multiplexer_output = immediate_stage3;
+      `WB_TARGET_ADDER: writeback_multiplexer_output = target_address_adder_stage3;
+      `WB_CSR:          writeback_multiplexer_output = csr_data_read;
+      `WB_PC_PLUS_4:    writeback_multiplexer_output = program_counter_plus_4_stage3;
+      default:          writeback_multiplexer_output = alu_output;
+    endcase
+  end
 
   load_unit load_unit_instance (
   
-    .load_size                  (load_size                        ),
-    .load_unsigned              (load_unsigned                    ),
+    .load_size                  (load_size_stage3                 ),
+    .load_unsigned              (load_unsigned_stage3             ),
     .data_read                  (data_read                        ),
-    .load_store_address_1_to_0  (target_address_adder       [1:0] ),
+    .load_store_address_1_to_0  (target_address_adder_stage3[1:0] ),
     .load_data                  (load_data                        )
   
   );
     
   rv32i_alu rv32i_alu_instance (
 
-    .first_operand              (rs1_data                         ),
-    .second_operand             (alu_2nd_operand_source        ?
-                                 rs2_data        :
-                                 immediate                        ),
-    .operation_code             (alu_operation_code               ),    
+    .first_operand              (rs1_data_stage3                  ),
+    .second_operand             (alu_2nd_operand_source_stage3 ?
+                                 rs2_data_stage3 :
+                                 immediate_stage3                 ),
+    .operation_code             (alu_operation_code_stage3        ),    
     .operation_result           (alu_output                       )
 
   );
@@ -911,6 +982,8 @@ module integer_file (
 
   );
     
+  wire [31:0] rs1_mux;
+  wire [31:0] rs2_mux;  
   reg [31:0] Q [31:1];
   
   integer i;
@@ -923,15 +996,25 @@ module integer_file (
     if (write_enable)
       Q[rd_addr] <= rd_data;
 
+  assign rs1_mux =
+    rs1_addr == rd_addr && write_enable == 1'b1 ?
+    rd_data :
+    Q[rs1_addr];
+
+  assign rs2_mux =
+    rs2_addr == rd_addr && write_enable == 1'b1 ?
+    rd_data :
+    Q[rs2_addr];
+
   assign rs1_data =
     rs1_addr == 5'b00000 ?
     32'h00000000 :
-    Q[rs1_addr];
+    rs1_mux;
   
   assign rs2_data =
     rs2_addr == 5'b00000 ?
     32'h00000000 :
-    Q[rs2_addr];
+    rs2_mux;
     
 endmodule
 
@@ -1239,8 +1322,8 @@ module csr_file (
   output reg    [31:0]  csr_read_data,
     
   // From pipeline stage 3
-  input wire    [31:0]  program_counter,
-  input wire    [31:0]  target_address_adder,
+  input wire    [31:0]  program_counter_stage3,
+  input wire    [31:0]  target_address_adder_stage3,
     
   // // Interface with Interrupt Controller
   input wire            interrupt_request_external,
@@ -1264,7 +1347,7 @@ module csr_file (
   // Hart state control signals
   output wire   [31:0]  exception_program_counter,
   output reg    [1:0 ]  program_counter_source,
-  output wire           abort,
+  output wire           flush_pipeline,
   output wire           take_trap,
   output wire   [31:0]  trap_address
 
@@ -1291,6 +1374,7 @@ module csr_file (
   reg           mip_meip;
   reg           mip_mtip;
   reg           mip_msip;
+  reg           misaligned_address_exception;
   
   wire  [31:0]  csr_data_mask;
   wire  [31:0]  mstatus;
@@ -1306,7 +1390,7 @@ module csr_file (
   // M-mode Operation Control
   // ----------------------------------------------------------------------------------------------
 
-  assign abort =
+  assign flush_pipeline =
     current_state != STATE_OPERATING;
 
   assign interrupt_pending =
@@ -1516,7 +1600,7 @@ module csr_file (
     if(reset)
       mepc <= 32'b0;
     else if(current_state == STATE_TRAP_TAKEN)
-      mepc <= program_counter;
+      mepc <= program_counter_stage3;
     else if(current_state == STATE_OPERATING && csr_address == `MEPC && write_enable)
       mepc <= {csr_data_in[31:2], 2'b00};
   end
@@ -1648,13 +1732,22 @@ module csr_file (
   // mtval : M-mode Trap Value
   // ----------------------------------------------------------------------------------------------
 
+  always @(posedge clock) begin
+    if (reset)
+      misaligned_address_exception <= 1'b0;
+    else
+      misaligned_address_exception <= misaligned_load | misaligned_store | misaligned_instruction_address;
+  end
+
   always @(posedge clock) begin : mtval_implementation
     if(reset) 
       mtval <= 32'h00000000;
-    else if (misaligned_load | misaligned_store | misaligned_instruction_address)
-      mtval <= target_address_adder;
-    else if (take_trap)
-      mtval <= 32'h00000000;
+    else if(current_state == STATE_TRAP_TAKEN) begin
+      if(misaligned_address_exception)
+        mtval <= target_address_adder_stage3;
+      else
+        mtval <= 32'h00000000;
+    end
     else if(current_state == STATE_OPERATING && csr_address == `MTVAL && write_enable) 
       mtval <= csr_data_in;
   end

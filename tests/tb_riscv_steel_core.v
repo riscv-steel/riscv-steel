@@ -76,8 +76,8 @@ module tb_riscv_steel_core();
 
   reg           clock;
   reg           reset;
-  wire  [31:0]  instruction_data;
-  wire  [31:0]  data_read;
+  reg   [31:0]  instruction_data;
+  reg   [31:0]  data_read;
   reg   [31:0]  ram [0:524287]; // 2 MB RAM memory
 
   wire          data_write_request;
@@ -114,8 +114,17 @@ module tb_riscv_steel_core();
 
   );
   
-  assign data_read          = ram[data_rw_address[24:2]];
-  assign instruction_data   = ram[instruction_address[24:2]];
+  // RAM output registers
+  always @(posedge clock) begin
+    if (reset) begin
+      data_read          <= 32'h00000000;
+      instruction_data   <= 32'h00000000;
+    end
+    else begin
+      data_read          <= ram[data_rw_address     [24:2]];
+      instruction_data   <= ram[instruction_address [24:2]];
+    end
+  end
   
   // 64 KB RAM memory implementation
   always @(posedge clock) begin
