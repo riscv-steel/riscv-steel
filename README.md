@@ -1,18 +1,13 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/22325319/203945687-53910363-5be9-46f9-96fc-c31c78419ccf.png" width="150"></p>
 
-**Steel** is a RISC-V processor core. It implements the `RV32I` base instruction set, the `Zicsr` extension, and the Machine-level ISA of the [RISC-V ISA specifications](https://riscv.org/technical/specifications/).
-
-It passes all tests from [RISC-V Test Suite](https://github.com/riscv-software-src/riscv-tests) and [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test).
+**Steel** is a RISC-V processor core. It implements the `RV32I` base instruction set, the `Zicsr` extension, and the Machine-level ISA of the [RISC-V ISA specifications](https://riscv.org/technical/specifications/). It passes all tests from [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test).
 
 ### Overview
 
 - [x] Free and open-source ([MIT License](LICENSE))
 - [x] RV32I + Zicsr + Machine-level ISA
 - [x] Tested and production-ready
-- [x] Single-issue, in-order, 3-stage pipeline (fetch / decode / execute)
 - [x] Single source file written in human-readable Verilog
-- [x] [Documentation](https://rafaelcalcada.github.io/steel-core/) and examples available
-- [x] [CoreMark](https://github.com/eembc/coremark) score: 1.36 CoreMarks/MHz
 
 ### Uses
 
@@ -20,12 +15,7 @@ Steel is designed to be easily integrated into microcontroller / embedded system
 
 ### Documentation
 
-Documentation is available at [https://rafaelcalcada.github.io/steel-core/](https://rafaelcalcada.github.io/steel-core/). There you can find:
-- [x] [Getting Started](https://rafaelcalcada.github.io/steel-core/getting/) guide showing how to integrate **Steel** into a project
-- [x] How you can build software to run on **Steel**
-- [x] Timing diagrams showing how **Steel** communicates with memory and peripherals
-- [x] How **Steel** handle exceptions, interrupts and traps
-- [x] Implementation details with RTL diagrams
+**Steel** has gone through significant changes recently, making the old docs obsolete. **New docs will be available soon.**
 
 ### License
 
