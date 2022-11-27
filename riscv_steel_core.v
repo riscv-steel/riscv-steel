@@ -337,9 +337,7 @@ module riscv_steel_core (
       `WB_ALU:          writeback_multiplexer_output = alu_output;
       `WB_LOAD_UNIT:    writeback_multiplexer_output = load_data;
       `WB_UPPER_IMM:    writeback_multiplexer_output = immediate;
-      `WB_TARGET_ADDER: writeback_multiplexer_output = take_branch ?
-                                                       branch_target_address :
-                                                       target_address_adder;
+      `WB_TARGET_ADDER: writeback_multiplexer_output = target_address_adder;
       `WB_CSR:          writeback_multiplexer_output = csr_data_read;
       `WB_PC_PLUS_4:    writeback_multiplexer_output = program_counter_plus_4;
       default:          writeback_multiplexer_output = alu_output;
@@ -434,9 +432,7 @@ module riscv_steel_core (
     .csr_write_data                 (rs1_data                       ),
     .csr_read_data                  (csr_data_read                  ),    
     .program_counter                (program_counter                ),
-    .target_address_adder           (take_branch ?
-                                     branch_target_address :
-                                     target_address_adder           ),    
+    .target_address_adder           (target_address_adder           ),    
     .interrupt_request_external     (interrupt_request_external     ),
     .interrupt_request_timer        (interrupt_request_timer        ),
     .interrupt_request_software     (interrupt_request_software     ),    
