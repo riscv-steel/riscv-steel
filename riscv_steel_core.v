@@ -204,14 +204,14 @@ module riscv_steel_core (
 
   // Instruction fetch interface
   output wire   [31:0]  instruction_address,
-  input  wire   [31:0]  instruction_data,
+  input  wire   [31:0]  instruction_in,
     
   // Data fetch/write interface
   output wire   [31:0]  data_rw_address,
-  output wire   [31:0]  data_write,
+  output wire   [31:0]  data_out,
   output wire           data_write_request,
   output wire   [3:0 ]  data_write_mask,
-  input  wire   [31:0]  data_read,
+  input  wire   [31:0]  data_in,
   
   // Interrupt signals (hardwire to zero if unused)
   input  wire           interrupt_request_external,
@@ -267,7 +267,7 @@ module riscv_steel_core (
   wire  [31:0]  immediate;
   wire  [31:0]  rs1_data;
   wire  [31:0]  rs2_data;
-  wire  [31:0]  csr_data_read;
+  wire  [31:0]  csr_data_out;
   wire  [2:0 ]  writeback_mux_selector;
   wire  [2:0 ]  immediate_type;
   wire  [2:0 ]  csr_operation;
@@ -333,7 +333,7 @@ module riscv_steel_core (
   assign instruction =
     flush_pipeline == 1'b1 ?
     32'h00000013 :
-    instruction_data;
+    instruction_in;
   
   assign instruction_opcode       = instruction[6:0  ];
   assign instruction_funct3       = instruction[14:12];
@@ -368,9 +368,9 @@ module riscv_steel_core (
     .store              (store                ),
     .misaligned_store   (misaligned_store     ),
     .take_trap          (take_trap            ),
-    .data_write_request (data_write_request   ),
-    .data_rw_address    (data_rw_address      ),
-    .store_data         (data_write           ),
+    .write_request      (data_write_request   ),
+    .rw_address         (data_rw_address      ),
+    .store_data         (data_out             ),
     .write_mask         (data_write_mask      )
   
   );
@@ -445,8 +445,8 @@ module riscv_steel_core (
     .csr_address                    (instruction_csr_address_stage3 ),
     .csr_operation                  (csr_operation_stage3           ),
     .immediate_data_4_to_0          (immediate_stage3[4:0]          ),
-    .csr_write_data                 (rs1_data_stage3                ),
-    .csr_read_data                  (csr_data_read                  ),    
+    .csr_data_in                    (rs1_data_stage3                ),
+    .csr_data_out                   (csr_data_out                   ),    
     .program_counter_stage3         (program_counter_stage3         ),
     .target_address_adder_stage3    (target_address_adder_stage3    ),    
     .interrupt_request_external     (interrupt_request_external     ),
@@ -517,7 +517,7 @@ module riscv_steel_core (
       `WB_LOAD_UNIT:    writeback_multiplexer_output = load_data;
       `WB_UPPER_IMM:    writeback_multiplexer_output = immediate_stage3;
       `WB_TARGET_ADDER: writeback_multiplexer_output = target_address_adder_stage3;
-      `WB_CSR:          writeback_multiplexer_output = csr_data_read;
+      `WB_CSR:          writeback_multiplexer_output = csr_data_out;
       `WB_PC_PLUS_4:    writeback_multiplexer_output = program_counter_plus_4_stage3;
       default:          writeback_multiplexer_output = alu_output;
     endcase
@@ -527,7 +527,7 @@ module riscv_steel_core (
   
     .load_size                  (load_size_stage3                 ),
     .load_unsigned              (load_unsigned_stage3             ),
-    .data_read                  (data_read                        ),
+    .data_read                  (data_in                          ),
     .load_store_address_1_to_0  (target_address_adder_stage3[1:0] ),
     .load_data                  (load_data                        )
   
@@ -857,10 +857,10 @@ endmodule
 // Data Fetch/Store Unit
 // 
 // This unit generates the signals interfacing with the data memory:
-//   - data_rw_address (address to fetch/store data)
-//   - data_write (data to be written to memory)
-//   - data_write_mask (write byte-enable mask) 
-//   - data_write_request (0 = fetch data / 1 = write)
+//   - rw_address (address to fetch/store data)
+//   - store_data (data to be written to memory)
+//   - write_mask (write byte-enable mask) 
+//   - write_request (0 = fetch data / 1 = write)
 //
 // When input 'store' is logic 0 the core is reading from memory. 
 // If it is logic 1 the core is writing to memory, and the output signals are
@@ -868,7 +868,7 @@ endmodule
 // position.
 //
 // Steel does not generate unaligned addresses. It means the two last bits of
-// data_rw_address bus are always 2'b00.
+// rw_address bus are always 2'b00.
 //
 // ------------------------------------------------------------------------------------------------
 module data_fetch_store_unit (
@@ -879,8 +879,8 @@ module data_fetch_store_unit (
   input wire            store,
   input wire            misaligned_store,
   input wire            take_trap,
-  output wire           data_write_request,
-  output wire   [31:0]  data_rw_address,
+  output wire           write_request,
+  output wire   [31:0]  rw_address,
   output reg    [31:0]  store_data,
   output reg    [3:0 ]  write_mask
     
@@ -891,10 +891,10 @@ module data_fetch_store_unit (
   reg [31:0] half_data;
   reg [31:0] byte_data;
   
-  assign data_write_request =
+  assign write_request =
     store & ~misaligned_store & ~take_trap;
   
-  assign data_rw_address = {load_store_address[31:2], 2'b00};
+  assign rw_address = {load_store_address[31:2], 2'b00};
   
   always @* begin
     case(instruction_funct3)
@@ -907,11 +907,11 @@ module data_fetch_store_unit (
         store_data = half_data;
       end
       `FUNCT3_SW: begin
-        write_mask = {4{data_write_request}};
+        write_mask = {4{write_request}};
         store_data = rs2_data;
       end
       default: begin
-        write_mask = {4{data_write_request}};
+        write_mask = {4{write_request}};
         store_data = rs2_data;
       end 
     endcase
@@ -921,19 +921,19 @@ module data_fetch_store_unit (
     case(load_store_address[1:0])
       2'b00: begin 
         byte_data = {24'b0, rs2_data[7:0]};
-        write_mask_for_byte = {3'b0, data_write_request};
+        write_mask_for_byte = {3'b0, write_request};
       end
       2'b01: begin
         byte_data = {16'b0, rs2_data[7:0], 8'b0};
-        write_mask_for_byte = {2'b0, data_write_request, 1'b0};
+        write_mask_for_byte = {2'b0, write_request, 1'b0};
       end
       2'b10: begin
         byte_data = {8'b0, rs2_data[7:0], 16'b0};
-        write_mask_for_byte = {1'b0, data_write_request, 2'b0};
+        write_mask_for_byte = {1'b0, write_request, 2'b0};
       end
       2'b11: begin
         byte_data = {rs2_data[7:0], 24'b0};
-        write_mask_for_byte = {data_write_request, 3'b0};
+        write_mask_for_byte = {write_request, 3'b0};
       end
     endcase    
   end
@@ -942,11 +942,11 @@ module data_fetch_store_unit (
     case(load_store_address[1])
       1'b0: begin
         half_data = {16'b0, rs2_data[15:0]};
-        write_mask_for_half = {2'b0, {2{data_write_request}}};
+        write_mask_for_half = {2'b0, {2{write_request}}};
       end
       1'b1: begin
         half_data = {rs2_data[15:0], 16'b0};
-        write_mask_for_half = {{2{data_write_request}}, 2'b0};
+        write_mask_for_half = {{2{write_request}}, 2'b0};
       end
     endcase
   end
@@ -1318,8 +1318,8 @@ module csr_file (
   input wire    [11:0]  csr_address,
   input wire    [2:0 ]  csr_operation,
   input wire    [4:0 ]  immediate_data_4_to_0,
-  input wire    [31:0]  csr_write_data,
-  output reg    [31:0]  csr_read_data,
+  input wire    [31:0]  csr_data_in,
+  output reg    [31:0]  csr_data_out,
     
   // From pipeline stage 3
   input wire    [31:0]  program_counter_stage3,
@@ -1355,7 +1355,7 @@ module csr_file (
     
   reg   [3:0 ]  current_state;
   reg   [3:0 ]  next_state;
-  reg   [31:0]  csr_data_in;
+  reg   [31:0]  csr_write_data;
   reg   [31:0]  mepc;
   reg   [31:0]  mscratch;
   reg   [31:0]  mtvec;
@@ -1459,46 +1459,46 @@ module csr_file (
   assign csr_data_mask =
     csr_operation[2] == 1'b1 ?
     {27'b0, immediate_data_4_to_0} :
-    csr_write_data;
+    csr_data_in;
 
-  always @* begin : csr_data_in_mux
+  always @* begin : csr_write_data_mux
     case (csr_operation[1:0])
       `CSR_RWX:
-        csr_data_in = csr_data_mask;
+        csr_write_data = csr_data_mask;
       `CSR_RSX:
-        csr_data_in = csr_read_data |  csr_data_mask;
+        csr_write_data = csr_data_out |  csr_data_mask;
       `CSR_RCX:
-        csr_data_in = csr_read_data & ~csr_data_mask;
+        csr_write_data = csr_data_out & ~csr_data_mask;
       default:
-        csr_data_in = csr_read_data;
+        csr_write_data = csr_data_out;
     endcase
   end
 
-  always @* begin : csr_read_data_mux
+  always @* begin : csr_data_out_mux
     case (csr_address)
-      `MARCHID:       csr_read_data = 32'h00000018; // Steel marchid
-      `MIMPID:        csr_read_data = 32'h00000004; // Version 4 
-      `CYCLE:         csr_read_data = mcycle    [31:0 ];
-      `CYCLEH:        csr_read_data = mcycle    [63:32];
-      `TIME:          csr_read_data = utime     [31:0 ];
-      `TIMEH:         csr_read_data = utime     [63:32];
-      `INSTRET:       csr_read_data = minstret  [31:0 ];
-      `INSTRETH:      csr_read_data = minstret  [63:32];
-      `MSTATUS:       csr_read_data = mstatus;
-      `MSTATUSH:      csr_read_data = 32'h00000000;
-      `MISA:          csr_read_data = 32'h40000100; // RV32I base ISA only
-      `MIE:           csr_read_data = mie;
-      `MTVEC:         csr_read_data = mtvec;
-      `MSCRATCH:      csr_read_data = mscratch;
-      `MEPC:          csr_read_data = mepc;
-      `MCAUSE:        csr_read_data = mcause;
-      `MTVAL:         csr_read_data = mtval;
-      `MIP:           csr_read_data = mip;
-      `MCYCLE:        csr_read_data = mcycle    [31:0 ];
-      `MCYCLEH:       csr_read_data = mcycle    [63:32];
-      `MINSTRET:      csr_read_data = minstret  [31:0 ];
-      `MINSTRETH:     csr_read_data = minstret  [63:32];
-      default:        csr_read_data = 32'h00000000;
+      `MARCHID:       csr_data_out = 32'h00000018; // Steel marchid
+      `MIMPID:        csr_data_out = 32'h00000004; // Version 4 
+      `CYCLE:         csr_data_out = mcycle    [31:0 ];
+      `CYCLEH:        csr_data_out = mcycle    [63:32];
+      `TIME:          csr_data_out = utime     [31:0 ];
+      `TIMEH:         csr_data_out = utime     [63:32];
+      `INSTRET:       csr_data_out = minstret  [31:0 ];
+      `INSTRETH:      csr_data_out = minstret  [63:32];
+      `MSTATUS:       csr_data_out = mstatus;
+      `MSTATUSH:      csr_data_out = 32'h00000000;
+      `MISA:          csr_data_out = 32'h40000100; // RV32I base ISA only
+      `MIE:           csr_data_out = mie;
+      `MTVEC:         csr_data_out = mtvec;
+      `MSCRATCH:      csr_data_out = mscratch;
+      `MEPC:          csr_data_out = mepc;
+      `MCAUSE:        csr_data_out = mcause;
+      `MTVAL:         csr_data_out = mtval;
+      `MIP:           csr_data_out = mip;
+      `MCYCLE:        csr_data_out = mcycle    [31:0 ];
+      `MCYCLEH:       csr_data_out = mcycle    [63:32];
+      `MINSTRET:      csr_data_out = minstret  [31:0 ];
+      `MINSTRETH:     csr_data_out = minstret  [63:32];
+      default:        csr_data_out = 32'h00000000;
     endcase
   end
 
@@ -1530,8 +1530,8 @@ module csr_file (
       mstatus_mie   <= 1'b0;
     end
     else if(current_state == STATE_OPERATING && csr_address == `MSTATUS && write_enable) begin
-      mstatus_mie   <= csr_data_in[3];
-      mstatus_mpie  <= csr_data_in[7];
+      mstatus_mie   <= csr_write_data[3];
+      mstatus_mpie  <= csr_write_data[7];
     end    
   end
 
@@ -1556,9 +1556,9 @@ module csr_file (
       mie_msie <= 1'b0;
     end
     else if(csr_address == `MIE && write_enable) begin            
-      mie_meie <= csr_data_in[11];
-      mie_mtie <= csr_data_in[7];
-      mie_msie <= csr_data_in[3];
+      mie_meie <= csr_write_data[11];
+      mie_mtie <= csr_write_data[7];
+      mie_msie <= csr_write_data[3];
     end
   end
   
@@ -1602,7 +1602,7 @@ module csr_file (
     else if(current_state == STATE_TRAP_TAKEN)
       mepc <= program_counter_stage3;
     else if(current_state == STATE_OPERATING && csr_address == `MEPC && write_enable)
-      mepc <= {csr_data_in[31:2], 2'b00};
+      mepc <= {csr_write_data[31:2], 2'b00};
   end
   
   // ----------------------------------------------------------------------------------------------
@@ -1613,7 +1613,7 @@ module csr_file (
     if(reset)
       mscratch <= 32'b0;
     else if(csr_address == `MSCRATCH && write_enable)
-      mscratch <= csr_data_in;
+      mscratch <= csr_write_data;
   end
   
   // ----------------------------------------------------------------------------------------------
@@ -1625,9 +1625,9 @@ module csr_file (
       mcycle <= 64'b0;
     else begin 
       if (csr_address == `MCYCLE && write_enable)
-        mcycle <= {mcycle[63:32], csr_data_in} + 1;
+        mcycle <= {mcycle[63:32], csr_write_data} + 1;
       else if (csr_address == `MCYCLEH && write_enable)
-        mcycle <= {csr_data_in, mcycle[31:0]} + 1;
+        mcycle <= {csr_write_data, mcycle[31:0]} + 1;
       else
         mcycle <= mcycle + 1;      
     end
@@ -1643,15 +1643,15 @@ module csr_file (
     else begin 
       if (csr_address == `MINSTRET && write_enable) begin
         if (current_state == STATE_OPERATING)
-          minstret <= {minstret[63:32], csr_data_in} + 1;
+          minstret <= {minstret[63:32], csr_write_data} + 1;
         else
-          minstret <= {minstret[63:32], csr_data_in};
+          minstret <= {minstret[63:32], csr_write_data};
       end
       else if (csr_address == `MINSTRETH && write_enable) begin
         if (current_state == STATE_OPERATING)
-          minstret <= {csr_data_in, minstret[31:0]} + 1;
+          minstret <= {csr_write_data, minstret[31:0]} + 1;
         else
-          minstret <= {csr_data_in, minstret[31:0]};
+          minstret <= {csr_write_data, minstret[31:0]};
       end
       else begin
         if (current_state == STATE_OPERATING)
@@ -1680,7 +1680,7 @@ module csr_file (
     else if(current_state == STATE_TRAP_TAKEN)
       mcause <= {mcause_interrupt_flag, 27'b0, mcause_cause_code};
     else if(current_state == STATE_OPERATING && csr_address == `MCAUSE && write_enable) 
-      mcause <= csr_data_in;
+      mcause <= csr_write_data;
   end
 
   always @(posedge clock) begin : trap_cause_implementation
@@ -1749,7 +1749,7 @@ module csr_file (
         mtval <= 32'h00000000;
     end
     else if(current_state == STATE_OPERATING && csr_address == `MTVAL && write_enable) 
-      mtval <= csr_data_in;
+      mtval <= csr_write_data;
   end
   
   // ----------------------------------------------------------------------------------------------
@@ -1768,7 +1768,7 @@ module csr_file (
     if(reset)
       mtvec <= 32'b0;
     else if(csr_address == `MTVEC && write_enable)
-      mtvec <= {csr_data_in[31:2], 1'b0, csr_data_in[0]};
+      mtvec <= {csr_write_data[31:2], 1'b0, csr_write_data[0]};
   end
     
 endmodule

@@ -76,14 +76,14 @@ module tb_riscv_steel_core();
 
   reg           clock;
   reg           reset;
-  reg   [31:0]  instruction_data;
-  reg   [31:0]  data_read;
+  reg   [31:0]  instruction_in;
+  reg   [31:0]  data_in;
   reg   [31:0]  ram [0:524287]; // 2 MB RAM memory
 
   wire          data_write_request;
   wire  [31:0]  instruction_address;
   wire  [31:0]  data_rw_address;
-  wire  [31:0]  data_write;
+  wire  [31:0]  data_out;
   wire  [3:0 ]  data_write_mask;
   
   riscv_steel_core dut (
@@ -95,14 +95,14 @@ module tb_riscv_steel_core();
 
     // Instruction fetch interface
     .instruction_address        (instruction_address  ),
-    .instruction_data           (instruction_data     ),
+    .instruction_in             (instruction_in       ),
       
     // Data fetch/write interface
     .data_rw_address            (data_rw_address      ),
-    .data_write                 (data_write           ),
+    .data_out                   (data_out             ),
     .data_write_request         (data_write_request   ),
     .data_write_mask            (data_write_mask      ),
-    .data_read                  (data_read            ),
+    .data_in                    (data_in              ),
     
     // Interrupt signals (hardwired to zero because they're not needed for the tests)
     .interrupt_request_external (1'b0                 ),
@@ -117,12 +117,12 @@ module tb_riscv_steel_core();
   // RAM output registers
   always @(posedge clock) begin
     if (reset) begin
-      data_read          <= 32'h00000000;
-      instruction_data   <= 32'h00000000;
+      data_in            <= 32'h00000000;
+      instruction_in     <= 32'h00000000;
     end
     else begin
-      data_read          <= ram[data_rw_address     [24:2]];
-      instruction_data   <= ram[instruction_address [24:2]];
+      data_in            <= ram[data_rw_address     [24:2]];
+      instruction_in     <= ram[instruction_address [24:2]];
     end
   end
   
@@ -130,13 +130,13 @@ module tb_riscv_steel_core();
   always @(posedge clock) begin
     if(data_write_request) begin
       if(data_write_mask[0])
-        ram[data_rw_address[24:2] ][7:0  ]  <= data_write[7:0  ];
+        ram[data_rw_address[24:2] ][7:0  ]  <= data_out[7:0  ];
       if(data_write_mask[1])
-        ram[data_rw_address[24:2] ][15:8 ]  <= data_write[15:8 ];
+        ram[data_rw_address[24:2] ][15:8 ]  <= data_out[15:8 ];
       if(data_write_mask[2])
-        ram[data_rw_address[24:2] ][23:16]  <= data_write[23:16];
+        ram[data_rw_address[24:2] ][23:16]  <= data_out[23:16];
       if(data_write_mask[3])
-        ram[data_rw_address[24:2] ][31:24]  <= data_write[31:24];
+        ram[data_rw_address[24:2] ][31:24]  <= data_out[31:24];
     end
   end
   
