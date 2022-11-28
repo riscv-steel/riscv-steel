@@ -36,12 +36,12 @@ E-mail:        rafaelcalcada@gmail.com
 /**************************************************************************************************
 
 This is a testbench/simulation for module riscv_steel_core.
-------------------------------------------------
+-----------------------------------------------------------
 
 It executes all unit tests from RISC-V Compatibility Test Framework v2.0.
 
-A successful execution ends with printing:
-"RISC-V Steel Core passed ALL tests from RISC-V Test and Compliance suites."
+A successful execution ends with the message:
+"RISC-V Steel Core passed ALL tests from RISC-V Compatibility Test Framework v2.0."
 
 How tests work:
 ---------------
@@ -286,8 +286,7 @@ module tb_riscv_steel_core();
       // Execution is aborted if j reaches 500000 cycles (~1ms)
       for(j = 0; j < 500000; j=j+1) begin
         #20;
-        // The compliance test flags the end of its execution by writing 1
-        // to the address 0x00001000
+        // Tests flag the end of their execution by writing 1 to the address 0x00001000
         if(data_write_request == 1'b1 && data_rw_address == 32'h00001000) begin   
           // The start and final memory position of the signature are stored at
           // 0x00001ffc (ram[2046]) and 0x00001ff8 (ram[2047]).
@@ -307,7 +306,7 @@ module tb_riscv_steel_core();
             z=z+1;
           end
           if (current_test_goldenref_match == 0) begin            
-            $display("Passed on compliance test: %s", riscv_test_program[k]);            
+            $display("Passed on test: %s", riscv_test_program[k]);            
             j = 999999; // large value skips this loop (without flagging error)
           end
         end
@@ -320,7 +319,7 @@ module tb_riscv_steel_core();
     end
     
     if (test_error_flag == 0) begin
-      $display("RISC-V Steel Core passed ALL tests from RISC-V Test and Compliance suites.");
+      $display("RISC-V Steel Core passed ALL tests from RISC-V Compatibility Test Framework v2.0.");
       $stop();
     end
     else begin
