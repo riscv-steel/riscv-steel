@@ -6,7 +6,7 @@
 
 - [x] Free and open-source ([MIT License](LICENSE))
 - [x] RV32I + Zicsr + Machine-level ISA
-- [x] 3-state pipeline, in-order execution
+- [x] 3-stage pipeline, in-order execution
 - [x] Tested and production-ready
 - [x] Single source file written in human-readable Verilog
 
