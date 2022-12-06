@@ -1,18 +1,19 @@
 <p><img src="https://user-images.githubusercontent.com/22325319/203945687-53910363-5be9-46f9-96fc-c31c78419ccf.png" width="150"></p>
 
-**Steel** is a RISC-V processor core. It implements the `RV32I` base instruction set, the `Zicsr` extension, and the Machine-level ISA of the [RISC-V ISA specifications](https://riscv.org/technical/specifications/). It passes all tests from [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test).
+RISC-V Steel Core is a free and open-source 32-bit RISC-V processor core for digital designs. With Steel you can create new RISC-V based embedded systems, microcontrollers and systems-on-chip.
 
 ### Overview
 
 - [x] Free and open-source ([MIT License](LICENSE))
 - [x] RV32I + Zicsr + Machine-level ISA
 - [x] 3-stage pipeline, in-order execution
-- [x] Tested and production-ready
+- [x] Passes all [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test) tests
+- [x] Production-ready
 - [x] Single source file written in human-readable Verilog
 
 ### Uses
 
-Steel is designed to be easily integrated into microcontroller / embedded systems / system-on-chip designs as the main or auxiliary processing unit. It can be used both as a soft-core with FPGAs or as a module in ASIC designs.
+RISC-V Steel is designed to be easily integrated into microcontroller, embedded systems and system-on-chip designs.
 
 ### Documentation
 
