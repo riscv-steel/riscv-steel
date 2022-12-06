@@ -11,10 +11,6 @@ RISC-V Steel Core is a free and open-source 32-bit RISC-V processor core for dig
 - [x] Production-ready
 - [x] Single source file written in human-readable Verilog
 
-### Uses
-
-RISC-V Steel is designed to be easily integrated into microcontroller, embedded systems and system-on-chip designs.
-
 ### Documentation
 
 **Steel** has gone through significant changes recently, making the old docs obsolete. **New docs will be available soon.**
