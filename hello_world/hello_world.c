@@ -44,20 +44,20 @@ char uart_rx_char()
 }
 
 /* If Enter key is pressed, prints "You pressed Enter key".
- * Otherwise simply echoes back the received character */
+ * Otherwise simply echoes back the received character (if it is printable) */
 void process_received_character()
 {
   char received_character = uart_rx_char();
   if (received_character == '\r')
-    uart_tx_string("\nYou pressed Enter key.\n\n> ");
-  else
+    uart_tx_string("\nYou pressed Enter key.\n");
+  else if (received_character >= 32 || received_character < 127) 
     uart_tx_char(received_character);
 }
 
 int main()
 {
   // Send Hello World! message
-  uart_tx_string("\n\nRISC-V Steel Core Project\n\nHello World!\n\nType anything or press enter:\n\n> ");
+  uart_tx_string("\n\nRISC-V Steel Core Project\n\nHello World!\n\nType anything or press enter:\n");
   // Enable interrupts
   asm (
     "li t0, 0xffffffff;"
