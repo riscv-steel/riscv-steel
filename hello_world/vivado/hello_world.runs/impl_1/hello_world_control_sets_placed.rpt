@@ -1,0 +1,96 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
+| Date         : Wed Dec  7 23:22:47 2022
+| Host         : aio running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file hello_world_control_sets_placed.rpt
+| Design       : hello_world
+| Device       : xc7a35t
+----------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    18 |
+|    Minimum number of control sets                        |    18 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    35 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    18 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |     1 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     4 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     1 |
+| >= 14 to < 16      |     1 |
+| >= 16              |    10 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              61 |           20 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |             329 |          115 |
+| Yes          | No                    | No                     |               9 |            4 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             238 |           99 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++------------------+------------------------------------------------------------------+----------------------------------------------------------------+------------------+----------------+--------------+
+|   Clock Signal   |                           Enable Signal                          |                        Set/Reset Signal                        | Slice Load Count | Bel Load Count | Bels / Slice |
++------------------+------------------------------------------------------------------+----------------------------------------------------------------+------------------+----------------+--------------+
+|  clock_IBUF_BUFG |                                                                  |                                                                |                1 |              1 |         1.00 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/mcause[31]_i_1_n_0   | reset_IBUF                                                     |                3 |              5 |         1.67 |
+|  clk50mhz_BUFG   |                                                                  | uart_instance/uart_rdata[7]_i_1_n_0                            |                3 |              8 |         2.67 |
+|  clk50mhz_BUFG   | uart_instance/rx_data_0                                          | reset_IBUF                                                     |                2 |              8 |         4.00 |
+|  clk50mhz_BUFG   | uart_instance/p_0_in                                             | uart_instance/rx_register[7]_i_1_n_0                           |                2 |              8 |         4.00 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/tx_register          |                                                                |                4 |              9 |         2.25 |
+|  clk50mhz_BUFG   |                                                                  | riscv_steel_core_instance/csr_file_instance/tx_register        |                4 |             13 |         3.25 |
+|  clk50mhz_BUFG   |                                                                  | uart_instance/rx_cycle_counter[0]_i_1_n_0                      |                4 |             14 |         3.50 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/mcause[31]_i_1_n_0   | riscv_steel_core_instance/csr_file_instance/mcause[30]_i_1_n_0 |               14 |             27 |         1.93 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/mtvec1               | reset_IBUF                                                     |               15 |             31 |         2.07 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/mepc[31]_i_1_n_0     | reset_IBUF                                                     |               13 |             31 |         2.38 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/mtval[31]_i_1_n_0    | reset_IBUF                                                     |               17 |             32 |         1.88 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/mscratch0            | reset_IBUF                                                     |               17 |             32 |         1.88 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/minstret[31]_i_1_n_0 | reset_IBUF                                                     |                8 |             32 |         4.00 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/minstret[63]_i_1_n_0 | reset_IBUF                                                     |                8 |             32 |         4.00 |
+|  clk50mhz_BUFG   |                                                                  |                                                                |               19 |             60 |         3.16 |
+|  clk50mhz_BUFG   | riscv_steel_core_instance/csr_file_instance/write_enable0        |                                                                |               11 |             88 |         8.00 |
+|  clk50mhz_BUFG   |                                                                  | reset_IBUF                                                     |              104 |            294 |         2.83 |
++------------------+------------------------------------------------------------------+----------------------------------------------------------------+------------------+----------------+--------------+
+
+
