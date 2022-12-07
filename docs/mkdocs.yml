@@ -1,0 +1,56 @@
+site_name: RISC-V Steel Core
+site_author: Rafael Calcada
+site_description: The Steel Core is a free and open-source 32-bit RISC-V processor core for digital designs. With Steel you can create new RISC-V based embedded systems, microcontrollers and systems-on-chip.
+repo_url: https://github.com/rafaelcalcada/steel-core
+edit_uri: edit/main/docs/source/
+markdown_extensions:
+    - attr_list
+    - md_in_html
+    - tables
+    - footnotes
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
+    - pymdownx.highlight:
+        anchor_linenums: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - def_list
+    - pymdownx.tasklist:
+        custom_checkbox: true
+theme: 
+    logo: images/steel-logo-1.png
+    name: material
+    custom_dir: overrides
+    highlightjs: true
+    palette:
+        primary: black
+        accent: teal
+    features:
+        - navigation.tabs
+        - navigation.top
+        - toc.integrate
+    hljs_languages:
+        - verilog
+        - console
+extra_css: [extra.css]
+plugins:
+    - search
+docs_dir: source/
+copyright: Copyright &copy; 2020 - 2023 Rafael Calcada
+nav:
+    - Home: 'index.md'
+    - Getting started: 'getting-started.md'
+    #- 'About the project':       
+    - License: 'license.md'
+    #- User Guide:
+    #  - Hardware guide: 'hardware.md'      
+    #  - Software guide: 'software.md'
+    #- 'Documentation':      
+    #  - Configuration: 'config.md'
+    #  - I/O signals: 'steelio.md'
+    #  - Timing diagrams: 'timing.md'      
+    #  - Example system: 'examplesoc.md'
+    #  - Exceptions and interrupts: 'traps.md'
+    #  - Microarchitecture: 'uarch.md'
+    #  - Implementation details: 'details.md'    
