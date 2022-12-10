@@ -1,8 +1,10 @@
+## Project overview
+
 **RISC-V Steel Core** is a free and open-source 32-bit RISC-V processor core for digital designs. With Steel you can create new RISC-V based embedded systems, microcontrollers and systems-on-chip.
 
 :arrow_right: [Check out the Getting Started guide!](https://rafaelcalcada.github.io/steel-core/getting-started/)
 
-## Overview
+### Key features
 
 :white_check_mark: `RV32I` + `Zicsr` + `Machine-level ISA` <br/>
 :white_check_mark: 3-stage pipeline, in-order execution <br/>
@@ -13,15 +15,15 @@
 
 ## Documentation
 
-**Steel** has gone through significant changes recently, making the old docs obsolete. **New docs will be available soon.**
+The project has gone through significant changes recently, making the old docs obsolete. **New docs will be available soon.**
 
 ## License
 
-Steel is distributed under the [MIT License](LICENSE.md).
+Steel Core is distributed under the [MIT License](LICENSE.md).
 
 ## History
 
-Steel was developed for the author's final year project in Computer Engineering. 
+Steel Core was developed for the author's final year project in college in 2020. The project goal was to help expand the adoption of the RISC-V architecture by creating a RISC-V core with the basic features to run embedded software that is simple to reuse.
 
 ## Contact
 
