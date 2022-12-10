@@ -1,21 +1,15 @@
-<br/>
-<br/>
-
-<p align="center"><img src="https://user-images.githubusercontent.com/22325319/205841657-5ee55baa-9d79-4c36-9e1b-a0b5afdaba31.png" width="150"></p>
-<br/>
-
 **RISC-V Steel Core** is a free and open-source 32-bit RISC-V processor core for digital designs. With Steel you can create new RISC-V based embedded systems, microcontrollers and systems-on-chip.
 
-[Click here to check out the Getting Started guide!](https://rafaelcalcada.github.io/steel-core/getting-started/)
+:arrow_right: [Check out the Getting Started guide!](https://rafaelcalcada.github.io/steel-core/getting-started/)
 
 ## Overview
 
-- [x] RV32I + Zicsr + Machine-level ISA
-- [x] 3-stage pipeline, in-order execution
-- [x] Passes all [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test) tests
-- [x] Production-ready
-- [x] Single [source file](riscv_steel_core.v) written in human-readable Verilog
-- [x] Free and open-source ([MIT License](LICENSE.md))
+:white_check_mark: `RV32I` + `Zicsr` + `Machine-level ISA` <br/>
+:white_check_mark: 3-stage pipeline, in-order execution <br/>
+:white_check_mark: Passes all [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test) tests <br/>
+:white_check_mark: Production-ready <br/>
+:white_check_mark: Single [source file](riscv_steel_core.v) written in human-readable Verilog <br/>
+:white_check_mark: Free and open-source ([MIT License](LICENSE.md))
 
 ## Documentation
 
