@@ -10,12 +10,12 @@
 
 ## Overview
 
-- [x] Free and open-source ([MIT License](LICENSE))
 - [x] RV32I + Zicsr + Machine-level ISA
 - [x] 3-stage pipeline, in-order execution
 - [x] Passes all [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test) tests
 - [x] Production-ready
-- [x] Single source file written in human-readable Verilog
+- [x] Single [source file](riscv_steel_core.v) written in human-readable Verilog
+- [x] Free and open-source ([MIT License](LICENSE.md))
 
 ## Documentation
 
@@ -23,7 +23,7 @@
 
 ## License
 
-Steel is distributed under the [MIT License](LICENSE).
+Steel is distributed under the [MIT License](LICENSE.md).
 
 ## History
 
