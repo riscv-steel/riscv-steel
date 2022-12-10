@@ -23,7 +23,7 @@ Steel Core is distributed under the [MIT License](LICENSE.md).
 
 ## History
 
-Steel Core was developed for the author's final year project in college in 2020. The project goal was to help expand the adoption of the RISC-V architecture by creating a RISC-V core with the basic features to run embedded software that is simple to reuse.
+Steel Core was developed for the author's final year college project in 2020. The project goal was to help expand the adoption of the RISC-V architecture by creating a RISC-V core with the basic features to run embedded software that is simple to reuse.
 
 ## Contact
 
