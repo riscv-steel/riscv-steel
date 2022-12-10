@@ -1,9 +1,5 @@
 <br/>
 
-<p align="center"><img src="https://user-images.githubusercontent.com/22325319/205841657-5ee55baa-9d79-4c36-9e1b-a0b5afdaba31.png" width="150"></p>
-
-## Project overview
-
 **RISC-V Steel Core** is a free and open-source 32-bit RISC-V processor core for digital designs. With Steel you can create new RISC-V based embedded systems, microcontrollers and systems-on-chip.
 
 **[Check out the Getting Started guide!](https://rafaelcalcada.github.io/steel-core/getting-started/)**
