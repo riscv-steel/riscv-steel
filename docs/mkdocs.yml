@@ -33,6 +33,10 @@ theme:
     hljs_languages:
         - verilog
         - console
+extra:
+    analytics:
+        provider: google
+        property: G-3K95TF04HL
 extra_css: [extra.css]
 plugins:
     - search
