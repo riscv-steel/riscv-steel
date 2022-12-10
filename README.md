@@ -4,7 +4,7 @@
 
 :arrow_right: [Check out the Getting Started guide!](https://rafaelcalcada.github.io/steel-core/getting-started/)
 
-### Key features
+## Key features
 
 :white_check_mark: `RV32I` + `Zicsr` + `Machine-level ISA` <br/>
 :white_check_mark: 3-stage pipeline, in-order execution <br/>
