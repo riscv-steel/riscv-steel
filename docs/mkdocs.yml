@@ -11,6 +11,9 @@ markdown_extensions:
     - admonition
     - pymdownx.details
     - pymdownx.superfences
+    - pymdownx.superfences
+    - pymdownx.tabbed:
+        alternate_style: true 
     - pymdownx.highlight:
         anchor_linenums: true
     - pymdownx.inlinehilite
@@ -18,18 +21,25 @@ markdown_extensions:
     - def_list
     - pymdownx.tasklist:
         custom_checkbox: true
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+        options:
+          custom_icons:
+            - overrides/.icons
 theme: 
-    logo: images/steel-logo-1.png
+    icon:
+        logo: bootstrap/cpu
+        favicon: bootstrap/cpu
     name: material
     custom_dir: overrides
     highlightjs: true
     palette:
-        primary: black
-        accent: teal
+        scheme: default
     features:
         - navigation.tabs
         - navigation.top
-        - toc.integrate
+        - content.tabs.link
     hljs_languages:
         - verilog
         - console

@@ -25,12 +25,7 @@ table {
   line-height: 2.6rem;
 }
 
-.md-header__button.md-logo :-webkit-any(img,svg) {
-  fill: currentcolor;
-  display: block;
-  height: auto;
-  width: 90px;
-}
+
 
 .mdx-hero__content {
   -webkit-backface-visibility: hidden;
@@ -43,15 +38,15 @@ table {
   margin-bottom: 2rem;
 }
 
-.mdx-hero__content .md-button--primary {
+/*.mdx-hero__content .md-button--primary {
   background-color: #000000;
   border-color: #000000;
   color: #fff;
-}
+}*/
 
-.mdx-hero__content .md-button--home {
+/*.mdx-hero__content .md-button--home {
   color: #000000;
-}
+}*/
 
 .md-typeset h1 {
   color: var(--md-default-fg-color);
