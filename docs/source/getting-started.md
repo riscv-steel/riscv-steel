@@ -58,7 +58,7 @@ A list of available serial ports will show up on the screen. Select the port the
 
 Open Vivado and follow the steps below to get the Hello World project running on [Arty](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/):
 
-- Open the `hello_world.xpr` file located in the `hello_world/vivado/` folder on Vivado.
+- Open the `hello_world.xpr` file located in the `hello_world/vivado/` folder in Vivado.
 
 - Click on *Open Hardware Manager*, located in the section *Program and Debug* of the *Flow Navigator* (the navigation bar on the left).
 
