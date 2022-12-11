@@ -74,7 +74,7 @@ Arty's FPGA is now programmed with the Hello World project!
 
 The board sends the following message immediately after the FPGA is programmed:
 
-![pyserial-hello](images/getting-started/pyserial-1.png)
+![pyserial-hello](images/getting-started/pyserial-0.png)
 
 When you type a character it is echoed back on the screen. When you press Enter, the message "You pressed Enter key" is shown.
 
