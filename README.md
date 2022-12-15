@@ -1,6 +1,6 @@
 <br/>
 
-**RISC-V Steel** is a free and open 32-bit RISC-V processor core for digital designs. It is developed so that you can start new hardware projects and enjoy the benefits of a free and open computer architecture. With RISC-V Steel, you can start projects ranging from small embedded systems to complex systems on a chip.
+**RISC-V Steel** is a free and open 32-bit RISC-V processor core for digital designs. It is developed so that you can start new hardware projects and enjoy the benefits of a free and open computer architecture. With RISC-V Steel you can start projects ranging from small embedded systems to complex systems on a chip.
 
 **[Check out the Getting Started guide!](https://rafaelcalcada.github.io/steel-core/getting-started/)**
 
