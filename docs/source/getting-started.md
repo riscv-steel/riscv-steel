@@ -7,9 +7,9 @@ hide:
 
 ## Overview
 
-This guide shows you how to get the [Hello World project](https://github.com/rafaelcalcada/steel-core/tree/main/hello_world/vivado) working on the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board. The project instantiates Steel as a softcore on Arty along with a UART unit, which allows communication between the board and your computer. A program that sends a Hello World message is run on Steel and you can interact with the board through a serial terminal.
+This guide will show you how to get the **Hello World** project working on an [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board, which can be the starting point for your own hardware designs. It has a working instance of RISC-V Steel and the most basic peripherals so that you can expand it to control other devices available on Arty.
 
-The Hello World project is a great starting point for your own projects. It has a working instance of Steel so you can easily adapt it to control other devices by making simple changes to it.
+The Hello World project runs a "Hello, World!" program on RISC-V Steel and uses Arty's UART bridge to interact with a host computer over a serial terminal.
 
 ## 1. Install prerequisites
 
@@ -17,71 +17,67 @@ Before you start make sure you have the following software installed on your mac
 
 **Xilinx Vivado**
 
-At the heart of the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) board is a Xilinx Artix-7 FPGA. You need Vivado installed on your machine to be able to program the board.
+At the heart of [Arty](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) is a Xilinx Artix-7 FPGA and you need Vivado installed on your machine to be able to program the board.
 
 The latest version of Vivado is available for [download here](https://www.xilinx.com/support/download.html). During installation, remember to include support for the Artix-7 device family and the cable drivers.
 
 **pySerial**
 
-[pySerial](https://pyserial.readthedocs.io/en/latest/index.html) is a Python package that allows your computer to communicate over UART serial protocol. After the installation, your computer will be able to send and receive messages to and from the board.
-
-To install pySerial open a terminal and run:
+[pySerial](https://pyserial.readthedocs.io/en/latest/index.html) is a Python package that allows your computer to communicate over UART serial protocol. To install pySerial open a terminal and run:
 
 ```
 $ python -m pip install pyserial
 ```
 
-## 2. Download Steel Core
+## 2. Get RISC-V Steel Core
 
-Run the following command to clone the Steel Core repository from GitHub:
+Clone the RISC-V Steel Core repository from GitHub by running on a terminal:
 
 ```
-$ git clone https://github.com/rafaelcalcada/steel-core.git
+$ git clone https://github.com/riscv-steel/riscv-steel-core.git
 ```
 
 ## 3. Start a serial terminal
 
-Before starting the a terminal, connect Arty to your computer using the USB cable. Make sure the board is powered on (a red LED should be lit).
-
-Then run the following command to start a new serial terminal:
+First connect Arty to your computer using a USB cable and make sure the board is powered on (a red light on the board must be on). Then open a new pySerial terminal by running the following command:
 
 ```
 $ python -m serial.tools.miniterm
 ```
 
-A list of available serial ports will show up on the screen. Select the port the board is connected to and **keep the terminal open** for the next steps.
-
-!!! tip
-    If your computer shows more than one available serial port and you're not sure which one is your board's you can find it out by running the command above with the board disconnected and then running it again with the board connected. The "extra" port in the list when the board is connected is the port you're looking for.
+A list of available serial ports will follow. Select the port the board is connected to and **keep the terminal open** for the next steps.
 
 ## 4. Program the FPGA
 
 Open Vivado and follow the steps below to get the Hello World project running on [Arty](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/):
 
-- Open the `hello_world.xpr` file located in the `hello_world/vivado/` folder in Vivado.
+- Open project **hello_world.xpr** (located at **hello_world/vivado/**).
 
-- Click on *Open Hardware Manager*, located in the section *Program and Debug* of the *Flow Navigator* (the navigation bar on the left).
+- Click on **Open Hardware Manager**, located in the **Program and Debug** section of the **Flow Navigator**.
 
-- Next, click on *Open Target > Auto Connect*.
+- Next, click on **Open Target** > **Auto Connect**.
 
-- Vivado will autodetect Arty's FPGA. The device `xc7a35t_0` should appear in the Hardware box. Right-click on `xc7a35t_0` and choose *Program Device*.
+- Vivado will autodetect Arty's FPGA. The device **xc7a35t_0** should appear in the Hardware box. Right-click on it and choose **Program Device**.
 
-- The bitstream file `hello_world.bit` (located at `hello_world.runs/impl_1/`) should appear in the file input box. To finish programming the FPGA, click on the *Program* button.
+- The bitstream **hello_world.bit** should appear in the input box. To start programming click on the **Program** button.
 
 Arty's FPGA is now programmed with the Hello World project!
 
 ## 5. Interact with the Hello World system
 
-The board sends the following message immediately after the FPGA is programmed:
+As soon as Vivado finishes programming the FPGA, the **hello_world.c** program will start running on RISC-V Steel Core and send this message over Arty's UART interface:
 
 ![pyserial-hello](images/getting-started/pyserial-0.png)
 
-When you type a character it is echoed back on the screen. When you press Enter, the message "You pressed Enter key" is shown.
+If you type a character it is echoed back on the screen. If you press Enter the message "You pressed Enter key" is shown.
 
-Although simple, the UART connection between the board and your computer allows you to:
+## 6. Next steps
 
-- Send commands to control devices on Arty from your computer
-- Obtain and display information about the status of devices on or connected to the board
+The Hello World project is intended to get you quickly into hardware design with RISC-V Steel. The Arty board was chosen because it is relatively popular among hardware developers. If you develop with Arty you can then easily modify the program and the hardware in this project to control different devices on the board.
+
+If you work with other development boards (from Lattice or Intel, for example) you need to port the Hello World project to it. If you port the project to another platform, we'll be happy if you share it opening a [pull request](https://github.com/riscv-steel/riscv-steel-core/pulls)!
+
+
 
 </br>
 
