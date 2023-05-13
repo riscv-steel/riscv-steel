@@ -1,34 +1,29 @@
 <br/>
 
-**RISC-V Steel** is a free and open 32-bit RISC-V processor core for digital designs. It is developed so that you can take advantage of the free RISC-V ISA in new hardware projects, from small embedded designs to complex systems on a chip.
+### About the project
 
-**[Check out the Getting Started guide!](https://rafaelcalcada.github.io/steel-core/getting-started/)**
+RISC-V Steel Core is a free and open 32-bit processor core that implements the RV32I instruction set of the RISC-V architecture. It is designed so you can easily reuse it in new RISC-V based hardware designs, from small embedded projects to complex systems on a chip.
 
-### Key features
+[Check out how to get the **Hello World project** running on an FPGA!](https://riscv-steel.github.io/riscv-steel-core/getting-started/)
 
-- [x] `RV32I` + `Zicsr` + `Machine-level ISA` <br/>
-- [x] 3-stage pipeline, in-order execution <br/>
-- [x] Passes all [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test) tests <br/>
-- [x] Production-ready <br/>
-- [x] Single [source file](riscv_steel_core.v) written in human-readable Verilog <br/>
-- [x] Free and open-source ([MIT License](LICENSE.md))
+### Core features
 
-### Documentation
-
-The project has gone through significant changes recently, making the old docs obsolete. **New docs will be available soon.**
+- **RV32I** base integer instruction set
+- **Zicsr** Control and Status Register extension
+- **Machine-level** priviledged architecture
+- 3-stage pipeline, in-order execution
+- Passes all [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test) tests
+- Single [source file](riscv_steel_core.v) (Verilog)
+- Free and open-source ([MIT License](LICENSE.md))
 
 ### License
 
-Steel Core is distributed under the [MIT License](LICENSE.md).
+RISC-V Steel Core is distributed under [MIT License](LICENSE.md).
 
-### History
+### Project's goal
 
-Steel Core was developed for the author's final year college project in 2020. The project goal was to help expand the adoption of the RISC-V architecture by creating a RISC-V core with the basic features to run embedded software that is simple to reuse.
+The project's goal is to help expand the adoption of the RISC-V architecture by creating free and open RISC-V hardware that is easy to reuse.
 
-### Contact
+### Need help?
 
-Rafael Calcada (rafaelcalcada@gmail.com)
-
-### Acknowledgements
-
-My friend [Francisco Knebel](https://github.com/FranciscoKnebel) and my advisor [Ricardo Reis](https://www.linkedin.com/in/ricardo-reis-bab4575/) deserve special thanks for their collaboration in this work.
+Please open a [new issue](https://github.com/riscv-steel/riscv-steel-core/issues).
