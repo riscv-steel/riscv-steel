@@ -10,7 +10,7 @@ RISC-V Steel Core is a free and open 32-bit processor core that implements the R
 
 - **RV32I** base integer instruction set
 - **Zicsr** Control and Status Register extension
-- **Machine-level** priviledged architecture
+- **Machine-level** privileged architecture
 - 3-stage pipeline, in-order execution
 - Passes all [RISC-V Compatibility Test Framework v2.0](https://github.com/riscv-non-isa/riscv-arch-test) tests
 - Single [source file](riscv_steel_core.v) (Verilog)
@@ -20,9 +20,9 @@ RISC-V Steel Core is a free and open 32-bit processor core that implements the R
 
 RISC-V Steel Core is distributed under [MIT License](LICENSE.md).
 
-### Project's goal
+### Project goal
 
-The project's goal is to help expand the adoption of the RISC-V architecture by creating free and open RISC-V hardware that is easy to reuse.
+The project goal is to help expand the adoption of the RISC-V architecture by creating free and open RISC-V hardware that is easy to reuse.
 
 ### Need help?
 
