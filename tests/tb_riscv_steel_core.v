@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2022 Rafael Calcada
+Copyright (c) 2020-2023 Rafael Calcada
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ SOFTWARE.
 /**************************************************************************************************
 
 Project Name:  RISC-V Steel Core
-Project Repo:  github.com/rafaelcalcada/steel-core
+Project Repo:  github.com/riscv-steel/riscv-steel-core
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
