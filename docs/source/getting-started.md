@@ -1,17 +1,8 @@
----
-hide:
-  - navigation
----
-
-# Getting started
-
-## Overview
-
 This guide will show you how to get the **Hello World** project working on an [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board, which can be the starting point for your own hardware designs. It has a working instance of RISC-V Steel and the most basic peripherals so that you can expand it to control other devices available on Arty.
 
 The Hello World project runs a "Hello, World!" program on RISC-V Steel and uses Arty's UART bridge to interact with a host computer over a serial terminal.
 
-## 1. Install prerequisites
+## Install prerequisites
 
 Before you start make sure you have the following software installed on your machine:
 
@@ -29,7 +20,7 @@ The latest version of Vivado is available for [download here](https://www.xilinx
 $ python -m pip install pyserial
 ```
 
-## 2. Get RISC-V Steel Core
+## Get RISC-V Steel Core
 
 Clone the RISC-V Steel Core repository from GitHub by running on a terminal:
 
@@ -37,7 +28,7 @@ Clone the RISC-V Steel Core repository from GitHub by running on a terminal:
 $ git clone https://github.com/riscv-steel/riscv-steel-core.git
 ```
 
-## 3. Start a serial terminal
+## Start a serial terminal
 
 First connect Arty to your computer using a USB cable and make sure the board is powered on (a red light on the board must be on). Then open a new pySerial terminal by running the following command:
 
@@ -47,7 +38,7 @@ $ python -m serial.tools.miniterm
 
 A list of available serial ports will follow. Select the port the board is connected to and **keep the terminal open** for the next steps.
 
-## 4. Program the FPGA
+## Program the FPGA
 
 Open Vivado and follow the steps below to get the Hello World project running on [Arty](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/):
 
@@ -63,7 +54,7 @@ Open Vivado and follow the steps below to get the Hello World project running on
 
 Arty's FPGA is now programmed with the Hello World project!
 
-## 5. Interact with the Hello World system
+## Interact with the Hello World system
 
 As soon as Vivado finishes programming the FPGA, the **hello_world.c** program will start running on RISC-V Steel Core and send this message over Arty's UART interface:
 
@@ -71,7 +62,7 @@ As soon as Vivado finishes programming the FPGA, the **hello_world.c** program w
 
 If you type a character it is echoed back on the screen. If you press Enter the message "You pressed Enter key" is shown.
 
-## 6. Next steps
+## Next steps
 
 The Hello World project is intended to get you quickly into hardware design with RISC-V Steel. The Arty board was chosen because it is relatively popular among hardware developers. If you develop with Arty you can then easily modify the program and the hardware in this project to control different devices on the board.
 
