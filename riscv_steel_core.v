@@ -35,178 +35,198 @@ Top Module:    riscv_steel_core
  
 **************************************************************************************************/
 
-`timescale 1ns / 1ps
+//-----------------------------------------------------------------------------------------------//
+// MACRO DEFINITIONS                                                                             //
+//-----------------------------------------------------------------------------------------------//
 
-// ------------------------------------------------------------------------------------------------
-// Constants and encodings (from RISC-V specifications)
-// ------------------------------------------------------------------------------------------------
+// NOP instruction
 
-`define FUNCT7_SUB          7'b0100000
-`define FUNCT7_SRA          7'b0100000
-`define FUNCT7_ADD          7'b0000000
-`define FUNCT7_SLT          7'b0000000
-`define FUNCT7_SLTU         7'b0000000
-`define FUNCT7_AND          7'b0000000
-`define FUNCT7_OR           7'b0000000
-`define FUNCT7_XOR          7'b0000000
-`define FUNCT7_SLL          7'b0000000
-`define FUNCT7_SRL          7'b0000000
-`define FUNCT7_SRAI         7'b0100000
-`define FUNCT7_SLLI         7'b0000000
-`define FUNCT7_SRLI         7'b0000000
-`define FUNCT7_ECALL        7'b0000000
-`define FUNCT7_EBREAK       7'b0000000
-`define FUNCT7_MRET         7'b0011000
-`define FUNCT3_ADD          3'b000
-`define FUNCT3_SUB          3'b000
-`define FUNCT3_SLT          3'b010
-`define FUNCT3_SLTU         3'b011
-`define FUNCT3_AND          3'b111
-`define FUNCT3_OR           3'b110
-`define FUNCT3_XOR          3'b100
-`define FUNCT3_SLL          3'b001
-`define FUNCT3_SRL          3'b101
-`define FUNCT3_SRA          3'b101
-`define FUNCT3_ADDI         3'b000
-`define FUNCT3_SLTI         3'b010
-`define FUNCT3_SLTIU        3'b011
-`define FUNCT3_ANDI         3'b111
-`define FUNCT3_ORI          3'b110
-`define FUNCT3_XORI         3'b100
-`define FUNCT3_SLLI         3'b001
-`define FUNCT3_SRLI         3'b101
-`define FUNCT3_SRAI         3'b101
-`define FUNCT3_BEQ          3'b000
-`define FUNCT3_BNE          3'b001
-`define FUNCT3_BLT          3'b100
-`define FUNCT3_BGE          3'b101
-`define FUNCT3_BLTU         3'b110
-`define FUNCT3_BGEU         3'b111
-`define FUNCT3_JALR         3'b000
-`define FUNCT3_SB           3'b000
-`define FUNCT3_SH           3'b001
-`define FUNCT3_SW           3'b010
-`define FUNCT3_LB           3'b000
-`define FUNCT3_LH           3'b001
-`define FUNCT3_LW           3'b010
-`define FUNCT3_LBU          3'b100
-`define FUNCT3_LHU          3'b101
-`define FUNCT3_CSRRW        3'b001
-`define FUNCT3_CSRRS        3'b010
-`define FUNCT3_CSRRC        3'b011
-`define FUNCT3_CSRRWI       3'b101
-`define FUNCT3_CSRRSI       3'b110
-`define FUNCT3_CSRRCI       3'b111
-`define FUNCT3_FENCE        3'b000
-`define FUNCT3_ECALL        3'b000
-`define FUNCT3_EBREAK       3'b000
-`define FUNCT3_MRET         3'b000
-`define OPCODE_OP           7'b0110011
-`define OPCODE_OP_IMM       7'b0010011
-`define OPCODE_LOAD         7'b0000011
-`define OPCODE_STORE        7'b0100011
-`define OPCODE_BRANCH       7'b1100011
-`define OPCODE_JAL          7'b1101111
-`define OPCODE_JALR         7'b1100111
-`define OPCODE_LUI          7'b0110111
-`define OPCODE_AUIPC        7'b0010111
-`define OPCODE_MISC_MEM     7'b0001111
-`define OPCODE_SYSTEM       7'b1110011
-`define RS1_ECALL           5'b00000
-`define RS1_EBREAK          5'b00000
-`define RS1_MRET            5'b00000
-`define RS2_ECALL           5'b00000
-`define RS2_EBREAK          5'b00001
-`define RS2_MRET            5'b00010
-`define RD_ECALL            5'b00000
-`define RD_EBREAK           5'b00000
-`define RD_MRET             5'b00000
-`define NOP_INSTRUCTION     32'h00000013
+`define NOP_INSTRUCTION         32'h00000013
 
-// ------------------------------------------------------------------------------------------------
-// CSR Addresses (from RISC-V specifications)
-// ------------------------------------------------------------------------------------------------
+// FUNCT7 field
 
-// Machine Information Registers
-`define MARCHID             12'hF12
-`define MIMPID              12'hF13
+`define FUNCT7_SUB              7'b0100000
+`define FUNCT7_SRA              7'b0100000
+`define FUNCT7_ADD              7'b0000000
+`define FUNCT7_SLT              7'b0000000
+`define FUNCT7_SLTU             7'b0000000
+`define FUNCT7_AND              7'b0000000
+`define FUNCT7_OR               7'b0000000
+`define FUNCT7_XOR              7'b0000000
+`define FUNCT7_SLL              7'b0000000
+`define FUNCT7_SRL              7'b0000000
+`define FUNCT7_SRAI             7'b0100000
+`define FUNCT7_SLLI             7'b0000000
+`define FUNCT7_SRLI             7'b0000000
+`define FUNCT7_ECALL            7'b0000000
+`define FUNCT7_EBREAK           7'b0000000
+`define FUNCT7_MRET             7'b0011000
 
-// Counters and timers 
-`define CYCLE               12'hC00
-`define TIME                12'hC01
-`define INSTRET             12'hC02
-`define CYCLEH              12'hC80
-`define TIMEH               12'hC81
-`define INSTRETH            12'hC82
+// FUNCT3 field
 
-// Machine Trap Setup
-`define MSTATUS             12'h300
-`define MSTATUSH            12'h310
-`define MISA                12'h301
-`define MIE                 12'h304
-`define MTVEC               12'h305
+`define FUNCT3_ADD              3'b000
+`define FUNCT3_SUB              3'b000
+`define FUNCT3_SLT              3'b010
+`define FUNCT3_SLTU             3'b011
+`define FUNCT3_AND              3'b111
+`define FUNCT3_OR               3'b110
+`define FUNCT3_XOR              3'b100
+`define FUNCT3_SLL              3'b001
+`define FUNCT3_SRL              3'b101
+`define FUNCT3_SRA              3'b101
+`define FUNCT3_ADDI             3'b000
+`define FUNCT3_SLTI             3'b010
+`define FUNCT3_SLTIU            3'b011
+`define FUNCT3_ANDI             3'b111
+`define FUNCT3_ORI              3'b110
+`define FUNCT3_XORI             3'b100
+`define FUNCT3_SLLI             3'b001
+`define FUNCT3_SRLI             3'b101
+`define FUNCT3_SRAI             3'b101
+`define FUNCT3_BEQ              3'b000
+`define FUNCT3_BNE              3'b001
+`define FUNCT3_BLT              3'b100
+`define FUNCT3_BGE              3'b101
+`define FUNCT3_BLTU             3'b110
+`define FUNCT3_BGEU             3'b111
+`define FUNCT3_JALR             3'b000
+`define FUNCT3_SB               3'b000
+`define FUNCT3_SH               3'b001
+`define FUNCT3_SW               3'b010
+`define FUNCT3_LB               3'b000
+`define FUNCT3_LH               3'b001
+`define FUNCT3_LW               3'b010
+`define FUNCT3_LBU              3'b100
+`define FUNCT3_LHU              3'b101
+`define FUNCT3_CSRRW            3'b001
+`define FUNCT3_CSRRS            3'b010
+`define FUNCT3_CSRRC            3'b011
+`define FUNCT3_CSRRWI           3'b101
+`define FUNCT3_CSRRSI           3'b110
+`define FUNCT3_CSRRCI           3'b111
+`define FUNCT3_FENCE            3'b000
+`define FUNCT3_ECALL            3'b000
+`define FUNCT3_EBREAK           3'b000
+`define FUNCT3_MRET             3'b000
 
-// Machine Trap Handling
-`define MSCRATCH            12'h340
-`define MEPC                12'h341
-`define MCAUSE              12'h342
-`define MTVAL               12'h343
-`define MIP                 12'h344
+// OPCODES
 
-// Machine Performance Counters
-`define MCYCLE              12'hB00
-`define MINSTRET            12'hB02
-`define MCYCLEH             12'hB80
-`define MINSTRETH           12'hB82
+`define OPCODE_OP               7'b0110011
+`define OPCODE_OP_IMM           7'b0010011
+`define OPCODE_LOAD             7'b0000011
+`define OPCODE_STORE            7'b0100011
+`define OPCODE_BRANCH           7'b1100011
+`define OPCODE_JAL              7'b1101111
+`define OPCODE_JALR             7'b1100111
+`define OPCODE_LUI              7'b0110111
+`define OPCODE_AUIPC            7'b0010111
+`define OPCODE_MISC_MEM         7'b0001111
+`define OPCODE_SYSTEM           7'b1110011
 
-// ------------------------------------------------------------------------------------------------
-// Encodings for muxes and state machines (not from RISC-V specifications)
-// ------------------------------------------------------------------------------------------------
+// RS1, RS2 and RD encodings for SYSTEM instructions
+
+`define RS1_ECALL               5'b00000
+`define RS1_EBREAK              5'b00000
+`define RS1_MRET                5'b00000
+`define RS2_ECALL               5'b00000
+`define RS2_EBREAK              5'b00001
+`define RS2_MRET                5'b00010
+`define RD_ECALL                5'b00000
+`define RD_EBREAK               5'b00000
+`define RD_MRET                 5'b00000
+
+// Address of Machine Information CSRs
+
+`define MARCHID                 12'hF12
+`define MIMPID                  12'hF13
+
+// Address of Performance Counters CSRs
+
+`define CYCLE                   12'hC00
+`define TIME                    12'hC01
+`define INSTRET                 12'hC02
+`define CYCLEH                  12'hC80
+`define TIMEH                   12'hC81
+`define INSTRETH                12'hC82
+
+// Address of Machine Trap Setup CSRs
+
+`define MSTATUS                 12'h300
+`define MSTATUSH                12'h310
+`define MISA                    12'h301
+`define MIE                     12'h304
+`define MTVEC                   12'h305
+
+// Address of Machine Trap Handling CSRs
+
+`define MSCRATCH                12'h340
+`define MEPC                    12'h341
+`define MCAUSE                  12'h342
+`define MTVAL                   12'h343
+`define MIP                     12'h344
+
+// Address of Machine Performance Counters CSRs
+
+`define MCYCLE                  12'hB00
+`define MINSTRET                12'hB02
+`define MCYCLEH                 12'hB80
+`define MINSTRETH               12'hB82
 
 // Writeback Mux selection
-`define WB_ALU                 3'b000
-`define WB_LOAD_UNIT           3'b001
-`define WB_UPPER_IMM           3'b010
-`define WB_TARGET_ADDER        3'b011
-`define WB_CSR                 3'b100
-`define WB_PC_PLUS_4           3'b101
+
+`define WB_ALU                  3'b000
+`define WB_LOAD_UNIT            3'b001
+`define WB_UPPER_IMM            3'b010
+`define WB_TARGET_ADDER         3'b011
+`define WB_CSR                  3'b100
+`define WB_PC_PLUS_4            3'b101
 
 // Immediate format selection
-`define I_TYPE_IMMEDIATE    3'b001
-`define S_TYPE_IMMEDIATE    3'b010
-`define B_TYPE_IMMEDIATE    3'b011
-`define U_TYPE_IMMEDIATE    3'b100
-`define J_TYPE_IMMEDIATE    3'b101
-`define CSR_TYPE_IMMEDIATE  3'b110
+
+`define I_TYPE_IMMEDIATE        3'b001
+`define S_TYPE_IMMEDIATE        3'b010
+`define B_TYPE_IMMEDIATE        3'b011
+`define U_TYPE_IMMEDIATE        3'b100
+`define J_TYPE_IMMEDIATE        3'b101
+`define CSR_TYPE_IMMEDIATE      3'b110
 
 // Program Counter source selection
-`define PC_BOOT             2'b00
-`define PC_EPC              2'b01
-`define PC_TRAP             2'b10
-`define PC_NEXT             2'b11
+
+`define PC_BOOT                 2'b00
+`define PC_EPC                  2'b01
+`define PC_TRAP                 2'b10
+`define PC_NEXT                 2'b11
 
 // Load size encoding
-`define LOAD_SIZE_BYTE      2'b00
-`define LOAD_SIZE_HALF      2'b01
-`define LOAD_SIZE_WORD      2'b10
 
-// CSR File operation
-`define CSR_RWX             2'b01
-`define CSR_RSX             2'b10
-`define CSR_RCX             2'b11
+`define LOAD_SIZE_BYTE          2'b00
+`define LOAD_SIZE_HALF          2'b01
+`define LOAD_SIZE_WORD          2'b10
 
+// CSR File operation encoding
+
+`define CSR_RWX                 2'b01
+`define CSR_RSX                 2'b10
+`define CSR_RCX                 2'b11
+
+//-----------------------------------------------------------------------------------------------//
+// TOP MODULE: RISC-V STEEL CORE                                                                 //
+//-----------------------------------------------------------------------------------------------//
 module riscv_steel_core (
 
   // Basic system signals
+  
   input  wire           clock,
   input  wire           reset,
   input  wire   [31:0]  boot_address,
 
   // Instruction fetch interface
+
   output wire   [31:0]  instruction_address,
   input  wire   [31:0]  instruction_in,
     
   // Data fetch/write interface
+
   output wire   [31:0]  data_rw_address,
   output wire   [31:0]  data_out,
   output wire           data_write_request,
@@ -214,19 +234,17 @@ module riscv_steel_core (
   input  wire   [31:0]  data_in,
   
   // Interrupt signals (hardwire to zero if unused)
+
   input  wire           interrupt_request_external,
   input  wire           interrupt_request_timer,
   input  wire           interrupt_request_software,
 
   // Real Time Counter (hardwire to zero if unused)
+
   input  wire   [63:0]  real_time
 
   );
     
-  // ----------------------------------------------------------------------------------------------
-  // Declaration of buses, signals and registers
-  // ----------------------------------------------------------------------------------------------
-  
   reg   [31:0]  program_counter;
   reg   [31:0]  next_program_counter;
   reg   [31:0]  writeback_multiplexer_output;
@@ -290,9 +308,9 @@ module riscv_steel_core (
   wire          misaligned_store;
   wire          illegal_instruction;    
        
-  // ----------------------------------------------------------------------------------------------
-  // PIPELINE STAGE 1
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // 1st PIPELINE STAGE                                                                          //
+  //---------------------------------------------------------------------------------------------//
   
   assign instruction_address =
     reset ?
@@ -326,9 +344,9 @@ module riscv_steel_core (
       program_counter <= next_program_counter;
   end
     
-  // ----------------------------------------------------------------------------------------------
-  // PIPELINE STAGE 2
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // 2nd PIPELINE STAGE                                                                          //
+  //---------------------------------------------------------------------------------------------//
     
   assign instruction =
     flush_pipeline == 1'b1 ?
@@ -360,7 +378,8 @@ module riscv_steel_core (
   assign misaligned_store = store & misaligned;
   assign misaligned_load  = load  & misaligned;
 
-  data_fetch_store_unit data_fetch_store_unit_instance (
+  data_fetch_store_unit
+  data_fetch_store_unit_instance (
 
     .instruction_funct3 (instruction_funct3   ),
     .load_store_address (target_address_adder ), 
@@ -375,7 +394,8 @@ module riscv_steel_core (
   
   );
     
-  decoder decoder_instance (
+  decoder
+  decoder_instance (
   
     .instruction_opcode         (instruction_opcode         ),
     .instruction_funct7         (instruction_funct7         ),
@@ -402,7 +422,8 @@ module riscv_steel_core (
       
   );
     
-  imm_generator imm_generator_instance (
+  imm_generator
+  imm_generator_instance (
       
     .instruction_31_downto_7        (instruction[31:7]  ),
     .immediate_type                 (immediate_type     ),
@@ -410,7 +431,8 @@ module riscv_steel_core (
 
   );
     
-  branch_decision branch_decision_instance (
+  branch_decision
+  branch_decision_instance (
 
     .instruction_opcode             (instruction_opcode ),
     .instruction_funct3             (instruction_funct3 ),
@@ -420,7 +442,8 @@ module riscv_steel_core (
 
   );
     
-  integer_file integer_file_instance (
+  integer_file
+  integer_file_instance (
     
     .clock         (clock                                 ),
     .rs1_addr      (instruction_rs1_address               ),
@@ -435,7 +458,8 @@ module riscv_steel_core (
 
   );
 
-  csr_file csr_file_instance (
+  csr_file
+  csr_file_instance (
 
     .clock                          (clock                          ),
     .reset                          (reset                          ),    
@@ -507,9 +531,9 @@ module riscv_steel_core (
     end
   end    
     
-  // ----------------------------------------------------------------------------------------------
-  // PIPELINE STAGE 2
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // 3rd PIPELINE STAGE                                                                          //
+  //---------------------------------------------------------------------------------------------//
   
   always @* begin
     case (writeback_mux_selector_stage3)
@@ -523,7 +547,8 @@ module riscv_steel_core (
     endcase
   end
 
-  load_unit load_unit_instance (
+  load_unit
+  load_unit_instance (
   
     .load_size                  (load_size_stage3                 ),
     .load_unsigned              (load_unsigned_stage3             ),
@@ -533,7 +558,8 @@ module riscv_steel_core (
   
   );
     
-  rv32i_alu rv32i_alu_instance (
+  rv32i_alu
+  rv32i_alu_instance (
 
     .first_operand              (rs1_data_stage3                  ),
     .second_operand             (alu_2nd_operand_source_stage3 ?
@@ -546,36 +572,35 @@ module riscv_steel_core (
     
 endmodule
 
-// ------------------------------------------------------------------------------------------------
-//
-// RISC-V 32-bit Arithmetic and Logic Unit
-// 
-// This unit applies one of the following arithmetic/logic operations to
-// first_operand and second_operand:
-//
-//  Operation name                operation_code        RISC-V instruction 
-//  -----------------------------------------------------------------------------------------------
-//  Addition                      0000                  ADD
-//  Subtraction                   1000                  SUB
-//  Set on less than              0010                  SLT
-//  Set on less than unsigned     0011                  SLTU
-//  Logical AND                   0111                  AND
-//  Logical OR                    0110                  OR
-//  Logical XOR                   0100                  XOR
-//  Shift left (logical)          0001                  SLL
-//  Shift right (logical)         0101                  SRL
-//  Shift right (arithmetic)      1101                  SRA
-//  -----------------------------------------------------------------------------------------------
-//
-// All operations are performed simultaneously. The bits of operation_code are
-// used to select the desired result.
-//
-// ------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------//
+// RISC-V 32-bit Arithmetic and Logic Unit                                                       //
+//                                                                                               //
+// This unit applies one of the following arithmetic/logic operations to                         //
+// first_operand and second_operand:                                                             //
+//                                                                                               //
+//  Operation name                operation_code        RISC-V instruction                       //
+//  -------------------------------------------------------------------------------------------  //
+//  Addition                      0000                  ADD                                      //
+//  Subtraction                   1000                  SUB                                      //
+//  Set on less than              0010                  SLT                                      //
+//  Set on less than unsigned     0011                  SLTU                                     //
+//  Logical AND                   0111                  AND                                      //
+//  Logical OR                    0110                  OR                                       //
+//  Logical XOR                   0100                  XOR                                      //
+//  Shift left (logical)          0001                  SLL                                      //
+//  Shift right (logical)         0101                  SRL                                      //
+//  Shift right (arithmetic)      1101                  SRA                                      //
+//  -------------------------------------------------------------------------------------------  //
+//                                                                                               //
+// All operations are performed simultaneously. The bits of operation_code are                   //
+// used to select the desired result.                                                            //
+//-----------------------------------------------------------------------------------------------//
 module rv32i_alu (
 
   input  wire   [31:0]  first_operand,
   input  wire   [31:0]  second_operand,
   input  wire   [3:0 ]  operation_code,
+  
   output reg    [31:0]  operation_result
 
   );
@@ -650,30 +675,29 @@ module rv32i_alu (
     
 endmodule
 
-// ------------------------------------------------------------------------------------------------
-//
-// Branch Decision
-// 
-// This unit generates the 'take_branch' signal, used by the program counter 
-// (PC) circuitry to decide the next value of the PC register.
-//
-// - instruction_opcode bus must hold the seven bits of the instruction opcode
-// - instruction_funct3 bus must hold the three bits of the funct3 field of the 
-//   instruction
-// - rs1_data (register source 1 data) bus must hold the data stored in the 
-//   Integer File register indicated in the RS1 field of the instruction
-// - rs2_data (register source 2 data) bus must hold the data stored in the 
-//   Integer File register indicated in the RS2 field of the instruction
-// 
-// Whenever a branch must be taken, signal take_branch will be set to logic 1.
-//
-// ------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------//
+// Branch Decision                                                                               //
+//                                                                                               // 
+// This unit generates the 'take_branch' signal, used by the program counter                     //
+// (PC) circuitry to decide the next value of the PC register.                                   //
+//                                                                                               //
+// - instruction_opcode bus must hold the seven bits of the instruction opcode                   //
+// - instruction_funct3 bus must hold the three bits of the funct3 field of the                  //
+//   instruction                                                                                 //
+// - rs1_data (register source 1 data) bus must hold the data stored in the                      //
+//   Integer File register indicated in the RS1 field of the instruction                         //
+// - rs2_data (register source 2 data) bus must hold the data stored in the                      //
+//   Integer File register indicated in the RS2 field of the instruction                         //
+//                                                                                               //
+// Whenever a branch must be taken, signal take_branch will be set to logic 1.                   //
+//-------------------------------------------------------------------------------------------------
 module branch_decision (
 
   input wire    [6:0]   instruction_opcode,
   input wire    [2:0]   instruction_funct3,
   input wire    [31:0]  rs1_data,
   input wire    [31:0]  rs2_data,
+
   output wire           take_branch
 
   );
@@ -722,7 +746,7 @@ module branch_decision (
   assign is_greater_or_equal_than_unsigned =
     !is_less_than_unsigned;
 
-  // Determines if the branch condition is satisfied based
+  // Determine if the branch condition is satisfied based
   // on the type of branch condition
   always @* begin : branch_condition_satisfied_mux
     case (instruction_funct3)
@@ -750,8 +774,8 @@ module branch_decision (
       endcase
   end
   
-  // If the instruction is type 'jump', the branch is always taken
-  // If type 'branch', only if the branch condition is satisfied
+  // If the instruction type is 'jump' then branch is always taken
+  // If type 'branch' takes the branch only if the condition is satisfied
   assign take_branch =
     (is_jump == 1'b1) ?
     1'b1 :
@@ -761,23 +785,22 @@ module branch_decision (
     
 endmodule
 
-// ------------------------------------------------------------------------------------------------
-//
-// Immediate Generator
-// 
-// This unit reorganizes the instruction bits to form the immediate data used 
-// with the operation.
-//
-// - instruction_31_downto_7 is a bus with the upper bits of the instruction
-// - immediate_type is a 3-bit signal generated by the instruction decoder, used
-//   as a selector for the type of immediate.
-// - immediate_data is the output, a 32-bit signal with the generated immediate
-//
-// ------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------//
+// Immediate Generator                                                                           //
+//                                                                                               //
+// This unit reorganizes the instruction bits to form the immediate data used                    //
+// with the operation.                                                                           //
+//                                                                                               //
+// - instruction_31_downto_7 is a bus with the upper bits of the instruction                     //
+// - immediate_type is a 3-bit signal generated by the instruction decoder, used                 //
+//   as a selector for the type of immediate.                                                    //
+// - immediate_data is the output, a 32-bit signal with the generated immediate                  //
+//-----------------------------------------------------------------------------------------------//
 module imm_generator (
     
   input wire    [31:7]  instruction_31_downto_7,
   input wire    [2:0]   immediate_type,
+
   output reg    [31:0]  immediate_data
 
   );
@@ -852,25 +875,23 @@ module imm_generator (
     
 endmodule
 
-// ------------------------------------------------------------------------------------------------
-//
-// Data Fetch/Store Unit
-// 
-// This unit generates the signals interfacing with the data memory:
-//   - rw_address (address to fetch/store data)
-//   - store_data (data to be written to memory)
-//   - write_mask (write byte-enable mask) 
-//   - write_request (0 = fetch data / 1 = write)
-//
-// When input 'store' is logic 0 the core is reading from memory. 
-// If it is logic 1 the core is writing to memory, and the output signals are
-// set so that bytes, half words and words are stored in the proper memory
-// position.
-//
-// Steel does not generate unaligned addresses. It means the two last bits of
-// rw_address bus are always 2'b00.
-//
-// ------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------//
+// Data Fetch/Store Unit                                                                         //
+//                                                                                               //
+// This unit generates the signals interfacing with the data memory:                             //
+//   - rw_address (address to fetch/store data)                                                  //
+//   - store_data (data to be written to memory)                                                 //
+//   - write_mask (write byte-enable mask)                                                       //
+//   - write_request (0 = fetch data / 1 = write)                                                //
+//                                                                                               //
+// When input 'store' is logic 0 the core is reading from memory.                                //
+// If it is logic 1 the core is writing to memory, and the output signals are                    //
+// set so that bytes, half words and words are stored in the proper memory                       //
+// position.                                                                                     //
+//                                                                                               //
+// RISC-V Steel does not generate unaligned addresses. It means that the two last bits of        //
+// rw_address bus are always 2'b00.                                                              //
+//-----------------------------------------------------------------------------------------------//
 module data_fetch_store_unit (
 
   input wire    [2:0 ]  instruction_funct3,
@@ -879,6 +900,7 @@ module data_fetch_store_unit (
   input wire            store,
   input wire            misaligned_store,
   input wire            take_trap,
+
   output wire           write_request,
   output wire   [31:0]  rw_address,
   output reg    [31:0]  store_data,
@@ -953,29 +975,29 @@ module data_fetch_store_unit (
                                                                 
 endmodule
 
-// ------------------------------------------------------------------------------------------------
-//
-// Integer File
-// 
-// Provide 31 32-bit integer registers and an addressable hardwired zero
-// required for a RV32I implementation. The forwarding tecnique is used. Most 
-// FPGA vendor tools will infer a Block RAM for this module.
-//
-// Buses 'rs1_addr', 'rs2_addr' and 'rd_addr' get their values from fields RS1,
-// RS2 and RD of RISC-V instructions.
-//
-// ------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------//
+// Integer File                                                                                  //
+//                                                                                               //
+// Provide 31 32-bit integer registers and an addressable hardwired zero                         //
+// required for a RV32I implementation. The forwarding tecnique is used. Most                    //
+// FPGA vendor tools will infer a Block RAM for this module.                                     //
+//                                                                                               //
+// Buses 'rs1_addr', 'rs2_addr' and 'rd_addr' get their values from fields RS1,                  //
+// RS2 and RD of RISC-V instructions.                                                            //
+//-----------------------------------------------------------------------------------------------//
 module integer_file (
   
   input wire            clock,
   
-  // Signals used in pipeline stage 2
+  // Signals used with pipeline stage 2
+
   input wire    [4:0]   rs1_addr,
   input wire    [4:0]   rs2_addr,    
   output wire   [31:0]  rs1_data,
   output wire   [31:0]  rs2_data,
   
-  // Signals used in pipeline stage 3
+  // Signals used with pipeline stage 3
+
   input wire    [4:0]   rd_addr,
   input wire            write_enable,
   input wire    [31:0]  rd_data
@@ -984,6 +1006,7 @@ module integer_file (
     
   wire [31:0] rs1_mux;
   wire [31:0] rs2_mux;  
+
   reg [31:0] Q [31:1];
   
   integer i;
@@ -1018,14 +1041,12 @@ module integer_file (
     
 endmodule
 
-// ------------------------------------------------------------------------------------------------
-//
-// Decoder Unit
-// 
-// This unit generates most of the signals that control the operation of other
-// architectural units. It also signals an illegal instruction.
-//
-// ------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------//
+// Decoder Unit                                                                                  //
+//                                                                                               //
+// This unit generates most of the signals that control the operation of other                   //
+// architectural units. It also signals an illegal instruction.                                  //
+//-----------------------------------------------------------------------------------------------//
 module decoder (
 
   input wire    [6:0] instruction_opcode,
@@ -1054,9 +1075,7 @@ module decoder (
 
   );
     
-  // ----------------------------------------------------------------------------------------------
   // Instruction type detection
-  // ----------------------------------------------------------------------------------------------
 
   assign branch_type    = instruction_opcode == `OPCODE_BRANCH;
   assign jal_type       = instruction_opcode == `OPCODE_JAL;
@@ -1070,9 +1089,7 @@ module decoder (
   assign op_imm_type    = instruction_opcode == `OPCODE_OP_IMM;
   assign misc_mem_type  = instruction_opcode == `OPCODE_MISC_MEM;
   
-  // ----------------------------------------------------------------------------------------------
-  // Detection of specific instructions
-  // ----------------------------------------------------------------------------------------------
+  // Instruction detection
 
   assign addi   = op_imm_type & instruction_funct3 == `FUNCT3_ADDI;
   assign slti   = op_imm_type & instruction_funct3 == `FUNCT3_SLTI;
@@ -1124,9 +1141,7 @@ module decoder (
                               & instruction_rs2_address == `RS2_MRET
                               & instruction_rd_address  == `RD_MRET;
 
-  // ----------------------------------------------------------------------------------------------
   // Illegal instruction detection
-  // ----------------------------------------------------------------------------------------------
 
   assign illegal_store = 
     store_type &
@@ -1160,9 +1175,7 @@ module decoder (
     unknown_type | illegal_store | illegal_load | illegal_jalr | illegal_branch | illegal_op 
     | illegal_op_imm | illegal_system;
 
-  // ----------------------------------------------------------------------------------------------
   // Control signals generation
-  // ----------------------------------------------------------------------------------------------
 
   assign alu_operation_code[2:0] =
     instruction_funct3;
@@ -1226,28 +1239,28 @@ module decoder (
         
 endmodule
 
-// ------------------------------------------------------------------------------------------------
-//
-// Load Unit
-// 
-// This unit select the appropriate bits of the data fetched from memory (which
-// is always 32-bit wide) for half-word and byte loads, and zero-/sign-extend
-// it to a 32-bit value. For LW instruction it simply puts the data read from
-// memory into load_data.
-//
-// ------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------//
+// Load Unit                                                                                     //
+//                                                                                               //
+// This unit select the appropriate bits of the data fetched from memory (which                  //
+// is always 32-bit wide) for half-word and byte loads, and zero-/sign-extend                    //
+// it to a 32-bit value. For LW instruction it simply puts the data read from                    //
+// memory into load_data.                                                                        //
+//-----------------------------------------------------------------------------------------------//
 module load_unit (
 
   input wire    [1:0 ]  load_size,
   input wire            load_unsigned,
   input wire    [31:0]  data_read,
   input wire    [1:0 ]  load_store_address_1_to_0,
+
   output reg    [31:0]  load_data
     
   );
     
   reg   [7:0]   byte_data;
   reg   [15:0]  half_data;    
+
   wire  [23:0]  byte_data_upper_bits;
   wire  [15:0]  half_data_upper_bits;
   
@@ -1298,22 +1311,22 @@ module load_unit (
                                                                 
 endmodule
 
-// ------------------------------------------------------------------------------------------------
-//
-// Control and Status Register File
-// 
-// This unit implements the privileged ISA specification from RISC-V. Operation
-// in M-mode is supported. H, S and U modes are not implemented.
-// Optional registers from M-mode are unimplemented for simplicity.
-//
-// ------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------//
+// Control and Status Register File                                                              //
+//                                                                                               //
+// This unit implements the privileged ISA specification from RISC-V. Operation                  //
+// in M-mode is supported. H, S and U modes are not implemented.                                 //
+// Optional registers from M-mode are not implemented.                                           //
+//-----------------------------------------------------------------------------------------------//
 module csr_file (
 
   // Basic signals
+
   input wire            clock,
   input wire            reset,
     
   // CSR registers read/write interface  
+
   input wire            write_enable,
   input wire    [11:0]  csr_address,
   input wire    [2:0 ]  csr_operation,
@@ -1322,29 +1335,35 @@ module csr_file (
   output reg    [31:0]  csr_data_out,
     
   // From pipeline stage 3
+
   input wire    [31:0]  program_counter_stage3,
   input wire    [31:0]  target_address_adder_stage3,
     
-  // // Interface with Interrupt Controller
+  // Interface with external Interrupt Controller
+
   input wire            interrupt_request_external,
   input wire            interrupt_request_timer,
   input wire            interrupt_request_software,
     
   // Exception flags
+
   input wire            misaligned_load,
   input wire            misaligned_store,
   input wire            misaligned_instruction_address,
 
   // Instruction decoder flags
+
   input wire            illegal_instruction,
   input wire            ecall,
   input wire            ebreak,
   input wire            mret,
     
-  // Real Time counter value
+  // Real time counter value
+
   input wire    [63:0]  real_time,
     
   // Hart state control signals
+
   output wire   [31:0]  exception_program_counter,
   output reg    [1:0 ]  program_counter_source,
   output wire           flush_pipeline,
@@ -1386,9 +1405,9 @@ module csr_file (
   parameter STATE_TRAP_TAKEN    = 4'b0100;    
   parameter STATE_TRAP_RETURN   = 4'b1000;
 
-  // ----------------------------------------------------------------------------------------------
-  // M-mode Operation Control
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // M-mode Operation Control                                                                    //
+  //---------------------------------------------------------------------------------------------//
 
   assign flush_pipeline =
     current_state != STATE_OPERATING;
@@ -1452,9 +1471,9 @@ module csr_file (
     endcase
   end
 
-  // ----------------------------------------------------------------------------------------------
-  // CSR Register File Control
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // CSR Register File Control                                                                   //
+  //---------------------------------------------------------------------------------------------//
 
   assign csr_data_mask =
     csr_operation[2] == 1'b1 ?
@@ -1476,7 +1495,7 @@ module csr_file (
 
   always @* begin : csr_data_out_mux
     case (csr_address)
-      `MARCHID:       csr_data_out = 32'h00000018; // Steel marchid
+      `MARCHID:       csr_data_out = 32'h00000018; // RISC-V Steel microarchitecture ID
       `MIMPID:        csr_data_out = 32'h00000004; // Version 4 
       `CYCLE:         csr_data_out = mcycle    [31:0 ];
       `CYCLEH:        csr_data_out = mcycle    [63:32];
@@ -1502,9 +1521,9 @@ module csr_file (
     endcase
   end
 
-  // ----------------------------------------------------------------------------------------------
-  // mstatus : M-mode Status register
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mstatus : M-mode Status register                                                            //
+  //---------------------------------------------------------------------------------------------//
 
   assign mstatus = {
     19'b0000000000000000000,
@@ -1535,9 +1554,9 @@ module csr_file (
     end    
   end
 
-  // ----------------------------------------------------------------------------------------------
-  // mie : M-mode Interrupt Enable register
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mie : M-mode Interrupt Enable register                                                      //
+  //---------------------------------------------------------------------------------------------//
 
   assign mie = {
     20'b0,
@@ -1562,9 +1581,9 @@ module csr_file (
     end
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // mip : M-mode Interrupt Pending
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mip : M-mode Interrupt Pending                                                              //
+  //---------------------------------------------------------------------------------------------//
 
   assign mip = {
     20'b0,
@@ -1589,9 +1608,9 @@ module csr_file (
     end
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // mepc : M-mode Exception Program Counter register
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mepc : M-mode Exception Program Counter register                                            //
+  //---------------------------------------------------------------------------------------------//
 
   assign exception_program_counter =
     mepc;
@@ -1605,9 +1624,9 @@ module csr_file (
       mepc <= {csr_write_data[31:2], 2'b00};
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // mscratch : M-mode Scratch register
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mscratch : M-mode Scratch register                                                          //
+  //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin
     if(reset)
@@ -1616,9 +1635,9 @@ module csr_file (
       mscratch <= csr_write_data;
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // mcycle : M-mode Cycle Counter register
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mcycle : M-mode Cycle Counter register                                                      //
+  //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : mcycle_implementation
     if (reset)
@@ -1633,9 +1652,9 @@ module csr_file (
     end
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // minstret : M-mode Instruction Retired Counter register
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // minstret : M-mode Instruction Retired Counter register                                      //
+  //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : minstret_implementation
     if (reset)
@@ -1662,17 +1681,17 @@ module csr_file (
     end
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // utime : Time register (Read-only shadow of mtime)
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // utime : Time register (Read-only shadow of mtime)                                           //
+  //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : utime_csr_implementation
     utime <= real_time;
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // mcause : M-mode Trap Cause register
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mcause : M-mode Trap Cause register                                                         //
+  //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : mcause_implementation
     if(reset) 
@@ -1728,9 +1747,9 @@ module csr_file (
     end        
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // mtval : M-mode Trap Value
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mtval : M-mode Trap Value                                                                   //
+  //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin
     if (reset)
@@ -1752,9 +1771,9 @@ module csr_file (
       mtval <= csr_write_data;
   end
   
-  // ----------------------------------------------------------------------------------------------
-  // mtvec : M-mode Trap Vector Address register
-  // ----------------------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------------------//
+  // mtvec : M-mode Trap Vector Address register                                                 //
+  //---------------------------------------------------------------------------------------------//
  
   assign base_address_offset =
     mcause_cause_code << 2;
