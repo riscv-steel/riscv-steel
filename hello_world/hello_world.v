@@ -47,11 +47,11 @@ module hello_world (
   reg         internal_clock;
   wire        interrupt_request_external;
 
-  // Steel Core (instruction interface) <=> RAM (device #0, port #0)
+  // RISC-V Steel Core (instruction interface) <=> RAM (device #0, port #0)
   wire [31:0] bus_instruction_address;
   wire [31:0] bus_instruction_instruction;
 
-  // Steel Core (data interface) <=> Memory Mapper
+  // RISC-V Steel Core (data interface) <=> Memory Mapper
   wire [31:0] bus_data_rw_address;
   wire [31:0] bus_data_wdata;
   wire [31:0] bus_data_rdata;
