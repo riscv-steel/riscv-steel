@@ -35,8 +35,6 @@ Top Module:    hello_world
  
 **************************************************************************************************/
 
-`timescale 1ns / 1ps
-
 module hello_world (
 
   input   wire clock,
@@ -46,9 +44,7 @@ module hello_world (
 
   );
   
-  reg clk50mhz = 1'b0;
-  always @(posedge clock) clk50mhz <= !clk50mhz;
-
+  reg         internal_clock;
   wire        interrupt_request_external;
 
   // Steel Core (instruction interface) <=> RAM (device #0, port #0)
@@ -76,11 +72,14 @@ module hello_world (
   wire [3:0 ] device1_write_mask;
   wire        device1_write_request;
   
+  always @(posedge clock)
+    internal_clock <= !internal_clock;
+  
   riscv_steel_core
   riscv_steel_core_instance (
 
     // Basic system signals
-    .clock                        (clk50mhz                     ),
+    .clock                        (internal_clock               ),
     .reset                        (reset                        ),
     .boot_address                 (32'h00000000                 ),
 
@@ -108,7 +107,7 @@ module hello_world (
   memory_mapper
   memory_mapper_instance        (
   
-    .clock                      (clk50mhz                   ),
+    .clock                      (internal_clock             ),
 
     // Connected to Steel
     .bus_data_rdata             (bus_data_rdata             ),
@@ -135,7 +134,7 @@ module hello_world (
   
   dual_port_ram
   dual_port_ram_instance    (
-    .clock                  (clk50mhz                       ),
+    .clock                  (internal_clock                 ),
     .reset                  (reset                          ),
     .port0_address          (bus_instruction_address[13:0]  ),
     .port0_data_out         (bus_instruction_instruction    ),
@@ -148,7 +147,7 @@ module hello_world (
 
   uart
   uart_instance             (
-    .clock                  (clk50mhz                       ),
+    .clock                  (internal_clock                 ),
     .reset                  (reset                          ),
     .uart_rw_address        (device1_rw_address             ),
     .uart_wdata             (device1_wdata[7:0]             ),
