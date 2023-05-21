@@ -25,3 +25,13 @@ The project goal is to help expand the adoption of the RISC-V architecture by cr
 ### Need help?
 
 Please open a [new issue](https://github.com/riscv-steel/riscv-steel-core/issues).
+
+### Project roadmap
+
+- RV32I base instruction set ✔️
+- Zicsr extension ✔️
+- Support to M-mode ✔️
+- Documentation
+- Support to U-mode
+- C extension
+- M extension
