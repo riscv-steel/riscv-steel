@@ -55,21 +55,21 @@ module hello_world (
   wire [31:0] bus_data_rw_address;
   wire [31:0] bus_data_wdata;
   wire [31:0] bus_data_rdata;
-  wire [3:0 ] bus_data_write_mask;
+  wire [3:0 ] bus_data_write_strobe;
   wire        bus_data_write_request;
   
   // Memory Mapper <=> RAM (device #0, port #1)
   wire [31:0] device0_rw_address;
   wire [31:0] device0_wdata;
   wire [31:0] device0_rdata;
-  wire [3:0 ] device0_write_mask;
+  wire [3:0 ] device0_write_strobe;
   wire        device0_write_request;
   
   // Memory Mapper <=> UART (device #1)
   wire [31:0] device1_rw_address;
   wire [31:0] device1_wdata;
   wire [31:0] device1_rdata;
-  wire [3:0 ] device1_write_mask;
+  wire [3:0 ] device1_write_strobe;
   wire        device1_write_request;
   
   always @(posedge clock)
@@ -91,7 +91,7 @@ module hello_world (
     .data_rw_address              (bus_data_rw_address          ),
     .data_out                     (bus_data_wdata               ),
     .data_write_request           (bus_data_write_request       ),
-    .data_write_mask              (bus_data_write_mask          ),
+    .data_write_strobe            (bus_data_write_strobe        ),
     .data_in                      (bus_data_rdata               ),
 
     // Interrupt signals (hardwire to zero if unused)
@@ -113,21 +113,21 @@ module hello_world (
     .bus_data_rdata             (bus_data_rdata             ),
     .bus_data_rw_address        (bus_data_rw_address        ),
     .bus_data_wdata             (bus_data_wdata             ),  
-    .bus_data_write_mask        (bus_data_write_mask        ),
+    .bus_data_write_strobe      (bus_data_write_strobe      ),
     .bus_data_write_request     (bus_data_write_request     ),
     
     // Connected to Device 0 => Memory
     .device0_rdata              (device0_rdata              ),
     .device0_rw_address         (device0_rw_address         ),
     .device0_wdata              (device0_wdata              ),  
-    .device0_write_mask         (device0_write_mask         ),
+    .device0_write_strobe       (device0_write_strobe       ),
     .device0_write_request      (device0_write_request      ),
     
     // Connected to Device 1 => UART
     .device1_rdata              (device1_rdata              ),
     .device1_rw_address         (device1_rw_address         ),
     .device1_wdata              (device1_wdata              ),
-    .device1_write_mask         (device1_write_mask         ),
+    .device1_write_strobe       (device1_write_strobe       ),
     .device1_write_request      (device1_write_request      )
 
   );
@@ -141,7 +141,7 @@ module hello_world (
     .port1_address          (device0_rw_address[13:0]       ),
     .port1_data_out         (device0_rdata                  ),
     .port1_data_in          (device0_wdata                  ),
-    .port1_write_mask       (device0_write_mask             ),
+    .port1_write_strobe     (device0_write_strobe           ),
     .port1_write_enable     (device0_write_request          )
   );
 
@@ -168,21 +168,21 @@ module memory_mapper (
   output  reg  [31:0] bus_data_rdata,
   input   wire [31:0] bus_data_rw_address,
   input   wire [31:0] bus_data_wdata,  
-  input   wire [3:0 ] bus_data_write_mask,
+  input   wire [3:0 ] bus_data_write_strobe,
   input   wire        bus_data_write_request,
   
   // Connected to Device 0 => Memory
   input   wire [31:0] device0_rdata,
   output  reg  [31:0] device0_rw_address,
   output  reg  [31:0] device0_wdata,  
-  output  reg  [3:0 ] device0_write_mask,
+  output  reg  [3:0 ] device0_write_strobe,
   output  reg         device0_write_request,
   
   // Connected to Device 1 => UART
   input   wire [31:0] device1_rdata,
   output  reg  [31:0] device1_rw_address,
   output  reg  [31:0] device1_wdata,
-  output  reg  [3:0 ] device1_write_mask,
+  output  reg  [3:0 ] device1_write_strobe,
   output  reg         device1_write_request
 
   );
@@ -201,13 +201,13 @@ module memory_mapper (
     if (bus_data_rw_address < 32'h00010000 || bus_data_rw_address > 32'h0001ffff) begin
       device0_rw_address     <= bus_data_rw_address;
       device0_wdata          <= bus_data_wdata;
-      device0_write_mask     <= bus_data_write_mask;
+      device0_write_strobe   <= bus_data_write_strobe;
       device0_write_request  <= bus_data_write_request;
     end
     else begin
       device0_rw_address     <= 32'h00000000;
       device0_wdata          <= 32'h00000000;
-      device0_write_mask     <= 4'h0;
+      device0_write_strobe   <= 4'h0;
       device0_write_request  <= 1'b0;
     end
   end
@@ -216,13 +216,13 @@ module memory_mapper (
     if (bus_data_rw_address >= 32'h00010000 && bus_data_rw_address <= 32'h0001ffff) begin
       device1_rw_address     <= bus_data_rw_address;
       device1_wdata          <= bus_data_wdata;
-      device1_write_mask     <= bus_data_write_mask;
+      device1_write_strobe   <= bus_data_write_strobe;
       device1_write_request  <= bus_data_write_request;
     end
     else begin
       device1_rw_address     <= 32'h00000000;
       device1_wdata          <= 32'h00000000;
-      device1_write_mask     <= 4'h0;
+      device1_write_strobe   <= 4'h0;
       device1_write_request  <= 1'b0;
     end
   end
@@ -242,7 +242,7 @@ module dual_port_ram (
   input   wire [13:0] port1_address,  // 14-bit addresses = 16 KB memory
   output  reg  [31:0] port1_data_out,
   input   wire [31:0] port1_data_in,
-  input   wire [3:0 ] port1_write_mask,
+  input   wire [3:0 ] port1_write_strobe,
   input   wire        port1_write_enable
 
   );
@@ -260,10 +260,10 @@ module dual_port_ram (
   // The code below will be synthesized to a Block RAM
   always @(posedge clock) begin 
     if (port1_write_enable == 1'b1) begin
-      if(port1_write_mask[0]) ram[data_address][7:0  ] <= port1_data_in[7:0  ];
-      if(port1_write_mask[1]) ram[data_address][15:8 ] <= port1_data_in[15:8 ];
-      if(port1_write_mask[2]) ram[data_address][23:16] <= port1_data_in[23:16];
-      if(port1_write_mask[3]) ram[data_address][31:24] <= port1_data_in[31:24];
+      if(port1_write_strobe[0]) ram[data_address][7:0  ] <= port1_data_in[7:0  ];
+      if(port1_write_strobe[1]) ram[data_address][15:8 ] <= port1_data_in[15:8 ];
+      if(port1_write_strobe[2]) ram[data_address][23:16] <= port1_data_in[23:16];
+      if(port1_write_strobe[3]) ram[data_address][31:24] <= port1_data_in[31:24];
     end
   end
 

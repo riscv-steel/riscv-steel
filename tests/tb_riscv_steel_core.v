@@ -84,7 +84,7 @@ module tb_riscv_steel_core();
   wire  [31:0]  instruction_address;
   wire  [31:0]  data_rw_address;
   wire  [31:0]  data_out;
-  wire  [3:0 ]  data_write_mask;
+  wire  [3:0 ]  data_write_strobe;
   
   riscv_steel_core dut (
 
@@ -101,7 +101,7 @@ module tb_riscv_steel_core();
     .data_rw_address            (data_rw_address      ),
     .data_out                   (data_out             ),
     .data_write_request         (data_write_request   ),
-    .data_write_mask            (data_write_mask      ),
+    .data_write_strobe          (data_write_strobe    ),
     .data_in                    (data_in              ),
     
     // Interrupt signals (hardwired to zero because they're not needed for the tests)
@@ -129,13 +129,13 @@ module tb_riscv_steel_core();
   // 64 KB RAM memory implementation
   always @(posedge clock) begin
     if(data_write_request) begin
-      if(data_write_mask[0])
+      if(data_write_strobe[0])
         ram[data_rw_address[24:2] ][7:0  ]  <= data_out[7:0  ];
-      if(data_write_mask[1])
+      if(data_write_strobe[1])
         ram[data_rw_address[24:2] ][15:8 ]  <= data_out[15:8 ];
-      if(data_write_mask[2])
+      if(data_write_strobe[2])
         ram[data_rw_address[24:2] ][23:16]  <= data_out[23:16];
-      if(data_write_mask[3])
+      if(data_write_strobe[3])
         ram[data_rw_address[24:2] ][31:24]  <= data_out[31:24];
     end
   end

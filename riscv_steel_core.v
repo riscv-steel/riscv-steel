@@ -230,7 +230,7 @@ module riscv_steel_core (
   output wire   [31:0]  data_rw_address,
   output wire   [31:0]  data_out,
   output wire           data_write_request,
-  output wire   [3:0 ]  data_write_mask,
+  output wire   [3:0 ]  data_write_strobe,
   input  wire   [31:0]  data_in,
   
   // Interrupt signals (hardwire to zero if unused)
