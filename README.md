@@ -1,6 +1,6 @@
-### About the project
+# RISC-V Steel Core
 
-RISC-V Steel Core is a free and open 32-bit processor core that implements the RV32I instruction set of the RISC-V architecture. It is designed so you can easily reuse it in new RISC-V based hardware designs, from small embedded projects to complex systems on a chip.
+This is RISC-V Steel Core project repo. RISC-V Steel is a free and open 32-bit processor core that implements the RV32I instruction set of the RISC-V architecture. It is designed so you can easily reuse it in new RISC-V based hardware designs, from small embedded projects to complex systems on a chip.
 
 [Check out how to get the **Hello World project** running on an FPGA!](https://riscv-steel.github.io/riscv-steel-core/getting-started/)
 
