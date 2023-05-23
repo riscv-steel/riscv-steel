@@ -350,7 +350,7 @@ module riscv_steel_core (
     
   assign instruction =
     flush_pipeline == 1'b1 ?
-    32'h00000013 :
+    `NOP_INSTRUCTION :
     instruction_in;
   
   assign instruction_opcode       = instruction[6:0  ];
