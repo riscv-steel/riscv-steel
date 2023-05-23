@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="synth_1" LaunchPart="xc7a35tcsg324-1" LaunchTime="1684875397">
   <File Type="PA-TCL" Name="hello_world.tcl"/>
-  <File Type="RDS-PROPCONSTRS" Name="hello_world_drc_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="hello_world_reports.tcl"/>
   <File Type="RDS-RDS" Name="hello_world.vds"/>
   <File Type="RDS-UTIL" Name="hello_world_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="hello_world_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="hello_world.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="hello_world_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="hello_world_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PPRDIR/../../riscv_steel_core.v">
@@ -56,9 +53,7 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2023">
-      <Desc>Vivado Synthesis Defaults</Desc>
-    </StratHandle>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2023"/>
     <Step Id="synth_design"/>
   </Strategy>
 </GenRun>
