@@ -233,11 +233,14 @@ module riscv_steel_core (
   output wire   [3:0 ]  data_write_strobe,
   input  wire   [31:0]  data_in,
   
-  // Interrupt signals (hardwire to zero if unused)
+  // Interrupt signals (hardwire inputs to zero if unused)
 
-  input  wire           interrupt_request_external,
-  input  wire           interrupt_request_timer,
-  input  wire           interrupt_request_software,
+  input  wire           irq_external,
+  output wire           irq_external_ack,
+  input  wire           irq_timer,
+  output wire           irq_timer_ack,
+  input  wire           irq_software,  
+  output wire           irq_software_ack,
 
   // Real Time Counter (hardwire to zero if unused)
 
@@ -390,7 +393,7 @@ module riscv_steel_core (
     .write_request      (data_write_request   ),
     .rw_address         (data_rw_address      ),
     .store_data         (data_out             ),
-    .write_mask         (data_write_mask      )
+    .write_strobe       (data_write_strobe    )
   
   );
     
@@ -473,9 +476,12 @@ module riscv_steel_core (
     .csr_data_out                   (csr_data_out                   ),    
     .program_counter_stage3         (program_counter_stage3         ),
     .target_address_adder_stage3    (target_address_adder_stage3    ),    
-    .interrupt_request_external     (interrupt_request_external     ),
-    .interrupt_request_timer        (interrupt_request_timer        ),
-    .interrupt_request_software     (interrupt_request_software     ),    
+    .irq_external                   (irq_external                   ),
+    .irq_timer                      (irq_timer                      ),
+    .irq_software                   (irq_software                   ),    
+    .irq_external_ack               (irq_external_ack               ),
+    .irq_timer_ack                  (irq_timer_ack                  ),
+    .irq_software_ack               (irq_software_ack               ),
     .misaligned_load                (misaligned_load                ),
     .misaligned_store               (misaligned_store               ),
     .misaligned_instruction_address (take_branch & next_address[1]  ),
@@ -601,7 +607,7 @@ module rv32i_alu (
   input  wire   [31:0]  second_operand,
   input  wire   [3:0 ]  operation_code,
   
-  output reg    [31:0]  operation_result
+  output  reg   [31:0]  operation_result
 
   );
   
@@ -693,10 +699,10 @@ endmodule
 //-------------------------------------------------------------------------------------------------
 module branch_decision (
 
-  input wire    [6:0]   instruction_opcode,
-  input wire    [2:0]   instruction_funct3,
-  input wire    [31:0]  rs1_data,
-  input wire    [31:0]  rs2_data,
+  input  wire   [6:0 ]  instruction_opcode,
+  input  wire   [2:0 ]  instruction_funct3,
+  input  wire   [31:0]  rs1_data,
+  input  wire   [31:0]  rs2_data,
 
   output wire           take_branch
 
@@ -798,10 +804,10 @@ endmodule
 //-----------------------------------------------------------------------------------------------//
 module imm_generator (
     
-  input wire    [31:7]  instruction_31_downto_7,
-  input wire    [2:0]   immediate_type,
+  input  wire   [31:7]  instruction_31_downto_7,
+  input  wire   [2:0 ]  immediate_type,
 
-  output reg    [31:0]  immediate_data
+  output  reg   [31:0]  immediate_data
 
   );
   
@@ -881,7 +887,7 @@ endmodule
 // This unit generates the signals interfacing with the data memory:                             //
 //   - rw_address (address to fetch/store data)                                                  //
 //   - store_data (data to be written to memory)                                                 //
-//   - write_mask (write byte-enable mask)                                                       //
+//   - write_strobe (write byte-enable mask)                                                     //
 //   - write_request (0 = fetch data / 1 = write)                                                //
 //                                                                                               //
 // When input 'store' is logic 0 the core is reading from memory.                                //
@@ -894,22 +900,22 @@ endmodule
 //-----------------------------------------------------------------------------------------------//
 module data_fetch_store_unit (
 
-  input wire    [2:0 ]  instruction_funct3,
-  input wire    [31:0]  load_store_address, 
-  input wire    [31:0]  rs2_data,
-  input wire            store,
-  input wire            misaligned_store,
-  input wire            take_trap,
+  input  wire   [2:0 ]  instruction_funct3,
+  input  wire   [31:0]  load_store_address, 
+  input  wire   [31:0]  rs2_data,
+  input  wire           store,
+  input  wire           misaligned_store,
+  input  wire           take_trap,
 
   output wire           write_request,
   output wire   [31:0]  rw_address,
-  output reg    [31:0]  store_data,
-  output reg    [3:0 ]  write_mask
+  output  reg   [31:0]  store_data,
+  output  reg   [3:0 ]  write_strobe
     
   );   
   
-  reg [3:0] write_mask_for_half;
-  reg [3:0] write_mask_for_byte;
+  reg [3:0] write_strobe_for_half;
+  reg [3:0] write_strobe_for_byte;
   reg [31:0] half_data;
   reg [31:0] byte_data;
   
@@ -921,20 +927,20 @@ module data_fetch_store_unit (
   always @* begin
     case(instruction_funct3)
       `FUNCT3_SB: begin
-        write_mask = write_mask_for_byte;
-        store_data = byte_data;
+        write_strobe = write_strobe_for_byte;
+        store_data   = byte_data;
       end
       `FUNCT3_SH: begin
-        write_mask = write_mask_for_half;
-        store_data = half_data;
+        write_strobe = write_strobe_for_half;
+        store_data   = half_data;
       end
       `FUNCT3_SW: begin
-        write_mask = {4{write_request}};
-        store_data = rs2_data;
+        write_strobe = {4{write_request}};
+        store_data   = rs2_data;
       end
       default: begin
-        write_mask = {4{write_request}};
-        store_data = rs2_data;
+        write_strobe = {4{write_request}};
+        store_data   = rs2_data;
       end 
     endcase
   end
@@ -943,19 +949,19 @@ module data_fetch_store_unit (
     case(load_store_address[1:0])
       2'b00: begin 
         byte_data = {24'b0, rs2_data[7:0]};
-        write_mask_for_byte = {3'b0, write_request};
+        write_strobe_for_byte = {3'b0, write_request};
       end
       2'b01: begin
         byte_data = {16'b0, rs2_data[7:0], 8'b0};
-        write_mask_for_byte = {2'b0, write_request, 1'b0};
+        write_strobe_for_byte = {2'b0, write_request, 1'b0};
       end
       2'b10: begin
         byte_data = {8'b0, rs2_data[7:0], 16'b0};
-        write_mask_for_byte = {1'b0, write_request, 2'b0};
+        write_strobe_for_byte = {1'b0, write_request, 2'b0};
       end
       2'b11: begin
         byte_data = {rs2_data[7:0], 24'b0};
-        write_mask_for_byte = {write_request, 3'b0};
+        write_strobe_for_byte = {write_request, 3'b0};
       end
     endcase    
   end
@@ -964,11 +970,11 @@ module data_fetch_store_unit (
     case(load_store_address[1])
       1'b0: begin
         half_data = {16'b0, rs2_data[15:0]};
-        write_mask_for_half = {2'b0, {2{write_request}}};
+        write_strobe_for_half = {2'b0, {2{write_request}}};
       end
       1'b1: begin
         half_data = {rs2_data[15:0], 16'b0};
-        write_mask_for_half = {{2{write_request}}, 2'b0};
+        write_strobe_for_half = {{2{write_request}}, 2'b0};
       end
     endcase
   end
@@ -987,20 +993,20 @@ endmodule
 //-----------------------------------------------------------------------------------------------//
 module integer_file (
   
-  input wire            clock,
+  input  wire           clock,
   
   // Signals used with pipeline stage 2
 
-  input wire    [4:0]   rs1_addr,
-  input wire    [4:0]   rs2_addr,    
+  input  wire   [4:0 ]  rs1_addr,
+  input  wire   [4:0 ]  rs2_addr,    
   output wire   [31:0]  rs1_data,
   output wire   [31:0]  rs2_data,
   
   // Signals used with pipeline stage 3
 
-  input wire    [4:0]   rd_addr,
-  input wire            write_enable,
-  input wire    [31:0]  rd_data
+  input  wire   [4:0 ]  rd_addr,
+  input  wire           write_enable,
+  input  wire   [31:0]  rd_data
 
   );
     
@@ -1063,8 +1069,8 @@ module decoder (
   output wire         target_address_source,
   output wire         integer_file_write_enable,
   output wire         csr_file_write_enable,
-  output reg    [2:0] writeback_mux_selector,
-  output reg    [2:0] immediate_type,
+  output  reg   [2:0] writeback_mux_selector,
+  output  reg   [2:0] immediate_type,
   output wire   [2:0] csr_operation,
   output wire         illegal_instruction,
   output wire         ecall,
@@ -1249,12 +1255,12 @@ endmodule
 //-----------------------------------------------------------------------------------------------//
 module load_unit (
 
-  input wire    [1:0 ]  load_size,
-  input wire            load_unsigned,
-  input wire    [31:0]  data_read,
-  input wire    [1:0 ]  load_store_address_1_to_0,
+  input  wire   [1:0 ]  load_size,
+  input  wire           load_unsigned,
+  input  wire   [31:0]  data_read,
+  input  wire   [1:0 ]  load_store_address_1_to_0,
 
-  output reg    [31:0]  load_data
+  output  reg   [31:0]  load_data
     
   );
     
@@ -1322,50 +1328,53 @@ module csr_file (
 
   // Basic signals
 
-  input wire            clock,
-  input wire            reset,
+  input  wire           clock,
+  input  wire           reset,
     
   // CSR registers read/write interface  
 
-  input wire            write_enable,
-  input wire    [11:0]  csr_address,
-  input wire    [2:0 ]  csr_operation,
-  input wire    [4:0 ]  immediate_data_4_to_0,
-  input wire    [31:0]  csr_data_in,
-  output reg    [31:0]  csr_data_out,
+  input  wire           write_enable,
+  input  wire   [11:0]  csr_address,
+  input  wire   [2:0 ]  csr_operation,
+  input  wire   [4:0 ]  immediate_data_4_to_0,
+  input  wire   [31:0]  csr_data_in,
+  output  reg   [31:0]  csr_data_out,
     
   // From pipeline stage 3
 
-  input wire    [31:0]  program_counter_stage3,
-  input wire    [31:0]  target_address_adder_stage3,
+  input  wire   [31:0]  program_counter_stage3,
+  input  wire   [31:0]  target_address_adder_stage3,
     
   // Interface with external Interrupt Controller
 
-  input wire            interrupt_request_external,
-  input wire            interrupt_request_timer,
-  input wire            interrupt_request_software,
+  input  wire           irq_external,
+  output wire           irq_external_ack,
+  input  wire           irq_timer,
+  output wire           irq_timer_ack,
+  input  wire           irq_software,
+  output wire           irq_software_ack,
     
   // Exception flags
 
-  input wire            misaligned_load,
-  input wire            misaligned_store,
-  input wire            misaligned_instruction_address,
+  input  wire           misaligned_load,
+  input  wire           misaligned_store,
+  input  wire           misaligned_instruction_address,
 
   // Instruction decoder flags
 
-  input wire            illegal_instruction,
-  input wire            ecall,
-  input wire            ebreak,
-  input wire            mret,
+  input  wire           illegal_instruction,
+  input  wire           ecall,
+  input  wire           ebreak,
+  input  wire           mret,
     
   // Real time counter value
 
-  input wire    [63:0]  real_time,
+  input  wire   [63:0]  real_time,
     
   // Hart state control signals
 
   output wire   [31:0]  exception_program_counter,
-  output reg    [1:0 ]  program_counter_source,
+  output  reg   [1:0 ]  program_counter_source,
   output wire           flush_pipeline,
   output wire           take_trap,
   output wire   [31:0]  trap_address
@@ -1470,6 +1479,18 @@ module csr_file (
         program_counter_source = `PC_NEXT;
     endcase
   end
+
+  assign irq_external_ack =
+    (current_state      == STATE_TRAP_TAKEN) &&
+    (mcause_cause_code  == 4'b1011);
+  
+  assign irq_timer_ack =
+    (current_state      == STATE_TRAP_TAKEN) &&
+    (mcause_cause_code  == 4'b0111);
+
+  assign irq_software_ack =
+    (current_state      == STATE_TRAP_TAKEN) &&
+    (mcause_cause_code  == 4'b0011);
 
   //---------------------------------------------------------------------------------------------//
   // CSR Register File Control                                                                   //
@@ -1602,9 +1623,9 @@ module csr_file (
       mip_msip <= 1'b0;
     end
     else begin
-      mip_meip <= interrupt_request_external;
-      mip_mtip <= interrupt_request_timer;
-      mip_msip <= interrupt_request_software;
+      mip_meip <= irq_external;
+      mip_mtip <= irq_timer;
+      mip_msip <= irq_software;
     end
   end
   

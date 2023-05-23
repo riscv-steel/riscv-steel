@@ -86,7 +86,8 @@ module tb_riscv_steel_core();
   wire  [31:0]  data_out;
   wire  [3:0 ]  data_write_strobe;
   
-  riscv_steel_core dut (
+  riscv_steel_core
+  dut (
 
     // Basic system signals
     .clock                      (clock                ),
@@ -104,10 +105,13 @@ module tb_riscv_steel_core();
     .data_write_strobe          (data_write_strobe    ),
     .data_in                    (data_in              ),
     
-    // Interrupt signals (hardwired to zero because they're not needed for the tests)
-    .interrupt_request_external (1'b0                 ),
-    .interrupt_request_timer    (1'b0                 ),
-    .interrupt_request_software (1'b0                 ),
+    // Interrupt signals (inputs hardwired to zero because they're not needed for the tests)
+    .irq_external               (1'b0                 ),
+    .irq_timer                  (1'b0                 ),
+    .irq_software               (1'b0                 ),
+    .irq_external_ack           (),
+    .irq_timer_ack              (),
+    .irq_software_ack           (),
 
     // Real Time Counter (hardwired to zero because they're not needed too)
     .real_time                  (64'b0                )
@@ -126,7 +130,7 @@ module tb_riscv_steel_core();
     end
   end
   
-  // 64 KB RAM memory implementation
+  // Memory implementation
   always @(posedge clock) begin
     if(data_write_request) begin
       if(data_write_strobe[0])
@@ -140,7 +144,6 @@ module tb_riscv_steel_core();
     end
   end
   
-  // 50MHz clock signal
   always #10 clock = !clock;
   
   reg [8*30:0] riscv_test_program [0:53] = {

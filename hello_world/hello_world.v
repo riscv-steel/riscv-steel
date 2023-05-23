@@ -45,7 +45,8 @@ module hello_world (
   );
   
   reg         internal_clock;
-  wire        interrupt_request_external;
+  wire        irq_external;
+  wire        irq_external_ack;
 
   // RISC-V Steel Core (instruction interface) <=> RAM (device #0, port #0)
   wire [31:0] bus_instruction_address;
@@ -94,10 +95,13 @@ module hello_world (
     .data_write_strobe            (bus_data_write_strobe        ),
     .data_in                      (bus_data_rdata               ),
 
-    // Interrupt signals (hardwire to zero if unused)
-    .interrupt_request_external   (interrupt_request_external   ),
-    .interrupt_request_timer      (0), // unused
-    .interrupt_request_software   (0), // unused
+    // Interrupt signals (hardwire inputs to zero if unused)
+    .irq_external                 (irq_external                 ),
+    .irq_external_ack             (irq_external_ack             ),
+    .irq_timer                    (0), // unused
+    .irq_timer_ack                (),  // unused
+    .irq_software                 (0), // unused
+    .irq_software_ack             (),  // unused
 
     // Real Time Counter (hardwire to zero if unused)
     .real_time                    (0)  // unused
@@ -155,7 +159,8 @@ module hello_world (
     .uart_rdata             (device1_rdata                  ),
     .uart_tx                (uart_tx                        ),
     .uart_rx                (uart_rx                        ),
-    .uart_interrupt_request (interrupt_request_external     )
+    .uart_irq               (irq_external                   ),
+    .uart_irq_ack           (irq_external_ack               )
   );
 
 endmodule
@@ -296,7 +301,8 @@ module uart #(
   input   wire        uart_rx,
   output  wire        uart_tx,
   output  reg  [31:0] uart_rdata,  
-  output  reg         uart_interrupt_request
+  output  reg         uart_irq,
+  input   wire        uart_irq_ack
     
   );
 
@@ -346,16 +352,16 @@ module uart #(
       rx_register <= 8'h00;
       rx_data <= 8'h00;
       rx_bit_counter <= 0;
-      uart_interrupt_request <= 1'b0;
+      uart_irq <= 1'b0;
       rx_active <= 1'b0;
     end
-    else if (uart_interrupt_request == 1'b1) begin
-      if (uart_rw_address == 32'h00010004) begin
+    else if (uart_irq == 1'b1) begin
+      if (uart_rw_address == 32'h00010004 || uart_irq_ack == 1'b1) begin
         rx_cycle_counter <= 0;
         rx_register <= 8'h00;
         rx_data <= rx_data;
         rx_bit_counter <= 0;
-        uart_interrupt_request <= 1'b0;
+        uart_irq <= 1'b0;
         rx_active <= 1'b0;
       end
       else begin
@@ -363,7 +369,7 @@ module uart #(
         rx_register <= 8'h00;
         rx_data <= rx_data;
         rx_bit_counter <= 0;
-        uart_interrupt_request <= 1'b1;
+        uart_irq <= 1'b1;
         rx_active <= 1'b0;
       end
     end
@@ -373,7 +379,7 @@ module uart #(
         rx_register <= 8'h00;
         rx_data <= rx_data;
         rx_bit_counter <= 0;
-        uart_interrupt_request <= 1'b0;
+        uart_irq <= 1'b0;
         rx_active <= 1'b0;
       end
       else if (uart_rx == 1'b0) begin
@@ -382,7 +388,7 @@ module uart #(
           rx_register <= 8'h00;
           rx_data <= rx_data;
           rx_bit_counter <= 0;
-          uart_interrupt_request <= 1'b0;
+          uart_irq <= 1'b0;
           rx_active <= 1'b0;
         end
         else begin
@@ -390,7 +396,7 @@ module uart #(
           rx_register <= 8'h00;
           rx_data <= rx_data;
           rx_bit_counter <= 8;
-          uart_interrupt_request <= 1'b0;
+          uart_irq <= 1'b0;
           rx_active <= 1'b1;
         end
       end
@@ -401,7 +407,7 @@ module uart #(
         rx_register <= rx_register;
         rx_data <= rx_data;
         rx_bit_counter <= rx_bit_counter;
-        uart_interrupt_request <= 1'b0;
+        uart_irq <= 1'b0;
         rx_active <= 1'b1;
       end
       else begin
@@ -409,7 +415,7 @@ module uart #(
         rx_register <= {uart_rx, rx_register[7:1]};
         rx_data <= (rx_bit_counter == 0) ? rx_register : rx_data;
         rx_bit_counter <= rx_bit_counter > 0 ? rx_bit_counter - 1 : 0;
-        uart_interrupt_request <= (rx_bit_counter == 0) ? 1'b1 : 1'b0;
+        uart_irq <= (rx_bit_counter == 0) ? 1'b1 : 1'b0;
         rx_active <= 1'b1;
       end
     end
