@@ -70,6 +70,13 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param checkpoint.writeSynthRtdsInDcp 1
+set_param chipscope.maxJobs 4
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
+set_msg_config  -id {Synth 8-7080}  -suppress 
+set_msg_config  -id {Board 49-26}  -suppress 
+set_msg_config  -id {filemgmt 56-3}  -suppress 
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcsg324-1
 
@@ -102,6 +109,8 @@ read_xdc U:/home/rafa/riscv-steel-core/hello_world/hello_world_arty_a7_constrain
 set_property used_in_implementation false [get_files U:/home/rafa/riscv-steel-core/hello_world/hello_world_arty_a7_constraints.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental U:/home/rafa/riscv-steel-core/hello_world/vivado/hello_world.srcs/utils_1/imports/synth_1/hello_world.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
