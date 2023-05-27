@@ -76,48 +76,91 @@ module tb_riscv_steel_core();
 
   reg           clock;
   reg           reset;
+  reg           halt;
   reg   [31:0]  instruction_in;
   reg   [31:0]  data_in;
   reg   [31:0]  ram [0:524287]; // 2 MB RAM memory
+  reg           instruction_in_valid;
+  reg           data_rw_valid;
+  reg           instruction_valid_test;
+  reg           data_rw_valid_test;
 
   wire          data_write_request;
   wire  [31:0]  instruction_address;
   wire  [31:0]  data_rw_address;
   wire  [31:0]  data_out;
   wire  [3:0 ]  data_write_strobe;
+  wire          instruction_address_valid;
+  wire          data_rw_address_valid;
   
   riscv_steel_core
   dut (
 
     // Basic system signals
-    .clock                      (clock                ),
-    .reset                      (reset                ),
-    .boot_address               (32'h00000000         ), // boot address of all test programs
+    .clock                      (clock                      ),
+    .reset                      (reset                      ),
+    .halt                       (halt                       ),
+    .boot_address               (32'h00000000               ), // boot address of all test programs
 
     // Instruction fetch interface
-    .instruction_address        (instruction_address  ),
-    .instruction_in             (instruction_in       ),
+    .instruction_address        (instruction_address        ),
+    .instruction_address_valid  (instruction_address_valid  ),
+    .instruction_in             (instruction_in             ),
+    .instruction_in_valid       (instruction_in_valid       ),
       
     // Data fetch/write interface
-    .data_rw_address            (data_rw_address      ),
-    .data_out                   (data_out             ),
-    .data_write_request         (data_write_request   ),
-    .data_write_strobe          (data_write_strobe    ),
-    .data_in                    (data_in              ),
+    .data_rw_address            (data_rw_address            ),
+    .data_rw_address_valid      (data_rw_address_valid      ),
+    .data_out                   (data_out                   ),
+    .data_write_request         (data_write_request         ),
+    .data_write_strobe          (data_write_strobe          ),
+    .data_in                    (data_in                    ),
+    .data_rw_valid              (data_rw_valid              ),
     
     // Interrupt signals (inputs hardwired to zero because they're not needed for the tests)
-    .irq_external               (1'b0                 ),
-    .irq_timer                  (1'b0                 ),
-    .irq_software               (1'b0                 ),
+    .irq_external               (1'b0                       ),
+    .irq_timer                  (1'b0                       ),
+    .irq_software               (1'b0                       ),
     .irq_external_ack           (),
     .irq_timer_ack              (),
     .irq_software_ack           (),
 
     // Real Time Counter (hardwired to zero because they're not needed too)
-    .real_time                  (64'b0                )
+    .real_time                  (64'b0                      )
 
   );
   
+  // Reflection of *_valid signals
+  always @(posedge clock) begin
+    if (reset) begin
+      instruction_in_valid <= 1'b0;
+      data_rw_valid <= 1'b0;
+    end
+    else begin
+      instruction_in_valid <= instruction_address_valid & instruction_valid_test;
+      data_rw_valid <= data_rw_address_valid & data_rw_valid_test;
+    end
+  end
+  
+  // Randomly assert/deassert *_valid and halt signals
+  integer x;
+  initial begin
+    #0;
+    instruction_valid_test = 1'b1;
+    data_rw_valid_test = 1'b1;
+    halt <= 1'b0;
+    for(x = 0; x < 100; x=x+1) begin
+      #1000;
+      instruction_valid_test = $random();
+      data_rw_valid_test = $random();    
+      halt <= $random();
+    end
+    #1000;
+    instruction_valid_test = 1'b1;
+    data_rw_valid_test = 1'b1;
+    halt <= 1'b0;
+  end
+
   // RAM output registers
   always @(posedge clock) begin
     if (reset) begin
@@ -125,8 +168,8 @@ module tb_riscv_steel_core();
       instruction_in     <= 32'h00000000;
     end
     else begin
-      data_in            <= ram[data_rw_address     [24:2]];
-      instruction_in     <= ram[instruction_address [24:2]];
+      data_in            <= ram[$unsigned(data_rw_address     [24:2])];
+      instruction_in     <= ram[$unsigned(instruction_address [24:2])];
     end
   end
   
@@ -134,13 +177,13 @@ module tb_riscv_steel_core();
   always @(posedge clock) begin
     if(data_write_request) begin
       if(data_write_strobe[0])
-        ram[data_rw_address[24:2] ][7:0  ]  <= data_out[7:0  ];
+        ram[$unsigned(data_rw_address[24:2])][7:0  ]  <= data_out[7:0  ];
       if(data_write_strobe[1])
-        ram[data_rw_address[24:2] ][15:8 ]  <= data_out[15:8 ];
+        ram[$unsigned(data_rw_address[24:2])][15:8 ]  <= data_out[15:8 ];
       if(data_write_strobe[2])
-        ram[data_rw_address[24:2] ][23:16]  <= data_out[23:16];
+        ram[$unsigned(data_rw_address[24:2])][23:16]  <= data_out[23:16];
       if(data_write_strobe[3])
-        ram[data_rw_address[24:2] ][31:24]  <= data_out[31:24];
+        ram[$unsigned(data_rw_address[24:2])][31:24]  <= data_out[31:24];
     end
   end
   

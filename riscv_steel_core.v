@@ -218,20 +218,25 @@ module riscv_steel_core (
   
   input  wire           clock,
   input  wire           reset,
+  input  wire           halt,
   input  wire   [31:0]  boot_address,
 
   // Instruction fetch interface
 
   output wire   [31:0]  instruction_address,
+  output wire           instruction_address_valid,
   input  wire   [31:0]  instruction_in,
+  input  wire           instruction_in_valid,
     
   // Data fetch/write interface
 
   output wire   [31:0]  data_rw_address,
+  output wire           data_rw_address_valid,
   output wire   [31:0]  data_out,
   output wire           data_write_request,
   output wire   [3:0 ]  data_write_strobe,
   input  wire   [31:0]  data_in,
+  input  wire           data_rw_valid,
   
   // Interrupt signals (hardwire inputs to zero if unused)
 
@@ -263,10 +268,14 @@ module riscv_steel_core (
   reg   [2:0 ]  writeback_mux_selector_stage3;  
   reg   [2:0 ]  csr_operation_stage3;  
   reg   [31:0]  immediate_stage3;
+  reg   [31:0]  prev_instruction_address;
+  reg           prev_instruction_address_valid;
+  reg           prev_data_rw_address_valid;
   reg           load_unsigned_stage3;  
   reg           alu_2nd_operand_source_stage3;
   reg           csr_file_write_enable_stage3;
   reg           integer_file_write_enable_stage3;  
+  reg           halt_register;
   
   wire  [1:0 ]  program_counter_source;
   wire  [31:0]  exception_program_counter;
@@ -310,7 +319,9 @@ module riscv_steel_core (
   wire          misaligned_load;
   wire          misaligned_store;
   wire          illegal_instruction;    
-       
+  wire          clock_enable;
+  wire          halt_internal;
+
   //---------------------------------------------------------------------------------------------//
   // 1st PIPELINE STAGE                                                                          //
   //---------------------------------------------------------------------------------------------//
@@ -318,7 +329,44 @@ module riscv_steel_core (
   assign instruction_address =
     reset ?
     boot_address :
-    next_program_counter;   
+    (halt_internal ?
+      prev_instruction_address :
+      next_program_counter);   
+  
+  assign instruction_address_valid =
+    reset ?
+    1'b0 :
+    (halt_internal ?    
+      prev_instruction_address_valid :
+      ((program_counter_source == `PC_NEXT) |
+       (program_counter_source == `PC_BOOT)));
+
+  always @(posedge clock) begin
+    if (reset) begin
+      prev_instruction_address <= boot_address;
+      prev_instruction_address_valid <= 1'b0;
+      prev_data_rw_address_valid <= 1'b0;
+    end
+    else if(clock_enable) begin
+      prev_instruction_address <= instruction_address;
+      prev_instruction_address_valid <= instruction_address_valid;    
+      prev_data_rw_address_valid <= data_rw_address_valid;
+    end
+  end
+
+  always @(posedge clock) begin
+    if (reset)
+      halt_register <= 1'b0;
+    else
+      halt_register <= halt;
+  end
+
+  assign halt_internal = 
+    halt_register |
+    (prev_instruction_address_valid & !instruction_in_valid) |
+    (prev_data_rw_address_valid & !data_rw_valid);
+
+  assign clock_enable = !halt_internal;
     
   always @* begin : next_program_counter_mux
     case (program_counter_source)
@@ -343,7 +391,7 @@ module riscv_steel_core (
   always @(posedge clock) begin : program_counter_reg_implementation
     if(reset)
       program_counter <= boot_address;
-    else
+    else if (clock_enable)
       program_counter <= next_program_counter;
   end
     
@@ -384,14 +432,20 @@ module riscv_steel_core (
   data_fetch_store_unit
   data_fetch_store_unit_instance (
 
+    .clock              (clock                ),
+    .clock_enable       (clock_enable         ),
+    .halt               (halt_internal        ),
+    .reset              (reset                ),
     .instruction_funct3 (instruction_funct3   ),
     .load_store_address (target_address_adder ), 
     .rs2_data           (rs2_data             ),
+    .load               (load                 ),
     .store              (store                ),
     .misaligned_store   (misaligned_store     ),
     .take_trap          (take_trap            ),
     .write_request      (data_write_request   ),
     .rw_address         (data_rw_address      ),
+    .rw_address_valid   (data_rw_address_valid),
     .store_data         (data_out             ),
     .write_strobe       (data_write_strobe    )
   
@@ -449,6 +503,7 @@ module riscv_steel_core (
   integer_file_instance (
     
     .clock         (clock                                 ),
+    .clock_enable  (clock_enable                          ),
     .rs1_addr      (instruction_rs1_address               ),
     .rs2_addr      (instruction_rs2_address               ),    
     .rd_addr       (instruction_rd_address_stage3         ),
@@ -465,6 +520,7 @@ module riscv_steel_core (
   csr_file_instance (
 
     .clock                          (clock                          ),
+    .clock_enable                   (clock_enable                   ),
     .reset                          (reset                          ),    
     .write_enable                   (flush_pipeline ?
                                      1'b0 :
@@ -517,7 +573,7 @@ module riscv_steel_core (
       csr_operation_stage3              <= 3'b000;
       immediate_stage3                  <= 32'h00000000;
     end
-    else begin
+    else if (clock_enable) begin
       instruction_rd_address_stage3     <= instruction_rd_address;
       instruction_csr_address_stage3    <= instruction_csr_address;
       rs1_data_stage3                   <= rs1_data;
@@ -900,47 +956,116 @@ endmodule
 //-----------------------------------------------------------------------------------------------//
 module data_fetch_store_unit (
 
+  input  wire           clock,
+  input  wire           clock_enable,
+  input  wire           halt,
+  input  wire           reset,
+
   input  wire   [2:0 ]  instruction_funct3,
   input  wire   [31:0]  load_store_address, 
   input  wire   [31:0]  rs2_data,
+  input  wire           load,
   input  wire           store,
   input  wire           misaligned_store,
   input  wire           take_trap,
 
   output wire           write_request,
   output wire   [31:0]  rw_address,
-  output  reg   [31:0]  store_data,
-  output  reg   [3:0 ]  write_strobe
+  output wire           rw_address_valid,
+  output wire   [31:0]  store_data,
+  output wire   [3:0 ]  write_strobe
     
   );   
   
-  reg [3:0] write_strobe_for_half;
-  reg [3:0] write_strobe_for_byte;
-  reg [31:0] half_data;
-  reg [31:0] byte_data;
+  reg [3:0 ]  write_strobe_for_half;
+  reg [3:0 ]  write_strobe_for_byte;
+  reg [3:0 ]  write_strobe_internal;
+  reg [3:0 ]  prev_write_strobe;
+  reg [31:0]  store_data_internal;
+  reg [31:0]  prev_store_data;
+  reg [31:0]  half_data;
+  reg [31:0]  byte_data;
+  reg [31:0]  prev_rw_address;  
+  reg         prev_write_request;
+  reg         prev_rw_address_valid;
+
+  wire [31:0] rw_address_internal;
+  wire        write_request_internal;  
+  
+  always @(posedge clock) begin
+    if (reset) begin
+      prev_rw_address <= 32'b0;
+      prev_store_data <= 32'b0;
+      prev_write_request <= 1'b0;
+      prev_write_strobe <= 4'b0000;
+      prev_rw_address_valid <= 1'b0;
+    end
+    else if (clock_enable) begin
+      prev_rw_address <= rw_address;
+      prev_store_data <= store_data;
+      prev_write_request <= write_request;
+      prev_write_strobe <= write_strobe;
+      prev_rw_address_valid <= rw_address_valid;
+    end    
+  end
+
+  assign rw_address_valid =
+    reset ?
+    1'b0 :
+    (halt ?
+      prev_rw_address_valid :
+      load | store);
+
+  assign rw_address =
+    reset ?
+    32'b0 :
+    (halt ?
+      prev_rw_address :
+      rw_address_internal);
   
   assign write_request =
+    reset ?
+    1'b0 :
+    (halt ?
+      prev_write_request :
+      write_request_internal);
+
+  assign store_data =
+    reset ?
+    32'b0 :
+    (halt ?
+      prev_store_data :
+      store_data_internal);
+
+  assign write_strobe =
+    reset ?
+    4'b0 :
+    (halt ?
+      prev_write_strobe :
+      write_strobe_internal);
+
+  assign write_request_internal =
     store & ~misaligned_store & ~take_trap;
   
-  assign rw_address = {load_store_address[31:2], 2'b00};
+  assign rw_address_internal = {load_store_address[31:2], 2'b00};
   
   always @* begin
     case(instruction_funct3)
       `FUNCT3_SB: begin
-        write_strobe = write_strobe_for_byte;
-        store_data   = byte_data;
+        write_strobe_internal = write_strobe_for_byte;
+        store_data_internal   = byte_data;
       end
       `FUNCT3_SH: begin
-        write_strobe = write_strobe_for_half;
-        store_data   = half_data;
+        write_strobe_internal = write_strobe_for_half;
+        store_data_internal   = half_data;
       end
       `FUNCT3_SW: begin
-        write_strobe = {4{write_request}};
-        store_data   = rs2_data;
+        write_strobe_internal = {4{write_request}};
+        store_data_internal   = rs2_data;
       end
       default: begin
-        write_strobe = {4{write_request}};
-        store_data   = rs2_data;
+        write_strobe_internal = {4{write_request}};
+        store_data_internal   = rs2_data;
       end 
     endcase
   end
@@ -994,6 +1119,7 @@ endmodule
 module integer_file (
   
   input  wire           clock,
+  input  wire           clock_enable,
   
   // Signals used with pipeline stage 2
 
@@ -1022,7 +1148,7 @@ module integer_file (
       Q[i] <= 32'h00000000;
 
   always @(posedge clock)
-    if (write_enable)
+    if (clock_enable & write_enable)
       Q[rd_addr] <= rd_data;
 
   assign rs1_mux =
@@ -1329,6 +1455,7 @@ module csr_file (
   // Basic signals
 
   input  wire           clock,
+  input  wire           clock_enable,
   input  wire           reset,
     
   // CSR registers read/write interface  
@@ -1461,7 +1588,7 @@ module csr_file (
   always @(posedge clock) begin : m_mode_fsm_current_state_register
     if(reset)
       current_state <= STATE_RESET;
-    else
+    else if (clock_enable)
       current_state <= next_state;
   end
 
@@ -1561,18 +1688,20 @@ module csr_file (
       mstatus_mie   <= 1'b0;
       mstatus_mpie  <= 1'b1;
     end
-    else if(current_state == STATE_TRAP_RETURN) begin
-      mstatus_mie   <= mstatus_mpie;
-      mstatus_mpie  <= 1'b1;
+    else if (clock_enable) begin
+      if(current_state == STATE_TRAP_RETURN) begin
+        mstatus_mie   <= mstatus_mpie;
+        mstatus_mpie  <= 1'b1;
+      end
+      else if(current_state == STATE_TRAP_TAKEN) begin
+        mstatus_mpie  <= mstatus_mie;
+        mstatus_mie   <= 1'b0;
+      end
+      else if(current_state == STATE_OPERATING && csr_address == `MSTATUS && write_enable) begin
+        mstatus_mie   <= csr_write_data[3];
+        mstatus_mpie  <= csr_write_data[7];
+      end    
     end
-    else if(current_state == STATE_TRAP_TAKEN) begin
-      mstatus_mpie  <= mstatus_mie;
-      mstatus_mie   <= 1'b0;
-    end
-    else if(current_state == STATE_OPERATING && csr_address == `MSTATUS && write_enable) begin
-      mstatus_mie   <= csr_write_data[3];
-      mstatus_mpie  <= csr_write_data[7];
-    end    
   end
 
   //---------------------------------------------------------------------------------------------//
@@ -1595,7 +1724,7 @@ module csr_file (
       mie_mtie <= 1'b0;
       mie_msie <= 1'b0;
     end
-    else if(csr_address == `MIE && write_enable) begin            
+    else if(clock_enable & csr_address == `MIE && write_enable) begin            
       mie_meie <= csr_write_data[11];
       mie_mtie <= csr_write_data[7];
       mie_msie <= csr_write_data[3];
@@ -1622,7 +1751,7 @@ module csr_file (
       mip_mtip <= 1'b0;
       mip_msip <= 1'b0;
     end
-    else begin
+    else if (clock_enable) begin
       mip_meip <= irq_external;
       mip_mtip <= irq_timer;
       mip_msip <= irq_software;
@@ -1639,10 +1768,12 @@ module csr_file (
   always @(posedge clock) begin : mepc_implementation
     if(reset)
       mepc <= 32'b0;
-    else if(current_state == STATE_TRAP_TAKEN)
-      mepc <= program_counter_stage3;
-    else if(current_state == STATE_OPERATING && csr_address == `MEPC && write_enable)
-      mepc <= {csr_write_data[31:2], 2'b00};
+    else if (clock_enable) begin
+      if(current_state == STATE_TRAP_TAKEN)
+        mepc <= program_counter_stage3;
+      else if(current_state == STATE_OPERATING && csr_address == `MEPC && write_enable)
+        mepc <= {csr_write_data[31:2], 2'b00};
+    end    
   end
   
   //---------------------------------------------------------------------------------------------//
@@ -1652,7 +1783,7 @@ module csr_file (
   always @(posedge clock) begin
     if(reset)
       mscratch <= 32'b0;
-    else if(csr_address == `MSCRATCH && write_enable)
+    else if(clock_enable & csr_address == `MSCRATCH && write_enable)
       mscratch <= csr_write_data;
   end
   
@@ -1664,9 +1795,9 @@ module csr_file (
     if (reset)
       mcycle <= 64'b0;
     else begin 
-      if (csr_address == `MCYCLE && write_enable)
+      if (clock_enable & csr_address == `MCYCLE && write_enable)
         mcycle <= {mcycle[63:32], csr_write_data} + 1;
-      else if (csr_address == `MCYCLEH && write_enable)
+      else if (clock_enable & csr_address == `MCYCLEH && write_enable)
         mcycle <= {csr_write_data, mcycle[31:0]} + 1;
       else
         mcycle <= mcycle + 1;      
@@ -1680,7 +1811,7 @@ module csr_file (
   always @(posedge clock) begin : minstret_implementation
     if (reset)
       minstret  <= 64'b0;
-    else begin 
+    else if (clock_enable) begin 
       if (csr_address == `MINSTRET && write_enable) begin
         if (current_state == STATE_OPERATING)
           minstret <= {minstret[63:32], csr_write_data} + 1;
@@ -1717,10 +1848,12 @@ module csr_file (
   always @(posedge clock) begin : mcause_implementation
     if(reset) 
       mcause <= 32'h00000000;
-    else if(current_state == STATE_TRAP_TAKEN)
-      mcause <= {mcause_interrupt_flag, 27'b0, mcause_cause_code};
-    else if(current_state == STATE_OPERATING && csr_address == `MCAUSE && write_enable) 
-      mcause <= csr_write_data;
+    else if (clock_enable) begin
+      if(current_state == STATE_TRAP_TAKEN)
+        mcause <= {mcause_interrupt_flag, 27'b0, mcause_cause_code};
+      else if(current_state == STATE_OPERATING && csr_address == `MCAUSE && write_enable) 
+        mcause <= csr_write_data;
+    end
   end
 
   always @(posedge clock) begin : trap_cause_implementation
@@ -1728,7 +1861,7 @@ module csr_file (
       mcause_cause_code       <= 4'b0;
       mcause_interrupt_flag   <= 1'b0;
     end
-    else if(current_state == STATE_OPERATING) begin 
+    if(clock_enable & current_state == STATE_OPERATING) begin 
       if(illegal_instruction) begin
         mcause_cause_code     <= 4'b0010;
         mcause_interrupt_flag <= 1'b0;
@@ -1775,21 +1908,23 @@ module csr_file (
   always @(posedge clock) begin
     if (reset)
       misaligned_address_exception <= 1'b0;
-    else
+    else if (clock_enable)
       misaligned_address_exception <= misaligned_load | misaligned_store | misaligned_instruction_address;
   end
 
   always @(posedge clock) begin : mtval_implementation
     if(reset) 
       mtval <= 32'h00000000;
-    else if(current_state == STATE_TRAP_TAKEN) begin
-      if(misaligned_address_exception)
-        mtval <= target_address_adder_stage3;
-      else
-        mtval <= 32'h00000000;
+    else if (clock_enable) begin
+      if(current_state == STATE_TRAP_TAKEN) begin
+        if(misaligned_address_exception)
+          mtval <= target_address_adder_stage3;
+        else
+          mtval <= 32'h00000000;
+      end
+      else if(current_state == STATE_OPERATING && csr_address == `MTVAL && write_enable) 
+        mtval <= csr_write_data;
     end
-    else if(current_state == STATE_OPERATING && csr_address == `MTVAL && write_enable) 
-      mtval <= csr_write_data;
   end
   
   //---------------------------------------------------------------------------------------------//
@@ -1807,7 +1942,7 @@ module csr_file (
   always @(posedge clock) begin : mtvec_implementation
     if(reset)
       mtvec <= 32'b0;
-    else if(csr_address == `MTVEC && write_enable)
+    else if(clock_enable & csr_address == `MTVEC && write_enable)
       mtvec <= {csr_write_data[31:2], 1'b0, csr_write_data[0]};
   end
     
