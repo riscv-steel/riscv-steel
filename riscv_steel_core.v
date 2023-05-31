@@ -219,6 +219,7 @@ module riscv_steel_core (
   input  wire           clock,
   input  wire           reset,
   input  wire           halt,
+  output wire           ready,
   input  wire   [31:0]  boot_address,
 
   // Instruction fetch interface
@@ -521,7 +522,8 @@ module riscv_steel_core (
 
     .clock                          (clock                          ),
     .clock_enable                   (clock_enable                   ),
-    .reset                          (reset                          ),    
+    .reset                          (reset                          ),
+    .ready                          (ready                          ),    
     .write_enable                   (flush_pipeline ?
                                      1'b0 :
                                      csr_file_write_enable_stage3   ),
@@ -1457,6 +1459,7 @@ module csr_file (
   input  wire           clock,
   input  wire           clock_enable,
   input  wire           reset,
+  output wire           ready,
     
   // CSR registers read/write interface  
 
@@ -1544,6 +1547,10 @@ module csr_file (
   //---------------------------------------------------------------------------------------------//
   // M-mode Operation Control                                                                    //
   //---------------------------------------------------------------------------------------------//
+
+  assign ready =
+    (current_state != STATE_RESET) && 
+    !reset;
 
   assign flush_pipeline =
     current_state != STATE_OPERATING;

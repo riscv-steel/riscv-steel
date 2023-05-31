@@ -40,6 +40,7 @@ module hello_world (
   input   wire clock,
   input   wire reset,
   input   wire halt,
+  output  wire ready,
   input   wire uart_rx,
   output  wire uart_tx
 
@@ -92,6 +93,7 @@ module hello_world (
     .clock                        (internal_clock                     ),
     .reset                        (reset                              ),
     .halt                         (halt                               ),
+    .ready                        (ready                              ),
     .boot_address                 (32'h00000000                       ),
 
     // Instruction fetch interface

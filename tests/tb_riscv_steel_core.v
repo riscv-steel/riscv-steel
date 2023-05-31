@@ -100,6 +100,7 @@ module tb_riscv_steel_core();
     .clock                      (clock                      ),
     .reset                      (reset                      ),
     .halt                       (halt                       ),
+    .ready                      (),
     .boot_address               (32'h00000000               ), // boot address of all test programs
 
     // Instruction fetch interface
