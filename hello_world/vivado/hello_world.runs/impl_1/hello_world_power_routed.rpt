@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Wed May 31 23:21:25 2023
+| Date             : Sat Jun  3 02:24:17 2023
 | Host             : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command          : report_power -file hello_world_power_routed.rpt -pb hello_world_power_summary_routed.pb -rpx hello_world_power_routed.rpx
 | Design           : hello_world
@@ -52,15 +52,15 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.002 |        4 |       --- |             --- |
-| Slice Logic              |     0.005 |     2773 |       --- |             --- |
-|   LUT as Logic           |     0.005 |     1636 |     20800 |            7.87 |
+| Clocks                   |     0.003 |        4 |       --- |             --- |
+| Slice Logic              |     0.005 |     2775 |       --- |             --- |
+|   LUT as Logic           |     0.005 |     1640 |     20800 |            7.88 |
 |   LUT as Distributed RAM |    <0.001 |       44 |      9600 |            0.46 |
 |   CARRY4                 |    <0.001 |      107 |      8150 |            1.31 |
-|   Register               |    <0.001 |      722 |     41600 |            1.74 |
+|   Register               |    <0.001 |      723 |     41600 |            1.74 |
 |   F7/F8 Muxes            |    <0.001 |       32 |     32600 |            0.10 |
 |   Others                 |     0.000 |       13 |       --- |             --- |
-| Signals                  |     0.008 |     2444 |       --- |             --- |
+| Signals                  |     0.008 |     2445 |       --- |             --- |
 | Block RAM                |     0.009 |        4 |        50 |            8.00 |
 | I/O                      |    <0.001 |        6 |       210 |            2.86 |
 | Static Power             |     0.072 |          |           |                 |
