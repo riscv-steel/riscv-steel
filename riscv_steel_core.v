@@ -277,6 +277,7 @@ module riscv_steel_core (
   reg           csr_file_write_enable_stage3;
   reg           integer_file_write_enable_stage3;  
   reg           halt_register;
+  reg           reset_register;
   
   wire  [1:0 ]  program_counter_source;
   wire  [31:0]  exception_program_counter;
@@ -322,20 +323,21 @@ module riscv_steel_core (
   wire          illegal_instruction;    
   wire          clock_enable;
   wire          halt_internal;
+  wire          reset_internal;
 
   //---------------------------------------------------------------------------------------------//
   // 1st PIPELINE STAGE                                                                          //
   //---------------------------------------------------------------------------------------------//
   
   assign instruction_address =
-    reset ?
+    reset_internal ?
     boot_address :
     (halt_internal ?
       prev_instruction_address :
       next_program_counter);   
   
   assign instruction_address_valid =
-    reset ?
+    reset_internal ?
     1'b0 :
     (halt_internal ?    
       prev_instruction_address_valid :
@@ -343,7 +345,7 @@ module riscv_steel_core (
        (program_counter_source == `PC_BOOT)));
 
   always @(posedge clock) begin
-    if (reset) begin
+    if (reset_internal) begin
       prev_instruction_address <= boot_address;
       prev_instruction_address_valid <= 1'b0;
       prev_data_rw_address_valid <= 1'b0;
@@ -356,7 +358,7 @@ module riscv_steel_core (
   end
 
   always @(posedge clock) begin
-    if (reset)
+    if (reset_internal)
       halt_register <= 1'b0;
     else
       halt_register <= halt;
@@ -390,11 +392,17 @@ module riscv_steel_core (
    program_counter_plus_4;
     
   always @(posedge clock) begin : program_counter_reg_implementation
-    if(reset)
+    if (reset_internal)
       program_counter <= boot_address;
     else if (clock_enable)
       program_counter <= next_program_counter;
   end
+
+  always @(posedge clock)
+    reset_register <= reset;
+
+  assign reset_internal =
+    reset | reset_register;
     
   //---------------------------------------------------------------------------------------------//
   // 2nd PIPELINE STAGE                                                                          //
@@ -436,7 +444,7 @@ module riscv_steel_core (
     .clock              (clock                ),
     .clock_enable       (clock_enable         ),
     .halt               (halt_internal        ),
-    .reset              (reset                ),
+    .reset              (reset_internal       ),
     .instruction_funct3 (instruction_funct3   ),
     .load_store_address (target_address_adder ), 
     .rs2_data           (rs2_data             ),
@@ -522,7 +530,7 @@ module riscv_steel_core (
 
     .clock                          (clock                          ),
     .clock_enable                   (clock_enable                   ),
-    .reset                          (reset                          ),
+    .reset                          (reset_internal                 ),
     .ready                          (ready                          ),    
     .write_enable                   (flush_pipeline ?
                                      1'b0 :
@@ -557,7 +565,7 @@ module riscv_steel_core (
   );
        
   always @(posedge clock) begin
-    if(reset) begin
+    if (reset_internal) begin
       instruction_rd_address_stage3     <= 5'b00000;
       instruction_csr_address_stage3    <= 12'b000000000000;
       rs1_data_stage3                   <= 32'h00000000;
