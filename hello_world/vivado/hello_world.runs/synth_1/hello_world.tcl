@@ -70,7 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 4
 set_msg_config  -id {Synth 8-7080}  -suppress 
 set_msg_config  -id {Board 49-26}  -suppress 
 set_msg_config  -id {filemgmt 56-3}  -suppress 
