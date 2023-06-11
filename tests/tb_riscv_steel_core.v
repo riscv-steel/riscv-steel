@@ -75,8 +75,8 @@ saved as Memory Initialization Files (*.mem) with the help of elf2hex tool.
 module tb_riscv_steel_core();
 
   reg           clock;
+  reg           clock_enable;
   reg           reset;
-  reg           halt;
   reg   [31:0]  instruction_in;
   reg   [31:0]  data_in;
   reg   [31:0]  ram [0:524287]; // 2 MB RAM memory
@@ -98,9 +98,8 @@ module tb_riscv_steel_core();
 
     // Basic system signals
     .clock                      (clock                      ),
+    .clock_enable               (clock_enable               ),
     .reset                      (reset                      ),
-    .halt                       (halt                       ),
-    .ready                      (),
     .boot_address               (32'h00000000               ), // boot address of all test programs
 
     // Instruction fetch interface
@@ -143,23 +142,23 @@ module tb_riscv_steel_core();
     end
   end
   
-  // Randomly assert/deassert *_valid and halt signals
+  // Randomly assert/deassert *_valid and clock_enable signals
   integer x;
   initial begin
     #0;
     instruction_valid_test = 1'b1;
     data_rw_valid_test = 1'b1;
-    halt <= 1'b0;
+    clock_enable <= 1'b0;
     for(x = 0; x < 100; x=x+1) begin
       #1000;
       instruction_valid_test = $random();
       data_rw_valid_test = $random();    
-      halt <= $random();
+      clock_enable <= $random();
     end
     #1000;
     instruction_valid_test = 1'b1;
     data_rw_valid_test = 1'b1;
-    halt <= 1'b0;
+    clock_enable <= 1'b1;
   end
 
   // RAM output registers

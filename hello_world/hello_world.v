@@ -39,8 +39,6 @@ module hello_world (
 
   input   wire clock,
   input   wire reset,
-  input   wire halt,
-  output  wire ready,
   input   wire uart_rx,
   output  wire uart_tx
 
@@ -85,15 +83,14 @@ module hello_world (
 
   always @(posedge clock)
     internal_clock <= !internal_clock;
-  
+
   riscv_steel_core
   riscv_steel_core_instance (
 
     // Basic system signals
     .clock                        (internal_clock                     ),
+    .clock_enable                 (1'b1                               ),
     .reset                        (reset                              ),
-    .halt                         (halt                               ),
-    .ready                        (ready                              ),
     .boot_address                 (32'h00000000                       ),
 
     // Instruction fetch interface
