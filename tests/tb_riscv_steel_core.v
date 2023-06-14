@@ -76,7 +76,7 @@ module tb_riscv_steel_core();
 
   reg           clock;
   reg           clock_enable;
-  reg           reset;
+  reg           resetn;
   reg   [31:0]  instruction_in;
   reg   [31:0]  data_in;
   reg   [31:0]  ram [0:524287]; // 2 MB RAM memory
@@ -99,7 +99,7 @@ module tb_riscv_steel_core();
     // Basic system signals
     .clock                      (clock                      ),
     .clock_enable               (clock_enable               ),
-    .reset                      (reset                      ),
+    .resetn                     (resetn                     ),
     .boot_address               (32'h00000000               ), // boot address of all test programs
 
     // Instruction fetch interface
@@ -132,7 +132,7 @@ module tb_riscv_steel_core();
   
   // Reflection of *_valid signals
   always @(posedge clock) begin
-    if (reset) begin
+    if (!resetn) begin
       instruction_in_valid <= 1'b0;
       data_rw_valid <= 1'b0;
     end
@@ -163,7 +163,7 @@ module tb_riscv_steel_core();
 
   // RAM output registers
   always @(posedge clock) begin
-    if (reset) begin
+    if (!resetn) begin
       data_in            <= 32'h00000000;
       instruction_in     <= 32'h00000000;
     end
@@ -310,7 +310,7 @@ module tb_riscv_steel_core();
   
   initial begin
   
-    reset = 1'b0;        
+    resetn = 1'b1;        
     clock = 1'b0;
     test_error_flag = 0; // value '0' flags no errors
       
@@ -318,9 +318,9 @@ module tb_riscv_steel_core();
     
     for(k = 0; k < 54; k=k+1) begin            
       // Reset
-      reset = 1'b1;
+      resetn = 1'b0;
       #20;
-      reset = 1'b0;
+      resetn = 1'b1;
       // Clear RAM
       for(i = 0; i < 524287; i=i+1) ram[i] = 32'b0;
       // Clear signature

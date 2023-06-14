@@ -217,8 +217,8 @@ module riscv_steel_core (
   // Basic system signals
   
   input  wire           clock,
-  input  wire           clock_enable, // Must be asserted/deasserted only on positive clock edges
-  input  wire           reset,        // Must be asserted/deasserted only on positive clock edges
+  input  wire           clock_enable,   // Active HIGH
+  input  wire           resetn,         // Active LOW
   input  wire   [31:0]  boot_address,
 
   // Instruction fetch interface
@@ -319,6 +319,9 @@ module riscv_steel_core (
   wire          misaligned_store;
   wire          illegal_instruction;    
   wire          clock_enable_internal;
+  wire          reset;
+
+  assign reset = !resetn;
 
   //---------------------------------------------------------------------------------------------//
   // 1st PIPELINE STAGE                                                                          //

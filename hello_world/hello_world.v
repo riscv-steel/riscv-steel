@@ -90,7 +90,7 @@ module hello_world (
     // Basic system signals
     .clock                        (internal_clock                     ),
     .clock_enable                 (1'b1                               ),
-    .reset                        (reset                              ),
+    .resetn                       (!reset                             ),
     .boot_address                 (32'h00000000                       ),
 
     // Instruction fetch interface
@@ -158,7 +158,7 @@ module hello_world (
   dual_port_ram
   dual_port_ram_instance    (
     .clock                  (internal_clock                     ),
-    .reset                  (reset                              ),
+    .resetn                 (!reset                             ),
     .port0_address          (bus_instruction_address[13:0]      ),
     .port0_address_valid    (bus_instruction_address_valid      ),
     .port0_data_out         (bus_instruction_instruction        ),
@@ -175,7 +175,7 @@ module hello_world (
   uart
   uart_instance             (
     .clock                  (internal_clock                 ),
-    .reset                  (reset                          ),
+    .resetn                 (!reset                         ),
     .uart_rw_address        (device1_rw_address             ),
     .uart_rw_address_valid  (device1_rw_address_valid       ),
     .uart_wdata             (device1_wdata[7:0]             ),
@@ -278,7 +278,7 @@ endmodule
 module dual_port_ram (
 
   input   wire clock,
-  input   wire reset,
+  input   wire resetn,
 
   // Port 0 is read-only (used for instruction fetch)
   input   wire [13:0] port0_address,  // 14-bit addresses = 16 KB memory
@@ -319,7 +319,7 @@ module dual_port_ram (
 
   // Instruction / data fetch
   always @(posedge clock) begin
-    if (reset) begin
+    if (!resetn) begin
       port0_data_out <= 32'h00000000;
       port1_data_out <= 32'h00000000;
       port0_data_out_valid <= 1'b0;
@@ -343,7 +343,7 @@ module uart #(
   )(
 
   input   wire        clock,
-  input   wire        reset,
+  input   wire        resetn,
   input   wire [31:0] uart_rw_address,
   input   wire        uart_rw_address_valid,
   input   wire [7:0 ] uart_wdata,
@@ -371,7 +371,7 @@ module uart #(
   assign uart_tx = tx_register[0];
   
   always @(posedge clock) begin
-    if (reset) begin
+    if (!resetn) begin
       tx_cycle_counter <= 0;
       tx_register <= 10'b1111111111;
       tx_bit_counter <= 0;
@@ -398,7 +398,7 @@ module uart #(
   end
   
   always @(posedge clock) begin
-    if (reset) begin
+    if (!resetn) begin
       rx_cycle_counter <= 0;
       rx_register <= 8'h00;
       rx_data <= 8'h00;
@@ -473,7 +473,7 @@ module uart #(
   end
   
   always @(posedge clock) begin
-    if (reset) 
+    if (!resetn) 
       uart_rdata <= 32'h00000000;
     else if (uart_rw_address == 32'h00010000)
       uart_rdata <= {31'b0, tx_bit_counter == 0};
@@ -484,7 +484,7 @@ module uart #(
   end
 
   always @(posedge clock) begin
-    if (reset)
+    if (!resetn)
       uart_rw_valid <= 1'b0;
     else
       uart_rw_valid <= uart_rw_address_valid;
