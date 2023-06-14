@@ -89,7 +89,7 @@ module hello_world (
 
     // Basic system signals
     .clock                        (internal_clock                     ),
-    .clock_enable                 (1'b1                               ),
+    .haltn                        (1'b1                               ),
     .resetn                       (!reset                             ),
     .boot_address                 (32'h00000000                       ),
 

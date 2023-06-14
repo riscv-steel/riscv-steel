@@ -217,7 +217,7 @@ module riscv_steel_core (
   // Basic system signals
   
   input  wire           clock,
-  input  wire           clock_enable,   // Active HIGH
+  input  wire           haltn,          // Active LOW
   input  wire           resetn,         // Active LOW
   input  wire   [31:0]  boot_address,
 
@@ -318,7 +318,7 @@ module riscv_steel_core (
   wire          misaligned_load;
   wire          misaligned_store;
   wire          illegal_instruction;    
-  wire          clock_enable_internal;
+  wire          clock_enable;
   wire          reset;
 
   assign reset = !resetn;
@@ -330,17 +330,17 @@ module riscv_steel_core (
   assign instruction_address =
     reset ?
     boot_address :
-    (!clock_enable_internal ?
-      prev_instruction_address :
-      next_program_counter);   
+    (clock_enable ?
+      next_program_counter :
+      prev_instruction_address);   
   
   assign instruction_address_valid =
     reset ?
     1'b0 :
-    (!clock_enable_internal ?    
-      prev_instruction_address_valid :
+    (clock_enable ?    
       ((program_counter_source == `PC_NEXT) |
-       (program_counter_source == `PC_BOOT)));
+       (program_counter_source == `PC_BOOT)) :
+      prev_instruction_address_valid);
 
   always @(posedge clock) begin
     if (reset) begin
@@ -348,15 +348,15 @@ module riscv_steel_core (
       prev_instruction_address_valid <= 1'b0;
       prev_data_rw_address_valid <= 1'b0;
     end
-    else if(clock_enable_internal) begin
+    else if(clock_enable) begin
       prev_instruction_address <= instruction_address;
       prev_instruction_address_valid <= instruction_address_valid;    
       prev_data_rw_address_valid <= data_rw_address_valid;
     end
   end
 
-  assign clock_enable_internal = 
-    clock_enable &
+  assign clock_enable = 
+    haltn &
     !((prev_instruction_address_valid & !instruction_in_valid) |
     (prev_data_rw_address_valid & !data_rw_valid));
     
@@ -383,7 +383,7 @@ module riscv_steel_core (
   always @(posedge clock) begin : program_counter_reg_implementation
     if (reset)
       program_counter <= boot_address;
-    else if (clock_enable_internal)
+    else if (clock_enable)
       program_counter <= next_program_counter;
   end
     
@@ -425,7 +425,7 @@ module riscv_steel_core (
   data_fetch_store_unit_instance (
 
     .clock              (clock                ),
-    .clock_enable       (clock_enable_internal),
+    .clock_enable       (clock_enable         ),
     .reset              (reset                ),
     .instruction_funct3 (instruction_funct3   ),
     .load_store_address (target_address_adder ), 
@@ -494,7 +494,7 @@ module riscv_steel_core (
   integer_file_instance (
     
     .clock         (clock                                 ),
-    .clock_enable  (clock_enable_internal                 ),
+    .clock_enable  (clock_enable                          ),
     .rs1_addr      (instruction_rs1_address               ),
     .rs2_addr      (instruction_rs2_address               ),    
     .rd_addr       (instruction_rd_address_stage3         ),
@@ -511,7 +511,7 @@ module riscv_steel_core (
   csr_file_instance (
 
     .clock                          (clock                          ),
-    .clock_enable                   (clock_enable_internal          ),
+    .clock_enable                   (clock_enable                   ),
     .reset                          (reset                          ),
     .write_enable                   (flush_pipeline ?
                                      1'b0 :
@@ -564,7 +564,7 @@ module riscv_steel_core (
       csr_operation_stage3              <= 3'b000;
       immediate_stage3                  <= 32'h00000000;
     end
-    else if (clock_enable_internal) begin
+    else if (clock_enable) begin
       instruction_rd_address_stage3     <= instruction_rd_address;
       instruction_csr_address_stage3    <= instruction_csr_address;
       rs1_data_stage3                   <= rs1_data;
@@ -1002,37 +1002,37 @@ module data_fetch_store_unit (
   assign rw_address_valid =
     reset ?
     1'b0 :
-    (!clock_enable ?
-      prev_rw_address_valid :
-      load | store);
+    (clock_enable ?
+      load | store :
+      prev_rw_address_valid);
 
   assign rw_address =
     reset ?
     32'b0 :
-    (!clock_enable ?
-      prev_rw_address :
-      rw_address_internal);
+    (clock_enable ?
+      rw_address_internal :
+      prev_rw_address);
   
   assign write_request =
     reset ?
     1'b0 :
-    (!clock_enable ?
-      prev_write_request :
-      write_request_internal);
+    (clock_enable ?
+      write_request_internal :
+      prev_write_request);
 
   assign store_data =
     reset ?
     32'b0 :
-    (!clock_enable ?
-      prev_store_data :
-      store_data_internal);
+    (clock_enable ?
+      store_data_internal :
+      prev_store_data);
 
   assign write_strobe =
     reset ?
     4'b0 :
-    (!clock_enable ?
-      prev_write_strobe :
-      write_strobe_internal);
+    (clock_enable ?
+      write_strobe_internal :
+      prev_write_strobe);
 
   assign write_request_internal =
     store & ~misaligned_store & ~take_trap;
