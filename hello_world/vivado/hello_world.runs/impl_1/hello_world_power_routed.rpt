@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Sun Jun 11 21:57:42 2023
+| Date             : Wed Jun 14 23:35:24 2023
 | Host             : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command          : report_power -file hello_world_power_routed.rpt -pb hello_world_power_summary_routed.pb -rpx hello_world_power_routed.rpx
 | Design           : hello_world
@@ -53,14 +53,14 @@ Table of Contents
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
 | Clocks                   |     0.003 |        4 |       --- |             --- |
-| Slice Logic              |     0.008 |     2735 |       --- |             --- |
-|   LUT as Logic           |     0.007 |     1628 |     20800 |            7.83 |
+| Slice Logic              |     0.008 |     2740 |       --- |             --- |
+|   LUT as Logic           |     0.007 |     1630 |     20800 |            7.84 |
 |   LUT as Distributed RAM |    <0.001 |       44 |      9600 |            0.46 |
 |   CARRY4                 |    <0.001 |      107 |      8150 |            1.31 |
 |   Register               |    <0.001 |      721 |     41600 |            1.73 |
 |   F7/F8 Muxes            |    <0.001 |       31 |     32600 |            0.10 |
 |   Others                 |     0.000 |       12 |       --- |             --- |
-| Signals                  |     0.011 |     2403 |       --- |             --- |
+| Signals                  |     0.011 |     2405 |       --- |             --- |
 | Block RAM                |     0.009 |        4 |        50 |            8.00 |
 | I/O                      |    <0.001 |        4 |       210 |            1.90 |
 | Static Power             |     0.072 |          |           |                 |
@@ -145,7 +145,7 @@ Table of Contents
 | Name                        | Power (W) |
 +-----------------------------+-----------+
 | hello_world                 |     0.030 |
-|   dual_port_ram_instance    |     0.011 |
+|   dual_port_ram_instance    |     0.010 |
 |   riscv_steel_core_instance |     0.019 |
 |     csr_file_instance       |     0.013 |
 +-----------------------------+-----------+
