@@ -3,8 +3,8 @@
 # SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Sun Jul 16 20:17:53 2023
-# Process ID: 21616
+# Start of session at: Sun Jul 16 21:16:20 2023
+# Process ID: 5976
 # Current directory: U:/home/rafa/riscv-steel-core/hello_world/vivado/hello_world.runs/synth_1
 # Command line: vivado.exe -log hello_world.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source hello_world.tcl
 # Log file: U:/home/rafa/riscv-steel-core/hello_world/vivado/hello_world.runs/synth_1/hello_world.vds

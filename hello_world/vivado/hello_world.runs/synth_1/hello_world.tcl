@@ -70,7 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 4
 set_msg_config  -id {Board 49-26}  -suppress 
 set_msg_config  -id {IP_Flow 19-11770}  -suppress 
 set_msg_config  -id {IP_Flow 19-5661}  -string {{WARNING: [IP_Flow 19-5661] Bus Interface 'clock_enable' does not have any bus interfaces associated with it.}}  -suppress 

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Sun Jul 16 20:19:53 2023
+| Date         : Sun Jul 16 21:18:59 2023
 | Host         : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file hello_world_control_sets_placed.rpt
 | Design       : hello_world
@@ -23,8 +23,8 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    19 |
-|    Minimum number of control sets                        |    19 |
+| Total control sets                                       |    18 |
+|    Minimum number of control sets                        |    18 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
 | Unused register locations in slices containing registers |    49 |
@@ -39,13 +39,13 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    19 |
+| Total control sets |    18 |
 | >= 0 to < 4        |     1 |
 | >= 4 to < 6        |     1 |
 | >= 6 to < 8        |     0 |
 | >= 8 to < 10       |     4 |
 | >= 10 to < 12      |     0 |
-| >= 12 to < 14      |     2 |
+| >= 12 to < 14      |     1 |
 | >= 14 to < 16      |     1 |
 | >= 16              |    10 |
 +--------------------+-------+
@@ -58,40 +58,39 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              19 |           10 |
+| No           | No                    | No                     |              19 |           14 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |             124 |           40 |
-| Yes          | No                    | No                     |              21 |            8 |
+| No           | Yes                   | No                     |             124 |           37 |
+| Yes          | No                    | No                     |               9 |            3 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |             539 |          240 |
+| Yes          | Yes                   | No                     |             551 |          237 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------------+--------------------------------------------------+--------------------------------------------------------+------------------+----------------+--------------+
-|     Clock Signal     |                   Enable Signal                  |                    Set/Reset Signal                    | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------------+--------------------------------------------------+--------------------------------------------------------+------------------+----------------+--------------+
-|  clock_IBUF_BUFG     |                                                  |                                                        |                1 |              1 |         1.00 |
-|  internal_clock_BUFG | riscv_steel_core_instance/mcause[31]_i_1_n_0     | reset_IBUF                                             |                3 |              5 |         1.67 |
-|  internal_clock_BUFG |                                                  | riscv_steel_core_instance/prev_rw_address_reg[30]_1[0] |                2 |              8 |         4.00 |
-|  internal_clock_BUFG | uart_instance/p_0_in                             | uart_instance/rx_register[7]_i_1_n_0                   |                3 |              8 |         2.67 |
-|  internal_clock_BUFG | uart_instance/E[0]                               | reset_IBUF                                             |                2 |              8 |         4.00 |
-|  internal_clock_BUFG | uart_instance/tx_register                        |                                                        |                4 |              9 |         2.25 |
-|  internal_clock_BUFG | riscv_steel_core_instance/program_counter_stage3 |                                                        |                4 |             12 |         3.00 |
-|  internal_clock_BUFG |                                                  | uart_instance/tx_register                              |                4 |             13 |         3.25 |
-|  internal_clock_BUFG |                                                  | uart_instance/rx_cycle_counter[0]_i_1_n_0              |                4 |             14 |         3.50 |
-|  internal_clock_BUFG |                                                  |                                                        |                9 |             18 |         2.00 |
-|  internal_clock_BUFG | riscv_steel_core_instance/mcause[31]_i_1_n_0     | riscv_steel_core_instance/mcause[30]_i_1_n_0           |               17 |             27 |         1.59 |
-|  internal_clock_BUFG | riscv_steel_core_instance/mepc[31]_i_1_n_0       | reset_IBUF                                             |               20 |             30 |         1.50 |
-|  internal_clock_BUFG | riscv_steel_core_instance/mtvec1                 | reset_IBUF                                             |               18 |             31 |         1.72 |
-|  internal_clock_BUFG | riscv_steel_core_instance/mscratch0              | reset_IBUF                                             |               15 |             32 |         2.13 |
-|  internal_clock_BUFG | riscv_steel_core_instance/mtval[31]_i_2_n_0      | riscv_steel_core_instance/mtval[31]_i_1_n_0            |               20 |             32 |         1.60 |
-|  internal_clock_BUFG | riscv_steel_core_instance/current_state_reg[2]_0 | reset_IBUF                                             |               16 |             64 |         4.00 |
-|  internal_clock_BUFG | riscv_steel_core_instance/p_0_in49_out           |                                                        |               11 |             88 |         8.00 |
-|  internal_clock_BUFG |                                                  | reset_IBUF                                             |               30 |             89 |         2.97 |
-|  internal_clock_BUFG | riscv_steel_core_instance/p_84_in                | reset_IBUF                                             |              126 |            302 |         2.40 |
-+----------------------+--------------------------------------------------+--------------------------------------------------------+------------------+----------------+--------------+
++----------------------+------------------------------------------------+----------------------------------------------+------------------+----------------+--------------+
+|     Clock Signal     |                  Enable Signal                 |               Set/Reset Signal               | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------------+------------------------------------------------+----------------------------------------------+------------------+----------------+--------------+
+|  clock_IBUF_BUFG     |                                                |                                              |                1 |              1 |         1.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/mcause[31]_i_1_n_0   | reset_IBUF                                   |                3 |              5 |         1.67 |
+|  internal_clock_BUFG |                                                | dual_port_ram_instance/SR[0]                 |                2 |              8 |         4.00 |
+|  internal_clock_BUFG | uart_instance/p_0_in                           | uart_instance/rx_register[7]_i_1_n_0         |                2 |              8 |         4.00 |
+|  internal_clock_BUFG | uart_instance/E[0]                             | reset_IBUF                                   |                2 |              8 |         4.00 |
+|  internal_clock_BUFG | uart_instance/tx_register                      |                                              |                3 |              9 |         3.00 |
+|  internal_clock_BUFG |                                                | uart_instance/tx_register                    |                4 |             13 |         3.25 |
+|  internal_clock_BUFG |                                                | uart_instance/rx_cycle_counter[0]_i_1_n_0    |                4 |             14 |         3.50 |
+|  internal_clock_BUFG |                                                |                                              |               13 |             18 |         1.38 |
+|  internal_clock_BUFG | riscv_steel_core_instance/mcause[31]_i_1_n_0   | riscv_steel_core_instance/mcause[30]_i_1_n_0 |               17 |             27 |         1.59 |
+|  internal_clock_BUFG | riscv_steel_core_instance/mepc[31]_i_1_n_0     | reset_IBUF                                   |               16 |             30 |         1.88 |
+|  internal_clock_BUFG | riscv_steel_core_instance/mtvec1               | reset_IBUF                                   |               18 |             31 |         1.72 |
+|  internal_clock_BUFG | riscv_steel_core_instance/mscratch0            | reset_IBUF                                   |               16 |             32 |         2.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/mtval[31]_i_2_n_0    | riscv_steel_core_instance/mtval[31]_i_1_n_0  |               17 |             32 |         1.88 |
+|  internal_clock_BUFG | riscv_steel_core_instance/minstret[63]_i_1_n_0 | reset_IBUF                                   |               16 |             64 |         4.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/p_0_in49_out         |                                              |               11 |             88 |         8.00 |
+|  internal_clock_BUFG |                                                | reset_IBUF                                   |               27 |             89 |         3.30 |
+|  internal_clock_BUFG | dual_port_ram_instance/p_84_in                 | reset_IBUF                                   |              130 |            314 |         2.42 |
++----------------------+------------------------------------------------+----------------------------------------------+------------------+----------------+--------------+
 
 
