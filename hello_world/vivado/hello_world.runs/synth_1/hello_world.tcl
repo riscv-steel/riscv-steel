@@ -70,10 +70,14 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_msg_config -id {HDL-1065} -limit 10000
-set_msg_config  -id {Synth 8-7080}  -suppress 
+set_param chipscope.maxJobs 4
 set_msg_config  -id {Board 49-26}  -suppress 
-set_msg_config  -id {filemgmt 56-3}  -suppress 
+set_msg_config  -id {IP_Flow 19-11770}  -suppress 
+set_msg_config  -id {IP_Flow 19-5661}  -string {{WARNING: [IP_Flow 19-5661] Bus Interface 'clock_enable' does not have any bus interfaces associated with it.}}  -suppress 
+set_msg_config  -id {Vivado 12-13340}  -string {{WARNING: [Vivado 12-13340] Unable to auto find GCC executables from simulator install path! (path not set)}}  -suppress 
+set_msg_config  -id {Synth 8-7080}  -suppress 
+set_msg_config  -id {Netlist 29-101}  -suppress 
+set_msg_config  -id {filemgmt 56-3}  -string {{WARNING: [filemgmt 56-3] IPUserFilesDir: Could not find the directory 'U:/home/rafa/riscv-steel-core/hello_world/vivado/hello_world.ip_user_files'.}}  -suppress 
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcsg324-1
 
