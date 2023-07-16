@@ -75,8 +75,8 @@ saved as Memory Initialization Files (*.mem) with the help of elf2hex tool.
 module tb_riscv_steel_core();
 
   reg           clock;
-  reg           haltn;
-  reg           resetn;
+  reg           clock_enable;
+  reg           reset_n;
   reg   [31:0]  instruction_in;
   reg   [31:0]  data_in;
   reg   [31:0]  ram [0:524287]; // 2 MB RAM memory
@@ -98,8 +98,8 @@ module tb_riscv_steel_core();
 
     // Basic system signals
     .clock                      (clock                      ),
-    .haltn                      (haltn                      ),
-    .resetn                     (resetn                     ),
+    .clock_enable               (clock_enable               ),
+    .reset_n                    (reset_n                    ),
     .boot_address               (32'h00000000               ), // boot address of all test programs
 
     // Instruction fetch interface
@@ -132,7 +132,7 @@ module tb_riscv_steel_core();
   
   // Reflection of *_valid signals
   always @(posedge clock) begin
-    if (!resetn) begin
+    if (!reset_n) begin
       instruction_in_valid <= 1'b0;
       data_rw_valid <= 1'b0;
     end
@@ -142,34 +142,34 @@ module tb_riscv_steel_core();
     end
   end
   
-  // Randomly assert/deassert *_valid and haltn signals
+  // Randomly assert/deassert *_valid and clock_enable signals
   integer x;
   initial begin
     #0;
     instruction_valid_test = 1'b1;
     data_rw_valid_test = 1'b1;
-    haltn <= 1'b1;
+    clock_enable <= 1'b1;
     for(x = 0; x < 100; x=x+1) begin
       #1000;
       instruction_valid_test = $random();
       data_rw_valid_test = $random();    
-      haltn <= $random();
+      clock_enable <= $random();
     end
     #1000;
     instruction_valid_test = 1'b1;
     data_rw_valid_test = 1'b1;
-    haltn <= 1'b1;
+    clock_enable <= 1'b1;
   end
 
   // RAM output registers
   always @(posedge clock) begin
-    if (!resetn) begin
+    if (!reset_n) begin
       data_in            <= 32'h00000000;
       instruction_in     <= 32'h00000000;
     end
     else begin
-      data_in            <= ram[$unsigned(data_rw_address     [24:2])];
-      instruction_in     <= ram[$unsigned(instruction_address [24:2])];
+      data_in            <= ram[$unsigned(data_rw_address     [20:2])];
+      instruction_in     <= ram[$unsigned(instruction_address [20:2])];
     end
   end
   
@@ -310,7 +310,7 @@ module tb_riscv_steel_core();
   
   initial begin
   
-    resetn = 1'b1;        
+    reset_n = 1'b1;        
     clock = 1'b0;
     test_error_flag = 0; // value '0' flags no errors
       
@@ -318,9 +318,9 @@ module tb_riscv_steel_core();
     
     for(k = 0; k < 54; k=k+1) begin            
       // Reset
-      resetn = 1'b0;
+      reset_n = 1'b0;
       #20;
-      resetn = 1'b1;
+      reset_n = 1'b1;
       // Clear RAM
       for(i = 0; i < 524287; i=i+1) ram[i] = 32'b0;
       // Clear signature

@@ -217,8 +217,8 @@ module riscv_steel_core (
   // Basic system signals
   
   input  wire           clock,
-  input  wire           haltn,          // Active LOW
-  input  wire           resetn,         // Active LOW
+  input  wire           clock_enable,
+  input  wire           reset_n,
   input  wire   [31:0]  boot_address,
 
   // Instruction fetch interface
@@ -318,10 +318,10 @@ module riscv_steel_core (
   wire          misaligned_load;
   wire          misaligned_store;
   wire          illegal_instruction;    
-  wire          clock_enable;
+  wire          clock_enable_internal;
   wire          reset;
 
-  assign reset = !resetn;
+  assign reset = !reset_n;
 
   //---------------------------------------------------------------------------------------------//
   // 1st PIPELINE STAGE                                                                          //
@@ -330,14 +330,14 @@ module riscv_steel_core (
   assign instruction_address =
     reset ?
     boot_address :
-    (clock_enable ?
+    (clock_enable_internal ?
       next_program_counter :
       prev_instruction_address);   
   
   assign instruction_address_valid =
     reset ?
     1'b0 :
-    (clock_enable ?    
+    (clock_enable_internal ?    
       ((program_counter_source == `PC_NEXT) |
        (program_counter_source == `PC_BOOT)) :
       prev_instruction_address_valid);
@@ -348,15 +348,15 @@ module riscv_steel_core (
       prev_instruction_address_valid <= 1'b0;
       prev_data_rw_address_valid <= 1'b0;
     end
-    else if(clock_enable) begin
+    else if(clock_enable_internal) begin
       prev_instruction_address <= instruction_address;
       prev_instruction_address_valid <= instruction_address_valid;    
       prev_data_rw_address_valid <= data_rw_address_valid;
     end
   end
 
-  assign clock_enable = 
-    haltn &
+  assign clock_enable_internal = 
+    clock_enable &
     !((prev_instruction_address_valid & !instruction_in_valid) |
     (prev_data_rw_address_valid & !data_rw_valid));
     
@@ -383,7 +383,7 @@ module riscv_steel_core (
   always @(posedge clock) begin : program_counter_reg_implementation
     if (reset)
       program_counter <= boot_address;
-    else if (clock_enable)
+    else if (clock_enable_internal)
       program_counter <= next_program_counter;
   end
     
@@ -425,7 +425,7 @@ module riscv_steel_core (
   data_fetch_store_unit_instance (
 
     .clock              (clock                ),
-    .clock_enable       (clock_enable         ),
+    .clock_enable       (clock_enable_internal),
     .reset              (reset                ),
     .instruction_funct3 (instruction_funct3   ),
     .load_store_address (target_address_adder ), 
@@ -494,7 +494,7 @@ module riscv_steel_core (
   integer_file_instance (
     
     .clock         (clock                                 ),
-    .clock_enable  (clock_enable                          ),
+    .clock_enable  (clock_enable_internal                 ),
     .rs1_addr      (instruction_rs1_address               ),
     .rs2_addr      (instruction_rs2_address               ),    
     .rd_addr       (instruction_rd_address_stage3         ),
@@ -511,7 +511,7 @@ module riscv_steel_core (
   csr_file_instance (
 
     .clock                          (clock                          ),
-    .clock_enable                   (clock_enable                   ),
+    .clock_enable                   (clock_enable_internal          ),
     .reset                          (reset                          ),
     .write_enable                   (flush_pipeline ?
                                      1'b0 :
@@ -564,7 +564,7 @@ module riscv_steel_core (
       csr_operation_stage3              <= 3'b000;
       immediate_stage3                  <= 32'h00000000;
     end
-    else if (clock_enable) begin
+    else if (clock_enable_internal) begin
       instruction_rd_address_stage3     <= instruction_rd_address;
       instruction_csr_address_stage3    <= instruction_csr_address;
       rs1_data_stage3                   <= rs1_data;
