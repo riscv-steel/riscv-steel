@@ -93,14 +93,13 @@ module tb_riscv_steel_core();
   wire          instruction_address_valid;
   wire          data_rw_address_valid;
   
-  riscv_steel_core
+  riscv_steel_core 
   dut (
 
     // Basic system signals
     .clock                      (clock                      ),
     .clock_enable               (clock_enable               ),
     .reset_n                    (reset_n                    ),
-    .boot_address               (32'h00000000               ), // boot address of all test programs
 
     // Instruction fetch interface
     .instruction_address        (instruction_address        ),

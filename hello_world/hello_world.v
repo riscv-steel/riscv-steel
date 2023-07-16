@@ -91,7 +91,6 @@ module hello_world (
     .clock                        (internal_clock                     ),
     .clock_enable                 (1'b1                               ),
     .reset_n                      (!reset                             ),
-    .boot_address                 (32'h00000000                       ),
 
     // Instruction fetch interface
     .instruction_address          (bus_instruction_address            ),

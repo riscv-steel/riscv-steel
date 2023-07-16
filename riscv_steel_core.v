@@ -35,14 +35,17 @@ Top Module:    riscv_steel_core
  
 **************************************************************************************************/
 
-module riscv_steel_core (
+module riscv_steel_core #(
+  
+  parameter     [31:0]  BOOT_ADDRESS = 32'h00000000
+
+  ) (
 
   // Basic system signals
   
   input  wire           clock,
   input  wire           clock_enable,
   input  wire           reset_n,
-  input  wire   [31:0]  boot_address,
 
   // Instruction fetch interface
 
@@ -414,7 +417,7 @@ module riscv_steel_core (
 
   assign instruction_address =
     reset ?
-    boot_address :
+    BOOT_ADDRESS :
     (clock_enable_internal ?
       next_program_counter :
       prev_instruction_address);   
@@ -429,7 +432,7 @@ module riscv_steel_core (
 
   always @(posedge clock) begin
     if (reset) begin
-      prev_instruction_address <= boot_address;
+      prev_instruction_address <= BOOT_ADDRESS;
       prev_instruction_address_valid <= 1'b0;
       prev_data_rw_address_valid <= 1'b0;
     end
@@ -442,7 +445,7 @@ module riscv_steel_core (
     
   always @* begin : next_program_counter_mux
     case (program_counter_source)
-      PC_BOOT: next_program_counter = boot_address;
+      PC_BOOT: next_program_counter = BOOT_ADDRESS;
       PC_EPC:  next_program_counter = exception_program_counter;
       PC_TRAP: next_program_counter = trap_address;
       PC_NEXT: next_program_counter = next_address;
@@ -467,7 +470,7 @@ module riscv_steel_core (
     
   always @(posedge clock) begin : program_counter_reg_implementation
     if (reset)
-      program_counter <= boot_address;
+      program_counter <= BOOT_ADDRESS;
     else if (clock_enable_internal)
       program_counter <= next_program_counter;
   end  
@@ -1489,7 +1492,7 @@ module riscv_steel_core (
       instruction_csr_address_stage3    <= 12'b000000000000;
       rs1_data_stage3                   <= 32'h00000000;
       rs2_data_stage3                   <= 32'h00000000;
-      program_counter_stage3            <= boot_address;
+      program_counter_stage3            <= BOOT_ADDRESS;
       program_counter_plus_4_stage3     <= 32'h00000000;
       target_address_adder_stage3       <= 32'h00000000;
       alu_operation_code_stage3         <= 4'b0000;
