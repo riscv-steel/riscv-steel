@@ -89,7 +89,6 @@ module hello_world (
 
     // Basic system signals
     .clock                        (internal_clock                     ),
-    .clock_enable                 (1'b1                               ),
     .reset_n                      (!reset                             ),
 
     // Instruction fetch interface
