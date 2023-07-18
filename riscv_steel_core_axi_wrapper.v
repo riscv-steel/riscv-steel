@@ -44,7 +44,6 @@ module riscv_steel_core_axi_wrapper #(
   // Global system signals
 
   input   wire          clock,
-  input   wire          clock_enable,
   input   wire          reset_n,
 
   // Interrupt signals (hardwire inputs to zero if unused)
@@ -284,7 +283,6 @@ module riscv_steel_core_axi_wrapper #(
 
     // Basic system signals
     .clock                      (clock                      ),
-    .clock_enable               (clock_enable               ),
     .reset_n                    (reset_n                    ),
 
     // Instruction fetch interface
