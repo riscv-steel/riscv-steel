@@ -1036,18 +1036,16 @@ module riscv_steel_core #(
   //-----------------------------------------------------------------------------------------------//
   // Integer File implementation                                                                   //
   //-----------------------------------------------------------------------------------------------//
-    
-  integer i;
-  
-  initial for (i=1; i <= 31; i=i+1)
-    integer_file[i] <= 32'h00000000;
 
   assign integer_file_write_enable =
     integer_file_write_request_stage3 & !flush_pipeline;
 
-  always @(posedge clock)
-    if (clock_enable & integer_file_write_enable)
+  always @(posedge clock) begin
+    if (reset)
+      integer_file <= '0;
+    else if (clock_enable & integer_file_write_enable)
       integer_file[instruction_rd_address_stage3] <= writeback_multiplexer_output;
+  end
 
   assign rs1_mux =
     instruction_rs1_address == instruction_rd_address_stage3 & integer_file_write_enable ?
