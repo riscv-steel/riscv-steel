@@ -1042,7 +1042,7 @@ module riscv_steel_core #(
 
   always @(posedge clock) begin
     if (reset)
-      integer_file <= '0;
+      for (i = 1; i < 32; i = i + 1) integer_file[i] <= 32'b0;
     else if (clock_enable & integer_file_write_enable)
       integer_file[instruction_rd_address_stage3] <= writeback_multiplexer_output;
   end
