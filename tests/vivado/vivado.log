@@ -1,0 +1,321 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Wed Jul 26 11:04:23 2023
+# Process ID: 21544
+# Current directory: C:/Users/rafcal0v/riscv-steel-core/tests/vivado
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent20936 C:\Users\rafcal0v\riscv-steel-core\tests\vivado\riscv-arch-test.xpr
+# Log file: C:/Users/rafcal0v/riscv-steel-core/tests/vivado/vivado.log
+# Journal file: C:/Users/rafcal0v/riscv-steel-core/tests/vivado\vivado.jou
+# Running On: CAK-M3NSK32-556, OS: Windows, CPU Frequency: 2496 MHz, CPU Physical cores: 8, Host memory: 34065 MB
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.xpr
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:kc705:part0:1.6 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kc705/1.6/board.xml as part xc7k325tffg900-2 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:kcu105:part0:1.6 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kcu105/1.6/board.xml as part xcku040-ffva1156-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:kcu105:part0:1.7 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kcu105/1.7/board.xml as part xcku040-ffva1156-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:kcu116:part0:1.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kcu116/1.4/board.xml as part xcku5p-ffvb676-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:kcu116:part0:1.5 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kcu116/1.5/board.xml as part xcku5p-ffvb676-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:kcu1500:part0:1.2 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kcu1500/1.2/board.xml as part xcku115-flvb2104-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vc707:part0:1.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vc707/1.4/board.xml as part xc7vx485tffg1761-2 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vc709:part0:1.8 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vc709/1.8/board.xml as part xc7vx690tffg1761-2 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:2.2 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/2.2/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.0/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.1/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.2 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.2/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190_newl:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190_newl/production/1.0/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190_newl:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190_newl/production/1.1/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu108:part0:1.6 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu108/1.6/board.xml as part xcvu095-ffva2104-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu108:part0:1.7 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu108/1.7/board.xml as part xcvu095-ffva2104-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu110:part0:1.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu110/1.4/board.xml as part xcvu190-flgc2104-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu118:part0:2.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu118/2.0/board.xml as part xcvu9p-flga2104-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu118:part0:2.3 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu118/2.3/board.xml as part xcvu9p-flga2104-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu118:part0:2.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu118/2.4/board.xml as part xcvu9p-flga2104-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu128:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu128/production/1.0/board.xml as part xcvu37p-fsvh2892-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu129:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu129/production/1.0/board.xml as part xcvu29p-fsga2577-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu1525:part0:1.3 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu1525/1.3/board.xml as part xcvu9p-fsgd2104-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.1/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.0/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.1/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vermeo_t1_mpsoc:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vermeo_t1_mpsoc/1.0/board.xml as part xczu19eg-ffvd1760-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vermeo_t1_rfsoc:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vermeo_t1_rfsoc/1.0/board.xml as part xczu21dr-ffvd1156-2l-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/production/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.1/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:2.2 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/2.2/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.0/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.1/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.2 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.2/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180_newl:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180_newl/production/1.0/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180_newl:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180_newl/production/1.1/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/production/1.0/board.xml as part xcvp1202-vsva2785-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/production/1.1/board.xml as part xcvp1202-vsva2785-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es:part0:1.2 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/es/1.2/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es:part0:1.3 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/es/1.3/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es_revb:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120_revb/es/1.0/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es_revb:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120_revb/es/1.1/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/production/1.0/board.xml as part xcvp1802-lsvc4072-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/production/1.1/board.xml as part xcvp1802-lsvc4072-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180_es:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/es/1.0/board.xml as part xcvp1802-lsvc4072-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180_es:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/es/1.1/board.xml as part xcvp1802-lsvc4072-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zc702:part0:1.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zc702/1.4/board.xml as part xc7z020clg484-1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zc706:part0:1.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zc706/1.4/board.xml as part xc7z045ffg900-2 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu102:part0:3.3 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu102/3.3/board.xml as part xczu9eg-ffvb1156-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu102:part0:3.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu102/3.4/board.xml as part xczu9eg-ffvb1156-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu104:part0:1.1 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu104/1.1/board.xml as part xczu7ev-ffvc1156-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu106:part0:2.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu106/2.4/board.xml as part xczu7ev-ffvc1156-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu106:part0:2.5 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu106/2.5/board.xml as part xczu7ev-ffvc1156-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu106:part0:2.6 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu106/2.6/board.xml as part xczu7ev-ffvc1156-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu111:part0:1.2 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu111/1.2/board.xml as part xczu28dr-ffvg1517-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu111:part0:1.3 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu111/1.3/board.xml as part xczu28dr-ffvg1517-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu111:part0:1.4 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu111/1.4/board.xml as part xczu28dr-ffvg1517-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu1275:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu1275/1.0/board.xml as part xczu29dr-ffvf1760-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu1285:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu1285/1.0/board.xml as part xczu39dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208:part0:2.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208/production/2.0/board.xml as part xczu48dr-fsvg1517-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216:part0:2.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216/production/2.0/board.xml as part xczu49dr-ffvf1760-2-e specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670:part0:2.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670/2.0/board.xml as part xczu67dr-fsve1156-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at C:/Xilinx/Vivado/2023.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.gen/sources_1'.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2023.1/data/ip'.
+open_project: Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 1458.945 ; gain = 187.629
+update_compile_order -fileset sources_1
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'tb_riscv_steel_core'
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from 'C:/Xilinx/Vivado/2023.1/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_riscv_steel_core' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sh-align-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/fence-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/jalr-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-bge-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sltu-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-sh-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign2-jalr-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sw-align-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lui-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lh-align-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lhu-align-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/slt-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sll-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/ori-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sltiu-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sltiu-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/bgeu-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lb-align-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/ecall.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/blt-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/blt-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-bltu-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/slti-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sll-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/bge-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/auipc-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign1-jalr-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/bgeu-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/add-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/xor-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-lhu-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/srli-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-blt-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sb-align-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/bltu-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-jal-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-sw-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-sh-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/bge-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/slli-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-blt-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lw-align-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-lw-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/jal-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sh-align-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/addi-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lui-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-lhu-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sb-align-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/ebreak.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/addi-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/and-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/andi-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/xor-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/auipc-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lh-align-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-beq-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/bne-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/fence-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sra-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-lw-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/srl-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/jal-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/beq-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/add-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lb-align-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sra-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-beq-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/andi-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-bgeu-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-bne-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-bltu-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-bgeu-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-lh-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/slt-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/slli-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/xori-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/bltu-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/ecall.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/and-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/xori-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sltu-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/ebreak.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/srl-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/sub-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lbu-align-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/beq-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lw-align-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/or-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/bne-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/ori-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/or-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/lhu-align-01.reference.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign2-jalr-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign1-jalr-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/srai-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-sw-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-bge-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/misalign-jal-01.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/srli-01.mem'
+INFO: [Common 17-14] Message 'SIM-utils 43' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj tb_riscv_steel_core_vlog.prj"
+ECHO is off.
+ECHO is off.
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/riscv_steel_core.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module riscv_steel_core
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/tests/tb_riscv_steel_core.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_riscv_steel_core
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim'
+"xelab --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_riscv_steel_core_behav xil_defaultlib.tb_riscv_steel_core xil_defaultlib.glbl -log elaborate.log"
+ECHO is off.
+ECHO is off.
+Vivado Simulator v2023.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2023.1/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_riscv_steel_core_behav xil_defaultlib.tb_riscv_steel_core xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4100] "C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
+WARNING: [XSIM 43-4100] "C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.riscv_steel_core
+Compiling module xil_defaultlib.tb_riscv_steel_core
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_riscv_steel_core_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '4' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/rafcal0v/riscv-steel-core/tests/vivado/riscv-arch-test.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_riscv_steel_core_behav -key {Behavioral:sim_1:Functional:tb_riscv_steel_core} -tclbatch {tb_riscv_steel_core.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source tb_riscv_steel_core.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+Running test programs from RISC-V Compatibility Test Framework v2.0.
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_riscv_steel_core_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:03 ; elapsed = 00:00:12 . Memory (MB): peak = 1536.641 ; gain = 37.910
+run 3ms
+Passed on test:                      add-01.mem
+Passed on test:                     addi-01.mem
+Passed on test:                      and-01.mem
+Passed on test:                     andi-01.mem
+Passed on test:                    auipc-01.mem
+Passed on test:                      beq-01.mem
+Passed on test:                      bge-01.mem
+Passed on test:                     bgeu-01.mem
+Passed on test:                      blt-01.mem
+Passed on test:                     bltu-01.mem
+Passed on test:                      bne-01.mem
+Passed on test:                      ebreak.mem
+Passed on test:                       ecall.mem
+Passed on test:                    fence-01.mem
+Passed on test:                      jal-01.mem
+Passed on test:                     jalr-01.mem
+Passed on test:                 lb-align-01.mem
+Passed on test:                lbu-align-01.mem
+Passed on test:                 lh-align-01.mem
+Passed on test:                lhu-align-01.mem
+Passed on test:                      lui-01.mem
+Passed on test:                 lw-align-01.mem
+Passed on test:             misalign-beq-01.mem
+Passed on test:             misalign-bge-01.mem
+Passed on test:            misalign-bgeu-01.mem
+Passed on test:             misalign-blt-01.mem
+Passed on test:            misalign-bltu-01.mem
+Passed on test:             misalign-bne-01.mem
+Passed on test:             misalign-jal-01.mem
+Passed on test:              misalign-lh-01.mem
+Passed on test:             misalign-lhu-01.mem
+Passed on test:              misalign-lw-01.mem
+Passed on test:              misalign-sh-01.mem
+Passed on test:              misalign-sw-01.mem
+Passed on test:           misalign1-jalr-01.mem
+Passed on test:           misalign2-jalr-01.mem
+Passed on test:                       or-01.mem
+Passed on test:                      ori-01.mem
+Passed on test:                 sb-align-01.mem
+Passed on test:                 sh-align-01.mem
+Passed on test:                      sll-01.mem
+Passed on test:                     slli-01.mem
+Passed on test:                      slt-01.mem
+Passed on test:                     slti-01.mem
+Passed on test:                    sltiu-01.mem
+Passed on test:                     sltu-01.mem
+Passed on test:                      sra-01.mem
+Passed on test:                     srai-01.mem
+Passed on test:                      srl-01.mem
+Passed on test:                     srli-01.mem
+Passed on test:                      sub-01.mem
+Passed on test:                 sw-align-01.mem
+Passed on test:                      xor-01.mem
+Passed on test:                     xori-01.mem
+RISC-V Steel Core passed ALL tests from RISC-V Compatibility Test Framework v2.0.
+$stop called at time : 1667800 ns : File "C:/Users/rafcal0v/riscv-steel-core/tests/tb_riscv_steel_core.v" Line 369
+run: Time (s): cpu = 00:00:19 ; elapsed = 00:00:27 . Memory (MB): peak = 1558.770 ; gain = 22.129
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+reset_simulation -simset sim_1 -mode behavioral
+INFO: [Vivado 12-2266] Removing simulation data...
+INFO: [Vivado 12-2267] Reset complete
+exit
+INFO: [Common 17-206] Exiting Vivado at Wed Jul 26 11:06:05 2023...

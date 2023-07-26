@@ -35,24 +35,30 @@ E-mail:        rafaelcalcada@gmail.com
 
 /**************************************************************************************************
 
-This is a testbench/simulation for module riscv_steel_core.
------------------------------------------------------------
+This is a testbench/simulation for module riscv_steel_core intended to be run using
+AMD Xilinx Vivado simulator (XSim).
 
-It executes all unit tests from RISC-V Compatibility Test Framework v2.0.
+How to run it in Vivado:
+------------------------
+
+  - Open project riscv-arch-test.xpr (located in tests/vivado) in Vivado and click on
+    "Run simulation > Run behavioral simulation".
+  - Run the simulation for at least 3ms by executing "run 3ms" in Vivado's integraged Tcl Console.
 
 A successful execution ends with the message:
 "RISC-V Steel Core passed ALL tests from RISC-V Compatibility Test Framework v2.0."
 
-How tests work:
----------------
+How this simulation work:
+-------------------------
 
 In this testbench a 2 MB memory is connected to the core. Test programs are loaded into memory
-and executed. Upon compiling the tests, the RVMODEL_HALT macro were written such that:
-  - The address of the beginning of the signature area is saved at 0x00001ffc
-  - The address of the end of the signature area is saved at 0x00001ff8
+and executed. Upon compiling the tests from riscv-arch-test, the RVMODEL_HALT macro was
+updated such that:
+  - The address of the beginning of the signature area is saved at address 0x00001ffc
+  - The address of the end of the signature area is saved at address 0x00001ff8
   - The core writes 1 to address 0x00001000 to flag the test execution ended
 
-The testbench detects the moment the core writes 1 to 0x00001000 and compares the signatures
+This testbench detects the moment the core writes 1 to 0x00001000 and compares the signatures
 obtained against their golden references. If the result for a test does not match the golden
 reference an error message is printed and the testbench execution is stopped.
 
