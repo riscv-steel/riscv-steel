@@ -1040,6 +1040,7 @@ module riscv_steel_core #(
   assign integer_file_write_enable =
     integer_file_write_request_stage3 & !flush_pipeline;
 
+  integer i;
   always @(posedge clock) begin
     if (reset)
       for (i = 1; i < 32; i = i + 1) integer_file[i] <= 32'b0;
