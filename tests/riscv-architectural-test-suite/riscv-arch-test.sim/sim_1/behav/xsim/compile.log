@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module riscv_steel_core
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-steel-core-unit-tests.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module riscv_steel_core_unit_tests
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-architectural-test-suite/riscv-arch-test.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl

@@ -42,7 +42,7 @@ A list of available serial ports will follow. Select the port the board is conne
 
 Open Vivado and follow the steps below to get the Hello World project running on [Arty](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/):
 
-- Open project **hello_world.xpr** (located at **hello_world/vivado/**).
+- Open project **hello-world.xpr** (located at **resources/arty-a7-hello-world-project/**).
 
 - Click on **Open Hardware Manager**, located in the **Program and Debug** section of the **Flow Navigator**.
 
@@ -56,7 +56,7 @@ Arty's FPGA is now programmed with the Hello World project!
 
 ## Interact with the Hello World system
 
-As soon as Vivado finishes programming the FPGA the **hello_world.c** program will start running on RISC-V Steel. The program sends the following message over Arty's UART interface:
+As soon as Vivado finishes programming the FPGA the **hello-world.c** program will start running on RISC-V Steel. The program sends the following message over Arty's UART interface:
 
 ![pyserial-hello](images/getting-started/pyserial-0.png)
 
@@ -64,7 +64,7 @@ If you type a character it is echoed back on the screen. If you press Enter the 
 
 ## Next steps
 
-The Hello World project is intended to quickly introduce you to development with RISC-V Steel. The Arty board was chosen because it is relatively popular among hardware developers. If you develop with Arty you can then easily modify the program (**hello_world.c**) and the HDL (**hello_world.v**) in this project to make the board do smarter things for you.
+The Hello World project is intended to quickly introduce you to development with RISC-V Steel. The Arty board was chosen because it is relatively popular among hardware developers. If you develop with Arty you can then easily modify the program (**hello-world.c**) and the HDL (**hello-world.v**) in this project to make the board do smarter things for you.
 
 If you work with other development boards you need to port the Hello World project to it. If you port the project to another platform we'll be happy if you share it opening a [pull request](https://github.com/riscv-steel/riscv-steel-core/pulls)!
 

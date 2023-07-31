@@ -57,7 +57,7 @@ extra_css: [extra.css]
 plugins:
     - search
 docs_dir: source/
-copyright: Copyright &copy; 2020-2023 Rafael Calcada
+copyright: Copyright &copy; Rafael Calcada
 nav:
     - Home: 'index.md'
     - Getting started: 'getting-started.md'
