@@ -17,7 +17,7 @@ RISC-V Steel is a free and open 32-bit processor core that implements the RV32I 
 
 ### License
 
-RISC-V Steel Core is distributed under the [MIT License](LICENSE).
+RISC-V Steel Core is distributed under the [MIT License](../LICENSE).
 
 ### Project goal
 
