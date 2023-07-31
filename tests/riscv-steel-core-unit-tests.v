@@ -40,7 +40,7 @@ This is a testbench/simulation for module riscv_steel_core intended to be run in
 How to run it in Vivado:
 ------------------------
 
-  - Open project riscv_arch_test.xpr (located in tests/riscv_architectural_test_suite) in Vivado
+  - Open project riscv-arch-test.xpr (located in tests/riscv-architectural-test-suite) in Vivado
     and click on "Run simulation > Run behavioral simulation".
   - Run the simulation for at least 3ms by executing "run 3ms" in Vivado's integraged Tcl Console.
 
