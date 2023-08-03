@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Fri Aug  4 00:29:57 2023
+| Date         : Fri Aug  4 00:55:11 2023
 | Host         : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command      : report_utilization -file hello_world_utilization_synth.rpt -pb hello_world_utilization_synth.pb
 | Design       : hello_world
@@ -31,11 +31,11 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs*             | 2367 |     0 |          0 |     20800 | 11.38 |
-|   LUT as Logic          | 2367 |     0 |          0 |     20800 | 11.38 |
+| Slice LUTs*             | 2370 |     0 |          0 |     20800 | 11.39 |
+|   LUT as Logic          | 2370 |     0 |          0 |     20800 | 11.39 |
 |   LUT as Memory         |    0 |     0 |          0 |      9600 |  0.00 |
-| Slice Registers         | 1737 |     0 |          0 |     41600 |  4.18 |
-|   Register as Flip Flop | 1737 |     0 |          0 |     41600 |  4.18 |
+| Slice Registers         | 1736 |     0 |          0 |     41600 |  4.17 |
+|   Register as Flip Flop | 1736 |     0 |          0 |     41600 |  4.17 |
 |   Register as Latch     |    0 |     0 |          0 |     41600 |  0.00 |
 | F7 Muxes                |  162 |     0 |          0 |     16300 |  0.99 |
 | F8 Muxes                |   28 |     0 |          0 |      8150 |  0.34 |
@@ -59,7 +59,7 @@ Warning! LUT value is adjusted to account for LUT combining.
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
 | 1     |          Yes |         Set |            - |
-| 1736  |          Yes |       Reset |            - |
+| 1735  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -149,16 +149,16 @@ Warning! LUT value is adjusted to account for LUT combining.
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     | 1736 |        Flop & Latch |
-| LUT6     | 1448 |                 LUT |
-| LUT5     |  505 |                 LUT |
-| LUT4     |  260 |                 LUT |
-| LUT3     |  220 |                 LUT |
+| FDRE     | 1735 |        Flop & Latch |
+| LUT6     | 1467 |                 LUT |
+| LUT5     |  496 |                 LUT |
+| LUT4     |  255 |                 LUT |
+| LUT3     |  215 |                 LUT |
 | MUXF7    |  162 |               MuxFx |
 | CARRY4   |  107 |          CarryLogic |
-| LUT2     |   85 |                 LUT |
+| LUT2     |   86 |                 LUT |
 | MUXF8    |   28 |               MuxFx |
-| LUT1     |   22 |                 LUT |
+| LUT1     |   20 |                 LUT |
 | RAMB36E1 |    4 |        Block Memory |
 | IBUF     |    3 |                  IO |
 | BUFG     |    2 |               Clock |

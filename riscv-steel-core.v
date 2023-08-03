@@ -48,21 +48,21 @@ module riscv_steel_core #(
 
   // Instruction fetch interface
 
-  output wire   [31:0]  instruction_address,
-  output wire           instruction_request,
   input  wire   [31:0]  instruction_in,
+  output wire   [31:0]  instruction_address,
+  output wire           instruction_request,  
   input  wire           instruction_request_ack,
     
   // Data read/write interface
 
+  input  wire   [31:0]  data_in,
+  output wire   [31:0]  data_out,
   output wire   [31:0]  data_address,
   output wire           data_read_request,
-  output wire   [31:0]  data_out,
-  output wire           data_write_request,
-  output wire   [3:0 ]  data_write_strobe,
-  input  wire   [31:0]  data_in,
   input  wire           data_read_request_ack,
+  output wire           data_write_request,
   input  wire           data_write_request_ack,
+  output wire   [3:0 ]  data_write_strobe,
   
   // Interrupt signals (hardwire inputs to zero if unused)
 
@@ -290,7 +290,8 @@ module riscv_steel_core #(
   wire  [31:0]  csr_type_immediate;
   reg   [31:0]  csr_write_data;    
   reg   [3:0 ]  current_state;
-  reg   [31:0]  data_out_internal;
+  wire  [31:0]  data_address_internal;
+  reg   [31:0]  data_out_internal;  
   wire          ebreak;
   wire          ecall;
   wire  [31:0]  exception_program_counter;
@@ -379,7 +380,6 @@ module riscv_steel_core #(
   wire  [4:0 ]  rs2_addr;    
   wire  [31:0]  rs2_mux;  
   wire  [31:0]  rs2_data;  
-  wire  [31:0]  data_address_internal;
   wire  [31:0]  s_type_immediate;
   wire  [31:0]  shift_right_mux;
   wire  [19:0]  sign_extension;

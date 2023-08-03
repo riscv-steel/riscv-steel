@@ -110,20 +110,20 @@ module riscv_steel_core_unit_tests();
     .reset_n                    (reset_n                    ),
 
     // Instruction fetch interface
-    .instruction_address        (instruction_address        ),
-    .instruction_request        (instruction_request        ),
     .instruction_in             (instruction_in             ),
+    .instruction_address        (instruction_address        ),
+    .instruction_request        (instruction_request        ),    
     .instruction_request_ack    (instruction_request_ack    ),
       
     // Data read/write interface
+    .data_in                    (data_in                    ),
+    .data_out                   (data_out                   ),
     .data_address               (data_address               ),
     .data_read_request          (data_read_request          ),
-    .data_out                   (data_out                   ),
-    .data_write_request         (data_write_request         ),
-    .data_write_strobe          (data_write_strobe          ),
-    .data_in                    (data_in                    ),
     .data_read_request_ack      (data_read_request_ack      ),
+    .data_write_request         (data_write_request         ),
     .data_write_request_ack     (data_write_request_ack     ),
+    .data_write_strobe          (data_write_strobe          ),
     
     // Interrupt signals (inputs hardwired to zero because they're not needed for the tests)
     .irq_external               (1'b0                       ),
