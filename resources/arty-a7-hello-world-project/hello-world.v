@@ -50,9 +50,9 @@ module hello_world (
 
   // RISC-V Steel Core (instruction interface) <=> RAM (device #0, port #0)
   wire [31:0] bus_instruction_address;
-  wire        bus_instruction_address_valid;
-  wire [31:0] bus_instruction_instruction;
-  wire        bus_instruction_instruction_valid;
+  wire        bus_instruction_request;
+  wire [31:0] bus_instruction_in;
+  wire        bus_instruction_request_ack;
 
   // RISC-V Steel Core (data interface) <=> Memory Mapper
   wire [31:0] bus_data_rw_address;
@@ -93,9 +93,9 @@ module hello_world (
 
     // Instruction fetch interface
     .instruction_address          (bus_instruction_address            ),
-    .instruction_address_valid    (bus_instruction_address_valid      ),
-    .instruction_in               (bus_instruction_instruction        ),
-    .instruction_in_valid         (bus_instruction_instruction_valid  ),
+    .instruction_request          (bus_instruction_request            ),
+    .instruction_in               (bus_instruction_in                 ),
+    .instruction_request_ack      (bus_instruction_request_ack        ),
 
     // Data fetch/write interface
     .data_rw_address              (bus_data_rw_address                ),
@@ -158,9 +158,9 @@ module hello_world (
     .clock                  (internal_clock                     ),
     .resetn                 (!reset                             ),
     .port0_address          (bus_instruction_address[13:0]      ),
-    .port0_address_valid    (bus_instruction_address_valid      ),
-    .port0_data_out         (bus_instruction_instruction        ),
-    .port0_data_out_valid   (bus_instruction_instruction_valid  ),
+    .port0_address_valid    (bus_instruction_request            ),
+    .port0_data_out         (bus_instruction_in                 ),
+    .port0_data_out_valid   (bus_instruction_request_ack        ),
     .port1_address          (device0_rw_address[13:0]           ),
     .port1_address_valid    (device0_rw_address_valid           ),
     .port1_data_out         (device0_rdata                      ),

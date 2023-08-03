@@ -87,9 +87,9 @@ module riscv_steel_core_unit_tests();
   reg   [31:0]  instruction_in;
   reg   [31:0]  data_in;
   reg   [31:0]  ram [0:524287];
-  reg           instruction_in_valid;
+  reg           instruction_request_ack;
   reg           data_rw_valid;
-  reg           instruction_valid_test;
+  reg           instruction_request_ack_test;
   reg           data_rw_valid_test;
 
   wire          data_write_request;
@@ -97,7 +97,7 @@ module riscv_steel_core_unit_tests();
   wire  [31:0]  data_rw_address;
   wire  [31:0]  data_out;
   wire  [3:0 ]  data_write_strobe;
-  wire          instruction_address_valid;
+  wire          instruction_request;
   wire          data_rw_address_valid;
   
   riscv_steel_core 
@@ -109,9 +109,9 @@ module riscv_steel_core_unit_tests();
 
     // Instruction fetch interface
     .instruction_address        (instruction_address        ),
-    .instruction_address_valid  (instruction_address_valid  ),
+    .instruction_request        (instruction_request        ),
     .instruction_in             (instruction_in             ),
-    .instruction_in_valid       (instruction_in_valid       ),
+    .instruction_request_ack    (instruction_request_ack    ),
       
     // Data fetch/write interface
     .data_rw_address            (data_rw_address            ),
@@ -138,11 +138,11 @@ module riscv_steel_core_unit_tests();
   // Reflection of *_valid signals
   always @(posedge clock) begin
     if (!reset_n) begin
-      instruction_in_valid <= 1'b0;
+      instruction_request_ack <= 1'b0;
       data_rw_valid <= 1'b0;
     end
     else begin
-      instruction_in_valid <= instruction_address_valid & instruction_valid_test;
+      instruction_request_ack <= instruction_request & instruction_request_ack_test;
       data_rw_valid <= data_rw_address_valid & data_rw_valid_test;
     end
   end
@@ -151,15 +151,15 @@ module riscv_steel_core_unit_tests();
   integer x;
   initial begin
     #0;
-    instruction_valid_test = 1'b1;
+    instruction_request_ack_test = 1'b1;
     data_rw_valid_test = 1'b1;
     for(x = 0; x < 100; x=x+1) begin
       #1000;
-      instruction_valid_test = $random();
+      instruction_request_ack_test = $random();
       data_rw_valid_test = $random();
     end
     #1000;
-    instruction_valid_test = 1'b1;
+    instruction_request_ack_test = 1'b1;
     data_rw_valid_test = 1'b1;
   end
 

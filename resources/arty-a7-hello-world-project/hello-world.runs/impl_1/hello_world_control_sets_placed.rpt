@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date         : Tue Aug  1 01:33:47 2023
+| Date         : Thu Aug  3 21:01:20 2023
 | Host         : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file hello_world_control_sets_placed.rpt
 | Design       : hello_world
@@ -85,39 +85,39 @@ Table of Contents
 |  internal_clock_BUFG | riscv_steel_core_instance/mcause[31]_i_1_n_0           | riscv_steel_core_instance/mcause[30]_i_1_n_0 |               16 |             27 |         1.69 |
 |  internal_clock_BUFG | riscv_steel_core_instance/mepc[31]_i_1_n_0             | reset_IBUF                                   |               16 |             30 |         1.88 |
 |  internal_clock_BUFG | riscv_steel_core_instance/mtvec1                       | reset_IBUF                                   |               13 |             31 |         2.38 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[5][31]_i_1_n_0  | reset_IBUF                                   |               12 |             32 |         2.67 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[6][31]_i_1_n_0  | reset_IBUF                                   |               10 |             32 |         3.20 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[19][31]_i_1_n_0 | reset_IBUF                                   |               11 |             32 |         2.91 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[4][31]_i_1_n_0  | reset_IBUF                                   |               24 |             32 |         1.33 |
 |  internal_clock_BUFG | riscv_steel_core_instance/integer_file[7][31]_i_1_n_0  | reset_IBUF                                   |               11 |             32 |         2.91 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[3][31]_i_1_n_0  | reset_IBUF                                   |                9 |             32 |         3.56 |
 |  internal_clock_BUFG | riscv_steel_core_instance/integer_file[8][31]_i_1_n_0  | reset_IBUF                                   |               12 |             32 |         2.67 |
 |  internal_clock_BUFG | riscv_steel_core_instance/integer_file[9][31]_i_1_n_0  | reset_IBUF                                   |               15 |             32 |         2.13 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[16][31]_i_1_n_0 | reset_IBUF                                   |               16 |             32 |         2.00 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[10][31]_i_1_n_0 | reset_IBUF                                   |               21 |             32 |         1.52 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[19][31]_i_1_n_0 | reset_IBUF                                   |               11 |             32 |         2.91 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[20][31]_i_1_n_0 | reset_IBUF                                   |               15 |             32 |         2.13 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[24][31]_i_1_n_0 | reset_IBUF                                   |               19 |             32 |         1.68 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[17][31]_i_1_n_0 | reset_IBUF                                   |               17 |             32 |         1.88 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[4][31]_i_1_n_0  | reset_IBUF                                   |               24 |             32 |         1.33 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[1][31]_i_1_n_0  | reset_IBUF                                   |               12 |             32 |         2.67 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[12][31]_i_1_n_0 | reset_IBUF                                   |               19 |             32 |         1.68 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[11][31]_i_1_n_0 | reset_IBUF                                   |               18 |             32 |         1.78 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[22][31]_i_1_n_0 | reset_IBUF                                   |               13 |             32 |         2.46 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[21][31]_i_1_n_0 | reset_IBUF                                   |               17 |             32 |         1.88 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[23][31]_i_1_n_0 | reset_IBUF                                   |               15 |             32 |         2.13 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[26][31]_i_1_n_0 | reset_IBUF                                   |               21 |             32 |         1.52 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[13][31]_i_1_n_0 | reset_IBUF                                   |               14 |             32 |         2.29 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[15][31]_i_1_n_0 | reset_IBUF                                   |               13 |             32 |         2.46 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[27][31]_i_1_n_0 | reset_IBUF                                   |               12 |             32 |         2.67 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[29][31]_i_1_n_0 | reset_IBUF                                   |               17 |             32 |         1.88 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[25][31]_i_1_n_0 | reset_IBUF                                   |               20 |             32 |         1.60 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[2][31]_i_1_n_0  | reset_IBUF                                   |                9 |             32 |         3.56 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[18][31]_i_1_n_0 | reset_IBUF                                   |               10 |             32 |         3.20 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[30][31]_i_1_n_0 | reset_IBUF                                   |               21 |             32 |         1.52 |
-|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[14][31]_i_1_n_0 | reset_IBUF                                   |               15 |             32 |         2.13 |
-|  internal_clock_BUFG | riscv_steel_core_instance/mscratch0                    | reset_IBUF                                   |               19 |             32 |         1.68 |
-|  internal_clock_BUFG | riscv_steel_core_instance/mtval[31]_i_2_n_0            | riscv_steel_core_instance/mtval[31]_i_1_n_0  |               19 |             32 |         1.68 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[6][31]_i_1_n_0  | reset_IBUF                                   |               10 |             32 |         3.20 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[3][31]_i_1_n_0  | reset_IBUF                                   |                9 |             32 |         3.56 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[5][31]_i_1_n_0  | reset_IBUF                                   |               12 |             32 |         2.67 |
 |  internal_clock_BUFG | riscv_steel_core_instance/integer_file[31][31]_i_1_n_0 | reset_IBUF                                   |               27 |             32 |         1.19 |
+|  internal_clock_BUFG | riscv_steel_core_instance/mtval[31]_i_2_n_0            | riscv_steel_core_instance/mtval[31]_i_1_n_0  |               19 |             32 |         1.68 |
+|  internal_clock_BUFG | riscv_steel_core_instance/mscratch0                    | reset_IBUF                                   |               19 |             32 |         1.68 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[30][31]_i_1_n_0 | reset_IBUF                                   |               21 |             32 |         1.52 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[25][31]_i_1_n_0 | reset_IBUF                                   |               20 |             32 |         1.60 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[14][31]_i_1_n_0 | reset_IBUF                                   |               15 |             32 |         2.13 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[20][31]_i_1_n_0 | reset_IBUF                                   |               15 |             32 |         2.13 |
 |  internal_clock_BUFG | riscv_steel_core_instance/integer_file[28][31]_i_1_n_0 | reset_IBUF                                   |               15 |             32 |         2.13 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[1][31]_i_1_n_0  | reset_IBUF                                   |               12 |             32 |         2.67 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[18][31]_i_1_n_0 | reset_IBUF                                   |               10 |             32 |         3.20 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[23][31]_i_1_n_0 | reset_IBUF                                   |               15 |             32 |         2.13 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[15][31]_i_1_n_0 | reset_IBUF                                   |               13 |             32 |         2.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[2][31]_i_1_n_0  | reset_IBUF                                   |                9 |             32 |         3.56 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[17][31]_i_1_n_0 | reset_IBUF                                   |               17 |             32 |         1.88 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[10][31]_i_1_n_0 | reset_IBUF                                   |               21 |             32 |         1.52 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[11][31]_i_1_n_0 | reset_IBUF                                   |               18 |             32 |         1.78 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[29][31]_i_1_n_0 | reset_IBUF                                   |               17 |             32 |         1.88 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[24][31]_i_1_n_0 | reset_IBUF                                   |               19 |             32 |         1.68 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[13][31]_i_1_n_0 | reset_IBUF                                   |               14 |             32 |         2.29 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[16][31]_i_1_n_0 | reset_IBUF                                   |               16 |             32 |         2.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[22][31]_i_1_n_0 | reset_IBUF                                   |               13 |             32 |         2.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[12][31]_i_1_n_0 | reset_IBUF                                   |               19 |             32 |         1.68 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[26][31]_i_1_n_0 | reset_IBUF                                   |               21 |             32 |         1.52 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[21][31]_i_1_n_0 | reset_IBUF                                   |               17 |             32 |         1.88 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[27][31]_i_1_n_0 | reset_IBUF                                   |               12 |             32 |         2.67 |
 |  internal_clock_BUFG | riscv_steel_core_instance/current_state_reg[2]_0       | reset_IBUF                                   |               16 |             64 |         4.00 |
 |  internal_clock_BUFG |                                                        | reset_IBUF                                   |               28 |             89 |         3.18 |
 |  internal_clock_BUFG | riscv_steel_core_instance/clock_enable                 | reset_IBUF                                   |              141 |            318 |         2.26 |

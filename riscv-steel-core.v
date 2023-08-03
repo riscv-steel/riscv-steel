@@ -49,9 +49,9 @@ module riscv_steel_core #(
   // Instruction fetch interface
 
   output wire   [31:0]  instruction_address,
-  output wire           instruction_address_valid,
+  output wire           instruction_request,
   input  wire   [31:0]  instruction_in,
-  input  wire           instruction_in_valid,
+  input  wire           instruction_request_ack,
     
   // Data fetch/write interface
 
@@ -357,7 +357,7 @@ module riscv_steel_core #(
   reg   [31:0]  prev_data_out;
   reg           prev_data_rw_address_valid;
   reg   [31:0]  prev_instruction_address;
-  reg           prev_instruction_address_valid;
+  reg           prev_instruction_request;
   reg   [31:0]  prev_rw_address;
   reg           prev_rw_address_valid;
   reg           prev_write_request;
@@ -406,7 +406,7 @@ module riscv_steel_core #(
   assign reset = !reset_n;
 
   assign clock_enable = 
-    !((prev_instruction_address_valid & !instruction_in_valid) |
+    !((prev_instruction_request & !instruction_request_ack) |
     (prev_data_rw_address_valid & !data_rw_valid));
   
   //-----------------------------------------------------------------------------------------------//
@@ -420,23 +420,23 @@ module riscv_steel_core #(
       next_program_counter :
       prev_instruction_address);   
   
-  assign instruction_address_valid =
+  assign instruction_request =
     reset ?
     1'b0 :
     (clock_enable ?    
       ((program_counter_source == PC_NEXT) |
        (program_counter_source == PC_BOOT)) :
-      prev_instruction_address_valid);
+      prev_instruction_request);
 
   always @(posedge clock) begin
     if (reset) begin
       prev_instruction_address <= BOOT_ADDRESS;
-      prev_instruction_address_valid <= 1'b0;
+      prev_instruction_request <= 1'b0;
       prev_data_rw_address_valid <= 1'b0;
     end
     else if(clock_enable) begin
       prev_instruction_address <= instruction_address;
-      prev_instruction_address_valid <= instruction_address_valid;    
+      prev_instruction_request <= instruction_request;    
       prev_data_rw_address_valid <= data_rw_address_valid;
     end
   end 
