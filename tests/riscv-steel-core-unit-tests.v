@@ -88,17 +88,17 @@ module riscv_steel_core_unit_tests();
   reg   [31:0]  data_in;
   reg   [31:0]  ram [0:524287];
   reg           instruction_request_ack;
-  reg           data_rw_valid;
+  reg           data_read_request_ack;
   reg           instruction_request_ack_test;
-  reg           data_rw_valid_test;
+  reg           data_read_request_ack_test;
 
   wire          data_write_request;
   wire  [31:0]  instruction_address;
-  wire  [31:0]  data_rw_address;
+  wire  [31:0]  data_address;
   wire  [31:0]  data_out;
   wire  [3:0 ]  data_write_strobe;
   wire          instruction_request;
-  wire          data_rw_address_valid;
+  wire          data_read_request;
   
   riscv_steel_core 
   dut (
@@ -114,13 +114,13 @@ module riscv_steel_core_unit_tests();
     .instruction_request_ack    (instruction_request_ack    ),
       
     // Data fetch/write interface
-    .data_rw_address            (data_rw_address            ),
-    .data_rw_address_valid      (data_rw_address_valid      ),
+    .data_address               (data_address               ),
+    .data_read_request          (data_read_request          ),
     .data_out                   (data_out                   ),
     .data_write_request         (data_write_request         ),
     .data_write_strobe          (data_write_strobe          ),
     .data_in                    (data_in                    ),
-    .data_rw_valid              (data_rw_valid              ),
+    .data_read_request_ack      (data_read_request_ack      ),
     
     // Interrupt signals (inputs hardwired to zero because they're not needed for the tests)
     .irq_external               (1'b0                       ),
@@ -139,11 +139,11 @@ module riscv_steel_core_unit_tests();
   always @(posedge clock) begin
     if (!reset_n) begin
       instruction_request_ack <= 1'b0;
-      data_rw_valid <= 1'b0;
+      data_read_request_ack <= 1'b0;
     end
     else begin
       instruction_request_ack <= instruction_request & instruction_request_ack_test;
-      data_rw_valid <= data_rw_address_valid & data_rw_valid_test;
+      data_read_request_ack <= data_read_request & data_read_request_ack_test;
     end
   end
   
@@ -152,15 +152,15 @@ module riscv_steel_core_unit_tests();
   initial begin
     #0;
     instruction_request_ack_test = 1'b1;
-    data_rw_valid_test = 1'b1;
+    data_read_request_ack_test = 1'b1;
     for(x = 0; x < 100; x=x+1) begin
       #1000;
       instruction_request_ack_test = $random();
-      data_rw_valid_test = $random();
+      data_read_request_ack_test = $random();
     end
     #1000;
     instruction_request_ack_test = 1'b1;
-    data_rw_valid_test = 1'b1;
+    data_read_request_ack_test = 1'b1;
   end
 
   // RAM output registers
@@ -170,7 +170,7 @@ module riscv_steel_core_unit_tests();
       instruction_in     <= 32'h00000000;
     end
     else begin
-      data_in            <= ram[$unsigned(data_rw_address     [20:2])];
+      data_in            <= ram[$unsigned(data_address        [20:2])];
       instruction_in     <= ram[$unsigned(instruction_address [20:2])];
     end
   end
@@ -179,13 +179,13 @@ module riscv_steel_core_unit_tests();
   always @(posedge clock) begin
     if(data_write_request) begin
       if(data_write_strobe[0])
-        ram[$unsigned(data_rw_address[24:2])][7:0  ]  <= data_out[7:0  ];
+        ram[$unsigned(data_address[24:2])][7:0  ]  <= data_out[7:0  ];
       if(data_write_strobe[1])
-        ram[$unsigned(data_rw_address[24:2])][15:8 ]  <= data_out[15:8 ];
+        ram[$unsigned(data_address[24:2])][15:8 ]  <= data_out[15:8 ];
       if(data_write_strobe[2])
-        ram[$unsigned(data_rw_address[24:2])][23:16]  <= data_out[23:16];
+        ram[$unsigned(data_address[24:2])][23:16]  <= data_out[23:16];
       if(data_write_strobe[3])
-        ram[$unsigned(data_rw_address[24:2])][31:24]  <= data_out[31:24];
+        ram[$unsigned(data_address[24:2])][31:24]  <= data_out[31:24];
     end
   end
   
@@ -335,7 +335,7 @@ module riscv_steel_core_unit_tests();
       for(j = 0; j < 500000; j=j+1) begin
         #20;
         // Tests flag the end of their execution by writing 1 to the address 0x00001000
-        if(data_write_request == 1'b1 && data_rw_address == 32'h00001000) begin   
+        if(data_write_request == 1'b1 && data_address == 32'h00001000) begin   
           // The start and final memory position of the signature are stored at
           // 0x00001ffc (ram[2046]) and 0x00001ff8 (ram[2047]).
           m = ram[2047][24:2];

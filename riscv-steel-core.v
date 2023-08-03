@@ -55,13 +55,13 @@ module riscv_steel_core #(
     
   // Data fetch/write interface
 
-  output wire   [31:0]  data_rw_address,
-  output wire           data_rw_address_valid,
+  output wire   [31:0]  data_address,
+  output wire           data_read_request,
   output wire   [31:0]  data_out,
   output wire           data_write_request,
   output wire   [3:0 ]  data_write_strobe,
   input  wire   [31:0]  data_in,
-  input  wire           data_rw_valid,
+  input  wire           data_read_request_ack,
   
   // Interrupt signals (hardwire inputs to zero if unused)
 
@@ -355,11 +355,11 @@ module riscv_steel_core #(
   reg   [31:0]  rs1_data_stage3;  
   reg   [31:0]  rs2_data_stage3;
   reg   [31:0]  prev_data_out;
-  reg           prev_data_rw_address_valid;
+  reg           prev_data_read_request;
   reg   [31:0]  prev_instruction_address;
   reg           prev_instruction_request;
-  reg   [31:0]  prev_rw_address;
-  reg           prev_rw_address_valid;
+  reg   [31:0]  prev_data_address;
+  reg           prev_read_request;
   reg           prev_write_request;
   reg   [3:0 ]  prev_write_strobe;
   reg   [31:0]  program_counter;
@@ -376,7 +376,7 @@ module riscv_steel_core #(
   wire  [4:0 ]  rs2_addr;    
   wire  [31:0]  rs2_mux;  
   wire  [31:0]  rs2_data;  
-  wire  [31:0]  rw_address_internal;
+  wire  [31:0]  data_address_internal;
   wire  [31:0]  s_type_immediate;
   wire  [31:0]  shift_right_mux;
   wire  [19:0]  sign_extension;
@@ -407,7 +407,7 @@ module riscv_steel_core #(
 
   assign clock_enable = 
     !((prev_instruction_request & !instruction_request_ack) |
-    (prev_data_rw_address_valid & !data_rw_valid));
+    (prev_data_read_request & !data_read_request_ack));
   
   //-----------------------------------------------------------------------------------------------//
   // Instruction fetch and instruction address logic                                               //
@@ -432,12 +432,12 @@ module riscv_steel_core #(
     if (reset) begin
       prev_instruction_address <= BOOT_ADDRESS;
       prev_instruction_request <= 1'b0;
-      prev_data_rw_address_valid <= 1'b0;
+      prev_data_read_request <= 1'b0;
     end
     else if(clock_enable) begin
       prev_instruction_address <= instruction_address;
       prev_instruction_request <= instruction_request;    
-      prev_data_rw_address_valid <= data_rw_address_valid;
+      prev_data_read_request <= data_read_request;
     end
   end 
     
@@ -505,34 +505,34 @@ module riscv_steel_core #(
   
   always @(posedge clock) begin
     if (reset) begin
-      prev_rw_address <= 32'b0;
+      prev_data_address <= 32'b0;
       prev_data_out <= 32'b0;
       prev_write_request <= 1'b0;
       prev_write_strobe <= 4'b0000;
-      prev_rw_address_valid <= 1'b0;
+      prev_read_request <= 1'b0;
     end
     else if (clock_enable) begin
-      prev_rw_address <= data_rw_address;
+      prev_data_address <= data_address;
       prev_data_out <= data_out;
       prev_write_request <= data_write_request;
       prev_write_strobe <= data_write_strobe;
-      prev_rw_address_valid <= data_rw_address_valid;
+      prev_read_request <= data_read_request;
     end    
   end
 
-  assign data_rw_address_valid =
+  assign data_read_request =
     reset ?
     1'b0 :
     (clock_enable ?
       load | store :
-      prev_rw_address_valid);
+      prev_read_request);
 
-  assign data_rw_address =
+  assign data_address =
     reset ?
     32'b0 :
     (clock_enable ?
-      rw_address_internal :
-      prev_rw_address);
+      data_address_internal :
+      prev_data_address);
   
   assign data_write_request =
     reset ?
@@ -558,7 +558,7 @@ module riscv_steel_core #(
   assign write_request_internal =
     store & ~misaligned_store & ~take_trap;
   
-  assign rw_address_internal = {target_address_adder[31:2], 2'b00};
+  assign data_address_internal = {target_address_adder[31:2], 2'b00};
   
   always @* begin
     case(instruction_funct3)

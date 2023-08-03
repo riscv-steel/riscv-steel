@@ -55,31 +55,31 @@ module hello_world (
   wire        bus_instruction_request_ack;
 
   // RISC-V Steel Core (data interface) <=> Memory Mapper
-  wire [31:0] bus_data_rw_address;
-  wire        bus_data_rw_address_valid;
+  wire [31:0] bus_data_address;
+  wire        bus_data_read_request;
   wire [31:0] bus_data_wdata;
   wire [31:0] bus_data_rdata;
   wire [3:0 ] bus_data_write_strobe;
   wire        bus_data_write_request;
-  wire        bus_data_rw_valid;
+  wire        bus_data_read_request_ack;
   
   // Memory Mapper <=> RAM (device #0, port #1)
-  wire [31:0] device0_rw_address;
-  wire        device0_rw_address_valid;
+  wire [31:0] device0_address;
+  wire        device0_read_request;
   wire [31:0] device0_wdata;
   wire [31:0] device0_rdata;
   wire [3:0 ] device0_write_strobe;
   wire        device0_write_request;
-  wire        device0_rw_valid;
+  wire        device0_read_request_ack;
   
   // Memory Mapper <=> UART (device #1)
-  wire [31:0] device1_rw_address;
-  wire        device1_rw_address_valid;
+  wire [31:0] device1_address;
+  wire        device1_read_request;
   wire [31:0] device1_wdata;
   wire [31:0] device1_rdata;
   wire [3:0 ] device1_write_strobe;
   wire        device1_write_request;
-  wire        device1_rw_valid;
+  wire        device1_read_request_ack;
 
   always @(posedge clock)
     internal_clock <= !internal_clock;
@@ -98,13 +98,13 @@ module hello_world (
     .instruction_request_ack      (bus_instruction_request_ack        ),
 
     // Data fetch/write interface
-    .data_rw_address              (bus_data_rw_address                ),
-    .data_rw_address_valid        (bus_data_rw_address_valid          ),
+    .data_address                 (bus_data_address                ),
+    .data_read_request            (bus_data_read_request              ),
     .data_out                     (bus_data_wdata                     ),
     .data_write_request           (bus_data_write_request             ),
     .data_write_strobe            (bus_data_write_strobe              ),
     .data_in                      (bus_data_rdata                     ),
-    .data_rw_valid                (bus_data_rw_valid                  ),
+    .data_read_request_ack        (bus_data_read_request_ack          ),
 
     // Interrupt signals (hardwire inputs to zero if unused)
     .irq_external                 (irq_external                       ),
@@ -126,30 +126,30 @@ module hello_world (
 
     // Connected to RISC-V Steel
     .bus_data_rdata             (bus_data_rdata             ),
-    .bus_data_rw_address        (bus_data_rw_address        ),
-    .bus_data_rw_address_valid  (bus_data_rw_address_valid  ),
+    .bus_data_address           (bus_data_address           ),
+    .bus_data_read_request      (bus_data_read_request      ),
     .bus_data_wdata             (bus_data_wdata             ),  
     .bus_data_write_strobe      (bus_data_write_strobe      ),
     .bus_data_write_request     (bus_data_write_request     ),
-    .bus_data_rw_valid          (bus_data_rw_valid          ),
+    .bus_data_read_request_ack  (bus_data_read_request_ack  ),
     
     // Connected to Device 0 => Memory
     .device0_rdata              (device0_rdata              ),
-    .device0_rw_address         (device0_rw_address         ),
-    .device0_rw_address_valid   (device0_rw_address_valid   ),
+    .device0_address            (device0_address            ),
+    .device0_read_request       (device0_read_request       ),
     .device0_wdata              (device0_wdata              ),  
     .device0_write_strobe       (device0_write_strobe       ),
     .device0_write_request      (device0_write_request      ),
-    .device0_rw_valid           (device0_rw_valid           ),
+    .device0_read_request_ack   (device0_read_request_ack   ),
     
     // Connected to Device 1 => UART
     .device1_rdata              (device1_rdata              ),
-    .device1_rw_address         (device1_rw_address         ),
-    .device1_rw_address_valid   (device1_rw_address_valid   ),
+    .device1_address            (device1_address            ),
+    .device1_read_request       (device1_read_request       ),
     .device1_wdata              (device1_wdata              ),
     .device1_write_strobe       (device1_write_strobe       ),
     .device1_write_request      (device1_write_request      ),
-    .device1_rw_valid           (device1_rw_valid           )
+    .device1_read_request_ack   (device1_read_request_ack   )
 
   );
   
@@ -161,10 +161,10 @@ module hello_world (
     .port0_address_valid    (bus_instruction_request            ),
     .port0_data_out         (bus_instruction_in                 ),
     .port0_data_out_valid   (bus_instruction_request_ack        ),
-    .port1_address          (device0_rw_address[13:0]           ),
-    .port1_address_valid    (device0_rw_address_valid           ),
+    .port1_address          (device0_address[13:0]              ),
+    .port1_address_valid    (device0_read_request               ),
     .port1_data_out         (device0_rdata                      ),
-    .port1_rw_valid         (device0_rw_valid                   ),
+    .port1_read_request_ack (device0_read_request_ack           ),
     .port1_data_in          (device0_wdata                      ),
     .port1_write_strobe     (device0_write_strobe               ),
     .port1_write_enable     (device0_write_request              )
@@ -174,12 +174,12 @@ module hello_world (
   uart_instance             (
     .clock                  (internal_clock                 ),
     .resetn                 (!reset                         ),
-    .uart_rw_address        (device1_rw_address             ),
-    .uart_rw_address_valid  (device1_rw_address_valid       ),
+    .uart_address           (device1_address                ),
+    .uart_read_request      (device1_read_request           ),
     .uart_wdata             (device1_wdata[7:0]             ),
     .uart_write_request     (device1_write_request          ),
     .uart_rdata             (device1_rdata                  ),
-    .uart_rw_valid          (device1_rw_valid               ),
+    .uart_read_request_ack  (device1_read_request_ack       ),
     .uart_tx                (uart_tx                        ),
     .uart_rx                (uart_rx                        ),
     .uart_irq               (irq_external                   ),
@@ -194,60 +194,60 @@ module memory_mapper (
 
   // Bus connected to RISC-V Steel
   output  reg  [31:0] bus_data_rdata,
-  input   wire [31:0] bus_data_rw_address,
-  input   wire        bus_data_rw_address_valid,
+  input   wire [31:0] bus_data_address,
+  input   wire        bus_data_read_request,
   input   wire [31:0] bus_data_wdata,  
   input   wire [3:0 ] bus_data_write_strobe,
   input   wire        bus_data_write_request,
-  output  reg         bus_data_rw_valid,
+  output  reg         bus_data_read_request_ack,
   
   // Connected to Device 0 => Memory
   input   wire [31:0] device0_rdata,
-  output  reg  [31:0] device0_rw_address,
-  output  reg         device0_rw_address_valid,
+  output  reg  [31:0] device0_address,
+  output  reg         device0_read_request,
   output  reg  [31:0] device0_wdata,  
   output  reg  [3:0 ] device0_write_strobe,
   output  reg         device0_write_request,
-  input   wire        device0_rw_valid,
+  input   wire        device0_read_request_ack,
   
   // Connected to Device 1 => UART
   input   wire [31:0] device1_rdata,
-  output  reg  [31:0] device1_rw_address,
-  output  reg         device1_rw_address_valid,
+  output  reg  [31:0] device1_address,
+  output  reg         device1_read_request,
   output  reg  [31:0] device1_wdata,
   output  reg  [3:0 ] device1_write_strobe,
   output  reg         device1_write_request,
-  input   wire        device1_rw_valid
+  input   wire        device1_read_request_ack
 
   );
   
-  reg [31:0] prev_bus_data_rw_address;
+  reg [31:0] prev_bus_data_address;
   
   always @(posedge clock)
-    prev_bus_data_rw_address <= bus_data_rw_address;
+    prev_bus_data_address <= bus_data_address;
   
   always @* begin
-    if (prev_bus_data_rw_address < 32'h00010000 || prev_bus_data_rw_address > 32'h0001ffff) begin
+    if (prev_bus_data_address < 32'h00010000 || prev_bus_data_address > 32'h0001ffff) begin
       bus_data_rdata <= device0_rdata;
-      bus_data_rw_valid <= device0_rw_valid;
+      bus_data_read_request_ack <= device0_read_request_ack;
     end
     else begin
       bus_data_rdata <= device1_rdata;
-      bus_data_rw_valid <= device1_rw_valid;
+      bus_data_read_request_ack <= device1_read_request_ack;
     end
   end
   
   always @* begin
-    if (bus_data_rw_address < 32'h00010000 || bus_data_rw_address > 32'h0001ffff) begin
-      device0_rw_address        <= bus_data_rw_address;
-      device0_rw_address_valid  <= bus_data_rw_address_valid;
+    if (bus_data_address < 32'h00010000 || bus_data_address > 32'h0001ffff) begin
+      device0_address           <= bus_data_address;
+      device0_read_request      <= bus_data_read_request;
       device0_wdata             <= bus_data_wdata;
       device0_write_strobe      <= bus_data_write_strobe;
       device0_write_request     <= bus_data_write_request;
     end
     else begin
-      device0_rw_address        <= 32'h00000000;
-      device0_rw_address_valid  <= 1'b0;
+      device0_address           <= 32'h00000000;
+      device0_read_request      <= 1'b0;
       device0_wdata             <= 32'h00000000;
       device0_write_strobe      <= 4'h0;
       device0_write_request     <= 1'b0;
@@ -255,16 +255,16 @@ module memory_mapper (
   end
   
   always @* begin
-    if (bus_data_rw_address >= 32'h00010000 && bus_data_rw_address <= 32'h0001ffff) begin
-      device1_rw_address        <= bus_data_rw_address;
-      device1_rw_address_valid  <= bus_data_rw_address_valid;
+    if (bus_data_address >= 32'h00010000 && bus_data_address <= 32'h0001ffff) begin
+      device1_address           <= bus_data_address;
+      device1_read_request      <= bus_data_read_request;
       device1_wdata             <= bus_data_wdata;
       device1_write_strobe      <= bus_data_write_strobe;
       device1_write_request     <= bus_data_write_request;
     end
     else begin
-      device1_rw_address        <= 32'h00000000;
-      device1_rw_address_valid  <= 1'b0;
+      device1_address           <= 32'h00000000;
+      device1_read_request      <= 1'b0;
       device1_wdata             <= 32'h00000000;
       device1_write_strobe      <= 4'h0;
       device1_write_request     <= 1'b0;
@@ -288,7 +288,7 @@ module dual_port_ram (
   input   wire [13:0] port1_address,  // 14-bit addresses = 16 KB memory
   input   wire        port1_address_valid,
   output  reg  [31:0] port1_data_out,
-  output  reg         port1_rw_valid,
+  output  reg         port1_read_request_ack,
   input   wire [31:0] port1_data_in,
   input   wire [3:0 ] port1_write_strobe,
   input   wire        port1_write_enable
@@ -321,13 +321,13 @@ module dual_port_ram (
       port0_data_out <= 32'h00000000;
       port1_data_out <= 32'h00000000;
       port0_data_out_valid <= 1'b0;
-      port1_rw_valid <= 1'b0;
+      port1_read_request_ack <= 1'b0;
     end
     else begin
       port0_data_out <= ram[instruction_address];
       port1_data_out <= ram[data_address];
       port0_data_out_valid <= port0_address_valid;
-      port1_rw_valid <= port1_address_valid;
+      port1_read_request_ack <= port1_address_valid;
     end
   end
 
@@ -342,14 +342,14 @@ module uart #(
 
   input   wire        clock,
   input   wire        resetn,
-  input   wire [31:0] uart_rw_address,
-  input   wire        uart_rw_address_valid,
+  input   wire [31:0] uart_address,
+  input   wire        uart_read_request,
   input   wire [7:0 ] uart_wdata,
   input   wire        uart_write_request,
   input   wire        uart_rx,
   output  wire        uart_tx,
   output  reg  [31:0] uart_rdata,  
-  output  reg         uart_rw_valid,
+  output  reg         uart_read_request_ack,
   output  reg         uart_irq,
   input   wire        uart_irq_ack
     
@@ -375,7 +375,7 @@ module uart #(
       tx_bit_counter <= 0;
     end
     else if (tx_bit_counter == 0 &&
-             uart_rw_address == 32'h00010000 &&
+             uart_address == 32'h00010000 &&
              uart_write_request == 1'b1) begin
       tx_cycle_counter <= 0;
       tx_register <= {1'b1, uart_wdata, 1'b0};
@@ -405,7 +405,7 @@ module uart #(
       rx_active <= 1'b0;
     end
     else if (uart_irq == 1'b1) begin
-      if (uart_rw_address == 32'h00010004 || uart_irq_ack == 1'b1) begin
+      if (uart_address == 32'h00010004 || uart_irq_ack == 1'b1) begin
         rx_cycle_counter <= 0;
         rx_register <= 8'h00;
         rx_data <= rx_data;
@@ -473,9 +473,9 @@ module uart #(
   always @(posedge clock) begin
     if (!resetn) 
       uart_rdata <= 32'h00000000;
-    else if (uart_rw_address == 32'h00010000)
+    else if (uart_address == 32'h00010000)
       uart_rdata <= {31'b0, tx_bit_counter == 0};
-    else if (uart_rw_address == 32'h00010004)
+    else if (uart_address == 32'h00010004)
       uart_rdata <= {24'b0, rx_data};
     else
       uart_rdata <= 32'h00000000;
@@ -483,9 +483,9 @@ module uart #(
 
   always @(posedge clock) begin
     if (!resetn)
-      uart_rw_valid <= 1'b0;
+      uart_read_request_ack <= 1'b0;
     else
-      uart_rw_valid <= uart_rw_address_valid;
+      uart_read_request_ack <= uart_read_request;
   end
   
 endmodule

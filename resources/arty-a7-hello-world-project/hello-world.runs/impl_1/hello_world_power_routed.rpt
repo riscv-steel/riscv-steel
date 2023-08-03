@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Thu Aug  3 21:02:02 2023
+| Date             : Thu Aug  3 23:11:54 2023
 | Host             : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command          : report_power -file hello_world_power_routed.rpt -pb hello_world_power_summary_routed.pb -rpx hello_world_power_routed.rpx
 | Design           : hello_world
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.098        |
+| Total On-Chip Power (W)  | 0.099        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.036        |
+| Dynamic (W)              | 0.037        |
 | Device Static (W)        | 0.062        |
 | Effective TJA (C/W)      | 4.8          |
 | Max Ambient (C)          | 99.5         |
@@ -52,18 +52,18 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.003 |        4 |       --- |             --- |
+| Clocks         |     0.004 |        4 |       --- |             --- |
 | Slice Logic    |     0.009 |     4486 |       --- |             --- |
-|   LUT as Logic |     0.009 |     2280 |     20800 |           10.96 |
+|   LUT as Logic |     0.009 |     2282 |     20800 |           10.97 |
 |   Register     |    <0.001 |     1699 |     41600 |            4.08 |
 |   CARRY4       |    <0.001 |      107 |      8150 |            1.31 |
 |   F7/F8 Muxes  |    <0.001 |      206 |     32600 |            0.63 |
 |   Others       |     0.000 |        9 |       --- |             --- |
-| Signals        |     0.015 |     3865 |       --- |             --- |
+| Signals        |     0.016 |     3868 |       --- |             --- |
 | Block RAM      |     0.008 |        4 |        50 |            8.00 |
 | I/O            |    <0.001 |        4 |       210 |            1.90 |
 | Static Power   |     0.062 |          |           |                 |
-| Total          |     0.098 |          |           |                 |
+| Total          |     0.099 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,7 +73,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       0.950 |     0.044 |       0.038 |      0.006 |       NA    | Unspecified | NA         |
+| Vccint    |       0.950 |     0.045 |       0.039 |      0.006 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.011 |       0.000 |      0.011 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -143,9 +143,9 @@ Table of Contents
 +-----------------------------+-----------+
 | Name                        | Power (W) |
 +-----------------------------+-----------+
-| hello_world                 |     0.036 |
-|   dual_port_ram_instance    |     0.010 |
-|   riscv_steel_core_instance |     0.025 |
+| hello_world                 |     0.037 |
+|   dual_port_ram_instance    |     0.011 |
+|   riscv_steel_core_instance |     0.026 |
 +-----------------------------+-----------+
 
 
