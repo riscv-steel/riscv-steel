@@ -55,8 +55,8 @@ module riscv_steel_core #(
     
   // Data read/write interface
 
-  input  wire   [31:0]  data_in,
-  output wire   [31:0]  data_out,
+  input  wire   [31:0]  data_rdata,
+  output wire   [31:0]  data_wdata,
   output wire   [31:0]  data_address,
   output wire           data_read_request,
   input  wire           data_read_request_ack,
@@ -291,7 +291,7 @@ module riscv_steel_core #(
   reg   [31:0]  csr_write_data;    
   reg   [3:0 ]  current_state;
   wire  [31:0]  data_address_internal;
-  reg   [31:0]  data_out_internal;  
+  reg   [31:0]  data_wdata_internal;  
   wire          ebreak;
   wire          ecall;
   wire  [31:0]  exception_program_counter;
@@ -356,7 +356,7 @@ module riscv_steel_core #(
   reg   [3:0 ]  next_state;
   reg   [31:0]  rs1_data_stage3;  
   reg   [31:0]  rs2_data_stage3;
-  reg   [31:0]  prev_data_out;
+  reg   [31:0]  prev_data_wdata;
   reg           prev_data_read_request;
   reg           prev_data_write_request;
   reg   [31:0]  prev_instruction_address;
@@ -512,14 +512,14 @@ module riscv_steel_core #(
   always @(posedge clock) begin
     if (reset) begin
       prev_data_address <= 32'b0;
-      prev_data_out <= 32'b0;
+      prev_data_wdata <= 32'b0;
       prev_write_request <= 1'b0;
       prev_write_strobe <= 4'b0000;
       prev_read_request <= 1'b0;
     end
     else if (clock_enable) begin
       prev_data_address <= data_address;
-      prev_data_out <= data_out;
+      prev_data_wdata <= data_wdata;
       prev_write_request <= data_write_request;
       prev_write_strobe <= data_write_strobe;
       prev_read_request <= data_read_request;
@@ -547,12 +547,12 @@ module riscv_steel_core #(
       write_request_internal :
       prev_write_request);
 
-  assign data_out =
+  assign data_wdata =
     reset ?
     32'b0 :
     (clock_enable ?
-      data_out_internal :
-      prev_data_out);
+      data_wdata_internal :
+      prev_data_wdata);
 
   assign data_write_strobe =
     reset ?
@@ -573,19 +573,19 @@ module riscv_steel_core #(
     case(instruction_funct3)
       FUNCT3_SB: begin
         write_strobe_internal = write_strobe_for_byte;
-        data_out_internal     = store_byte_data;
+        data_wdata_internal   = store_byte_data;
       end
       FUNCT3_SH: begin
         write_strobe_internal = write_strobe_for_half;
-        data_out_internal     = store_half_data;
+        data_wdata_internal   = store_half_data;
       end
       FUNCT3_SW: begin
         write_strobe_internal = {4{data_write_request}};
-        data_out_internal     = rs2_data;
+        data_wdata_internal   = rs2_data;
       end
       default: begin
         write_strobe_internal = {4{data_write_request}};
-        data_out_internal     = rs2_data;
+        data_wdata_internal   = rs2_data;
       end 
     endcase
   end
@@ -1558,31 +1558,31 @@ module riscv_steel_core #(
       LOAD_SIZE_HALF:
         load_data = {half_data_upper_bits, load_half_data};
       LOAD_SIZE_WORD:
-        load_data = data_in;
+        load_data = data_rdata;
       default:
-        load_data = data_in;
+        load_data = data_rdata;
     endcase
   end
     
   always @* begin : load_byte_data_mux
     case (target_address_adder_stage3[1:0])    
       2'b00:
-        load_byte_data = data_in[7:0];
+        load_byte_data = data_rdata[7:0];
       2'b01:
-        load_byte_data = data_in[15:8];
+        load_byte_data = data_rdata[15:8];
       2'b10:
-        load_byte_data = data_in[23:16];
+        load_byte_data = data_rdata[23:16];
       2'b11:
-        load_byte_data = data_in[31:24];
+        load_byte_data = data_rdata[31:24];
     endcase
   end
     
   always @* begin : load_half_data_mux
     case (target_address_adder_stage3[1])
       1'b0:
-        load_half_data = data_in[15:0];
+        load_half_data = data_rdata[15:0];
       1'b1:
-        load_half_data = data_in[31:16];
+        load_half_data = data_rdata[31:16];
     endcase
   end
     

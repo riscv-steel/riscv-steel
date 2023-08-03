@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Fri Aug  4 00:56:38 2023
+| Date             : Fri Aug  4 01:26:17 2023
 | Host             : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command          : report_power -file hello_world_power_routed.rpt -pb hello_world_power_summary_routed.pb -rpx hello_world_power_routed.rpx
 | Design           : hello_world
@@ -54,12 +54,12 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.004 |        4 |       --- |             --- |
 | Slice Logic    |     0.010 |     4565 |       --- |             --- |
-|   LUT as Logic |     0.009 |     2311 |     20800 |           11.11 |
+|   LUT as Logic |     0.010 |     2312 |     20800 |           11.12 |
 |   F7/F8 Muxes  |    <0.001 |      190 |     32600 |            0.58 |
 |   Register     |    <0.001 |     1736 |     41600 |            4.17 |
 |   CARRY4       |    <0.001 |      107 |      8150 |            1.31 |
 |   Others       |     0.000 |        9 |       --- |             --- |
-| Signals        |     0.017 |     4003 |       --- |             --- |
+| Signals        |     0.017 |     4001 |       --- |             --- |
 | Block RAM      |     0.008 |        4 |        50 |            8.00 |
 | I/O            |    <0.001 |        4 |       210 |            1.90 |
 | Static Power   |     0.059 |          |           |                 |

@@ -85,7 +85,7 @@ module riscv_steel_core_unit_tests();
   reg           clock;
   reg           reset_n;
   reg   [31:0]  instruction_in;
-  reg   [31:0]  data_in;
+  reg   [31:0]  data_rdata;
   reg   [31:0]  ram [0:524287];
   reg           instruction_request_ack;
   reg           data_read_request_ack;
@@ -97,7 +97,7 @@ module riscv_steel_core_unit_tests();
   wire          data_write_request;
   wire  [31:0]  instruction_address;
   wire  [31:0]  data_address;
-  wire  [31:0]  data_out;
+  wire  [31:0]  data_wdata;
   wire  [3:0 ]  data_write_strobe;
   wire          instruction_request;
   wire          data_read_request;
@@ -116,8 +116,8 @@ module riscv_steel_core_unit_tests();
     .instruction_request_ack    (instruction_request_ack    ),
       
     // Data read/write interface
-    .data_in                    (data_in                    ),
-    .data_out                   (data_out                   ),
+    .data_rdata                 (data_rdata                 ),
+    .data_wdata                 (data_wdata                 ),
     .data_address               (data_address               ),
     .data_read_request          (data_read_request          ),
     .data_read_request_ack      (data_read_request_ack      ),
@@ -174,11 +174,11 @@ module riscv_steel_core_unit_tests();
   // RAM output registers
   always @(posedge clock) begin
     if (!reset_n) begin
-      data_in            <= 32'h00000000;
+      data_rdata         <= 32'h00000000;
       instruction_in     <= 32'h00000000;
     end
     else begin
-      data_in            <= ram[$unsigned(data_address        [20:2])];
+      data_rdata         <= ram[$unsigned(data_address        [20:2])];
       instruction_in     <= ram[$unsigned(instruction_address [20:2])];
     end
   end
@@ -187,13 +187,13 @@ module riscv_steel_core_unit_tests();
   always @(posedge clock) begin
     if(data_write_request) begin
       if(data_write_strobe[0])
-        ram[$unsigned(data_address[24:2])][7:0  ]  <= data_out[7:0  ];
+        ram[$unsigned(data_address[24:2])][7:0  ]  <= data_wdata[7:0  ];
       if(data_write_strobe[1])
-        ram[$unsigned(data_address[24:2])][15:8 ]  <= data_out[15:8 ];
+        ram[$unsigned(data_address[24:2])][15:8 ]  <= data_wdata[15:8 ];
       if(data_write_strobe[2])
-        ram[$unsigned(data_address[24:2])][23:16]  <= data_out[23:16];
+        ram[$unsigned(data_address[24:2])][23:16]  <= data_wdata[23:16];
       if(data_write_strobe[3])
-        ram[$unsigned(data_address[24:2])][31:24]  <= data_out[31:24];
+        ram[$unsigned(data_address[24:2])][31:24]  <= data_wdata[31:24];
     end
   end
   

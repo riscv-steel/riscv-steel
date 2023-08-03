@@ -49,20 +49,20 @@ module hello_world (
   wire        irq_external_ack;
 
   // RISC-V Steel Core (instruction interface) <=> RAM (device #0, port #0)
-  wire [31:0] bus_instruction_in;
-  wire [31:0] bus_instruction_address;
-  wire        bus_instruction_request;  
-  wire        bus_instruction_request_ack;
+  wire [31:0] instruction_in;
+  wire [31:0] instruction_address;
+  wire        instruction_request;  
+  wire        instruction_request_ack;
 
   // RISC-V Steel Core (data interface) <=> Memory Mapper
-  wire [31:0] bus_data_rdata;
-  wire [31:0] bus_data_wdata;
-  wire [31:0] bus_data_address;
-  wire        bus_data_read_request;  
-  wire        bus_data_read_request_ack;  
-  wire        bus_data_write_request;  
-  wire        bus_data_write_request_ack;
-  wire [3:0 ] bus_data_write_strobe;
+  wire [31:0] data_rdata;
+  wire [31:0] data_wdata;
+  wire [31:0] data_address;
+  wire        data_read_request;  
+  wire        data_read_request_ack;  
+  wire        data_write_request;  
+  wire        data_write_request_ack;
+  wire [3:0 ] data_write_strobe;
   
   // Memory Mapper <=> RAM (device #0, port #1)
   wire [31:0] device0_rdata;
@@ -95,20 +95,20 @@ module hello_world (
     .reset_n                      (!reset                             ),
 
     // Instruction fetch interface
-    .instruction_in               (bus_instruction_in                 ),
-    .instruction_address          (bus_instruction_address            ),
-    .instruction_request          (bus_instruction_request            ),    
-    .instruction_request_ack      (bus_instruction_request_ack        ),
+    .instruction_in               (instruction_in                     ),
+    .instruction_address          (instruction_address                ),
+    .instruction_request          (instruction_request                ),    
+    .instruction_request_ack      (instruction_request_ack            ),
 
     // Data read/write interface
-    .data_in                      (bus_data_rdata                     ),
-    .data_out                     (bus_data_wdata                     ),
-    .data_address                 (bus_data_address                   ),
-    .data_read_request            (bus_data_read_request              ),    
-    .data_read_request_ack        (bus_data_read_request_ack          ),
-    .data_write_request           (bus_data_write_request             ),
-    .data_write_request_ack       (bus_data_write_request_ack         ),
-    .data_write_strobe            (bus_data_write_strobe              ),
+    .data_rdata                   (data_rdata                         ),
+    .data_wdata                   (data_wdata                         ),
+    .data_address                 (data_address                       ),
+    .data_read_request            (data_read_request                  ),    
+    .data_read_request_ack        (data_read_request_ack              ),
+    .data_write_request           (data_write_request                 ),
+    .data_write_request_ack       (data_write_request_ack             ),
+    .data_write_strobe            (data_write_strobe                  ),
 
     // Interrupt signals (hardwire inputs to zero if unused)
     .irq_external                 (irq_external                       ),
@@ -129,14 +129,14 @@ module hello_world (
     .clock                        (internal_clock                     ),
 
     // Connected to RISC-V Steel
-    .bus_data_rdata               (bus_data_rdata                     ),
-    .bus_data_wdata               (bus_data_wdata                     ),  
-    .bus_data_address             (bus_data_address                   ),
-    .bus_data_read_request        (bus_data_read_request              ),    
-    .bus_data_read_request_ack    (bus_data_read_request_ack          ),    
-    .bus_data_write_request       (bus_data_write_request             ),    
-    .bus_data_write_request_ack   (bus_data_write_request_ack         ),
-    .bus_data_write_strobe        (bus_data_write_strobe              ),
+    .data_rdata                   (data_rdata                         ),
+    .data_wdata                   (data_wdata                         ),  
+    .data_address                 (data_address                       ),
+    .data_read_request            (data_read_request                  ),    
+    .data_read_request_ack        (data_read_request_ack              ),    
+    .data_write_request           (data_write_request                 ),    
+    .data_write_request_ack       (data_write_request_ack             ),
+    .data_write_strobe            (data_write_strobe                  ),
     
     // Connected to Device 0 => Memory
     .device0_rdata                (device0_rdata                      ),
@@ -164,16 +164,16 @@ module hello_world (
   dual_port_ram_instance          (
     .clock                        (internal_clock                     ),
     .resetn                       (!reset                             ),
-    .port0_data_out               (bus_instruction_in                 ),
-    .port0_address                (bus_instruction_address[13:0]      ),
-    .port0_address_valid          (bus_instruction_request            ),    
-    .port0_data_out_valid         (bus_instruction_request_ack        ),
-    .port1_data_out               (device0_rdata                      ),
+    .port0_rdata                  (instruction_in                     ),
+    .port0_address                (instruction_address[13:0]          ),
+    .port0_read_request           (instruction_request                ),    
+    .port0_read_request_ack       (instruction_request_ack            ),
+    .port1_rdata                  (device0_rdata                      ),
     .port1_address                (device0_address[13:0]              ),
-    .port1_address_valid          (device0_read_request               ),    
+    .port1_read_request           (device0_read_request               ),    
     .port1_read_request_ack       (device0_read_request_ack           ),
-    .port1_data_in                (device0_wdata                      ),    
-    .port1_write_enable           (device0_write_request              ),
+    .port1_wdata                  (device0_wdata                      ),    
+    .port1_write_request          (device0_write_request              ),
     .port1_write_request_ack      (device0_write_request_ack          ),
     .port1_write_strobe           (device0_write_strobe               )
   );
@@ -202,14 +202,14 @@ module memory_mapper (
   input   wire       clock,
 
   // Bus connected to RISC-V Steel
-  output  reg  [31:0] bus_data_rdata,
-  input   wire [31:0] bus_data_wdata,  
-  input   wire [31:0] bus_data_address,
-  input   wire        bus_data_read_request,
-  output  reg         bus_data_read_request_ack,  
-  input   wire        bus_data_write_request,  
-  output  reg         bus_data_write_request_ack,
-  input   wire [3:0 ] bus_data_write_strobe,
+  output  reg  [31:0] data_rdata,
+  input   wire [31:0] data_wdata,  
+  input   wire [31:0] data_address,
+  input   wire        data_read_request,
+  output  reg         data_read_request_ack,  
+  input   wire        data_write_request,  
+  output  reg         data_write_request_ack,
+  input   wire [3:0 ] data_write_strobe,
   
   // Connected to Device 0 => Memory
   input   wire [31:0] device0_rdata,
@@ -233,31 +233,31 @@ module memory_mapper (
 
   );
   
-  reg [31:0] prev_bus_data_address;
+  reg [31:0] prev_data_address;
   
   always @(posedge clock)
-    prev_bus_data_address <= bus_data_address;
+    prev_data_address <= data_address;
   
   always @* begin
-    if (prev_bus_data_address < 32'h00010000 || prev_bus_data_address > 32'h0001ffff) begin
-      bus_data_rdata              <= device0_rdata;
-      bus_data_read_request_ack   <= device0_read_request_ack;
-      bus_data_write_request_ack  <= device0_write_request_ack;
+    if (prev_data_address < 32'h00010000 || prev_data_address > 32'h0001ffff) begin
+      data_rdata              <= device0_rdata;
+      data_read_request_ack   <= device0_read_request_ack;
+      data_write_request_ack  <= device0_write_request_ack;
     end
     else begin
-      bus_data_rdata              <= device1_rdata;
-      bus_data_read_request_ack   <= device1_read_request_ack;
-      bus_data_write_request_ack  <= device1_write_request_ack;
+      data_rdata              <= device1_rdata;
+      data_read_request_ack   <= device1_read_request_ack;
+      data_write_request_ack  <= device1_write_request_ack;
     end
   end
   
   always @* begin
-    if (bus_data_address < 32'h00010000 || bus_data_address > 32'h0001ffff) begin
-      device0_wdata             <= bus_data_wdata;
-      device0_address           <= bus_data_address;
-      device0_read_request      <= bus_data_read_request;
-      device0_write_request     <= bus_data_write_request;
-      device0_write_strobe      <= bus_data_write_strobe;
+    if (data_address < 32'h00010000 || data_address > 32'h0001ffff) begin
+      device0_wdata             <= data_wdata;
+      device0_address           <= data_address;
+      device0_read_request      <= data_read_request;
+      device0_write_request     <= data_write_request;
+      device0_write_strobe      <= data_write_strobe;
     end
     else begin
       device0_wdata             <= 32'h00000000;
@@ -269,12 +269,12 @@ module memory_mapper (
   end
   
   always @* begin
-    if (bus_data_address >= 32'h00010000 && bus_data_address <= 32'h0001ffff) begin
-      device1_wdata             <= bus_data_wdata;
-      device1_address           <= bus_data_address;
-      device1_read_request      <= bus_data_read_request;
-      device1_write_request     <= bus_data_write_request;
-      device1_write_strobe      <= bus_data_write_strobe;      
+    if (data_address >= 32'h00010000 && data_address <= 32'h0001ffff) begin
+      device1_wdata             <= data_wdata;
+      device1_address           <= data_address;
+      device1_read_request      <= data_read_request;
+      device1_write_request     <= data_write_request;
+      device1_write_strobe      <= data_write_strobe;      
     end
     else begin
       device1_wdata             <= 32'h00000000;
@@ -293,18 +293,18 @@ module dual_port_ram (
   input   wire resetn,
 
   // Port 0 is read-only (used for instruction fetch)
-  output  reg  [31:0] port0_data_out,
+  output  reg  [31:0] port0_rdata,
   input   wire [13:0] port0_address,  // 14-bit addresses = 16 KB memory
-  input   wire        port0_address_valid,  
-  output  reg         port0_data_out_valid,
+  input   wire        port0_read_request,  
+  output  reg         port0_read_request_ack,
 
   // Port 1 is read/write capable
-  output  reg  [31:0] port1_data_out,
-  input   wire [31:0] port1_data_in,
+  output  reg  [31:0] port1_rdata,
+  input   wire [31:0] port1_wdata,
   input   wire [13:0] port1_address,  // 14-bit addresses = 16 KB memory
-  input   wire        port1_address_valid,  
+  input   wire        port1_read_request,  
   output  reg         port1_read_request_ack,
-  input   wire        port1_write_enable,
+  input   wire        port1_write_request,
   output  wire        port1_write_request_ack,  
   input   wire [3:0 ] port1_write_strobe
   
@@ -315,7 +315,7 @@ module dual_port_ram (
   reg [31:0] ram [0:4095];
 
   // Needed for write request acknowledgement
-  reg [31:0] prev_port1_data_in;
+  reg [31:0] prev_port1_wdata;
   reg [3:0 ] prev_port1_write_strobe;
   reg        prev_port1_write_request;  
   wire       byte_lane_0_ok;
@@ -332,57 +332,57 @@ module dual_port_ram (
   
   // The code below will be synthesized to a Block RAM
   always @(posedge clock) begin 
-    if (port1_write_enable == 1'b1) begin
-      if(port1_write_strobe[0]) ram[data_address][7:0  ] <= port1_data_in[7:0  ];
-      if(port1_write_strobe[1]) ram[data_address][15:8 ] <= port1_data_in[15:8 ];
-      if(port1_write_strobe[2]) ram[data_address][23:16] <= port1_data_in[23:16];
-      if(port1_write_strobe[3]) ram[data_address][31:24] <= port1_data_in[31:24];
+    if (port1_write_request == 1'b1) begin
+      if(port1_write_strobe[0]) ram[data_address][7:0  ] <= port1_wdata[7:0  ];
+      if(port1_write_strobe[1]) ram[data_address][15:8 ] <= port1_wdata[15:8 ];
+      if(port1_write_strobe[2]) ram[data_address][23:16] <= port1_wdata[23:16];
+      if(port1_write_strobe[3]) ram[data_address][31:24] <= port1_wdata[31:24];
     end
   end
 
   // Instruction / data fetch
   always @(posedge clock) begin
     if (!resetn) begin
-      port0_data_out <= 32'h00000000;
-      port1_data_out <= 32'h00000000;
-      port0_data_out_valid <= 1'b0;
+      port0_rdata <= 32'h00000000;
+      port1_rdata <= 32'h00000000;
+      port0_read_request_ack <= 1'b0;
       port1_read_request_ack <= 1'b0;
     end
     else begin
-      port0_data_out <= ram[instruction_address];
-      port1_data_out <= ram[data_address];
-      port0_data_out_valid <= port0_address_valid;
-      port1_read_request_ack <= port1_address_valid;
+      port0_rdata <= ram[instruction_address];
+      port1_rdata <= ram[data_address];
+      port0_read_request_ack <= port0_read_request;
+      port1_read_request_ack <= port1_read_request;
     end
   end
 
   always @(posedge clock)
     if (!resetn) begin
-      prev_port1_data_in <= 32'h00000000;
+      prev_port1_wdata <= 32'h00000000;
       prev_port1_write_request <= 1'b0;
       prev_port1_write_strobe <= 4'b0000;
     end
     else begin
-      prev_port1_data_in <= port1_data_in;
-      prev_port1_write_request <= port1_write_enable;
+      prev_port1_wdata <= port1_wdata;
+      prev_port1_write_request <= port1_write_request;
       prev_port1_write_strobe <= port1_write_strobe;
     end
   
   assign byte_lane_0_ok =
     !prev_port1_write_strobe[0] | 
-    (prev_port1_data_in[7:0] == port1_data_out[7:0]);
+    (prev_port1_wdata[7:0] == port1_rdata[7:0]);
 
   assign byte_lane_1_ok =
     !prev_port1_write_strobe[1] | 
-    (prev_port1_data_in[15:8] == port1_data_out[15:8]);
+    (prev_port1_wdata[15:8] == port1_rdata[15:8]);
   
   assign byte_lane_2_ok =
     !prev_port1_write_strobe[2] | 
-    (prev_port1_data_in[23:16] == port1_data_out[23:16]);
+    (prev_port1_wdata[23:16] == port1_rdata[23:16]);
   
   assign byte_lane_3_ok =
     !prev_port1_write_strobe[3] | 
-    (prev_port1_data_in[31:24] == port1_data_out[31:24]);
+    (prev_port1_wdata[31:24] == port1_rdata[31:24]);
 
   assign port1_write_request_ack = 
     prev_port1_write_request &
