@@ -89,8 +89,10 @@ module riscv_steel_core_unit_tests();
   reg   [31:0]  ram [0:524287];
   reg           instruction_request_ack;
   reg           data_read_request_ack;
+  reg           data_write_request_ack;
   reg           instruction_request_ack_test;
   reg           data_read_request_ack_test;
+  reg           data_write_request_ack_test;
 
   wire          data_write_request;
   wire  [31:0]  instruction_address;
@@ -121,6 +123,7 @@ module riscv_steel_core_unit_tests();
     .data_write_strobe          (data_write_strobe          ),
     .data_in                    (data_in                    ),
     .data_read_request_ack      (data_read_request_ack      ),
+    .data_write_request_ack     (data_write_request_ack     ),
     
     // Interrupt signals (inputs hardwired to zero because they're not needed for the tests)
     .irq_external               (1'b0                       ),
@@ -139,11 +142,13 @@ module riscv_steel_core_unit_tests();
   always @(posedge clock) begin
     if (!reset_n) begin
       instruction_request_ack <= 1'b0;
-      data_read_request_ack <= 1'b0;
+      data_read_request_ack   <= 1'b0;
+      data_write_request_ack  <= 1'b0;
     end
     else begin
-      instruction_request_ack <= instruction_request & instruction_request_ack_test;
-      data_read_request_ack <= data_read_request & data_read_request_ack_test;
+      instruction_request_ack <= instruction_request  & instruction_request_ack_test;
+      data_read_request_ack   <= data_read_request    & data_read_request_ack_test;
+      data_write_request_ack  <= data_write_request   & data_write_request_ack_test;
     end
   end
   
@@ -151,16 +156,19 @@ module riscv_steel_core_unit_tests();
   integer x;
   initial begin
     #0;
-    instruction_request_ack_test = 1'b1;
-    data_read_request_ack_test = 1'b1;
+    instruction_request_ack_test  = 1'b1;
+    data_read_request_ack_test    = 1'b1;
+    data_write_request_ack_test   = 1'b1;
     for(x = 0; x < 100; x=x+1) begin
       #1000;
-      instruction_request_ack_test = $random();
-      data_read_request_ack_test = $random();
+      instruction_request_ack_test  = $random();
+      data_read_request_ack_test    = $random();
+      data_write_request_ack_test   = $random();
     end
     #1000;
-    instruction_request_ack_test = 1'b1;
-    data_read_request_ack_test = 1'b1;
+    instruction_request_ack_test  = 1'b1;
+    data_read_request_ack_test    = 1'b1;
+    data_write_request_ack_test   = 1'b1;
   end
 
   // RAM output registers

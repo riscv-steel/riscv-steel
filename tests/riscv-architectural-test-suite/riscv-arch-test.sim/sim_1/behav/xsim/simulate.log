@@ -55,4 +55,4 @@ Passed on test:                 sw-align-01.mem
 Passed on test:                      xor-01.mem
 Passed on test:                     xori-01.mem
 RISC-V Steel passed ALL unit tests from RISC-V Architectural Test Suite
-$stop called at time : 1667800 ns : File "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-steel-core-unit-tests.v" Line 371
+$stop called at time : 1675040 ns : File "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-steel-core-unit-tests.v" Line 379

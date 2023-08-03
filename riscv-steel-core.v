@@ -62,6 +62,7 @@ module riscv_steel_core #(
   output wire   [3:0 ]  data_write_strobe,
   input  wire   [31:0]  data_in,
   input  wire           data_read_request_ack,
+  input  wire           data_write_request_ack,
   
   // Interrupt signals (hardwire inputs to zero if unused)
 
@@ -356,6 +357,7 @@ module riscv_steel_core #(
   reg   [31:0]  rs2_data_stage3;
   reg   [31:0]  prev_data_out;
   reg           prev_data_read_request;
+  reg           prev_data_write_request;
   reg   [31:0]  prev_instruction_address;
   reg           prev_instruction_request;
   reg   [31:0]  prev_data_address;
@@ -369,6 +371,7 @@ module riscv_steel_core #(
   reg   [31:0]  program_counter_stage3;
   wire  [4:0 ]  rd_addr;
   wire  [31:0]  rd_data;
+  wire          read_request_internal;
   wire          reset;
   wire  [4:0 ]  rs1_addr;
   wire  [31:0]  rs1_data;
@@ -405,9 +408,10 @@ module riscv_steel_core #(
 
   assign reset = !reset_n;
 
-  assign clock_enable = 
-    !((prev_instruction_request & !instruction_request_ack) |
-    (prev_data_read_request & !data_read_request_ack));
+  assign clock_enable = !(
+    (prev_instruction_request & !instruction_request_ack  ) |
+    (prev_data_read_request   & !data_read_request_ack    ) |
+    (prev_data_write_request  & !data_write_request_ack   ) );
   
   //-----------------------------------------------------------------------------------------------//
   // Instruction fetch and instruction address logic                                               //
@@ -423,21 +427,23 @@ module riscv_steel_core #(
   assign instruction_request =
     reset ?
     1'b0 :
-    (clock_enable ?    
-      ((program_counter_source == PC_NEXT) |
-       (program_counter_source == PC_BOOT)) :
+    (clock_enable ? ( 
+      (program_counter_source == PC_NEXT) |
+      (program_counter_source == PC_BOOT) ) :
       prev_instruction_request);
 
   always @(posedge clock) begin
     if (reset) begin
-      prev_instruction_address <= BOOT_ADDRESS;
-      prev_instruction_request <= 1'b0;
-      prev_data_read_request <= 1'b0;
+      prev_instruction_address  <= BOOT_ADDRESS;
+      prev_instruction_request  <= 1'b0;
+      prev_data_read_request    <= 1'b0;
+      prev_data_write_request   <= 1'b0;
     end
     else if(clock_enable) begin
-      prev_instruction_address <= instruction_address;
-      prev_instruction_request <= instruction_request;    
-      prev_data_read_request <= data_read_request;
+      prev_instruction_address  <= instruction_address;
+      prev_instruction_request  <= instruction_request;    
+      prev_data_read_request    <= data_read_request;
+      prev_data_write_request   <= data_write_request;
     end
   end 
     
@@ -524,7 +530,7 @@ module riscv_steel_core #(
     reset ?
     1'b0 :
     (clock_enable ?
-      load | store :
+      read_request_internal :
       prev_read_request);
 
   assign data_address =
@@ -554,6 +560,9 @@ module riscv_steel_core #(
     (clock_enable ?
       write_strobe_internal :
       prev_write_strobe);
+
+  assign read_request_internal =
+    load & ~misaligned_load & ~take_trap;
 
   assign write_request_internal =
     store & ~misaligned_store & ~take_trap;
