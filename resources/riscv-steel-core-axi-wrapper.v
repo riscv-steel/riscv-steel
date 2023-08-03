@@ -291,7 +291,7 @@ module riscv_steel_core_axi_wrapper #(
     .instruction_in             (instruction_in             ),
     .instruction_in_valid       (instruction_in_valid       ),
       
-    // Data fetch/write interface
+    // Data read/write interface
     .data_rw_address            (data_rw_address            ),
     .data_rw_address_valid      (data_rw_address_valid      ),
     .data_out                   (data_out                   ),

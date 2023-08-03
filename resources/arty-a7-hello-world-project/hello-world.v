@@ -97,7 +97,7 @@ module hello_world (
     .instruction_in               (bus_instruction_in                 ),
     .instruction_request_ack      (bus_instruction_request_ack        ),
 
-    // Data fetch/write interface
+    // Data read/write interface
     .data_address                 (bus_data_address                ),
     .data_read_request            (bus_data_read_request              ),
     .data_out                     (bus_data_wdata                     ),

@@ -53,7 +53,7 @@ module riscv_steel_core #(
   input  wire   [31:0]  instruction_in,
   input  wire           instruction_request_ack,
     
-  // Data fetch/write interface
+  // Data read/write interface
 
   output wire   [31:0]  data_address,
   output wire           data_read_request,

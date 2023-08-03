@@ -113,7 +113,7 @@ module riscv_steel_core_unit_tests();
     .instruction_in             (instruction_in             ),
     .instruction_request_ack    (instruction_request_ack    ),
       
-    // Data fetch/write interface
+    // Data read/write interface
     .data_address               (data_address               ),
     .data_read_request          (data_read_request          ),
     .data_out                   (data_out                   ),
