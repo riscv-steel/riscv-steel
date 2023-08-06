@@ -70,8 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 4
-set_param xicom.use_bs_reader 1
 set_msg_config  -id {XSIM 43-4100}  -string {{WARNING: [XSIM 43-4100] "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-architectural-test-suite/riscv-arch-test.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.}}  -suppress 
 set_msg_config  -id {Vivado 12-13340}  -string {{WARNING: [Vivado 12-13340] Unable to auto find GCC executables from simulator install path! (path not set)}}  -suppress 
 set_msg_config  -id {Wavedata 42-489}  -string {{WARNING: [Wavedata 42-489] Can't add object "/riscv_steel_core_unit_tests/ram" to the wave window because it has 16777216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".}}  -suppress 

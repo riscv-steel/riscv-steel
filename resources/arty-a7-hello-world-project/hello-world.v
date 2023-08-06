@@ -163,7 +163,7 @@ module hello_world (
   dual_port_ram
   dual_port_ram_instance          (
     .clock                        (internal_clock                     ),
-    .resetn                       (!reset                             ),
+    .reset_n                      (!reset                             ),
     .port0_rdata                  (instruction_in                     ),
     .port0_address                (instruction_address[13:0]          ),
     .port0_read_request           (instruction_request                ),    
@@ -181,7 +181,7 @@ module hello_world (
   uart
   uart_instance                   (
     .clock                        (internal_clock                     ),
-    .resetn                       (!reset                             ),
+    .reset_n                      (!reset                             ),
     .uart_rdata                   (device1_rdata                      ),
     .uart_wdata                   (device1_wdata[7:0]                 ),
     .uart_address                 (device1_address                    ),
@@ -290,7 +290,7 @@ endmodule
 module dual_port_ram (
 
   input   wire clock,
-  input   wire resetn,
+  input   wire reset_n,
 
   // Port 0 is read-only (used for instruction fetch)
   output  reg  [31:0] port0_rdata,
@@ -342,7 +342,7 @@ module dual_port_ram (
 
   // Instruction / data fetch
   always @(posedge clock) begin
-    if (!resetn) begin
+    if (!reset_n) begin
       port0_rdata <= 32'h00000000;
       port1_rdata <= 32'h00000000;
       port0_read_request_ack <= 1'b0;
@@ -357,7 +357,7 @@ module dual_port_ram (
   end
 
   always @(posedge clock)
-    if (!resetn) begin
+    if (!reset_n) begin
       prev_port1_wdata <= 32'h00000000;
       prev_port1_write_request <= 1'b0;
       prev_port1_write_strobe <= 4'b0000;
@@ -401,7 +401,7 @@ module uart #(
   )(
 
   input   wire        clock,
-  input   wire        resetn,
+  input   wire        reset_n,
   output  reg  [31:0] uart_rdata,  
   input   wire [7:0 ] uart_wdata,
   input   wire [31:0] uart_address,
@@ -430,7 +430,7 @@ module uart #(
   assign uart_tx = tx_register[0];
   
   always @(posedge clock) begin
-    if (!resetn) begin
+    if (!reset_n) begin
       tx_cycle_counter <= 0;
       tx_register <= 10'b1111111111;
       tx_bit_counter <= 0;
@@ -457,7 +457,7 @@ module uart #(
   end
   
   always @(posedge clock) begin
-    if (!resetn) begin
+    if (!reset_n) begin
       rx_cycle_counter <= 0;
       rx_register <= 8'h00;
       rx_data <= 8'h00;
@@ -532,7 +532,7 @@ module uart #(
   end
   
   always @(posedge clock) begin
-    if (!resetn) 
+    if (!reset_n) 
       uart_rdata <= 32'h00000000;
     else if (uart_address == 32'h00010000)
       uart_rdata <= {31'b0, tx_bit_counter == 0};
@@ -543,7 +543,7 @@ module uart #(
   end
 
   always @(posedge clock) begin
-    if (!resetn) begin
+    if (!reset_n) begin
       uart_read_request_ack <= 1'b0;
       uart_write_request_ack <= 1'b0;
     end
