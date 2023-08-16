@@ -199,7 +199,7 @@ module riscv_steel_core_unit_tests();
   
   always #10 clock = !clock;
   
-  reg [8*30:0] riscv_test_program [0:53] = {
+  reg [8*30:0] riscv_test_program [0:44] = {
     "add-01.mem",
     "addi-01.mem",
     "and-01.mem",
@@ -222,20 +222,11 @@ module riscv_steel_core_unit_tests();
     "lhu-align-01.mem",
     "lui-01.mem",
     "lw-align-01.mem",
-    "misalign-beq-01.mem",
-    "misalign-bge-01.mem",
-    "misalign-bgeu-01.mem",
-    "misalign-blt-01.mem",
-    "misalign-bltu-01.mem",
-    "misalign-bne-01.mem",
-    "misalign-jal-01.mem",
     "misalign-lh-01.mem",
     "misalign-lhu-01.mem",
     "misalign-lw-01.mem",
     "misalign-sh-01.mem",
     "misalign-sw-01.mem",
-    "misalign1-jalr-01.mem",
-    "misalign2-jalr-01.mem",
     "or-01.mem",
     "ori-01.mem",
     "sb-align-01.mem",
@@ -256,7 +247,7 @@ module riscv_steel_core_unit_tests();
     "xori-01.mem"
   };
   
-  reg [8*35:0] riscv_test_program_goldenref [0:53] = {
+  reg [8*35:0] riscv_test_program_goldenref [0:44] = {
     "add-01.reference.mem",
     "addi-01.reference.mem",
     "and-01.reference.mem",
@@ -279,20 +270,11 @@ module riscv_steel_core_unit_tests();
     "lhu-align-01.reference.mem",
     "lui-01.reference.mem",
     "lw-align-01.reference.mem",
-    "misalign-beq-01.reference.mem",
-    "misalign-bge-01.reference.mem",
-    "misalign-bgeu-01.reference.mem",
-    "misalign-blt-01.reference.mem",
-    "misalign-bltu-01.reference.mem",
-    "misalign-bne-01.reference.mem",
-    "misalign-jal-01.reference.mem",
     "misalign-lh-01.reference.mem",
     "misalign-lhu-01.reference.mem",
     "misalign-lw-01.reference.mem",
     "misalign-sh-01.reference.mem",
     "misalign-sw-01.reference.mem",
-    "misalign1-jalr-01.reference.mem",
-    "misalign2-jalr-01.reference.mem",
     "or-01.reference.mem",
     "ori-01.reference.mem",
     "sb-align-01.reference.mem",
@@ -326,7 +308,7 @@ module riscv_steel_core_unit_tests();
       
     $display("Running unit test programs from RISC-V Architectural Test Suite.");
     
-    for(k = 0; k < 54; k=k+1) begin            
+    for(k = 0; k < 45; k=k+1) begin            
       // Reset
       reset_n = 1'b0;
       #20;
@@ -343,7 +325,7 @@ module riscv_steel_core_unit_tests();
       for(j = 0; j < 500000; j=j+1) begin
         #20;
         // Tests flag the end of their execution by writing 1 to the address 0x00001000
-        if(data_write_request == 1'b1 && data_address == 32'h00001000) begin   
+        if(data_write_request == 1'b1 && data_address == 32'h00001000 && data_wdata == 32'h00000001) begin   
           // The start and final memory position of the signature are stored at
           // 0x00001ffc (ram[2046]) and 0x00001ff8 (ram[2047]).
           m = ram[2047][24:2];

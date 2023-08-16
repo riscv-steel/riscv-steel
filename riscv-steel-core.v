@@ -293,6 +293,7 @@ module riscv_steel_core #(
   wire  [31:0]  data_address_internal;
   reg   [31:0]  data_wdata_internal;  
   wire          ebreak;
+  reg           ebreak_stage3;
   wire          ecall;
   wire  [31:0]  exception_program_counter;
   wire          flush_pipeline;
@@ -425,12 +426,7 @@ module riscv_steel_core #(
       prev_instruction_address);   
   
   assign instruction_request =
-    reset ?
-    1'b0 :
-    (clock_enable ? ( 
-      (program_counter_source == PC_NEXT) |
-      (program_counter_source == PC_BOOT) ) :
-      prev_instruction_request);
+    !reset;
 
   always @(posedge clock) begin
     if (reset) begin
@@ -506,7 +502,7 @@ module riscv_steel_core #(
     instruction[31:20];   
 
   //-----------------------------------------------------------------------------------------------//
-  // Data fetch / store                                                                            //
+  // Data read / store                                                                            //
   //-----------------------------------------------------------------------------------------------//
   
   always @(posedge clock) begin
@@ -1461,6 +1457,8 @@ module riscv_steel_core #(
       if(current_state == STATE_TRAP_TAKEN) begin
         if(misaligned_address_exception)
           mtval <= target_address_adder_stage3;
+        else if (ebreak_stage3)
+          mtval <= program_counter_stage3;
         else
           mtval <= 32'h00000000;
       end
@@ -1505,11 +1503,12 @@ module riscv_steel_core #(
       load_size_stage3                  <= 2'b00;
       load_unsigned_stage3              <= 1'b0;
       alu_2nd_operand_source_stage3     <= 1'b0;
-      csr_file_write_request_stage3      <= 1'b0;
-      integer_file_write_request_stage3  <= 1'b0;
+      csr_file_write_request_stage3     <= 1'b0;
+      integer_file_write_request_stage3 <= 1'b0;
       writeback_mux_selector_stage3     <= WB_ALU;
       csr_operation_stage3              <= 3'b000;
       immediate_stage3                  <= 32'h00000000;
+      ebreak_stage3                     <= 1'b0;
     end
     else if (clock_enable) begin
       instruction_rd_address_stage3     <= instruction_rd_address;
@@ -1528,6 +1527,7 @@ module riscv_steel_core #(
       writeback_mux_selector_stage3     <= writeback_mux_selector;
       csr_operation_stage3              <= csr_operation;
       immediate_stage3                  <= immediate;
+      ebreak_stage3                     <= ebreak;
     end
   end    
 

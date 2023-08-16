@@ -340,7 +340,7 @@ module dual_port_ram (
     end
   end
 
-  // Instruction / data fetch
+  // Instruction / data read
   always @(posedge clock) begin
     if (!reset_n) begin
       port0_rdata <= 32'h00000000;
