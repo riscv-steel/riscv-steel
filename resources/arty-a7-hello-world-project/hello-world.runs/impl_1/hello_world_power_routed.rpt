@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Sun Aug  6 17:02:08 2023
+| Date             : Wed Aug 16 03:01:00 2023
 | Host             : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command          : report_power -file hello_world_power_routed.rpt -pb hello_world_power_summary_routed.pb -rpx hello_world_power_routed.rpx
 | Design           : hello_world
@@ -30,11 +30,11 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.098        |
+| Total On-Chip Power (W)  | 0.102        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.039        |
-| Device Static (W)        | 0.059        |
+| Dynamic (W)              | 0.040        |
+| Device Static (W)        | 0.062        |
 | Effective TJA (C/W)      | 4.8          |
 | Max Ambient (C)          | 99.5         |
 | Junction Temperature (C) | 25.5         |
@@ -53,17 +53,17 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.004 |        4 |       --- |             --- |
-| Slice Logic    |     0.010 |     4565 |       --- |             --- |
-|   LUT as Logic |     0.010 |     2312 |     20800 |           11.12 |
-|   F7/F8 Muxes  |    <0.001 |      190 |     32600 |            0.58 |
-|   Register     |    <0.001 |     1736 |     41600 |            4.17 |
+| Slice Logic    |     0.010 |     4532 |       --- |             --- |
+|   LUT as Logic |     0.010 |     2285 |     20800 |           10.99 |
+|   Register     |    <0.001 |     1738 |     41600 |            4.18 |
 |   CARRY4       |    <0.001 |      107 |      8150 |            1.31 |
+|   F7/F8 Muxes  |    <0.001 |      182 |     32600 |            0.56 |
 |   Others       |     0.000 |        9 |       --- |             --- |
-| Signals        |     0.017 |     4001 |       --- |             --- |
+| Signals        |     0.018 |     3964 |       --- |             --- |
 | Block RAM      |     0.008 |        4 |        50 |            8.00 |
 | I/O            |    <0.001 |        4 |       210 |            1.90 |
-| Static Power   |     0.059 |          |           |                 |
-| Total          |     0.098 |          |           |                 |
+| Static Power   |     0.062 |          |           |                 |
+| Total          |     0.102 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,9 +73,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       0.950 |     0.046 |       0.040 |      0.006 |       NA    | Unspecified | NA         |
+| Vccint    |       0.950 |     0.048 |       0.042 |      0.006 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.011 |       0.000 |      0.011 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -143,9 +143,9 @@ Table of Contents
 +-----------------------------+-----------+
 | Name                        | Power (W) |
 +-----------------------------+-----------+
-| hello_world                 |     0.039 |
+| hello_world                 |     0.040 |
 |   dual_port_ram_instance    |     0.011 |
-|   riscv_steel_core_instance |     0.027 |
+|   riscv_steel_core_instance |     0.029 |
 +-----------------------------+-----------+
 
 

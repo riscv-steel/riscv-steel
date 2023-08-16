@@ -22,20 +22,11 @@ Passed on test:                 lh-align-01.mem
 Passed on test:                lhu-align-01.mem
 Passed on test:                      lui-01.mem
 Passed on test:                 lw-align-01.mem
-Passed on test:             misalign-beq-01.mem
-Passed on test:             misalign-bge-01.mem
-Passed on test:            misalign-bgeu-01.mem
-Passed on test:             misalign-blt-01.mem
-Passed on test:            misalign-bltu-01.mem
-Passed on test:             misalign-bne-01.mem
-Passed on test:             misalign-jal-01.mem
 Passed on test:              misalign-lh-01.mem
 Passed on test:             misalign-lhu-01.mem
 Passed on test:              misalign-lw-01.mem
 Passed on test:              misalign-sh-01.mem
 Passed on test:              misalign-sw-01.mem
-Passed on test:           misalign1-jalr-01.mem
-Passed on test:           misalign2-jalr-01.mem
 Passed on test:                       or-01.mem
 Passed on test:                      ori-01.mem
 Passed on test:                 sb-align-01.mem
@@ -55,4 +46,4 @@ Passed on test:                 sw-align-01.mem
 Passed on test:                      xor-01.mem
 Passed on test:                     xori-01.mem
 RISC-V Steel passed ALL unit tests from RISC-V Architectural Test Suite
-$stop called at time : 1675040 ns : File "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-steel-core-unit-tests.v" Line 379
+$stop called at time : 1700 us : File "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-steel-core-unit-tests.v" Line 361
