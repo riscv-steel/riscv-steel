@@ -84,46 +84,37 @@ module riscv_steel_core_unit_tests();
 
   reg           clock;
   reg           reset_n;
-  reg   [31:0]  instruction_in;
-  reg   [31:0]  data_rdata;
+  
   reg   [31:0]  ram [0:524287];
-  reg           instruction_request_ack;
-  reg           data_read_request_ack;
-  reg           data_write_request_ack;
-  reg           instruction_request_ack_test;
+
+  wire  [31:0]  mem_address;
+  reg   [31:0]  mem_read_data;  
+  wire          mem_read_request;
+  reg           mem_read_request_ack;
+  wire  [31:0]  mem_write_data;
+  wire          mem_write_request;
+  reg           mem_write_request_ack;
+  wire  [3:0 ]  mem_write_strobe;  
+
   reg           data_read_request_ack_test;
   reg           data_write_request_ack_test;
-
-  wire          data_write_request;
-  wire  [31:0]  instruction_address;
-  wire  [31:0]  data_address;
-  wire  [31:0]  data_wdata;
-  wire  [3:0 ]  data_write_strobe;
-  wire          instruction_request;
-  wire          data_read_request;
   
   riscv_steel_core 
   dut (
 
-    // Basic system signals
+    // Global clock and active-low reset
     .clock                      (clock                      ),
     .reset_n                    (reset_n                    ),
-
-    // Instruction fetch interface
-    .instruction_in             (instruction_in             ),
-    .instruction_address        (instruction_address        ),
-    .instruction_request        (instruction_request        ),    
-    .instruction_request_ack    (instruction_request_ack    ),
       
-    // Data read/write interface
-    .data_rdata                 (data_rdata                 ),
-    .data_wdata                 (data_wdata                 ),
-    .data_address               (data_address               ),
-    .data_read_request          (data_read_request          ),
-    .data_read_request_ack      (data_read_request_ack      ),
-    .data_write_request         (data_write_request         ),
-    .data_write_request_ack     (data_write_request_ack     ),
-    .data_write_strobe          (data_write_strobe          ),
+    // Memory read / write interface
+    .mem_address                (mem_address                ),
+    .mem_read_data              (mem_read_data              ),
+    .mem_read_request           (mem_read_request           ),
+    .mem_read_request_ack       (mem_read_request_ack       ),
+    .mem_write_data             (mem_write_data             ),    
+    .mem_write_strobe           (mem_write_strobe           ),
+    .mem_write_request          (mem_write_request          ),
+    .mem_write_request_ack      (mem_write_request_ack      ),    
     
     // Interrupt signals (inputs hardwired to zero because they're not needed for the tests)
     .irq_external               (1'b0                       ),
@@ -134,72 +125,62 @@ module riscv_steel_core_unit_tests();
     .irq_software_ack           (),
 
     // Real Time Counter (hardwired to zero because they're not needed too)
-    .real_time                  (64'b0                      )
+    .real_time_counter          (64'b0                      )
 
   );
   
-  // Reflection of *_valid signals
+  // Read / write acknowledgement
   always @(posedge clock) begin
     if (!reset_n) begin
-      instruction_request_ack <= 1'b0;
-      data_read_request_ack   <= 1'b0;
-      data_write_request_ack  <= 1'b0;
+      mem_read_request_ack   <= 1'b0;
+      mem_write_request_ack  <= 1'b0;
     end
     else begin
-      instruction_request_ack <= instruction_request  & instruction_request_ack_test;
-      data_read_request_ack   <= data_read_request    & data_read_request_ack_test;
-      data_write_request_ack  <= data_write_request   & data_write_request_ack_test;
+      mem_read_request_ack   <= mem_read_request    & data_read_request_ack_test;
+      mem_write_request_ack  <= mem_write_request   & data_write_request_ack_test;
     end
   end
   
-  // Randomly assert/deassert *_valid
+  // Randomly assert / deassert *_ack
   integer x;
   initial begin
     #0;
-    instruction_request_ack_test  = 1'b1;
     data_read_request_ack_test    = 1'b1;
     data_write_request_ack_test   = 1'b1;
     for(x = 0; x < 100; x=x+1) begin
       #1000;
-      instruction_request_ack_test  = $random();
       data_read_request_ack_test    = $random();
       data_write_request_ack_test   = $random();
     end
     #1000;
-    instruction_request_ack_test  = 1'b1;
     data_read_request_ack_test    = 1'b1;
     data_write_request_ack_test   = 1'b1;
   end
 
   // RAM output registers
-  always @(posedge clock) begin
-    if (!reset_n) begin
-      data_rdata         <= 32'h00000000;
-      instruction_in     <= 32'h00000000;
-    end
-    else begin
-      data_rdata         <= ram[$unsigned(data_address        [20:2])];
-      instruction_in     <= ram[$unsigned(instruction_address [20:2])];
-    end
-  end
+  always @(posedge clock)
+    if (!reset_n)
+      mem_read_data <= 32'h00000000;
+    else
+      mem_read_data <= ram[$unsigned(mem_address[20:2])];
   
   // Memory implementation
   always @(posedge clock) begin
-    if(data_write_request) begin
-      if(data_write_strobe[0])
-        ram[$unsigned(data_address[24:2])][7:0  ]  <= data_wdata[7:0  ];
-      if(data_write_strobe[1])
-        ram[$unsigned(data_address[24:2])][15:8 ]  <= data_wdata[15:8 ];
-      if(data_write_strobe[2])
-        ram[$unsigned(data_address[24:2])][23:16]  <= data_wdata[23:16];
-      if(data_write_strobe[3])
-        ram[$unsigned(data_address[24:2])][31:24]  <= data_wdata[31:24];
+    if(mem_write_request) begin
+      if(mem_write_strobe[0])
+        ram[$unsigned(mem_address[24:2])][7:0  ]  <= mem_write_data[7:0  ];
+      if(mem_write_strobe[1])
+        ram[$unsigned(mem_address[24:2])][15:8 ]  <= mem_write_data[15:8 ];
+      if(mem_write_strobe[2])
+        ram[$unsigned(mem_address[24:2])][23:16]  <= mem_write_data[23:16];
+      if(mem_write_strobe[3])
+        ram[$unsigned(mem_address[24:2])][31:24]  <= mem_write_data[31:24];
     end
   end
   
   always #10 clock = !clock;
   
-  reg [8*30:0] riscv_test_program [0:44] = {
+  reg [8*30:0] unit_test_programs_array [0:44] = {
     "add-01.mem",
     "addi-01.mem",
     "and-01.mem",
@@ -247,7 +228,7 @@ module riscv_steel_core_unit_tests();
     "xori-01.mem"
   };
   
-  reg [8*35:0] riscv_test_program_goldenref [0:44] = {
+  reg [8*35:0] golden_reference_array [0:44] = {
     "add-01.reference.mem",
     "addi-01.reference.mem",
     "and-01.reference.mem",
@@ -296,67 +277,81 @@ module riscv_steel_core_unit_tests();
   };
   
   integer i, j, k, m, n, z;
-  integer test_error_flag;
-  integer current_test_goldenref_match;
-  reg [31:0] current_test_goldenref [0:2047];
+  integer failing_tests_counter;
+  integer current_test_failed_flag;
+  reg [31:0] current_golden_reference [0:2047];
   
   initial begin
   
     reset_n = 1'b1;        
-    clock = 1'b0;
-    test_error_flag = 0; // value '0' flags no errors
+    clock   = 1'b0;
+    failing_tests_counter = 0;
       
     $display("Running unit test programs from RISC-V Architectural Test Suite.");
     
-    for(k = 0; k < 45; k=k+1) begin            
+    // Main loop: run one test in unit_test_programs_array[0:44] at a time
+    for(k = 0; k < 45; k=k+1) begin       
+
       // Reset
       reset_n = 1'b0;
+      for(i = 0; i < 524287; i=i+1) ram[i] = 32'b0;
+      for(i = 0; i < 2048;   i=i+1) current_golden_reference[i] = 32'b0;
       #20;
       reset_n = 1'b1;
-      // Clear RAM
-      for(i = 0; i < 524287; i=i+1) ram[i] = 32'b0;
-      // Clear signature
-      for(i = 0; i < 2048;   i=i+1) current_test_goldenref[i] = 32'b0;
-      // Load test program into RAM
-      $readmemh(riscv_test_program[k],ram);      
-      // Load reference signature for this test
-      $readmemh(riscv_test_program_goldenref[k],current_test_goldenref);   
-      // Execution is aborted if j reaches 500000 cycles (~1ms)
+      
+      // Initialization
+      $readmemh(unit_test_programs_array[k], ram                     );
+      $readmemh(golden_reference_array[k]  , current_golden_reference);   
+
+      // Run loop
       for(j = 0; j < 500000; j=j+1) begin
+
+        // After each clock cycle it tests whether the test program finished its execution
+        // This event is signaled by writing 1 to the address 0x00001000
         #20;
-        // Tests flag the end of their execution by writing 1 to the address 0x00001000
-        if(data_write_request == 1'b1 && data_address == 32'h00001000 && data_wdata == 32'h00000001) begin   
-          // The start and final memory position of the signature are stored at
+        if(mem_write_request == 1'b1 &&
+           mem_address == 32'h00001000 &&
+           mem_write_data == 32'h00000001) begin   
+
+          // The beginning and end of signature are stored at
           // 0x00001ffc (ram[2046]) and 0x00001ff8 (ram[2047]).
-          m = ram[2047][24:2];
-          n = ram[2046][24:2];
+          m = ram[2047][24:2]; // m holds the address of the beginning of the signature
+          n = ram[2046][24:2]; // n holds the address of the end of the signature
+
+          // Compare signature with golden reference
           z = 0;
-          current_test_goldenref_match = 0;
+          current_test_failed_flag = 0;
           for(m = ram[2047][24:2]; m < n; m=m+1) begin
-            if (ram[m] !== current_test_goldenref[z]) begin
-              $display("TEST FAILED: %s", riscv_test_program[k]);
+            if (ram[m] !== current_golden_reference[z]) begin
+              $display("TEST FAILED: %s", unit_test_programs_array[k]);
               $display("Signature at line %d differs from golden reference.", z+1);
-              $display("Signature: %h. Golden reference: %h", ram[m], current_test_goldenref[z]);
-              test_error_flag = 1; // value '1' flags an error
-              current_test_goldenref_match = 1; // not a match!
+              $display("Signature: %h. Golden reference: %h", ram[m], current_golden_reference[z]);
+              failing_tests_counter = failing_tests_counter + 1;
+              current_test_failed_flag = 1; // not a match!
               $stop();
             end
             z=z+1;
           end
-          if (current_test_goldenref_match == 0) begin            
-            $display("Passed on test: %s", riscv_test_program[k]);            
+
+          // Skip main loop in a successful run 
+          if (current_test_failed_flag == 0) begin            
+            $display("Passed on test: %s", unit_test_programs_array[k]);            
             j = 999999; // large value skips this loop (without flagging error)
           end
-        end
-      end
-      // The program ran for 500000 cycles and did not reach a result (test failed)
+
+        end // if
+
+      end // Run loop
+
+      // The program ran for 500000 cycles and did not finish (something is wrong)
       if (j == 500000) begin
-        $display("TEST FAILED (probably hanging): %s", riscv_test_program[k]);
+        $display("TEST FAILED (probably hanging): %s", unit_test_programs_array[k]);
         $stop();
       end
-    end
+
+    end // Main loop
     
-    if (test_error_flag == 0) begin
+    if (failing_tests_counter == 0) begin
       $display("RISC-V Steel passed ALL unit tests from RISC-V Architectural Test Suite");
       $stop();
     end
