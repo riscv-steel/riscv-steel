@@ -41,28 +41,21 @@ module riscv_steel_core #(
 
   ) (
 
-  // Basic system signals
+  // Global clock and active-low reset
   
   input  wire           clock,
   input  wire           reset_n,
 
-  // Instruction fetch interface
+  // Memory read / write interface
 
-  input  wire   [31:0]  instruction_in,
-  output wire   [31:0]  instruction_address,
-  output wire           instruction_request,  
-  input  wire           instruction_request_ack,
-    
-  // Data read/write interface
-
-  input  wire   [31:0]  data_rdata,
-  output wire   [31:0]  data_wdata,
-  output wire   [31:0]  data_address,
-  output wire           data_read_request,
-  input  wire           data_read_request_ack,
-  output wire           data_write_request,
-  input  wire           data_write_request_ack,
-  output wire   [3:0 ]  data_write_strobe,
+  output wire   [31:0]  mem_address,
+  input  wire   [31:0]  mem_read_data,
+  output wire           mem_read_request,
+  input  wire           mem_read_request_ack,
+  output wire   [31:0]  mem_write_data,
+  output wire   [3:0 ]  mem_write_strobe,
+  output wire           mem_write_request,
+  input  wire           mem_write_request_ack,  
   
   // Interrupt signals (hardwire inputs to zero if unused)
 
@@ -75,7 +68,7 @@ module riscv_steel_core #(
 
   // Real Time Counter (hardwire to zero if unused)
 
-  input  wire   [63:0]  real_time
+  input  wire   [63:0]  real_time_counter
 
   );
 
@@ -264,155 +257,166 @@ module riscv_steel_core #(
   // Wires and regs                                                                                //
   //-----------------------------------------------------------------------------------------------//
 
-  wire  [31:0]  adder_second_operand_mux;
   wire  [31:0]  alu_2nd_operand;
   wire          alu_2nd_operand_source;
-  reg           alu_2nd_operand_source_stage3;
+  wire  [31:0]  alu_adder_2nd_operand_mux;
+  wire  [31:0]  alu_minus_2nd_operand;
   wire  [3:0 ]  alu_operation_code;
-  reg   [3:0 ]  alu_operation_code_stage3;
   reg   [31:0]  alu_output;
+  wire  [31:0]  alu_shift_right_mux;
   wire          alu_slt_result;
   wire          alu_sltu_result;
   wire  [31:0]  alu_sra_result;
   wire  [31:0]  alu_srl_result;
-  wire  [31:0]  b_type_immediate;
   reg           branch_condition_satisfied;
   wire  [31:0]  branch_target_address;
-  wire  [23:0]  byte_data_upper_bits;
   wire          clock_enable;
   wire  [31:0]  csr_data_mask;
   reg   [31:0]  csr_data_out;
   wire          csr_file_write_enable;
   wire          csr_file_write_request;
-  reg           csr_file_write_request_stage3;
+  reg   [31:0]  csr_mcause;
+  reg   [3:0 ]  csr_mcause_code;
+  reg           csr_mcause_interrupt_flag;
+  reg   [63:0]  csr_mcycle;
+  reg   [31:0]  csr_mepc;
+  wire  [31:0]  csr_mie;  
+  reg           csr_mie_meie;
+  reg           csr_mie_msie;
+  reg           csr_mie_mtie;  
+  wire  [31:0]  csr_mip;
+  reg           csr_mip_meip;  
+  reg           csr_mip_mtip;  
+  reg           csr_mip_msip;
+  reg   [63:0]  csr_minstret;
+  reg   [31:0]  csr_mscratch;
+  wire  [31:0]  csr_mstatus;
+  reg           csr_mstatus_mie;
+  reg           csr_mstatus_mpie;
+  reg   [31:0]  csr_mtvec;
+  reg   [31:0]  csr_mtval;
   wire  [2:0 ]  csr_operation;
-  reg   [2:0 ]  csr_operation_stage3;
-  wire  [31:0]  csr_type_immediate;
+  reg   [63:0]  csr_utime;  
   reg   [31:0]  csr_write_data;    
   reg   [3:0 ]  current_state;
-  wire  [31:0]  data_address_internal;
-  reg   [31:0]  data_wdata_internal;  
   wire          ebreak;
-  reg           ebreak_stage3;
   wire          ecall;
-  wire  [31:0]  exception_program_counter;
-  wire          flush_pipeline;
-  wire  [15:0]  half_data_upper_bits;
-  wire  [31:0]  i_type_immediate;
+  wire          flush;  
   wire          illegal_instruction;    
   reg   [31:0]  immediate;
-  reg   [31:0]  immediate_stage3;
+  wire  [31:0]  immediate_b_type;
+  wire  [31:0]  immediate_csr_type;
+  wire  [31:0]  immediate_i_type;
+  wire  [31:0]  immediate_j_type;
+  wire  [31:0]  immediate_s_type;
+  wire  [19:0]  immediate_sign_extension;
   reg   [2:0 ]  immediate_type;
+  wire  [31:0]  immediate_u_type;
   reg   [31:0]  integer_file [31:1];
   wire          integer_file_write_enable;
   wire          integer_file_write_request;
-  reg           integer_file_write_request_stage3;
   wire  [31:0]  instruction;
+  wire  [31:0]  instruction_address;
   wire  [2:0 ]  instruction_funct3;
   wire  [6:0 ]  instruction_funct7;
   wire  [6:0 ]  instruction_opcode;  
-  wire  [11:0]  instruction_csr_address;
-  reg   [11:0]  instruction_csr_address_stage3;  
-  wire  [4:0 ]  instruction_rd_address;
-  reg   [4:0 ]  instruction_rd_address_stage3;  
+  wire  [11:0]  instruction_csr_address;  
+  wire  [4:0 ]  instruction_rd_address;  
   wire  [4:0 ]  instruction_rs1_address;
   wire  [4:0 ]  instruction_rs2_address;
-  wire  [31:0]  j_type_immediate;
+  wire  [31:0]  interrupt_address_offset;
   wire          load;
   reg   [7:0 ]  load_byte_data;
+  wire  [23:0]  load_byte_upper_bits;
+  wire          load_commit_cycle;  
   reg   [31:0]  load_data;
   reg   [15:0]  load_half_data;
+  wire  [15:0]  load_half_upper_bits;
+  wire          load_pending;
+  wire          load_request;
   wire  [1:0 ]  load_size;
-  reg   [1:0 ]  load_size_stage3;
   wire          load_unsigned;
-  reg           load_unsigned_stage3;  
-  reg   [31:0]  mcause;
-  reg   [3:0 ]  mcause_cause_code;
-  reg           mcause_interrupt_flag;
-  reg   [63:0]  mcycle;
-  reg   [31:0]  mepc;
-  wire  [31:0]  mie;  
-  reg           mie_meie;
-  reg           mie_msie;
-  reg           mie_mtie;  
-  wire  [31:0]  mip;
-  reg           mip_mtip;
-  reg           mip_meip;  
-  reg           mip_msip;
-  reg   [63:0]  minstret;
-  wire  [31:0]  minus_second_operand;
-  reg           misaligned_address_exception;
+  wire  [31:0]  mem_address_internal;
+  reg   [31:0]  mem_write_data_internal;
+  wire          misaligned_address_exception;
   wire          misaligned_instruction_address;
   wire          misaligned_load;
   wire          misaligned_store;
   wire          mret;
-  reg   [31:0]  mscratch;
-  wire  [31:0]  mstatus;
-  reg           mstatus_mie;
-  reg           mstatus_mpie;
-  reg   [31:0]  mtvec;
-  reg   [31:0]  mtval;
   wire  [31:0]  next_address;
   reg   [31:0]  next_program_counter;
-  reg   [3:0 ]  next_state;
-  reg   [31:0]  rs1_data_stage3;  
-  reg   [31:0]  rs2_data_stage3;
-  reg   [31:0]  prev_data_wdata;
-  reg           prev_data_read_request;
-  reg           prev_data_write_request;
-  reg   [31:0]  prev_instruction_address;
-  reg           prev_instruction_request;
-  reg   [31:0]  prev_data_address;
-  reg           prev_read_request;
-  reg           prev_write_request;
-  reg   [3:0 ]  prev_write_strobe;
+  reg   [3:0 ]  next_state;  
+  reg   [31:0]  prev_instruction;
+  reg   [31:0]  prev_instruction_address;  
+  reg           prev_load_request;  
+  reg   [31:0]  prev_mem_address;
+  reg           prev_mem_read_request;
+  reg   [31:0]  prev_mem_write_data;  
+  reg           prev_mem_write_request; 
+  reg   [3:0 ]  prev_mem_write_strobe;  
   reg   [31:0]  program_counter;
-  wire  [31:0]  program_counter_plus_4;
-  reg   [31:0]  program_counter_plus_4_stage3; 
-  reg   [1:0 ]  program_counter_source;  
-  reg   [31:0]  program_counter_stage3;
+  wire  [31:0]  program_counter_plus_4; 
+  reg   [1:0 ]  program_counter_source;
   wire  [4:0 ]  rd_addr;
   wire  [31:0]  rd_data;
-  wire          read_request_internal;
   wire          reset;
+  reg           reset_n_reg;
   wire  [4:0 ]  rs1_addr;
   wire  [31:0]  rs1_data;
   wire  [31:0]  rs1_mux;
   wire  [4:0 ]  rs2_addr;    
   wire  [31:0]  rs2_mux;  
-  wire  [31:0]  rs2_data;  
-  wire  [31:0]  s_type_immediate;
-  wire  [31:0]  shift_right_mux;
-  wire  [19:0]  sign_extension;
+  wire  [31:0]  rs2_data;    
   wire          store;
   reg   [31:0]  store_byte_data;
+  wire          store_commit_cycle;
   reg   [31:0]  store_half_data;
+  wire          store_pending;
+  wire          store_request;  
   wire          take_branch;
   wire          take_trap;
-  wire  [31:0]  target_address_adder;  
-  reg   [31:0]  target_address_adder_stage3;
+  wire  [31:0]  target_address_adder;
   wire          target_address_source;
   wire  [31:0]  trap_address;
-  wire  [31:0]  u_type_immediate;
-  reg   [63:0]  utime;  
-  wire          write_request_internal;  
   reg   [3:0 ]  write_strobe_for_byte;
   reg   [3:0 ]  write_strobe_for_half;  
-  reg   [3:0 ]  write_strobe_internal;
-  reg   [2:0 ]  writeback_mux_selector;
-  reg   [2:0 ]  writeback_mux_selector_stage3; 
+  reg   [3:0 ]  write_strobe;
+  reg   [2:0 ]  writeback_mux_selector; 
   reg   [31:0]  writeback_multiplexer_output;  
 
   //-----------------------------------------------------------------------------------------------//
   // Global reset and clock enable logic                                                           //
   //-----------------------------------------------------------------------------------------------//
 
-  assign reset = !reset_n;
+  always @(posedge clock)
+    reset_n_reg <= reset_n;
+
+  assign reset = !reset_n | !reset_n_reg;
 
   assign clock_enable = !(
-    (prev_instruction_request & !instruction_request_ack  ) |
-    (prev_data_read_request   & !data_read_request_ack    ) |
-    (prev_data_write_request  & !data_write_request_ack   ) );
+    (prev_mem_read_request   & !mem_read_request_ack    ) |
+    (prev_mem_write_request  & !mem_write_request_ack   ) );
+
+  always @(posedge clock) begin
+    if (reset) begin      
+      prev_instruction_address  <= BOOT_ADDRESS;
+      prev_load_request         <= 1'b0;
+      prev_mem_address          <= 32'h00000000;
+      prev_mem_read_request     <= 1'b0;
+      prev_mem_write_data       <= 32'h00000000;
+      prev_mem_write_request    <= 1'b0;
+      prev_mem_write_strobe     <= 4'b0000;
+    end
+    else if(clock_enable) begin            
+      prev_instruction_address  <= instruction_address;
+      prev_load_request         <= load_request;
+      prev_mem_address          <= mem_address;
+      prev_mem_read_request     <= mem_read_request;
+      prev_mem_write_data       <= mem_write_data;
+      prev_mem_write_request    <= mem_write_request;      
+      prev_mem_write_strobe     <= mem_write_strobe;
+    end
+  end
   
   //-----------------------------------------------------------------------------------------------//
   // Instruction fetch and instruction address logic                                               //
@@ -425,28 +429,16 @@ module riscv_steel_core #(
       next_program_counter :
       prev_instruction_address);   
   
-  assign instruction_request =
-    !reset;
-
-  always @(posedge clock) begin
-    if (reset) begin
-      prev_instruction_address  <= BOOT_ADDRESS;
-      prev_instruction_request  <= 1'b0;
-      prev_data_read_request    <= 1'b0;
-      prev_data_write_request   <= 1'b0;
-    end
-    else if(clock_enable) begin
-      prev_instruction_address  <= instruction_address;
-      prev_instruction_request  <= instruction_request;    
-      prev_data_read_request    <= data_read_request;
-      prev_data_write_request   <= data_write_request;
-    end
-  end 
+  always @(posedge clock)
+    if (reset)
+      prev_instruction <= 32'h00000000;
+    else
+      prev_instruction <= instruction;
     
   always @* begin : next_program_counter_mux
     case (program_counter_source)
       PC_BOOT: next_program_counter = BOOT_ADDRESS;
-      PC_EPC:  next_program_counter = exception_program_counter;
+      PC_EPC:  next_program_counter = csr_mepc;
       PC_TRAP: next_program_counter = trap_address;
       PC_NEXT: next_program_counter = next_address;
     endcase
@@ -471,14 +463,16 @@ module riscv_steel_core #(
   always @(posedge clock) begin : program_counter_reg_implementation
     if (reset)
       program_counter <= BOOT_ADDRESS;
-    else if (clock_enable)
+    else if (clock_enable & !load_pending & !store_pending)
       program_counter <= next_program_counter;
   end  
     
   assign instruction =
-    flush_pipeline == 1'b1 ?
+    flush ?
     NOP_INSTRUCTION :
-    instruction_in;
+    (!clock_enable | load_commit_cycle | store_commit_cycle) ?
+      prev_instruction :
+      mem_read_data;
   
   assign instruction_opcode =
     instruction[6:0];
@@ -502,86 +496,84 @@ module riscv_steel_core #(
     instruction[31:20];   
 
   //-----------------------------------------------------------------------------------------------//
-  // Data read / store                                                                            //
+  // Memory read / write                                                                           //
   //-----------------------------------------------------------------------------------------------//
-  
-  always @(posedge clock) begin
-    if (reset) begin
-      prev_data_address <= 32'b0;
-      prev_data_wdata <= 32'b0;
-      prev_write_request <= 1'b0;
-      prev_write_strobe <= 4'b0000;
-      prev_read_request <= 1'b0;
-    end
-    else if (clock_enable) begin
-      prev_data_address <= data_address;
-      prev_data_wdata <= data_wdata;
-      prev_write_request <= data_write_request;
-      prev_write_strobe <= data_write_strobe;
-      prev_read_request <= data_read_request;
-    end    
-  end
 
-  assign data_read_request =
+  assign mem_read_request =
     reset ?
     1'b0 :
     (clock_enable ?
-      read_request_internal :
-      prev_read_request);
+      ~store_request :
+      prev_mem_read_request);
 
-  assign data_address =
+  assign mem_address =
     reset ?
-    32'b0 :
+    32'h00000000 :
     (clock_enable ?
-      data_address_internal :
-      prev_data_address);
+      mem_address_internal :
+      prev_mem_address);
   
-  assign data_write_request =
+  assign mem_write_request =
     reset ?
     1'b0 :
     (clock_enable ?
-      write_request_internal :
-      prev_write_request);
+      store_request :
+      prev_mem_write_request);
 
-  assign data_wdata =
+  assign mem_write_data =
     reset ?
-    32'b0 :
+    32'h00000000 :
     (clock_enable ?
-      data_wdata_internal :
-      prev_data_wdata);
+      mem_write_data_internal :
+      prev_mem_write_data);
 
-  assign data_write_strobe =
+  assign mem_write_strobe =
     reset ?
     4'b0 :
     (clock_enable ?
-      write_strobe_internal :
-      prev_write_strobe);
+      write_strobe :
+      prev_mem_write_strobe);
 
-  assign read_request_internal =
-    load & ~misaligned_load & ~take_trap;
+  assign load_commit_cycle =
+    prev_load_request & mem_read_request_ack;
 
-  assign write_request_internal =
-    store & ~misaligned_store & ~take_trap;
+  assign store_commit_cycle =
+    prev_mem_write_request & mem_write_request_ack;
+
+  assign load_pending =
+    load  & !load_commit_cycle;
+
+  assign store_pending =
+    store & !store_commit_cycle;
+
+  assign load_request =
+    load  & ~misaligned_load  & ~take_trap & ~load_commit_cycle;
+
+  assign store_request =
+    store & ~misaligned_store & ~take_trap & ~store_commit_cycle;
   
-  assign data_address_internal = {target_address_adder[31:2], 2'b00};
+  assign mem_address_internal = 
+    load_request | store_request ?
+    {target_address_adder[31:2], 2'b00} :
+    instruction_address;
   
   always @* begin
     case(instruction_funct3)
       FUNCT3_SB: begin
-        write_strobe_internal = write_strobe_for_byte;
-        data_wdata_internal   = store_byte_data;
+        write_strobe            = write_strobe_for_byte;
+        mem_write_data_internal = store_byte_data;
       end
       FUNCT3_SH: begin
-        write_strobe_internal = write_strobe_for_half;
-        data_wdata_internal   = store_half_data;
+        write_strobe            = write_strobe_for_half;
+        mem_write_data_internal = store_half_data;
       end
       FUNCT3_SW: begin
-        write_strobe_internal = {4{data_write_request}};
-        data_wdata_internal   = rs2_data;
+        write_strobe            = {4{mem_write_request}};
+        mem_write_data_internal = rs2_data;
       end
       default: begin
-        write_strobe_internal = {4{data_write_request}};
-        data_wdata_internal   = rs2_data;
+        write_strobe            = {4{mem_write_request}};
+        mem_write_data_internal = rs2_data;
       end 
     endcase
   end
@@ -589,20 +581,20 @@ module riscv_steel_core #(
   always @* begin
     case(target_address_adder[1:0])
       2'b00: begin 
-        store_byte_data = {24'b0, rs2_data[7:0]};
-        write_strobe_for_byte = {3'b0, data_write_request};
+        store_byte_data       = {24'b0, rs2_data[7:0]};
+        write_strobe_for_byte = {3'b0, mem_write_request};
       end
       2'b01: begin
-        store_byte_data = {16'b0, rs2_data[7:0], 8'b0};
-        write_strobe_for_byte = {2'b0, data_write_request, 1'b0};
+        store_byte_data       = {16'b0, rs2_data[7:0], 8'b0};
+        write_strobe_for_byte = {2'b0, mem_write_request, 1'b0};
       end
       2'b10: begin
-        store_byte_data = {8'b0, rs2_data[7:0], 16'b0};
-        write_strobe_for_byte = {1'b0, data_write_request, 2'b0};
+        store_byte_data       = {8'b0, rs2_data[7:0], 16'b0};
+        write_strobe_for_byte = {1'b0, mem_write_request, 2'b0};
       end
       2'b11: begin
-        store_byte_data = {rs2_data[7:0], 24'b0};
-        write_strobe_for_byte = {data_write_request, 3'b0};
+        store_byte_data       = {rs2_data[7:0], 24'b0};
+        write_strobe_for_byte = {mem_write_request, 3'b0};
       end
     endcase    
   end
@@ -610,12 +602,12 @@ module riscv_steel_core #(
   always @* begin
     case(target_address_adder[1])
       1'b0: begin
-        store_half_data = {16'b0, rs2_data[15:0]};
-        write_strobe_for_half = {2'b0, {2{data_write_request}}};
+        store_half_data       = {16'b0, rs2_data[15:0]};
+        write_strobe_for_half = {2'b0, {2{mem_write_request}}};
       end
       1'b1: begin
-        store_half_data = {rs2_data[15:0], 16'b0};
-        write_strobe_for_half = {{2{data_write_request}}, 2'b0};
+        store_half_data       = {rs2_data[15:0], 16'b0};
+        write_strobe_for_half = {{2{mem_write_request}}, 2'b0};
       end
     endcase
   end
@@ -915,43 +907,43 @@ module riscv_steel_core #(
   // Immediate generation                                                                          //
   //-----------------------------------------------------------------------------------------------//
    
-  assign sign_extension = {
+  assign immediate_sign_extension = {
     20 {instruction[31]}
   };
 
-  assign i_type_immediate = {
-    sign_extension,
+  assign immediate_i_type = {
+    immediate_sign_extension,
     instruction[31:20]
   };
 
-  assign s_type_immediate = {
-    sign_extension,
+  assign immediate_s_type = {
+    immediate_sign_extension,
     instruction[31:25],
     instruction[11:7 ]
   };
 
-  assign b_type_immediate = {
-    sign_extension,
+  assign immediate_b_type = {
+    immediate_sign_extension,
     instruction[7],
     instruction[30:25],
     instruction[11:8],
     1'b0
   };
 
-  assign u_type_immediate = {
+  assign immediate_u_type = {
     instruction[31:12],
     12'h000
   };
 
-  assign j_type_immediate = {
-    sign_extension[11:0],
+  assign immediate_j_type = {
+    immediate_sign_extension[11:0],
     instruction[19:12],
     instruction[20],
     instruction[30:21],
     1'b0
   };
 
-  assign csr_type_immediate = {
+  assign immediate_csr_type = {
     27'b0,
     instruction[19:15]
   };
@@ -959,19 +951,19 @@ module riscv_steel_core #(
   always @(*) begin : immediate_mux
     case (immediate_type) 
       I_TYPE_IMMEDIATE:
-        immediate = i_type_immediate;
+        immediate = immediate_i_type;
       S_TYPE_IMMEDIATE:
-        immediate = s_type_immediate;
+        immediate = immediate_s_type;
       B_TYPE_IMMEDIATE:
-        immediate = b_type_immediate;
+        immediate = immediate_b_type;
       U_TYPE_IMMEDIATE:
-        immediate = u_type_immediate;
+        immediate = immediate_u_type;
       J_TYPE_IMMEDIATE:
-        immediate = j_type_immediate;
+        immediate = immediate_j_type;
       CSR_TYPE_IMMEDIATE:
-        immediate = csr_type_immediate;
+        immediate = immediate_csr_type;
       default:
-        immediate = i_type_immediate;
+        immediate = immediate_i_type;
     endcase
   end
     
@@ -1043,47 +1035,37 @@ module riscv_steel_core #(
   //-----------------------------------------------------------------------------------------------//
 
   assign integer_file_write_enable =
-    integer_file_write_request_stage3 & !flush_pipeline;
+    integer_file_write_request & !flush & !load_pending;
 
   integer i;
   always @(posedge clock) begin
     if (reset)
-      for (i = 1; i < 32; i = i + 1) integer_file[i] <= 32'b0;
+      for (i = 1; i < 32; i = i + 1) integer_file[i] <= 32'h00000000;
     else if (clock_enable & integer_file_write_enable)
-      integer_file[instruction_rd_address_stage3] <= writeback_multiplexer_output;
+      integer_file[instruction_rd_address] <= writeback_multiplexer_output;
   end
-
-  assign rs1_mux =
-    instruction_rs1_address == instruction_rd_address_stage3 & integer_file_write_enable ?
-    writeback_multiplexer_output :
-    integer_file[instruction_rs1_address];
-
-  assign rs2_mux =
-    instruction_rs2_address == instruction_rd_address_stage3 & integer_file_write_enable ?
-    writeback_multiplexer_output :
-    integer_file[instruction_rs2_address];
 
   assign rs1_data =
     instruction_rs1_address == 5'b00000 ?
     32'h00000000 :
-    rs1_mux;
+    integer_file[instruction_rs1_address];
   
   assign rs2_data =
     instruction_rs2_address == 5'b00000 ?
     32'h00000000 :
-    rs2_mux;
+    integer_file[instruction_rs2_address];
 
   //---------------------------------------------------------------------------------------------//
   // M-mode logic and hart control                                                               //
   //---------------------------------------------------------------------------------------------//
 
-  assign flush_pipeline =
+  assign flush =
     current_state != STATE_OPERATING;
 
   assign interrupt_pending =
-    (mie_meie & mip_meip) |
-    (mie_mtie & mip_mtip) |
-    (mie_msie & mip_msip);
+    (csr_mie_meie & csr_mip_meip) |
+    (csr_mie_mtie & csr_mip_mtip) |
+    (csr_mie_msie & csr_mip_msip);
   
   assign exception_pending =
     illegal_instruction |
@@ -1092,7 +1074,7 @@ module riscv_steel_core #(
     misaligned_instruction_address;
 
   assign take_trap =
-    (mstatus_mie & interrupt_pending) |
+    (csr_mstatus_mie & interrupt_pending) |
     exception_pending |
     ecall |
     ebreak;
@@ -1141,27 +1123,27 @@ module riscv_steel_core #(
 
   assign irq_external_ack =
     (current_state      == STATE_TRAP_TAKEN) &&
-    (mcause_cause_code  == 4'b1011);
+    (csr_mcause_code  == 4'b1011);
   
   assign irq_timer_ack =
     (current_state      == STATE_TRAP_TAKEN) &&
-    (mcause_cause_code  == 4'b0111);
+    (csr_mcause_code  == 4'b0111);
 
   assign irq_software_ack =
     (current_state      == STATE_TRAP_TAKEN) &&
-    (mcause_cause_code  == 4'b0011);
+    (csr_mcause_code  == 4'b0011);
 
   //---------------------------------------------------------------------------------------------//
   // Control and Status Registers implementation                                                 //
   //---------------------------------------------------------------------------------------------//
 
   assign csr_data_mask =
-    csr_operation_stage3[2] == 1'b1 ?
-    {27'b0, immediate_stage3[4:0]} :
-    rs1_data_stage3;
+    csr_operation[2] == 1'b1 ?
+    {27'b0, immediate[4:0]} :
+    rs1_data;
 
   always @* begin : csr_write_data_mux
-    case (csr_operation_stage3[1:0])
+    case (csr_operation[1:0])
       CSR_RWX:
         csr_write_data = csr_data_mask;
       CSR_RSX:
@@ -1174,35 +1156,35 @@ module riscv_steel_core #(
   end
 
   always @* begin : csr_data_out_mux
-    case (instruction_csr_address_stage3)
+    case (instruction_csr_address)
       MARCHID:       csr_data_out = 32'h00000018; // RISC-V Steel microarchitecture ID
-      MIMPID:        csr_data_out = 32'h00000005; // Version 5 
-      CYCLE:         csr_data_out = mcycle    [31:0 ];
-      CYCLEH:        csr_data_out = mcycle    [63:32];
-      TIME:          csr_data_out = utime     [31:0 ];
-      TIMEH:         csr_data_out = utime     [63:32];
-      INSTRET:       csr_data_out = minstret  [31:0 ];
-      INSTRETH:      csr_data_out = minstret  [63:32];
-      MSTATUS:       csr_data_out = mstatus;
+      MIMPID:        csr_data_out = 32'h00000006; // Version 6 
+      CYCLE:         csr_data_out = csr_mcycle    [31:0 ];
+      CYCLEH:        csr_data_out = csr_mcycle    [63:32];
+      TIME:          csr_data_out = csr_utime     [31:0 ];
+      TIMEH:         csr_data_out = csr_utime     [63:32];
+      INSTRET:       csr_data_out = csr_minstret  [31:0 ];
+      INSTRETH:      csr_data_out = csr_minstret  [63:32];
+      MSTATUS:       csr_data_out = csr_mstatus;
       MSTATUSH:      csr_data_out = 32'h00000000;
       MISA:          csr_data_out = 32'h40000100; // RV32I base ISA only
-      MIE:           csr_data_out = mie;
-      MTVEC:         csr_data_out = mtvec;
-      MSCRATCH:      csr_data_out = mscratch;
-      MEPC:          csr_data_out = mepc;
-      MCAUSE:        csr_data_out = mcause;
-      MTVAL:         csr_data_out = mtval;
-      MIP:           csr_data_out = mip;
-      MCYCLE:        csr_data_out = mcycle    [31:0 ];
-      MCYCLEH:       csr_data_out = mcycle    [63:32];
-      MINSTRET:      csr_data_out = minstret  [31:0 ];
-      MINSTRETH:     csr_data_out = minstret  [63:32];
+      MIE:           csr_data_out = csr_mie;
+      MTVEC:         csr_data_out = csr_mtvec;
+      MSCRATCH:      csr_data_out = csr_mscratch;
+      MEPC:          csr_data_out = csr_mepc;
+      MCAUSE:        csr_data_out = csr_mcause;
+      MTVAL:         csr_data_out = csr_mtval;
+      MIP:           csr_data_out = csr_mip;
+      MCYCLE:        csr_data_out = csr_mcycle    [31:0 ];
+      MCYCLEH:       csr_data_out = csr_mcycle    [63:32];
+      MINSTRET:      csr_data_out = csr_minstret  [31:0 ];
+      MINSTRETH:     csr_data_out = csr_minstret  [63:32];
       default:       csr_data_out = 32'h00000000;
     endcase
   end
 
   assign csr_file_write_enable =
-    csr_file_write_request_stage3 & !flush_pipeline;
+    csr_file_write_request & !flush;
 
   assign misaligned_instruction_address =
     take_branch & next_address[1];
@@ -1211,33 +1193,33 @@ module riscv_steel_core #(
   // mstatus : M-mode Status register                                                            //
   //---------------------------------------------------------------------------------------------//
 
-  assign mstatus = {
+  assign csr_mstatus = {
     19'b0000000000000000000,
-    2'b11,          // M-mode Prior Privilege (always M-mode)
+    2'b11,              // M-mode Prior Privilege (always M-mode)
     3'b000,
-    mstatus_mpie,   // M-mode Prior Global Interrupt Enable
+    csr_mstatus_mpie,   // M-mode Prior Global Interrupt Enable
     3'b000,
-    mstatus_mie,    // M-mode Global Interrupt Enable
+    csr_mstatus_mie,    // M-mode Global Interrupt Enable
     3'b000
   };
   
   always @(posedge clock) begin : mstatus_csr_fields_update
     if(reset) begin
-      mstatus_mie   <= 1'b0;
-      mstatus_mpie  <= 1'b1;
+      csr_mstatus_mie   <= 1'b0;
+      csr_mstatus_mpie  <= 1'b1;
     end
     else if (clock_enable) begin
       if(current_state == STATE_TRAP_RETURN) begin
-        mstatus_mie   <= mstatus_mpie;
-        mstatus_mpie  <= 1'b1;
+        csr_mstatus_mie   <= csr_mstatus_mpie;
+        csr_mstatus_mpie  <= 1'b1;
       end
       else if(current_state == STATE_TRAP_TAKEN) begin
-        mstatus_mpie  <= mstatus_mie;
-        mstatus_mie   <= 1'b0;
+        csr_mstatus_mpie  <= csr_mstatus_mie;
+        csr_mstatus_mie   <= 1'b0;
       end
-      else if(current_state == STATE_OPERATING && instruction_csr_address_stage3 == MSTATUS && csr_file_write_enable) begin
-        mstatus_mie   <= csr_write_data[3];
-        mstatus_mpie  <= csr_write_data[7];
+      else if(current_state == STATE_OPERATING && instruction_csr_address == MSTATUS && csr_file_write_enable) begin
+        csr_mstatus_mie   <= csr_write_data[3];
+        csr_mstatus_mpie  <= csr_write_data[7];
       end    
     end
   end
@@ -1246,26 +1228,26 @@ module riscv_steel_core #(
   // mie : M-mode Interrupt Enable register                                                      //
   //---------------------------------------------------------------------------------------------//
 
-  assign mie = {
+  assign csr_mie = {
     20'b0,
-    mie_meie,   // M-mode External Interrupt Enable
+    csr_mie_meie,   // M-mode External Interrupt Enable
     3'b0,
-    mie_mtie,   // M-mode Timer Interrupt Enable
+    csr_mie_mtie,   // M-mode Timer Interrupt Enable
     3'b0,
-    mie_msie,   // M-mode Software Interrupt Enable
+    csr_mie_msie,   // M-mode Software Interrupt Enable
     3'b0
   };
 
   always @(posedge clock) begin : mie_csr_fields_implementation
     if(reset) begin
-      mie_meie <= 1'b0;
-      mie_mtie <= 1'b0;
-      mie_msie <= 1'b0;
+      csr_mie_meie <= 1'b0;
+      csr_mie_mtie <= 1'b0;
+      csr_mie_msie <= 1'b0;
     end
-    else if(clock_enable & instruction_csr_address_stage3 == MIE && csr_file_write_enable) begin            
-      mie_meie <= csr_write_data[11];
-      mie_mtie <= csr_write_data[7];
-      mie_msie <= csr_write_data[3];
+    else if(clock_enable & instruction_csr_address == MIE && csr_file_write_enable) begin            
+      csr_mie_meie <= csr_write_data[11];
+      csr_mie_mtie <= csr_write_data[7];
+      csr_mie_msie <= csr_write_data[3];
     end
   end
   
@@ -1273,26 +1255,26 @@ module riscv_steel_core #(
   // mip : M-mode Interrupt Pending                                                              //
   //---------------------------------------------------------------------------------------------//
 
-  assign mip = {
+  assign csr_mip = {
     20'b0,
-    mip_meip,
+    csr_mip_meip,
     3'b0,
-    mip_mtip,
+    csr_mip_mtip,
     3'b0,
-    mip_msip,
+    csr_mip_msip,
     3'b0
   };
 
   always @(posedge clock) begin : mip_csr_fields_implementation
     if(reset) begin
-      mip_meip <= 1'b0;
-      mip_mtip <= 1'b0;
-      mip_msip <= 1'b0;
+      csr_mip_meip <= 1'b0;
+      csr_mip_mtip <= 1'b0;
+      csr_mip_msip <= 1'b0;
     end
     else if (clock_enable) begin
-      mip_meip <= irq_external;
-      mip_mtip <= irq_timer;
-      mip_msip <= irq_software;
+      csr_mip_meip <= irq_external;
+      csr_mip_mtip <= irq_timer;
+      csr_mip_msip <= irq_software;
     end
   end
   
@@ -1300,17 +1282,14 @@ module riscv_steel_core #(
   // mepc : M-mode Exception Program Counter register                                            //
   //---------------------------------------------------------------------------------------------//
 
-  assign exception_program_counter =
-    mepc;
-
   always @(posedge clock) begin : mepc_implementation
     if(reset)
-      mepc <= 32'b0;
+      csr_mepc <= 32'h00000000;
     else if (clock_enable) begin
-      if(current_state == STATE_TRAP_TAKEN)
-        mepc <= program_counter_stage3;
-      else if(current_state == STATE_OPERATING && instruction_csr_address_stage3 == MEPC && csr_file_write_enable)
-        mepc <= {csr_write_data[31:2], 2'b00};
+      if(take_trap)
+        csr_mepc <= program_counter;
+      else if(current_state == STATE_OPERATING && instruction_csr_address == MEPC && csr_file_write_enable)
+        csr_mepc <= {csr_write_data[31:2], 2'b00};
     end    
   end
   
@@ -1320,9 +1299,9 @@ module riscv_steel_core #(
 
   always @(posedge clock) begin
     if(reset)
-      mscratch <= 32'b0;
-    else if(clock_enable & instruction_csr_address_stage3 == MSCRATCH && csr_file_write_enable)
-      mscratch <= csr_write_data;
+      csr_mscratch <= 32'h00000000;
+    else if(clock_enable & instruction_csr_address == MSCRATCH && csr_file_write_enable)
+      csr_mscratch <= csr_write_data;
   end
   
   //---------------------------------------------------------------------------------------------//
@@ -1331,14 +1310,14 @@ module riscv_steel_core #(
 
   always @(posedge clock) begin : mcycle_implementation
     if (reset)
-      mcycle <= 64'b0;
+      csr_mcycle <= 64'b0;
     else begin 
-      if (clock_enable & instruction_csr_address_stage3 == MCYCLE && csr_file_write_enable)
-        mcycle <= {mcycle[63:32], csr_write_data} + 1;
-      else if (clock_enable & instruction_csr_address_stage3 == MCYCLEH && csr_file_write_enable)
-        mcycle <= {csr_write_data, mcycle[31:0]} + 1;
+      if (clock_enable & instruction_csr_address == MCYCLE && csr_file_write_enable)
+        csr_mcycle <= {csr_mcycle[63:32], csr_write_data} + 1;
+      else if (clock_enable & instruction_csr_address == MCYCLEH && csr_file_write_enable)
+        csr_mcycle <= {csr_write_data, csr_mcycle[31:0]} + 1;
       else
-        mcycle <= mcycle + 1;      
+        csr_mcycle <= csr_mcycle + 1;      
     end
   end
   
@@ -1348,25 +1327,25 @@ module riscv_steel_core #(
 
   always @(posedge clock) begin : minstret_implementation
     if (reset)
-      minstret  <= 64'b0;
+      csr_minstret  <= 64'b0;
     else if (clock_enable) begin 
-      if (instruction_csr_address_stage3 == MINSTRET && csr_file_write_enable) begin
+      if (instruction_csr_address == MINSTRET && csr_file_write_enable) begin
         if (current_state == STATE_OPERATING)
-          minstret <= {minstret[63:32], csr_write_data} + 1;
+          csr_minstret <= {csr_minstret[63:32], csr_write_data} + 1;
         else
-          minstret <= {minstret[63:32], csr_write_data};
+          csr_minstret <= {csr_minstret[63:32], csr_write_data};
       end
-      else if (instruction_csr_address_stage3 == MINSTRETH && csr_file_write_enable) begin
+      else if (instruction_csr_address == MINSTRETH && csr_file_write_enable) begin
         if (current_state == STATE_OPERATING)
-          minstret <= {csr_write_data, minstret[31:0]} + 1;
+          csr_minstret <= {csr_write_data, csr_minstret[31:0]} + 1;
         else
-          minstret <= {csr_write_data, minstret[31:0]};
+          csr_minstret <= {csr_write_data, csr_minstret[31:0]};
       end
       else begin
         if (current_state == STATE_OPERATING)
-          minstret <= minstret + 1;
+          csr_minstret <= csr_minstret + 1;
         else
-          minstret <= minstret;
+          csr_minstret <= csr_minstret;
       end      
     end
   end
@@ -1376,7 +1355,7 @@ module riscv_steel_core #(
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : utime_csr_implementation
-    utime <= real_time;
+    csr_utime <= real_time_counter;
   end
   
   //---------------------------------------------------------------------------------------------//
@@ -1385,56 +1364,56 @@ module riscv_steel_core #(
 
   always @(posedge clock) begin : mcause_implementation
     if(reset) 
-      mcause <= 32'h00000000;
+      csr_mcause <= 32'h00000000;
     else if (clock_enable) begin
       if(current_state == STATE_TRAP_TAKEN)
-        mcause <= {mcause_interrupt_flag, 27'b0, mcause_cause_code};
-      else if(current_state == STATE_OPERATING && instruction_csr_address_stage3 == MCAUSE && csr_file_write_enable) 
-        mcause <= csr_write_data;
+        csr_mcause <= {csr_mcause_interrupt_flag, 27'b0, csr_mcause_code};
+      else if(current_state == STATE_OPERATING && instruction_csr_address == MCAUSE && csr_file_write_enable) 
+        csr_mcause <= csr_write_data;
     end
   end
 
   always @(posedge clock) begin : trap_cause_implementation
     if(reset) begin
-      mcause_cause_code       <= 4'b0;
-      mcause_interrupt_flag   <= 1'b0;
+      csr_mcause_code           <= 4'b0;
+      csr_mcause_interrupt_flag <= 1'b0;
     end
     if(clock_enable & current_state == STATE_OPERATING) begin 
       if(illegal_instruction) begin
-        mcause_cause_code     <= 4'b0010;
-        mcause_interrupt_flag <= 1'b0;
+        csr_mcause_code           <= 4'b0010;
+        csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(misaligned_instruction_address) begin
-        mcause_cause_code     <= 4'b0000;
-        mcause_interrupt_flag <= 1'b0;
+        csr_mcause_code           <= 4'b0000;
+        csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(ecall) begin
-        mcause_cause_code     <= 4'b1011;
-        mcause_interrupt_flag <= 1'b0;
+        csr_mcause_code           <= 4'b1011;
+        csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(ebreak) begin
-        mcause_cause_code     <= 4'b0011;
-        mcause_interrupt_flag <= 1'b0;
+        csr_mcause_code           <= 4'b0011;
+        csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(misaligned_store) begin
-        mcause_cause_code     <= 4'b0110;
-        mcause_interrupt_flag <= 1'b0;
+        csr_mcause_code           <= 4'b0110;
+        csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(misaligned_load) begin
-        mcause_cause_code     <= 4'b0100;
-        mcause_interrupt_flag <= 1'b0;
+        csr_mcause_code           <= 4'b0100;
+        csr_mcause_interrupt_flag <= 1'b0;
       end
-      else if(mstatus_mie & mie_meie & mip_meip) begin
-        mcause_cause_code     <= 4'b1011;
-        mcause_interrupt_flag <= 1'b1;
+      else if(csr_mstatus_mie & csr_mie_meie & csr_mip_meip) begin
+        csr_mcause_code           <= 4'b1011;
+        csr_mcause_interrupt_flag <= 1'b1;
       end
-      else if(mstatus_mie & mie_mtie & mip_mtip) begin
-        mcause_cause_code     <= 4'b0111;
-        mcause_interrupt_flag <= 1'b1;
+      else if(csr_mstatus_mie & csr_mie_mtie & csr_mip_mtip) begin
+        csr_mcause_code           <= 4'b0111;
+        csr_mcause_interrupt_flag <= 1'b1;
       end
-      else if(mstatus_mie & mie_msie & mip_msip) begin
-        mcause_cause_code     <= 4'b0011;
-        mcause_interrupt_flag <= 1'b1;
+      else if(csr_mstatus_mie & csr_mie_msie & csr_mip_msip) begin
+        csr_mcause_code           <= 4'b0011;
+        csr_mcause_interrupt_flag <= 1'b1;
       end
     end        
   end
@@ -1443,27 +1422,23 @@ module riscv_steel_core #(
   // mtval : M-mode Trap Value                                                                   //
   //---------------------------------------------------------------------------------------------//
 
-  always @(posedge clock) begin
-    if (reset)
-      misaligned_address_exception <= 1'b0;
-    else if (clock_enable)
-      misaligned_address_exception <= misaligned_load | misaligned_store | misaligned_instruction_address;
-  end
+  assign misaligned_address_exception =
+    misaligned_load | misaligned_store | misaligned_instruction_address;
 
   always @(posedge clock) begin : mtval_implementation
     if(reset) 
-      mtval <= 32'h00000000;
+      csr_mtval <= 32'h00000000;
     else if (clock_enable) begin
-      if(current_state == STATE_TRAP_TAKEN) begin
+      if(take_trap) begin
         if(misaligned_address_exception)
-          mtval <= target_address_adder_stage3;
-        else if (ebreak_stage3)
-          mtval <= program_counter_stage3;
+          csr_mtval <= target_address_adder;
+        else if (ebreak)
+          csr_mtval <= program_counter;
         else
-          mtval <= 32'h00000000;
+          csr_mtval <= 32'h00000000;
       end
-      else if(current_state == STATE_OPERATING && instruction_csr_address_stage3 == MTVAL && csr_file_write_enable) 
-        mtval <= csr_write_data;
+      else if(current_state == STATE_OPERATING && instruction_csr_address == MTVAL && csr_file_write_enable) 
+        csr_mtval <= csr_write_data;
     end
   end
   
@@ -1471,78 +1446,33 @@ module riscv_steel_core #(
   // mtvec : M-mode Trap Vector Address register                                                 //
   //---------------------------------------------------------------------------------------------//
  
-  assign base_address_offset =
-    mcause_cause_code << 2;
+  assign interrupt_address_offset =
+    csr_mcause_code << 2;
 
   assign trap_address = 
-    mtvec[1:0] == 2'b01 && mcause_interrupt_flag ?
-    {mtvec[31:2], 2'b00} + base_address_offset :
-    {mtvec[31:2], 2'b00};
+    csr_mtvec[1:0] == 2'b01 && csr_mcause_interrupt_flag ?
+    {csr_mtvec[31:2], 2'b00} + interrupt_address_offset :
+    {csr_mtvec[31:2], 2'b00};
 
   always @(posedge clock) begin : mtvec_implementation
     if(reset)
-      mtvec <= 32'b0;
-    else if(clock_enable & instruction_csr_address_stage3 == MTVEC && csr_file_write_enable)
-      mtvec <= {csr_write_data[31:2], 1'b0, csr_write_data[0]};
+      csr_mtvec <= 32'h00000000;
+    else if(clock_enable & instruction_csr_address == MTVEC && csr_file_write_enable)
+      csr_mtvec <= {csr_write_data[31:2], 1'b0, csr_write_data[0]};
   end
-
-  //---------------------------------------------------------------------------------------------//
-  // Pipelining registers from stage 2 => 3                                                      //
-  //---------------------------------------------------------------------------------------------//
-
-  always @(posedge clock) begin
-    if (reset) begin
-      instruction_rd_address_stage3     <= 5'b00000;
-      instruction_csr_address_stage3    <= 12'b000000000000;
-      rs1_data_stage3                   <= 32'h00000000;
-      rs2_data_stage3                   <= 32'h00000000;
-      program_counter_stage3            <= BOOT_ADDRESS;
-      program_counter_plus_4_stage3     <= 32'h00000000;
-      target_address_adder_stage3       <= 32'h00000000;
-      alu_operation_code_stage3         <= 4'b0000;
-      load_size_stage3                  <= 2'b00;
-      load_unsigned_stage3              <= 1'b0;
-      alu_2nd_operand_source_stage3     <= 1'b0;
-      csr_file_write_request_stage3     <= 1'b0;
-      integer_file_write_request_stage3 <= 1'b0;
-      writeback_mux_selector_stage3     <= WB_ALU;
-      csr_operation_stage3              <= 3'b000;
-      immediate_stage3                  <= 32'h00000000;
-      ebreak_stage3                     <= 1'b0;
-    end
-    else if (clock_enable) begin
-      instruction_rd_address_stage3     <= instruction_rd_address;
-      instruction_csr_address_stage3    <= instruction_csr_address;
-      rs1_data_stage3                   <= rs1_data;
-      rs2_data_stage3                   <= rs2_data;
-      program_counter_stage3            <= program_counter;
-      program_counter_plus_4_stage3     <= program_counter_plus_4;
-      target_address_adder_stage3       <= target_address_adder;
-      alu_operation_code_stage3         <= alu_operation_code;
-      load_size_stage3                  <= load_size;
-      load_unsigned_stage3              <= load_unsigned;
-      alu_2nd_operand_source_stage3     <= alu_2nd_operand_source;
-      csr_file_write_request_stage3     <= csr_file_write_request;
-      integer_file_write_request_stage3 <= integer_file_write_request;
-      writeback_mux_selector_stage3     <= writeback_mux_selector;
-      csr_operation_stage3              <= csr_operation;
-      immediate_stage3                  <= immediate;
-      ebreak_stage3                     <= ebreak;
-    end
-  end    
 
   //---------------------------------------------------------------------------------------------//
   // Integer register file writeback selection                                                   //
   //---------------------------------------------------------------------------------------------//
 
   always @* begin
-    case (writeback_mux_selector_stage3)
+    case (writeback_mux_selector)
       WB_ALU:          writeback_multiplexer_output = alu_output;
       WB_LOAD_UNIT:    writeback_multiplexer_output = load_data;
-      WB_UPPER_IMM:    writeback_multiplexer_output = immediate_stage3;
-      WB_TARGET_ADDER: writeback_multiplexer_output = target_address_adder_stage3;
+      WB_UPPER_IMM:    writeback_multiplexer_output = immediate;
+      WB_TARGET_ADDER: writeback_multiplexer_output = target_address_adder;
       WB_CSR:          writeback_multiplexer_output = csr_data_out;
-      WB_PC_PLUS_4:    writeback_multiplexer_output = program_counter_plus_4_stage3;
+      WB_PC_PLUS_4:    writeback_multiplexer_output = program_counter_plus_4;
       default:         writeback_multiplexer_output = alu_output;
     endcase
   end
@@ -1552,47 +1482,47 @@ module riscv_steel_core #(
   //-----------------------------------------------------------------------------------------------//
     
   always @* begin : load_size_mux
-    case (load_size_stage3)
+    case (load_size)
       LOAD_SIZE_BYTE:
-        load_data = {byte_data_upper_bits, load_byte_data};
+        load_data = {load_byte_upper_bits, load_byte_data};
       LOAD_SIZE_HALF:
-        load_data = {half_data_upper_bits, load_half_data};
+        load_data = {load_half_upper_bits, load_half_data};
       LOAD_SIZE_WORD:
-        load_data = data_rdata;
+        load_data = mem_read_data;
       default:
-        load_data = data_rdata;
+        load_data = mem_read_data;
     endcase
   end
     
   always @* begin : load_byte_data_mux
-    case (target_address_adder_stage3[1:0])    
+    case (target_address_adder[1:0])    
       2'b00:
-        load_byte_data = data_rdata[7:0];
+        load_byte_data = mem_read_data[7:0];
       2'b01:
-        load_byte_data = data_rdata[15:8];
+        load_byte_data = mem_read_data[15:8];
       2'b10:
-        load_byte_data = data_rdata[23:16];
+        load_byte_data = mem_read_data[23:16];
       2'b11:
-        load_byte_data = data_rdata[31:24];
+        load_byte_data = mem_read_data[31:24];
     endcase
   end
     
   always @* begin : load_half_data_mux
-    case (target_address_adder_stage3[1])
+    case (target_address_adder[1])
       1'b0:
-        load_half_data = data_rdata[15:0];
+        load_half_data = mem_read_data[15:0];
       1'b1:
-        load_half_data = data_rdata[31:16];
+        load_half_data = mem_read_data[31:16];
     endcase
   end
     
-  assign byte_data_upper_bits =
-    load_unsigned_stage3 == 1'b1 ?
+  assign load_byte_upper_bits =
+    load_unsigned == 1'b1 ?
     24'b0 :
     {24{load_byte_data[7]}};
   
-  assign half_data_upper_bits =
-    load_unsigned_stage3 == 1'b1 ?
+  assign load_half_upper_bits =
+    load_unsigned == 1'b1 ?
     16'b0 :
     {16{load_half_data[15]}};
     
@@ -1601,54 +1531,54 @@ module riscv_steel_core #(
   //-----------------------------------------------------------------------------------------------//
   
   assign alu_2nd_operand =
-    alu_2nd_operand_source_stage3 ?
-    rs2_data_stage3 :
-    immediate_stage3;
+    alu_2nd_operand_source ?
+    rs2_data :
+    immediate;
 
-  assign minus_second_operand = 
+  assign alu_minus_2nd_operand = 
     - alu_2nd_operand;
 
-  assign adder_second_operand_mux = 
-    alu_operation_code_stage3[3] == 1'b1 ?
-    minus_second_operand : 
+  assign alu_adder_2nd_operand_mux = 
+    alu_operation_code[3] == 1'b1 ?
+    alu_minus_2nd_operand : 
     alu_2nd_operand;
 
   assign alu_sra_result = 
-    $signed(rs1_data_stage3) >>> alu_2nd_operand[4:0];
+    $signed(rs1_data) >>> alu_2nd_operand[4:0];
 
   assign alu_srl_result = 
-    rs1_data_stage3 >> alu_2nd_operand[4:0];
+    rs1_data >> alu_2nd_operand[4:0];
 
-  assign shift_right_mux = 
-    alu_operation_code_stage3[3] == 1'b1 ?
+  assign alu_shift_right_mux = 
+    alu_operation_code[3] == 1'b1 ?
     alu_sra_result : 
     alu_srl_result;
 
   assign alu_sltu_result = 
-    rs1_data_stage3 < alu_2nd_operand;
+    rs1_data < alu_2nd_operand;
 
   assign alu_slt_result =
-    rs1_data_stage3[31] ^ alu_2nd_operand[31] ?
-    rs1_data_stage3[31] :
+    rs1_data[31] ^ alu_2nd_operand[31] ?
+    rs1_data[31] :
     alu_sltu_result;
 
   always @* begin : operation_result_mux
-    case (alu_operation_code_stage3[2:0])
+    case (alu_operation_code[2:0])
       FUNCT3_ADD:
         alu_output =
-          rs1_data_stage3 + adder_second_operand_mux;
+          rs1_data + alu_adder_2nd_operand_mux;
       FUNCT3_SRL:
         alu_output =
-          shift_right_mux;
+          alu_shift_right_mux;
       FUNCT3_OR: 
         alu_output = 
-          rs1_data_stage3 | alu_2nd_operand;
+          rs1_data | alu_2nd_operand;
       FUNCT3_AND: 
         alu_output = 
-          rs1_data_stage3 & alu_2nd_operand;            
+          rs1_data & alu_2nd_operand;            
       FUNCT3_XOR: 
         alu_output = 
-          rs1_data_stage3 ^ alu_2nd_operand;
+          rs1_data ^ alu_2nd_operand;
       FUNCT3_SLT: 
         alu_output = 
           {31'b0, alu_slt_result};
@@ -1657,7 +1587,7 @@ module riscv_steel_core #(
           {31'b0, alu_sltu_result};
       FUNCT3_SLL: 
         alu_output = 
-          rs1_data_stage3 << alu_2nd_operand[4:0];
+          rs1_data << alu_2nd_operand[4:0];
     endcase
   end
     
