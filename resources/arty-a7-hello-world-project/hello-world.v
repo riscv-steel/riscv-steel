@@ -48,12 +48,6 @@ module hello_world (
   wire        irq_external;
   wire        irq_external_ack;
 
-  // RISC-V Steel Core (instruction interface) <=> RAM (device #0, port #0)
-  wire [31:0] instruction_in;
-  wire [31:0] instruction_address;
-  wire        instruction_request;  
-  wire        instruction_request_ack;
-
   // RISC-V Steel Core (data interface) <=> Memory Mapper
   wire [31:0] data_rdata;
   wire [31:0] data_wdata;
@@ -90,25 +84,19 @@ module hello_world (
   riscv_steel_core
   riscv_steel_core_instance (
 
-    // Basic system signals
+    // Global clock and active-low reset
     .clock                        (internal_clock                     ),
     .reset_n                      (!reset                             ),
 
-    // Instruction fetch interface
-    .instruction_in               (instruction_in                     ),
-    .instruction_address          (instruction_address                ),
-    .instruction_request          (instruction_request                ),    
-    .instruction_request_ack      (instruction_request_ack            ),
-
-    // Data read/write interface
-    .data_rdata                   (data_rdata                         ),
-    .data_wdata                   (data_wdata                         ),
-    .data_address                 (data_address                       ),
-    .data_read_request            (data_read_request                  ),    
-    .data_read_request_ack        (data_read_request_ack              ),
-    .data_write_request           (data_write_request                 ),
-    .data_write_request_ack       (data_write_request_ack             ),
-    .data_write_strobe            (data_write_strobe                  ),
+    // Memory read / write interface
+    .mem_read_data                (data_rdata                         ),
+    .mem_write_data               (data_wdata                         ),
+    .mem_address                  (data_address                       ),
+    .mem_read_request             (data_read_request                  ),    
+    .mem_read_request_ack         (data_read_request_ack              ),
+    .mem_write_request            (data_write_request                 ),
+    .mem_write_request_ack        (data_write_request_ack             ),
+    .mem_write_strobe             (data_write_strobe                  ),
 
     // Interrupt signals (hardwire inputs to zero if unused)
     .irq_external                 (irq_external                       ),
@@ -119,7 +107,7 @@ module hello_world (
     .irq_software_ack             (),  // unused
 
     // Real Time Counter (hardwire to zero if unused)
-    .real_time                    (0)  // unused
+    .real_time_counter            (0)  // unused
 
   );
   
@@ -160,14 +148,10 @@ module hello_world (
 
   );
   
-  dual_port_ram
-  dual_port_ram_instance          (
+  single_port_ram
+  single_port_ram_instance          (
     .clock                        (internal_clock                     ),
     .reset_n                      (!reset                             ),
-    .port0_rdata                  (instruction_in                     ),
-    .port0_address                (instruction_address[13:0]          ),
-    .port0_read_request           (instruction_request                ),    
-    .port0_read_request_ack       (instruction_request_ack            ),
     .port1_rdata                  (device0_rdata                      ),
     .port1_address                (device0_address[13:0]              ),
     .port1_read_request           (device0_read_request               ),    
@@ -287,18 +271,11 @@ module memory_mapper (
 
 endmodule
 
-module dual_port_ram (
+module single_port_ram (
 
   input   wire clock,
   input   wire reset_n,
 
-  // Port 0 is read-only (used for instruction fetch)
-  output  reg  [31:0] port0_rdata,
-  input   wire [13:0] port0_address,  // 14-bit addresses = 16 KB memory
-  input   wire        port0_read_request,  
-  output  reg         port0_read_request_ack,
-
-  // Port 1 is read/write capable
   output  reg  [31:0] port1_rdata,
   input   wire [31:0] port1_wdata,
   input   wire [13:0] port1_address,  // 14-bit addresses = 16 KB memory
@@ -327,7 +304,6 @@ module dual_port_ram (
   initial $readmemh("hello-world.mem", ram);
 
   // Because we made the RAM word-addressed, we need to shift the last two bits
-  wire [11:0] instruction_address = port0_address >> 2;
   wire [11:0] data_address        = port1_address >> 2;
   
   // The code below will be synthesized to a Block RAM
@@ -340,18 +316,14 @@ module dual_port_ram (
     end
   end
 
-  // Instruction / data read
+  // Memory read
   always @(posedge clock) begin
     if (!reset_n) begin
-      port0_rdata <= 32'h00000000;
       port1_rdata <= 32'h00000000;
-      port0_read_request_ack <= 1'b0;
       port1_read_request_ack <= 1'b0;
     end
     else begin
-      port0_rdata <= ram[instruction_address];
       port1_rdata <= ram[data_address];
-      port0_read_request_ack <= port0_read_request;
       port1_read_request_ack <= port1_read_request;
     end
   end
