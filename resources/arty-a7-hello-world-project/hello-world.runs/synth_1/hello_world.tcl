@@ -70,11 +70,14 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_msg_config -id {Common 17-41} -limit 10000000
 set_msg_config  -id {XSIM 43-4100}  -string {{WARNING: [XSIM 43-4100] "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-architectural-test-suite/riscv-arch-test.sim/sim_1/behav/xsim/glbl.v" Line 6. Module glbl has a timescale but at least one module in design doesn't have timescale.}}  -suppress 
 set_msg_config  -id {Vivado 12-13340}  -string {{WARNING: [Vivado 12-13340] Unable to auto find GCC executables from simulator install path! (path not set)}}  -suppress 
 set_msg_config  -id {Wavedata 42-489}  -string {{WARNING: [Wavedata 42-489] Can't add object "/riscv_steel_core_unit_tests/ram" to the wave window because it has 16777216 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".}}  -suppress 
 set_msg_config  -id {Synth 8-7080}  -string {{WARNING: [Synth 8-7080] Parallel synthesis criteria is not met}}  -suppress 
 set_msg_config  -id {Netlist 29-101}  -string {{WARNING: [Netlist 29-101] Netlist 'hello_world' is not ideal for floorplanning, since the cellview 'riscv_steel_core' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.}}  -suppress 
+set_msg_config  -id {USF-XSim-62}  -string {{ERROR: [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'C:/Users/rafcal0v/riscv-steel-core/tests/riscv-architectural-test-suite/riscv-arch-test.sim/sim_1/behav/xsim/elaborate.log' file for more information.}}  -suppress 
+set_msg_config  -id {Vivado 12-4473}  -string {{ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.}}  -suppress 
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35ticsg324-1L
 
