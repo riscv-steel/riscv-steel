@@ -1,0 +1,12 @@
+
+{ 
+    crc :  1595624861881896122  , 
+    ccp_crc :  0  , 
+    cmdline : " --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot riscv_steel_unit_tests_behav xil_defaultlib.riscv_steel_unit_tests xil_defaultlib.glbl" , 
+    buildDate : "May  7 2023" , 
+    buildTime : "15:24:31" , 
+    linkCmd : "C:\\Xilinx\\Vivado\\2023.1\\data\\..\\tps\\mingw\\6.2.0\\win64.o\\nt\\bin\\gcc.exe -Wa,-W  -O -Wl,--stack,104857600 -o \"xsim.dir/riscv_steel_unit_tests_behav/xsimk.exe\"   \"xsim.dir/riscv_steel_unit_tests_behav/obj/xsim_0.win64.obj\" \"xsim.dir/riscv_steel_unit_tests_behav/obj/xsim_1.win64.obj\" -L\"C:\\Xilinx\\Vivado\\2023.1\\lib\\win64.o\" -lrdi_simulator_kernel   -lrdi_simbridge_kernel" , 
+    aggregate_nets : 
+    [ 
+    ] 
+} 
