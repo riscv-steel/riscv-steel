@@ -42,7 +42,7 @@ A list of available serial ports will follow. Select the port the board is conne
 
 Open Vivado and follow the steps below to get the Hello World project running on [Arty](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/):
 
-- Open project **hello-world.xpr** (located at **resources/arty-a7-hello-world-project/**).
+- Open project **arty-a7-hello-world.xpr** (located at **resources/arty-a7-hello-world/**).
 
 - Click on **Open Hardware Manager**, located in the **Program and Debug** section of the **Flow Navigator**.
 
