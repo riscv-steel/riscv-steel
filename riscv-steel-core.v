@@ -46,17 +46,28 @@ module riscv_steel_core #(
   input  wire           clock,
   input  wire           reset_n,
 
-  // Memory read / write interface
+  // AXI4 Lite Master Interface
 
-  output wire   [31:0]  mem_address,
-  input  wire   [31:0]  mem_read_data,
-  output wire           mem_read_request,
-  input  wire           mem_read_request_ack,
-  output wire   [31:0]  mem_write_data,
-  output wire   [3:0 ]  mem_write_strobe,
-  output wire           mem_write_request,
-  input  wire           mem_write_request_ack,  
-  
+  input   wire          m_axil_arready,
+  output  reg           m_axil_arvalid,
+  output  wire  [31:0]  m_axil_araddr,
+  output  wire  [2:0 ]  m_axil_arprot,
+  output  reg           m_axil_rready,
+  input   wire          m_axil_rvalid,
+  input   wire  [31:0]  m_axil_rdata,
+  input   wire  [1:0 ]  m_axil_rresp,
+  input   wire          m_axil_awready,
+  output  reg           m_axil_awvalid,
+  output  wire  [31:0]  m_axil_awaddr,
+  output  wire  [2:0 ]  m_axil_awprot,  
+  input   wire          m_axil_wready,
+  output  reg           m_axil_wvalid,
+  output  wire  [31:0]  m_axil_wdata,
+  output  wire  [3:0 ]  m_axil_wstrb,
+  output  reg           m_axil_bready,
+  input   wire          m_axil_bvalid,
+  input   wire  [1:0]   m_axil_bresp,  
+
   // Interrupt signals (hardwire inputs to zero if unused)
 
   input  wire           irq_external,
@@ -251,7 +262,20 @@ module riscv_steel_core #(
   localparam RS2_MRET             = 5'b00010;
   localparam RD_ECALL             = 5'b00000;
   localparam RD_EBREAK            = 5'b00000;
-  localparam RD_MRET              = 5'b00000; 
+  localparam RD_MRET              = 5'b00000;
+
+  // AXI4 Lite Read Channel state machine
+
+  localparam AXIL_READ_RESET         = 4'b0001;
+  localparam AXIL_READ_WAIT_ARREADY  = 4'b0010;
+  localparam AXIL_READ_WAIT_RVALID   = 4'b0100;
+
+  // AXI4 Lite Write Channel state machine
+
+  localparam AXIL_WRITE_RESET        = 4'b0001;
+  localparam AXIL_WRITE_WAIT_AWREADY = 4'b0010;
+  localparam AXIL_WRITE_WAIT_WREADY  = 4'b0100;
+  localparam AXIL_WRITE_WAIT_BVALID  = 4'b1000;
   
   //-----------------------------------------------------------------------------------------------//
   // Wires and regs                                                                                //
@@ -268,6 +292,10 @@ module riscv_steel_core #(
   wire          alu_sltu_result;
   wire  [31:0]  alu_sra_result;
   wire  [31:0]  alu_srl_result;
+  reg   [2:0]   axil_read_curr_state;
+  reg   [2:0]   axil_read_next_state;
+  reg   [3:0]   axil_write_curr_state;
+  reg   [3:0]   axil_write_next_state;
   reg           branch_condition_satisfied;
   wire  [31:0]  branch_target_address;
   wire          clock_enable;
@@ -336,8 +364,16 @@ module riscv_steel_core #(
   wire          load_request;
   wire  [1:0 ]  load_size;
   wire          load_unsigned;
+  wire  [31:0]  mem_address;
   wire  [31:0]  mem_address_internal;
+  wire  [31:0]  mem_read_data;
+  wire          mem_read_request;
+  reg           mem_read_request_ack;
+  wire  [31:0]  mem_write_data;
   reg   [31:0]  mem_write_data_internal;
+  wire  [3:0 ]  mem_write_strobe;
+  wire          mem_write_request;
+  reg           mem_write_request_ack; 
   wire          misaligned_address_exception;
   wire          misaligned_instruction_address;
   wire          misaligned_load;
@@ -418,6 +454,149 @@ module riscv_steel_core #(
     end
   end
   
+  //---------------------------------------------------------------------------------------------//
+  // AXI4 Lite Read Channel                                                                      //
+  //---------------------------------------------------------------------------------------------//
+
+  always @(posedge clock) begin
+    if (reset)
+      axil_read_curr_state <= AXIL_READ_RESET;
+    else
+      axil_read_curr_state <= axil_read_next_state;
+  end
+
+  assign m_axil_araddr =
+    mem_address;
+
+  assign m_axil_arprot =
+    {!load_request, 2'b00};
+
+  assign mem_read_data =
+    m_axil_rdata;
+  
+  always @* begin
+    case (axil_read_curr_state)
+      AXIL_READ_RESET: begin
+        m_axil_arvalid           = 1'b0;
+        m_axil_rready            = 1'b0;
+        mem_read_request_ack     = 1'b0;
+        axil_read_next_state     = AXIL_READ_WAIT_ARREADY;
+      end
+      AXIL_READ_WAIT_ARREADY: begin
+        m_axil_arvalid           = mem_read_request;
+        m_axil_rready            = 1'b0;
+        mem_read_request_ack     = 1'b0;
+        if (reset)
+          axil_read_next_state   = AXIL_READ_RESET;
+        else if (!m_axil_arready)
+          axil_read_next_state   = AXIL_READ_WAIT_ARREADY;
+        else if (m_axil_arready & mem_read_request)
+          axil_read_next_state   = AXIL_READ_WAIT_RVALID;
+        else
+          axil_read_next_state   = AXIL_READ_WAIT_ARREADY;
+      end
+      AXIL_READ_WAIT_RVALID: begin
+        m_axil_arvalid           = mem_read_request & m_axil_rready & m_axil_rvalid & (m_axil_rresp == 2'b00);
+        m_axil_rready            = 1'b1;
+        mem_read_request_ack     = m_axil_rvalid & (m_axil_rresp == 2'b00);
+        if (reset)
+          axil_read_next_state   = AXIL_READ_RESET;
+        else if (!mem_read_request_ack)
+          axil_read_next_state   = AXIL_READ_WAIT_RVALID;
+        else if (!m_axil_arready | !mem_read_request)
+          axil_read_next_state   = AXIL_READ_WAIT_ARREADY;
+        else
+          axil_read_next_state   = AXIL_READ_WAIT_RVALID;
+      end
+      default: begin
+        m_axil_arvalid           = 1'b0;
+        m_axil_rready            = 1'b0;
+        mem_read_request_ack     = 1'b0;
+        axil_read_next_state     = AXIL_READ_WAIT_ARREADY;
+      end
+    endcase
+  end
+
+  //---------------------------------------------------------------------------------------------//
+  // AXI4 Lite Write Channel                                                                     //
+  //---------------------------------------------------------------------------------------------//
+
+  always @(posedge clock) begin
+    if (reset)
+      axil_write_curr_state <= AXIL_WRITE_RESET;
+    else
+      axil_write_curr_state <= axil_write_next_state;
+  end
+
+  assign m_axil_awaddr =
+    mem_address;
+  
+  assign m_axil_awprot =
+    3'b000;
+
+  assign m_axil_wdata =
+    mem_write_data;
+
+  assign m_axil_wstrb =
+    mem_write_strobe;
+  
+  always @* begin
+    case (axil_write_curr_state)
+      AXIL_WRITE_RESET: begin
+        m_axil_awvalid           = 1'b0;
+        m_axil_wvalid            = 1'b0;
+        m_axil_bready            = 1'b0;
+        mem_write_request_ack    = 1'b0;
+        axil_write_next_state    = AXIL_WRITE_WAIT_AWREADY;
+      end
+      AXIL_WRITE_WAIT_AWREADY: begin
+        m_axil_awvalid           = mem_write_request;
+        m_axil_wvalid            = mem_write_request;
+        m_axil_bready            = 1'b0;
+        mem_write_request_ack    = 1'b0;
+        if (reset)
+          axil_write_next_state  = AXIL_WRITE_RESET;
+        else if (mem_write_request & m_axil_awready & m_axil_wready)
+          axil_write_next_state  = AXIL_WRITE_WAIT_BVALID;
+        else if (mem_write_request & m_axil_awready & !m_axil_wready)
+          axil_write_next_state  = AXIL_WRITE_WAIT_WREADY;
+        else
+          axil_write_next_state  = AXIL_WRITE_WAIT_AWREADY;
+      end
+      AXIL_WRITE_WAIT_WREADY: begin
+        m_axil_awvalid           = 1'b0;
+        m_axil_wvalid            = mem_write_request;
+        m_axil_bready            = 1'b0;
+        mem_write_request_ack    = 1'b0;
+        if (reset)
+          axil_write_next_state  = AXIL_WRITE_RESET;
+        else if (mem_write_request & m_axil_wready)
+          axil_write_next_state  = AXIL_WRITE_WAIT_BVALID;
+        else
+          axil_write_next_state  = AXIL_WRITE_WAIT_WREADY;
+      end
+      AXIL_WRITE_WAIT_BVALID: begin
+        m_axil_awvalid           = 1'b0;
+        m_axil_wvalid            = 1'b0;
+        m_axil_bready            = 1'b1;
+        mem_write_request_ack    = m_axil_bready & m_axil_bvalid & (m_axil_bresp == 2'b00);
+        if (reset)
+          axil_write_next_state  = AXIL_WRITE_RESET;
+        else if (mem_write_request_ack)
+          axil_write_next_state  = AXIL_WRITE_WAIT_AWREADY;
+        else
+          axil_write_next_state  = AXIL_WRITE_WAIT_BVALID;
+      end
+      default: begin
+        m_axil_awvalid           = 1'b0;
+        m_axil_wvalid            = 1'b0;
+        m_axil_bready            = 1'b0;
+        mem_write_request_ack    = 1'b0;
+        axil_write_next_state    = AXIL_WRITE_WAIT_AWREADY;
+      end
+    endcase
+  end
+
   //-----------------------------------------------------------------------------------------------//
   // Instruction fetch and instruction address logic                                               //
   //-----------------------------------------------------------------------------------------------//
