@@ -80,107 +80,116 @@ then executed.
  
 **************************************************************************************************/
 
-module riscv_steel_core_unit_tests();
+`timescale 1ns / 1ps
 
-  reg           clock;
-  reg           reset_n;
+module riscv_steel_unit_tests();
+
+  reg clock;
+  reg reset_n;
+
+  wire          axil_awready;
+  wire          axil_awvalid;
+  wire  [31:0]  axil_awaddr;
+  wire  [2:0 ]  axil_awprot;
+  wire          axil_arready;
+  wire          axil_arvalid;
+  wire  [31:0]  axil_araddr;
+  wire  [2:0 ]  axil_arprot;
+  wire          axil_wready;
+  wire          axil_wvalid;
+  wire  [31:0]  axil_wdata;
+  wire  [3:0 ]  axil_wstrb;
+  wire          axil_bready;
+  wire          axil_bvalid;
+  wire  [1:0]   axil_bresp;
+  wire          axil_rready;
+  wire          axil_rvalid;
+  wire  [31:0]  axil_rdata;
+  wire  [1:0 ]  axil_rresp;
   
-  reg   [31:0]  ram [0:524287];
-
-  wire  [31:0]  mem_address;
-  reg   [31:0]  mem_read_data;  
-  wire          mem_read_request;
-  reg           mem_read_request_ack;
-  wire  [31:0]  mem_write_data;
-  wire          mem_write_request;
-  reg           mem_write_request_ack;
-  wire  [3:0 ]  mem_write_strobe;  
-
-  reg           data_read_request_ack_test;
-  reg           data_write_request_ack_test;
-  
-  riscv_steel_core 
-  dut (
+  riscv_steel_core
+  dut0 (
 
     // Global clock and active-low reset
-    .clock                      (clock                      ),
-    .reset_n                    (reset_n                    ),
-      
-    // Memory read / write interface
-    .mem_address                (mem_address                ),
-    .mem_read_data              (mem_read_data              ),
-    .mem_read_request           (mem_read_request           ),
-    .mem_read_request_ack       (mem_read_request_ack       ),
-    .mem_write_data             (mem_write_data             ),    
-    .mem_write_strobe           (mem_write_strobe           ),
-    .mem_write_request          (mem_write_request          ),
-    .mem_write_request_ack      (mem_write_request_ack      ),    
-    
-    // Interrupt signals (inputs hardwired to zero because they're not needed for the tests)
-    .irq_external               (1'b0                       ),
-    .irq_timer                  (1'b0                       ),
-    .irq_software               (1'b0                       ),
-    .irq_external_ack           (),
-    .irq_timer_ack              (),
-    .irq_software_ack           (),
-
-    // Real Time Counter (hardwired to zero because they're not needed too)
-    .real_time_counter          (64'b0                      )
+  
+    .clock                    (clock            ),
+    .reset_n                  (reset_n          ),
+  
+    // AXI4 Lite Master Interface
+  
+    .m_axil_arready           (axil_arready    ),
+    .m_axil_arvalid           (axil_arvalid    ),
+    .m_axil_araddr            (axil_araddr     ),
+    .m_axil_arprot            (axil_arprot     ),
+    .m_axil_rready            (axil_rready     ),
+    .m_axil_rvalid            (axil_rvalid     ),
+    .m_axil_rdata             (axil_rdata      ),
+    .m_axil_rresp             (axil_rresp      ),
+    .m_axil_awready           (axil_awready    ),
+    .m_axil_awvalid           (axil_awvalid    ),
+    .m_axil_awaddr            (axil_awaddr     ),
+    .m_axil_awprot            (axil_awprot     ),    
+    .m_axil_wready            (axil_wready     ),
+    .m_axil_wvalid            (axil_wvalid     ),
+    .m_axil_wdata             (axil_wdata      ),
+    .m_axil_wstrb             (axil_wstrb      ),
+    .m_axil_bready            (axil_bready     ),
+    .m_axil_bvalid            (axil_bvalid     ),
+    .m_axil_bresp             (axil_bresp      ),    
+  
+    // Interrupt signals (hardwire inputs to zero if unused)
+  
+    .irq_external             (1'b0),
+    .irq_external_ack         (),
+    .irq_timer                (1'b0),
+    .irq_timer_ack            (),
+    .irq_software             (1'b0),  
+    .irq_software_ack         (),
+  
+    // Real Time Counter (hardwire to zero if unused)
+  
+    .real_time_counter        (64'b0)
 
   );
   
-  // Read / write acknowledgement
-  always @(posedge clock) begin
-    if (!reset_n) begin
-      mem_read_request_ack   <= 1'b0;
-      mem_write_request_ack  <= 1'b0;
-    end
-    else begin
-      mem_read_request_ack   <= mem_read_request    & data_read_request_ack_test;
-      mem_write_request_ack  <= mem_write_request   & data_write_request_ack_test;
-    end
-  end
+  ram_memory_axi4_lite #(
+    
+    .MEMORY_SIZE                (2097152          )
   
-  // Randomly assert / deassert *_ack
-  integer x;
-  initial begin
-    #0;
-    data_read_request_ack_test    = 1'b1;
-    data_write_request_ack_test   = 1'b1;
-    for(x = 0; x < 100; x=x+1) begin
-      #1000;
-      data_read_request_ack_test    = $random();
-      data_write_request_ack_test   = $random();
-    end
-    #1000;
-    data_read_request_ack_test    = 1'b1;
-    data_write_request_ack_test   = 1'b1;
-  end
+  ) dut1 (
+  
+    // Global clock and active-low reset
+  
+    .clock                      (clock            ),
+    .reset_n                    (reset_n          ),
+    
+    // AXI4-Lite Slave Interface
+  
+    .s_axil_arready             (axil_arready    ),
+    .s_axil_arvalid             (axil_arvalid    ),
+    .s_axil_araddr              (axil_araddr     ),
+    .s_axil_arprot              (axil_arprot     ),
+    .s_axil_awready             (axil_awready    ),
+    .s_axil_rvalid              (axil_rvalid     ),
+    .s_axil_rdata               (axil_rdata      ),
+    .s_axil_rresp               (axil_rresp      ),
+    .s_axil_awvalid             (axil_awvalid    ),
+    .s_axil_awaddr              (axil_awaddr     ),
+    .s_axil_awprot              (axil_awprot     ),    
+    .s_axil_wready              (axil_wready     ),
+    .s_axil_wvalid              (axil_wvalid     ),
+    .s_axil_wdata               (axil_wdata      ),
+    .s_axil_wstrb               (axil_wstrb      ),
+    .s_axil_bready              (axil_bready     ),
+    .s_axil_bvalid              (axil_bvalid     ),
+    .s_axil_bresp               (axil_bresp      ),
+    .s_axil_rready              (axil_rready     )    
 
-  // RAM output registers
-  always @(posedge clock)
-    if (!reset_n)
-      mem_read_data <= 32'h00000000;
-    else
-      mem_read_data <= ram[$unsigned(mem_address[20:2])];
-  
-  // Memory implementation
-  always @(posedge clock) begin
-    if(mem_write_request) begin
-      if(mem_write_strobe[0])
-        ram[$unsigned(mem_address[24:2])][7:0  ]  <= mem_write_data[7:0  ];
-      if(mem_write_strobe[1])
-        ram[$unsigned(mem_address[24:2])][15:8 ]  <= mem_write_data[15:8 ];
-      if(mem_write_strobe[2])
-        ram[$unsigned(mem_address[24:2])][23:16]  <= mem_write_data[23:16];
-      if(mem_write_strobe[3])
-        ram[$unsigned(mem_address[24:2])][31:24]  <= mem_write_data[31:24];
-    end
-  end
+  );
   
   always #10 clock = !clock;
   
-  reg [8*30:0] unit_test_programs_array [0:44] = {
+  reg [159:0] unit_test_programs_array [0:44] = {
     "add-01.mem",
     "addi-01.mem",
     "and-01.mem",
@@ -228,7 +237,7 @@ module riscv_steel_core_unit_tests();
     "xori-01.mem"
   };
   
-  reg [8*35:0] golden_reference_array [0:44] = {
+  reg [511:0] golden_reference_array [0:44] = {
     "add-01.reference.mem",
     "addi-01.reference.mem",
     "and-01.reference.mem",
@@ -276,88 +285,94 @@ module riscv_steel_core_unit_tests();
     "xori-01.reference.mem"
   };
   
-  integer i, j, k, m, n, z;
-  integer failing_tests_counter;
-  integer current_test_failed_flag;
-  reg [31:0] current_golden_reference [0:2047];
-  
+  integer     i, j, k, m, n, z;
+  integer     failing_tests_counter;
+  integer     current_test_failed_flag;
+  reg [31:0]  current_golden_reference [0:2047];
+ 
   initial begin
   
-    reset_n = 1'b1;        
-    clock   = 1'b0;
+    i = 0;
+    j = 0;
+    k = 0;
+    m = 0;
+    n = 0;
+    z = 0;    
+    current_test_failed_flag = 0;
     failing_tests_counter = 0;
+    clock   = 1'b0;
+    reset_n = 1'b1;
       
     $display("Running unit test programs from RISC-V Architectural Test Suite.");
     
-    // Main loop: run one test in unit_test_programs_array[0:44] at a time
-    for(k = 0; k < 45; k=k+1) begin       
-
-      // Reset
+    for(k = 0; k < 45; k=k+1) begin
+    
+      // Reset     
       reset_n = 1'b0;
-      for(i = 0; i < 524287; i=i+1) ram[i] = 32'b0;
-      for(i = 0; i < 2048;   i=i+1) current_golden_reference[i] = 32'b0;
-      #20;
+      for(i = 0; i < 524287; i=i+1) dut1.ram[i] = 32'hdeadbeef;
+      for(i = 0; i < 2048;   i=i+1) current_golden_reference[i] = 32'hdeadbeef;
+      #40;
       reset_n = 1'b1;
       
       // Initialization
-      $readmemh(unit_test_programs_array[k], ram                     );
-      $readmemh(golden_reference_array[k]  , current_golden_reference);   
-
-      // Run loop
+      $readmemh(unit_test_programs_array[k],  dut1.ram                );      
+      $readmemh(golden_reference_array[k],    current_golden_reference);
+      
+      // Main loop: run test
       for(j = 0; j < 500000; j=j+1) begin
-
+                
         // After each clock cycle it tests whether the test program finished its execution
         // This event is signaled by writing 1 to the address 0x00001000
-        #20;
-        if(mem_write_request == 1'b1 &&
-           mem_address == 32'h00001000 &&
-           mem_write_data == 32'h00000001) begin   
-
+        #20;        
+        if(axil_awvalid == 1'b1 &&
+           axil_awaddr  == 32'h00001000 &&
+           axil_wvalid  == 1'b1 &&
+           axil_wdata   == 32'h00000001) begin
+           
           // The beginning and end of signature are stored at
           // 0x00001ffc (ram[2046]) and 0x00001ff8 (ram[2047]).
-          m = ram[2047][24:2]; // m holds the address of the beginning of the signature
-          n = ram[2046][24:2]; // n holds the address of the end of the signature
-
+          m =  dut1.ram[2047][24:2]; // m holds the address of the beginning of the signature
+          n =  dut1.ram[2046][24:2]; // n holds the address of the end of the signature
+          
           // Compare signature with golden reference
           z = 0;
           current_test_failed_flag = 0;
-          for(m = ram[2047][24:2]; m < n; m=m+1) begin
-            if (ram[m] !== current_golden_reference[z]) begin
+          for(m = dut1.ram[2047][24:2]; m < n; m=m+1) begin
+            if (dut1.ram[m] !== current_golden_reference[z]) begin
               $display("TEST FAILED: %s", unit_test_programs_array[k]);
               $display("Signature at line %d differs from golden reference.", z+1);
-              $display("Signature: %h. Golden reference: %h", ram[m], current_golden_reference[z]);
-              failing_tests_counter = failing_tests_counter + 1;
-              current_test_failed_flag = 1; // not a match!
+              $display("Signature: %h. Golden reference: %h", dut1.ram[m], current_golden_reference[z]);
+              failing_tests_counter = failing_tests_counter+1;
+              current_test_failed_flag = 1;
               $stop();
-            end
+            end            
             z=z+1;
           end
-
+          
           // Skip main loop in a successful run 
           if (current_test_failed_flag == 0) begin            
             $display("Passed on test: %s", unit_test_programs_array[k]);            
-            j = 999999; // large value skips this loop (without flagging error)
+            j = 999999; // skip main loop
           end
-
-        end // if
-
-      end // Run loop
-
+          
+        end
+      end
+      
       // The program ran for 500000 cycles and did not finish (something is wrong)
       if (j == 500000) begin
         $display("TEST FAILED (probably hanging): %s", unit_test_programs_array[k]);
         $stop();
       end
-
-    end // Main loop
+      
+    end
     
     if (failing_tests_counter == 0) begin
       $display("RISC-V Steel passed ALL unit tests from RISC-V Architectural Test Suite");
-      $stop();
-    end
+      $finish();
+    end    
     else begin
       $display("FAILED on one or more unit tests.");
-      $stop();
+      $finish();
     end
    
   end
