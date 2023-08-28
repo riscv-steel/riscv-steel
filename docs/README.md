@@ -6,12 +6,12 @@ RISC-V Steel is a free and open 32-bit processor core that implements the RV32I 
 
 ### Features
 
-- **RV32I** base integer instruction set
-- **Zicsr** Control and Status Register extension
-- **Machine-level** privileged architecture
-- Passes all [RISC-V Architectural Test Suite](https://github.com/riscv-non-isa/riscv-arch-test) unit tests
+- Implemented RISC-V ISA modules: **RV32I**, **Zicsr**, **Machine-Mode** privileged architecture
+- Native AXI4 Lite Master Interface
+- Verified with [RISC-V Architectural Test Suite](https://github.com/riscv-non-isa/riscv-arch-test) - passes all tests
 - Single [source file](../riscv-steel-core.v) (Verilog)
 - Free and open-source ([MIT License](../LICENSE))
+- [Quick start project demo](https://riscv-steel.github.io/riscv-steel-core/getting-started/)
 
 ### License
 
@@ -30,6 +30,7 @@ Please open a [new issue](https://github.com/riscv-steel/riscv-steel-core/issues
 - RV32I base instruction set ✔️
 - Zicsr extension ✔️
 - Support to M-mode ✔️
+- AXI4-Lite Master Interface ✔️
 - Documentation
 - Support to U-mode
 - C extension
