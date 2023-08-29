@@ -1,4 +1,4 @@
-site_name: RISC-V Steel Core
+site_name: RISC-V Steel
 site_author: Rafael Calcada
 site_description: RISC-V Steel is a free and open 32-bit processor core that implements the RV32I instruction set of the RISC-V architecture. It is designed to be easily reused in new RISC-V based hardware designs, from small embedded projects to complex systems on a chip.
 repo_url: https://github.com/riscv-steel/riscv-steel-core
@@ -60,7 +60,7 @@ docs_dir: source/
 copyright: Copyright &copy; Rafael Calcada
 nav:
     - Home: 'index.md'
-    - Getting started: 'getting-started.md'
+    - Quick Start Guide: 'quick-start-guide.md'
     #- Reference Guide:
     #  - reference.md
     #  - Microarchitecture: 'microarchitecture.md'
