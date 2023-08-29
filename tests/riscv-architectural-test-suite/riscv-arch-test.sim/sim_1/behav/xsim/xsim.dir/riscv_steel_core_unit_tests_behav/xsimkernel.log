@@ -1,7 +1,0 @@
-Running: xsim.dir/riscv_steel_core_unit_tests_behav/xsimk.exe -simmode gui -wdb riscv_steel_core_unit_tests_behav.wdb -simrunnum 0 -socket 61041
-Design successfully loaded
-Design Loading Memory Usage: 12140 KB (Peak: 12140 KB)
-Design Loading CPU Usage: 0 ms
-Simulation completed
-Simulation Memory Usage: 38336 KB (Peak: 38336 KB)
-Simulation CPU Usage: 1452 ms

@@ -1,8 +1,0 @@
-0.7
-2020.2
-May  7 2023
-15:24:31
-C:/Users/rafcal0v/riscv-steel-core/resources/ram-memory-axi4-lite.v,1693256781,verilog,,C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v,,ram_memory_axi4_lite,,,,,,,,
-C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v,1693171281,verilog,,C:/Users/rafcal0v/riscv-steel-core/tests/riscv-steel-core-unit-tests.v,,riscv_steel_core,,,,,,,,
-C:/Users/rafcal0v/riscv-steel-core/tests/riscv-architectural-test-suite/riscv-arch-test.sim/sim_1/behav/xsim/glbl.v,1683266558,verilog,,,,glbl,,,,,,,,
-C:/Users/rafcal0v/riscv-steel-core/tests/riscv-steel-core-unit-tests.v,1693260295,verilog,,,,riscv_steel_unit_tests,,,,,,,,

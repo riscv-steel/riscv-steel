@@ -1,6 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/resources/ram-memory-axi4-lite.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module ram_memory_axi4_lite
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module riscv_steel_core
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/rafcal0v/riscv-steel-core/tests/riscv-steel-core-unit-tests.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module riscv_steel_unit_tests

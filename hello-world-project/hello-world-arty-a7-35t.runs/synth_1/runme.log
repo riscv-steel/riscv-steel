@@ -1,0 +1,400 @@
+
+*** Running vivado
+    with args -log hello_world_arty_a7_35t.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source hello_world_arty_a7_35t.tcl
+
+
+ECHO is off.
+ECHO is off.
+
+****** Vivado v2023.1 (64-bit)
+  **** SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+  **** IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+  **** SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source hello_world_arty_a7_35t.tcl -notrace
+create_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 442.980 ; gain = 164.441
+Command: synth_design -top hello_world_arty_a7_35t -part xc7a35ticsg324-1L
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
+INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 14424
+INFO: [Synth 8-11241] undeclared symbol 'branch_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:800]
+INFO: [Synth 8-11241] undeclared symbol 'jal_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:803]
+INFO: [Synth 8-11241] undeclared symbol 'jalr_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:806]
+INFO: [Synth 8-11241] undeclared symbol 'auipc_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:809]
+INFO: [Synth 8-11241] undeclared symbol 'lui_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:812]
+INFO: [Synth 8-11241] undeclared symbol 'load_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:815]
+INFO: [Synth 8-11241] undeclared symbol 'store_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:818]
+INFO: [Synth 8-11241] undeclared symbol 'system_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:821]
+INFO: [Synth 8-11241] undeclared symbol 'op_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:824]
+INFO: [Synth 8-11241] undeclared symbol 'op_imm_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:827]
+INFO: [Synth 8-11241] undeclared symbol 'misc_mem_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:830]
+INFO: [Synth 8-11241] undeclared symbol 'addi', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:835]
+INFO: [Synth 8-11241] undeclared symbol 'slti', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:839]
+INFO: [Synth 8-11241] undeclared symbol 'sltiu', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:843]
+INFO: [Synth 8-11241] undeclared symbol 'andi', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:847]
+INFO: [Synth 8-11241] undeclared symbol 'ori', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:851]
+INFO: [Synth 8-11241] undeclared symbol 'xori', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:855]
+INFO: [Synth 8-11241] undeclared symbol 'slli', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:859]
+INFO: [Synth 8-11241] undeclared symbol 'srli', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:864]
+INFO: [Synth 8-11241] undeclared symbol 'srai', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:869]
+INFO: [Synth 8-11241] undeclared symbol 'add', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:874]
+INFO: [Synth 8-11241] undeclared symbol 'sub', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:879]
+INFO: [Synth 8-11241] undeclared symbol 'slt', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:884]
+INFO: [Synth 8-11241] undeclared symbol 'sltu', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:889]
+INFO: [Synth 8-11241] undeclared symbol 'is_and', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:894]
+INFO: [Synth 8-11241] undeclared symbol 'is_or', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:899]
+INFO: [Synth 8-11241] undeclared symbol 'is_xor', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:904]
+INFO: [Synth 8-11241] undeclared symbol 'sll', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:909]
+INFO: [Synth 8-11241] undeclared symbol 'srl', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:914]
+INFO: [Synth 8-11241] undeclared symbol 'sra', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:919]
+INFO: [Synth 8-11241] undeclared symbol 'csrxxx', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:924]
+INFO: [Synth 8-11241] undeclared symbol 'illegal_store', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:955]
+INFO: [Synth 8-11241] undeclared symbol 'illegal_load', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:960]
+INFO: [Synth 8-11241] undeclared symbol 'illegal_jalr', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:966]
+INFO: [Synth 8-11241] undeclared symbol 'illegal_branch', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:970]
+INFO: [Synth 8-11241] undeclared symbol 'illegal_op', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:975]
+INFO: [Synth 8-11241] undeclared symbol 'illegal_op_imm', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:979]
+INFO: [Synth 8-11241] undeclared symbol 'illegal_system', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:983]
+INFO: [Synth 8-11241] undeclared symbol 'unknown_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:987]
+INFO: [Synth 8-11241] undeclared symbol 'misaligned_word', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:997]
+INFO: [Synth 8-11241] undeclared symbol 'misaligned_half', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1001]
+INFO: [Synth 8-11241] undeclared symbol 'misaligned', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1005]
+INFO: [Synth 8-11241] undeclared symbol 'is_branch', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1153]
+INFO: [Synth 8-11241] undeclared symbol 'is_jump', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1156]
+INFO: [Synth 8-11241] undeclared symbol 'is_equal', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1159]
+INFO: [Synth 8-11241] undeclared symbol 'is_not_equal', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1162]
+INFO: [Synth 8-11241] undeclared symbol 'is_less_than_unsigned', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1165]
+INFO: [Synth 8-11241] undeclared symbol 'is_less_than', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1168]
+INFO: [Synth 8-11241] undeclared symbol 'is_greater_or_equal_than', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1173]
+INFO: [Synth 8-11241] undeclared symbol 'is_greater_or_equal_than_unsigned', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1176]
+INFO: [Synth 8-11241] undeclared symbol 'interrupt_pending', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1244]
+INFO: [Synth 8-11241] undeclared symbol 'exception_pending', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1249]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1256.906 ; gain = 410.844
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'hello_world_arty_a7_35t' [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.v:47]
+INFO: [Synth 8-6157] synthesizing module 'riscv_steel_core' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'riscv_steel_core' (0#1) [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:38]
+INFO: [Synth 8-6157] synthesizing module 'crossbar_axi4_lite' [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/crossbar-axi4-lite.v:47]
+INFO: [Synth 8-6155] done synthesizing module 'crossbar_axi4_lite' (0#1) [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/crossbar-axi4-lite.v:47]
+INFO: [Synth 8-6157] synthesizing module 'ram_memory_axi4_lite' [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/ram-memory-axi4-lite.v:51]
+	Parameter MEMORY_SIZE bound to: 8192 - type: integer 
+	Parameter MEMORY_INIT_FILE bound to: hello-world.mem - type: string 
+INFO: [Synth 8-3876] $readmem data file 'hello-world.mem' is read successfully [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/ram-memory-axi4-lite.v:137]
+INFO: [Synth 8-6155] done synthesizing module 'ram_memory_axi4_lite' (0#1) [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/ram-memory-axi4-lite.v:51]
+INFO: [Synth 8-6157] synthesizing module 'uart_axi4_lite' [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/uart-axi4-lite.v:49]
+INFO: [Synth 8-6155] done synthesizing module 'uart_axi4_lite' (0#1) [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/uart-axi4-lite.v:49]
+INFO: [Synth 8-6155] done synthesizing module 'hello_world_arty_a7_35t' (0#1) [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.v:47]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1366.039 ; gain = 519.977
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1366.039 ; gain = 519.977
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1366.039 ; gain = 519.977
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 1366.039 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t-constraints.xdc]
+Finished Parsing XDC File [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t-constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t-constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/hello_world_arty_a7_35t_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/hello_world_arty_a7_35t_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1470.051 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1470.051 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1470.051 ; gain = 623.988
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a35ticsg324-1L
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1470.051 ; gain = 623.988
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1470.051 ; gain = 623.988
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'axil_read_curr_state_reg' in module 'riscv_steel_core'
+INFO: [Synth 8-802] inferred FSM for state register 'axil_write_curr_state_reg' in module 'riscv_steel_core'
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'riscv_steel_core'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+             STATE_RESET |                             0001 |                             0001
+         STATE_OPERATING |                             0010 |                             0010
+        STATE_TRAP_TAKEN |                             0100 |                             0100
+       STATE_TRAP_RETURN |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'current_state_reg' in module 'riscv_steel_core'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+        AXIL_WRITE_RESET |                             0001 |                             0001
+ AXIL_WRITE_WAIT_AWREADY |                             0010 |                             0010
+  AXIL_WRITE_WAIT_WREADY |                             0100 |                             0100
+  AXIL_WRITE_WAIT_BVALID |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'axil_write_curr_state_reg' in module 'riscv_steel_core'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+         AXIL_READ_RESET |                              001 |                              001
+  AXIL_READ_WAIT_ARREADY |                              010 |                              010
+   AXIL_READ_WAIT_RVALID |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3898] No Re-encoding of one hot register 'axil_read_curr_state_reg' in module 'riscv_steel_core'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:18 . Memory (MB): peak = 1470.051 ; gain = 623.988
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   64 Bit       Adders := 3     
+	   3 Input   32 Bit       Adders := 1     
+	   2 Input   32 Bit       Adders := 3     
+	   2 Input    4 Bit       Adders := 2     
++---XORs : 
+	   2 Input     32 Bit         XORs := 1     
+	   2 Input      1 Bit         XORs := 2     
++---Registers : 
+	               64 Bit    Registers := 3     
+	               32 Bit    Registers := 42    
+	               13 Bit    Registers := 2     
+	               10 Bit    Registers := 1     
+	                8 Bit    Registers := 2     
+	                4 Bit    Registers := 5     
+	                3 Bit    Registers := 3     
+	                1 Bit    Registers := 19    
++---RAMs : 
+	              64K Bit	(2049 X 32 bit)          RAMs := 1     
++---Muxes : 
+	   2 Input   64 Bit        Muxes := 9     
+	   2 Input   32 Bit        Muxes := 79    
+	   4 Input   32 Bit        Muxes := 21    
+	  18 Input   32 Bit        Muxes := 1     
+	   2 Input   31 Bit        Muxes := 2     
+	   2 Input   24 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 2     
+	   2 Input   13 Bit        Muxes := 2     
+	   2 Input   12 Bit        Muxes := 1     
+	   2 Input   10 Bit        Muxes := 2     
+	   4 Input    8 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 2     
+	   2 Input    6 Bit        Muxes := 1     
+	  23 Input    5 Bit        Muxes := 1     
+	   6 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 20    
+	  10 Input    4 Bit        Muxes := 1     
+	   5 Input    4 Bit        Muxes := 3     
+	   4 Input    4 Bit        Muxes := 6     
+	   3 Input    4 Bit        Muxes := 1     
+	   7 Input    3 Bit        Muxes := 2     
+	   2 Input    3 Bit        Muxes := 7     
+	   4 Input    3 Bit        Muxes := 3     
+	   3 Input    3 Bit        Muxes := 2     
+	   2 Input    2 Bit        Muxes := 4     
+	   5 Input    2 Bit        Muxes := 2     
+	   4 Input    2 Bit        Muxes := 3     
+	   2 Input    1 Bit        Muxes := 70    
+	   6 Input    1 Bit        Muxes := 1     
+	   3 Input    1 Bit        Muxes := 1     
+	   5 Input    1 Bit        Muxes := 7     
+	   4 Input    1 Bit        Muxes := 7     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 90 (col length:60)
+BRAMs: 100 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:37 ; elapsed = 00:00:41 . Memory (MB): peak = 1531.898 ; gain = 685.836
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping Report (see note below)
++------------------------+---------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name             | RTL Object                            | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------------------+---------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|hello_world_arty_a7_35t | ram_memory_axi4_lite_instance/ram_reg | 2 K x 32(READ_FIRST)   | W |   | 2 K x 32(WRITE_FIRST)  |   | R | Port A and B     | 0      | 4      | 
++------------------------+---------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:43 ; elapsed = 00:00:48 . Memory (MB): peak = 1531.898 ; gain = 685.836
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:59 ; elapsed = 00:01:05 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Final Mapping Report
++------------------------+---------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name             | RTL Object                            | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++------------------------+---------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|hello_world_arty_a7_35t | ram_memory_axi4_lite_instance/ram_reg | 2 K x 32(READ_FIRST)   | W |   | 2 K x 32(WRITE_FIRST)  |   | R | Port A and B     | 0      | 4      | 
++------------------------+---------------------------------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance ram_memory_axi4_lite_instance/ram_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance ram_memory_axi4_lite_instance/ram_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance ram_memory_axi4_lite_instance/ram_reg_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance ram_memory_axi4_lite_instance/ram_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:01:03 ; elapsed = 00:01:09 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:01:06 ; elapsed = 00:01:12 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:06 ; elapsed = 00:01:12 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUFG     |     2|
+|2     |CARRY4   |   115|
+|3     |LUT1     |     6|
+|4     |LUT2     |    51|
+|5     |LUT3     |   258|
+|6     |LUT4     |   301|
+|7     |LUT5     |   498|
+|8     |LUT6     |  1161|
+|9     |MUXF7    |   327|
+|10    |RAMB36E1 |     4|
+|14    |FDRE     |  1535|
+|15    |FDSE     |     5|
+|16    |IBUF     |     3|
+|17    |OBUF     |     1|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:59 ; elapsed = 00:01:11 . Memory (MB): peak = 1710.168 ; gain = 760.094
+Synthesis Optimization Complete : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1710.168 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 446 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'hello_world_arty_a7_35t' is not ideal for floorplanning, since the cellview 'riscv_steel_core' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1710.168 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 5a4ba09d
+INFO: [Common 17-83] Releasing license: Synthesis
+88 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:10 ; elapsed = 00:01:24 . Memory (MB): peak = 1710.168 ; gain = 1267.188
+INFO: [Common 17-1381] The checkpoint 'C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.runs/synth_1/hello_world_arty_a7_35t.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file hello_world_arty_a7_35t_utilization_synth.rpt -pb hello_world_arty_a7_35t_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Aug 29 22:29:38 2023...

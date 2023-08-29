@@ -1,0 +1,130 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
+| Date         : Tue Aug 29 22:30:25 2023
+| Host         : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file hello_world_arty_a7_35t_control_sets_placed.rpt
+| Design       : hello_world_arty_a7_35t
+| Device       : xc7a35ti
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    52 |
+|    Minimum number of control sets                        |    52 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    52 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    52 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |     1 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     4 |
+| >= 10 to < 12      |     1 |
+| >= 12 to < 14      |     2 |
+| >= 14 to < 16      |     1 |
+| >= 16              |    42 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              20 |           14 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |             153 |           62 |
+| Yes          | No                    | No                     |               9 |            5 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |            1358 |          614 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------------+--------------------------------------------------------+------------------------------------------------------------+------------------+----------------+--------------+
+|     Clock Signal     |                      Enable Signal                     |                      Set/Reset Signal                      | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------------+--------------------------------------------------------+------------------------------------------------------------+------------------+----------------+--------------+
+|  clock_IBUF_BUFG     |                                                        |                                                            |                1 |              1 |         1.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/csr_mcause[31]_i_1_n_0       | riscv_steel_core_instance/SR[0]                            |                5 |              5 |         1.00 |
+|  internal_clock_BUFG |                                                        | riscv_steel_core_instance/axil_read_curr_state_reg[2]_3[0] |                3 |              8 |         2.67 |
+|  internal_clock_BUFG | uart_axi4_lite_instance/E[0]                           | riscv_steel_core_instance/SR[0]                            |                2 |              8 |         4.00 |
+|  internal_clock_BUFG | uart_axi4_lite_instance/p_0_in                         | uart_axi4_lite_instance/rx_register[7]_i_1_n_0             |                2 |              8 |         4.00 |
+|  internal_clock_BUFG | uart_axi4_lite_instance/tx_register_0                  |                                                            |                5 |              9 |         1.80 |
+|  internal_clock_BUFG | ram_memory_axi4_lite_instance/saved_write_address0     | riscv_steel_core_instance/SR[0]                            |                4 |             11 |         2.75 |
+|  internal_clock_BUFG | riscv_steel_core_instance/E[0]                         | riscv_steel_core_instance/SR[0]                            |                4 |             12 |         3.00 |
+|  internal_clock_BUFG |                                                        | uart_axi4_lite_instance/tx_register_0                      |                4 |             13 |         3.25 |
+|  internal_clock_BUFG |                                                        | uart_axi4_lite_instance/rx_cycle_counter[0]_i_1_n_0        |                4 |             14 |         3.50 |
+|  internal_clock_BUFG |                                                        |                                                            |               13 |             19 |         1.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/csr_mcause[31]_i_1_n_0       | riscv_steel_core_instance/csr_mcause[30]_i_1_n_0           |               23 |             27 |         1.17 |
+|  internal_clock_BUFG | riscv_steel_core_instance/csr_mepc[18]                 | riscv_steel_core_instance/SR[0]                            |               12 |             30 |         2.50 |
+|  internal_clock_BUFG | riscv_steel_core_instance/csr_mtvec1                   | riscv_steel_core_instance/SR[0]                            |               17 |             31 |         1.82 |
+|  internal_clock_BUFG | riscv_steel_core_instance/program_counter0             | riscv_steel_core_instance/SR[0]                            |               13 |             31 |         2.38 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[3][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |               11 |             32 |         2.91 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[7][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |               22 |             32 |         1.45 |
+|  internal_clock_BUFG | riscv_steel_core_instance/csr_mscratch0                | riscv_steel_core_instance/SR[0]                            |               14 |             32 |         2.29 |
+|  internal_clock_BUFG | riscv_steel_core_instance/csr_mtval[31]_i_1_n_0        | riscv_steel_core_instance/SR[0]                            |               20 |             32 |         1.60 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[21][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               13 |             32 |         2.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[1][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |                9 |             32 |         3.56 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[16][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               13 |             32 |         2.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[20][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               13 |             32 |         2.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[13][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               10 |             32 |         3.20 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[10][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               13 |             32 |         2.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[26][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               12 |             32 |         2.67 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file                 | riscv_steel_core_instance/SR[0]                            |               20 |             32 |         1.60 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[12][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               10 |             32 |         3.20 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[14][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               12 |             32 |         2.67 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[15][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               17 |             32 |         1.88 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[19][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               16 |             32 |         2.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[22][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               17 |             32 |         1.88 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[25][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               14 |             32 |         2.29 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[23][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               21 |             32 |         1.52 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[18][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               14 |             32 |         2.29 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[24][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               12 |             32 |         2.67 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[27][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               15 |             32 |         2.13 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[11][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               13 |             32 |         2.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[30][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               19 |             32 |         1.68 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[29][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               15 |             32 |         2.13 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[17][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               14 |             32 |         2.29 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[2][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |               16 |             32 |         2.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/csr_minstret[31]_i_1_n_0     | riscv_steel_core_instance/SR[0]                            |                8 |             32 |         4.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/csr_minstret[63]_i_1_n_0     | riscv_steel_core_instance/SR[0]                            |                8 |             32 |         4.00 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[28][31]_i_1_n_0 | riscv_steel_core_instance/SR[0]                            |               15 |             32 |         2.13 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[9][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |               19 |             32 |         1.68 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[6][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |               17 |             32 |         1.88 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[4][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |               10 |             32 |         3.20 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[5][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |               14 |             32 |         2.29 |
+|  internal_clock_BUFG | riscv_steel_core_instance/integer_file[8][31]_i_1_n_0  | riscv_steel_core_instance/SR[0]                            |               13 |             32 |         2.46 |
+|  internal_clock_BUFG | riscv_steel_core_instance/clock_enable                 | riscv_steel_core_instance/SR[0]                            |               33 |             75 |         2.27 |
+|  internal_clock_BUFG |                                                        | riscv_steel_core_instance/SR[0]                            |               51 |            118 |         2.31 |
++----------------------+--------------------------------------------------------+------------------------------------------------------------+------------------+----------------+--------------+
+
+
