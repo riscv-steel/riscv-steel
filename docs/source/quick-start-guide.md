@@ -1,6 +1,16 @@
-This guide shows how to run the [Hello World project](https://github.com/riscv-steel/riscv-steel-core/tree/main/resources/arty-a7-hello-world) on the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board. The project consists of an instance of RISC-V Steel, a RAM memory, a UART unit and runs a program that prints a *Hello World!* message on your screen. It can be the starting point for your own projects and you can expand on it to build more interesting systems.
+RISC-V Steel comes with a [Hello World Project](https://github.com/riscv-steel/riscv-steel-core/tree/main/resources/arty-a7-hello-world) to quickly get you started in hardware development with the core. The project is designed to provide you with some basic elements for your own projects as the core alone does not form a complete system. In this guide, we'll show you how to run the project on the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board, which was chosen because it is a relatively popular platform among hardware developers.
 
-## Prerequisites
+We want to create versions of this guide for other FPGAs and development boards, so if you want to have this guide ported to another platform please let us know by opening a [new issue](https://github.com/riscv-steel/riscv-steel-core/issues) on GitHub.
+
+## Hello World Project overview
+
+The figure below shows the project's main hardware devices and how they interconnect. A Hello World design composed of a RISC-V Steel instance, an AXI Crossbar, a RAM memory and a UART unit will be programmed into Arty's FPGA and connected to its UART-USB bridge. Then, with a USB cable, you can connect the board to your computer and interact with the Hello World program (loaded into the 8K RAM during programming) from a serial terminal.
+
+<figure markdown>
+  ![](images/hello-world.svg)
+</figure>
+
+## Required software
 
 Make sure you have the following software installed on your machine before you start:
 
@@ -54,7 +64,6 @@ Make sure you have the following software installed on your machine before you s
 
 - Get back to the serial terminal window. The board sends the following message to your computer as soon Vivado finishes programming the FPGA:
 
-    </br>
-    ![pyserial-hello](images/getting-started/pyserial-0.png)
-
-</br>
+<figure markdown>
+  ![pyserial-hello](images/getting-started/pyserial-0.png)
+</figure>
