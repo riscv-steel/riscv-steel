@@ -70,6 +70,12 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 4
+set_param xicom.use_bs_reader 1
+set_msg_config  -id {Synth 8-7080}  -suppress 
+set_msg_config  -id {Netlist 29-101}  -suppress 
+set_msg_config  -id {Power 33-332}  -suppress 
+set_msg_config  -id {Board 49-26}  -suppress 
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35ticsg324-1L
 
@@ -105,6 +111,8 @@ read_xdc C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty
 set_property used_in_implementation false [get_files C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t-constraints.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.srcs/utils_1/imports/synth_1/hello_world_arty_a7_35t.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

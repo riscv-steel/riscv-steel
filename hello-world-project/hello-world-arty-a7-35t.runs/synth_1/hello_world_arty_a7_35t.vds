@@ -3,8 +3,8 @@
 # SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
 # IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
 # SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
-# Start of session at: Tue Aug 29 22:28:07 2023
-# Process ID: 10356
+# Start of session at: Sun Sep 24 23:04:24 2023
+# Process ID: 24092
 # Current directory: C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.runs/synth_1
 # Command line: vivado.exe -log hello_world_arty_a7_35t.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source hello_world_arty_a7_35t.tcl
 # Log file: C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.runs/synth_1/hello_world_arty_a7_35t.vds
@@ -12,15 +12,20 @@
 # Running On: CAK-M3NSK32-556, OS: Windows, CPU Frequency: 2496 MHz, CPU Physical cores: 8, Host memory: 34065 MB
 #-----------------------------------------------------------
 source hello_world_arty_a7_35t.tcl -notrace
-create_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 442.980 ; gain = 164.441
+create_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:07 . Memory (MB): peak = 443.793 ; gain = 163.699
+Command: read_checkpoint -auto_incremental -incremental C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.srcs/utils_1/imports/synth_1/hello_world_arty_a7_35t.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.srcs/utils_1/imports/synth_1/hello_world_arty_a7_35t.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top hello_world_arty_a7_35t -part xc7a35ticsg324-1L
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a35ti'
 INFO: [Device 21-403] Loading part xc7a35ticsg324-1L
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 14424
+INFO: [Synth 8-7075] Helper process launched with PID 9860
 INFO: [Synth 8-11241] undeclared symbol 'branch_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:800]
 INFO: [Synth 8-11241] undeclared symbol 'jal_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:803]
 INFO: [Synth 8-11241] undeclared symbol 'jalr_type', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:806]
@@ -74,7 +79,7 @@ INFO: [Synth 8-11241] undeclared symbol 'is_greater_or_equal_than_unsigned', ass
 INFO: [Synth 8-11241] undeclared symbol 'interrupt_pending', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1244]
 INFO: [Synth 8-11241] undeclared symbol 'exception_pending', assumed default net type 'wire' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:1249]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1256.906 ; gain = 410.844
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1260.789 ; gain = 411.676
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'hello_world_arty_a7_35t' [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.v:47]
 INFO: [Synth 8-6157] synthesizing module 'riscv_steel_core' [C:/Users/rafcal0v/riscv-steel-core/riscv-steel-core.v:38]
@@ -90,18 +95,18 @@ INFO: [Synth 8-6157] synthesizing module 'uart_axi4_lite' [C:/Users/rafcal0v/ris
 INFO: [Synth 8-6155] done synthesizing module 'uart_axi4_lite' (0#1) [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/uart-axi4-lite.v:49]
 INFO: [Synth 8-6155] done synthesizing module 'hello_world_arty_a7_35t' (0#1) [C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.v:47]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1366.039 ; gain = 519.977
+Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1370.039 ; gain = 520.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1366.039 ; gain = 519.977
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1370.039 ; gain = 520.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 1366.039 ; gain = 519.977
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1370.039 ; gain = 520.926
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 1366.039 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.041 . Memory (MB): peak = 1370.039 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -112,26 +117,28 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/hello_world_arty_a7_35t_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1470.051 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1478.871 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 1470.051 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 1478.871 ; gain = 0.000
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1470.051 ; gain = 623.988
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1478.871 ; gain = 629.758
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35ticsg324-1L
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1470.051 ; gain = 623.988
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1478.871 ; gain = 629.758
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1470.051 ; gain = 623.988
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1478.871 ; gain = 629.758
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'axil_read_curr_state_reg' in module 'riscv_steel_core'
 INFO: [Synth 8-802] inferred FSM for state register 'axil_write_curr_state_reg' in module 'riscv_steel_core'
@@ -166,7 +173,7 @@ INFO: [Synth 8-3898] No Re-encoding of one hot register 'axil_write_curr_state_r
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3898] No Re-encoding of one hot register 'axil_read_curr_state_reg' in module 'riscv_steel_core'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:18 . Memory (MB): peak = 1470.051 ; gain = 623.988
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 1478.871 ; gain = 629.758
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -219,7 +226,7 @@ Detailed RTL Component Info :
 	   2 Input    2 Bit        Muxes := 4     
 	   5 Input    2 Bit        Muxes := 2     
 	   4 Input    2 Bit        Muxes := 3     
-	   2 Input    1 Bit        Muxes := 70    
+	   2 Input    1 Bit        Muxes := 67    
 	   6 Input    1 Bit        Muxes := 1     
 	   3 Input    1 Bit        Muxes := 1     
 	   5 Input    1 Bit        Muxes := 7     
@@ -239,9 +246,8 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:37 ; elapsed = 00:00:41 . Memory (MB): peak = 1531.898 ; gain = 685.836
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:34 ; elapsed = 00:00:36 . Memory (MB): peak = 1529.262 ; gain = 680.148
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -262,13 +268,13 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:43 ; elapsed = 00:00:48 . Memory (MB): peak = 1531.898 ; gain = 685.836
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:39 ; elapsed = 00:00:41 . Memory (MB): peak = 1529.262 ; gain = 680.148
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:59 ; elapsed = 00:01:05 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished Timing Optimization : Time (s): cpu = 00:00:53 ; elapsed = 00:00:56 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -292,7 +298,7 @@ INFO: [Synth 8-7052] The timing for the instance ram_memory_axi4_lite_instance/r
 INFO: [Synth 8-7052] The timing for the instance ram_memory_axi4_lite_instance/ram_reg_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance ram_memory_axi4_lite_instance/ram_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:01:03 ; elapsed = 00:01:09 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished Technology Mapping : Time (s): cpu = 00:00:56 ; elapsed = 00:01:00 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -310,37 +316,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:06 ; elapsed = 00:01:12 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished IO Insertion : Time (s): cpu = 00:01:00 ; elapsed = 00:01:03 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:06 ; elapsed = 00:01:12 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:00 ; elapsed = 00:01:03 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:00 ; elapsed = 00:01:04 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:00 ; elapsed = 00:01:04 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:00 ; elapsed = 00:01:04 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:01 ; elapsed = 00:01:04 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -359,12 +365,12 @@ Report Cell Usage:
 |1     |BUFG     |     2|
 |2     |CARRY4   |   115|
 |3     |LUT1     |     6|
-|4     |LUT2     |    51|
-|5     |LUT3     |   258|
-|6     |LUT4     |   301|
-|7     |LUT5     |   498|
-|8     |LUT6     |  1161|
-|9     |MUXF7    |   327|
+|4     |LUT2     |    45|
+|5     |LUT3     |   244|
+|6     |LUT4     |   314|
+|7     |LUT5     |   464|
+|8     |LUT6     |  1246|
+|9     |MUXF7    |   317|
 |10    |RAMB36E1 |     4|
 |14    |FDRE     |  1535|
 |15    |FDSE     |     5|
@@ -372,27 +378,26 @@ Report Cell Usage:
 |17    |OBUF     |     1|
 +------+---------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:01 ; elapsed = 00:01:04 . Memory (MB): peak = 1712.301 ; gain = 863.188
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:59 ; elapsed = 00:01:11 . Memory (MB): peak = 1710.168 ; gain = 760.094
-Synthesis Optimization Complete : Time (s): cpu = 00:01:07 ; elapsed = 00:01:13 . Memory (MB): peak = 1710.168 ; gain = 864.105
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:54 ; elapsed = 00:01:02 . Memory (MB): peak = 1712.301 ; gain = 754.355
+Synthesis Optimization Complete : Time (s): cpu = 00:01:01 ; elapsed = 00:01:04 . Memory (MB): peak = 1712.301 ; gain = 863.188
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1710.168 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 446 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.034 . Memory (MB): peak = 1712.301 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 436 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
-WARNING: [Netlist 29-101] Netlist 'hello_world_arty_a7_35t' is not ideal for floorplanning, since the cellview 'riscv_steel_core' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1710.168 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1712.301 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: 5a4ba09d
+Synth Design complete | Checksum: eec65914
 INFO: [Common 17-83] Releasing license: Synthesis
-88 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+94 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:10 ; elapsed = 00:01:24 . Memory (MB): peak = 1710.168 ; gain = 1267.188
+synth_design: Time (s): cpu = 00:01:03 ; elapsed = 00:01:14 . Memory (MB): peak = 1712.301 ; gain = 1243.641
 INFO: [Common 17-1381] The checkpoint 'C:/Users/rafcal0v/riscv-steel-core/hello-world-project/hello-world-arty-a7-35t.runs/synth_1/hello_world_arty_a7_35t.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file hello_world_arty_a7_35t_utilization_synth.rpt -pb hello_world_arty_a7_35t_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue Aug 29 22:29:38 2023...
+INFO: [Common 17-206] Exiting Vivado at Sun Sep 24 23:05:48 2023...

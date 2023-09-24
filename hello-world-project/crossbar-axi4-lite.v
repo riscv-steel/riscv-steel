@@ -154,25 +154,25 @@ module crossbar_axi4_lite (
   assign s0_axil_bready = m_axil_bready;
   assign s1_axil_bready = m_axil_bready;
 
-  assign s0_axil_arvalid = m_axil_araddr[31:16] != 16'h0001 ? m_axil_arvalid : 1'b0;
-  assign s0_axil_awvalid = m_axil_araddr[31:16] != 16'h0001 ? m_axil_awvalid : 1'b0;
-  assign s0_axil_wvalid  = m_axil_araddr[31:16] != 16'h0001 ? m_axil_wvalid  : 1'b0;
+  assign s0_axil_arvalid = m_axil_araddr[31] != 1'b1 ? m_axil_arvalid : 1'b0;
+  assign s0_axil_awvalid = m_axil_araddr[31] != 1'b1 ? m_axil_awvalid : 1'b0;
+  assign s0_axil_wvalid  = m_axil_araddr[31] != 1'b1 ? m_axil_wvalid  : 1'b0;
 
-  assign s1_axil_arvalid = m_axil_araddr[31:16] == 16'h0001 ? m_axil_arvalid : 1'b0;
-  assign s1_axil_awvalid = m_axil_araddr[31:16] == 16'h0001 ? m_axil_awvalid : 1'b0;
-  assign s1_axil_wvalid  = m_axil_araddr[31:16] == 16'h0001 ? m_axil_wvalid  : 1'b0;
+  assign s1_axil_arvalid = m_axil_araddr[31] == 1'b1 ? m_axil_arvalid : 1'b0;
+  assign s1_axil_awvalid = m_axil_araddr[31] == 1'b1 ? m_axil_awvalid : 1'b0;
+  assign s1_axil_wvalid  = m_axil_araddr[31] == 1'b1 ? m_axil_wvalid  : 1'b0;
 
   // Slave Response selection
   
-  assign m_axil_arready = m_axil_araddr[31:16] != 16'h0001 ? s0_axil_arready : s1_axil_arready;
-  assign m_axil_awready = m_axil_araddr[31:16] != 16'h0001 ? s0_axil_awready : s1_axil_awready;
-  assign m_axil_wready  = m_axil_araddr[31:16] != 16'h0001 ? s0_axil_wready  : s1_axil_wready ;
+  assign m_axil_arready = m_axil_araddr[31] != 1'b1 ? s0_axil_arready : s1_axil_arready;
+  assign m_axil_awready = m_axil_araddr[31] != 1'b1 ? s0_axil_awready : s1_axil_awready;
+  assign m_axil_wready  = m_axil_araddr[31] != 1'b1 ? s0_axil_wready  : s1_axil_wready ;
 
   always @(posedge clock) begin
     if (reset)
       read_response_sel   <= SEL_RESET;
     else if (m_axil_arvalid == 1'b1 && m_axil_arready == 1'b1) begin
-      if (m_axil_araddr[31:16] != 16'h0001)
+      if (m_axil_araddr[31] != 1'b1)
         read_response_sel   <= SEL_SLAVE0;
       else
         read_response_sel   <= SEL_SLAVE1;
@@ -180,7 +180,7 @@ module crossbar_axi4_lite (
     if (reset)
       write_response_sel  <= SEL_RESET;
     else if (m_axil_awvalid == 1'b1 && m_axil_awready == 1'b1) begin
-      if (m_axil_araddr[31:16] != 16'h0001)
+      if (m_axil_araddr[31] != 1'b1)
         write_response_sel  <= SEL_SLAVE0;
       else
         write_response_sel  <= SEL_SLAVE1;

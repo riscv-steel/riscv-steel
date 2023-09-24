@@ -40,7 +40,7 @@ Top Module:    uart_axi4_lite
 Remarks:
 
   - This UART module works with 8 data bits, 1 stop bit, no parity bit and no flow control signals
-  - It only partially implements AXI4 Slave Interface requirements - thus it is not fully compliant
+  - It only partially implements AXI4 Slave Interface requirements
   - The baud rate can be adjusted to any value as long as the following condition is satisfied:
     
     CLOCK_FREQUENCY / BAUD_RATE > 50        (clock cycles per baud)
@@ -142,7 +142,7 @@ module uart_axi4_lite #(
       rx_active <= 1'b0;
     end
     else if (uart_irq == 1'b1) begin
-      if ((s_axil_araddr == 32'h00010004 && s_axil_arvalid == 1'b1) || uart_irq_ack == 1'b1) begin
+      if ((s_axil_araddr == 32'h80000004 && s_axil_arvalid == 1'b1) || uart_irq_ack == 1'b1) begin
         rx_cycle_counter <= 0;
         rx_register <= 8'h00;
         rx_data <= rx_data;
@@ -218,9 +218,9 @@ module uart_axi4_lite #(
   always @(posedge clock) begin
     if (reset) 
       s_axil_rdata <= 32'h00000000;
-    else if (s_axil_araddr == 32'h00010000 && s_axil_arvalid == 1'b1)
+    else if (s_axil_araddr == 32'h80000000 && s_axil_arvalid == 1'b1)
       s_axil_rdata <= {31'b0, tx_bit_counter == 0};
-    else if (s_axil_araddr == 32'h00010004 && s_axil_arvalid == 1'b1)
+    else if (s_axil_araddr == 32'h80000004 && s_axil_arvalid == 1'b1)
       s_axil_rdata <= {24'b0, rx_data};
     else
       s_axil_rdata <= 32'h00000000;

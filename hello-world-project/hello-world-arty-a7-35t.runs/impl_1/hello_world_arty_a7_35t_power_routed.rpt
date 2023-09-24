@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2023.1 (win64) Build 3865809 Sun May  7 15:05:29 MDT 2023
-| Date             : Tue Aug 29 22:31:10 2023
+| Date             : Sun Sep 24 23:07:10 2023
 | Host             : CAK-M3NSK32-556 running 64-bit major release  (build 9200)
 | Command          : report_power -file hello_world_arty_a7_35t_power_routed.rpt -pb hello_world_arty_a7_35t_power_summary_routed.pb -rpx hello_world_arty_a7_35t_power_routed.rpx
 | Design           : hello_world_arty_a7_35t
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.070        |
+| Total On-Chip Power (W)  | 0.069        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.011        |
+| Dynamic (W)              | 0.010        |
 | Device Static (W)        | 0.059        |
 | Effective TJA (C/W)      | 4.8          |
 | Max Ambient (C)          | 99.7         |
@@ -53,17 +53,17 @@ Table of Contents
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
 | Clocks         |     0.003 |        4 |       --- |             --- |
-| Slice Logic    |     0.002 |     4265 |       --- |             --- |
-|   LUT as Logic |     0.001 |     2041 |     20800 |            9.81 |
+| Slice Logic    |     0.001 |     4299 |       --- |             --- |
+|   LUT as Logic |     0.001 |     2102 |     20800 |           10.11 |
 |   CARRY4       |    <0.001 |      115 |      8150 |            1.41 |
 |   Register     |    <0.001 |     1540 |     41600 |            3.70 |
-|   F7/F8 Muxes  |    <0.001 |      327 |     32600 |            1.00 |
+|   F7/F8 Muxes  |    <0.001 |      317 |     32600 |            0.97 |
 |   Others       |     0.000 |        9 |       --- |             --- |
-| Signals        |     0.003 |     3411 |       --- |             --- |
+| Signals        |     0.002 |     3464 |       --- |             --- |
 | Block RAM      |     0.003 |        4 |        50 |            8.00 |
 | I/O            |    <0.001 |        4 |       210 |            1.90 |
 | Static Power   |     0.059 |          |           |                 |
-| Total          |     0.070 |          |           |                 |
+| Total          |     0.069 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,7 +73,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       0.950 |     0.018 |       0.012 |      0.006 |       NA    | Unspecified | NA         |
+| Vccint    |       0.950 |     0.016 |       0.010 |      0.006 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.011 |       0.000 |      0.011 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -143,9 +143,9 @@ Table of Contents
 +---------------------------------+-----------+
 | Name                            | Power (W) |
 +---------------------------------+-----------+
-| hello_world_arty_a7_35t         |     0.011 |
+| hello_world_arty_a7_35t         |     0.010 |
 |   ram_memory_axi4_lite_instance |     0.004 |
-|   riscv_steel_core_instance     |     0.007 |
+|   riscv_steel_core_instance     |     0.006 |
 +---------------------------------+-----------+
 
 
