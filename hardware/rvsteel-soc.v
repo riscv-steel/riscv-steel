@@ -26,25 +26,16 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel / Hello World example
+Project Name:  RISC-V Steel SoC
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    hello_world_arty_a7_35t
+Top Module:    rvsteel_soc
  
 **************************************************************************************************/
 
-/**************************************************************************************************
-
-Remarks:
-
-  - 'clock' is connected to Arty's 100MHz board clock. Internally this clock is divided by 2.
-  - 'reset' is connected to BTN0 on the board
-  - UART signals are connect to Arty's UART-USB bridge
-
-**************************************************************************************************/
-module hello_world_arty_a7_35t (
+module rvsteel_soc (
 
   input   wire clock,
   input   wire reset,
@@ -53,7 +44,6 @@ module hello_world_arty_a7_35t (
 
   );
   
-  reg         internal_clock;
   wire        irq_external;
   wire        irq_external_ack;
 
@@ -123,17 +113,12 @@ module hello_world_arty_a7_35t (
   wire  [31:0]  s1_axil_rdata;
   wire  [1:0 ]  s1_axil_rresp;
 
-  // Generate a 50MHz clock signal from Arty's onboard 100MHz clock
-  initial internal_clock = 1'b0;
-  always @(posedge clock)
-    internal_clock <= !internal_clock;
-
-  riscv_steel_core
-  riscv_steel_core_instance (
+  rvsteel_core
+  rvsteel_core_instance (
 
     // Global clock and active-low reset
 
-    .clock                        (internal_clock                     ),
+    .clock                        (clock                              ),
     .reset_n                      (!reset                             ),
 
     // AXI4 Lite Master Interface
@@ -173,10 +158,10 @@ module hello_world_arty_a7_35t (
 
   );
   
-  crossbar_axi4_lite
-  crossbar_axi4_lite_instance (
+  axi4_lite_crossbar
+  axi4_lite_crossbar_instance (
   
-    .clock                        (internal_clock                     ),
+    .clock                        (clock                              ),
     .reset_n                      (!reset                             ),
 
     // RISC-V Steel <=> AXI4 Lite Crossbar
@@ -247,16 +232,16 @@ module hello_world_arty_a7_35t (
 
   );
   
-  ram_memory_axi4_lite #(
+  ram #(
   
     .MEMORY_SIZE(8192),
     .MEMORY_INIT_FILE("hello-world.mem")
   
-  ) ram_memory_axi4_lite_instance (
+  ) ram_instance (
   
     // Global clock and active-low reset
   
-    .clock                        (internal_clock                     ),
+    .clock                        (clock                              ),
     .reset_n                      (!reset                             ),
     
     // AXI4-Lite Slave Interface
@@ -283,12 +268,12 @@ module hello_world_arty_a7_35t (
 
   );
 
-  uart_axi4_lite
-  uart_axi4_lite_instance (
+  uart
+  uart_instance (
 
     // Global clock and active-low reset
 
-    .clock                        (internal_clock                     ),
+    .clock                        (clock                              ),
     .reset_n                      (!reset                             ),
 
     // AXI4-Lite Slave Interface

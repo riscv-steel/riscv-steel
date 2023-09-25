@@ -1,10 +1,12 @@
-RISC-V Steel comes with a [Hello World Project](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) to quickly get you started in hardware development with the core. The project is designed to provide you with some basic elements for your own projects as the core alone does not form a complete system. In this guide, we'll show you how to run the project on the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board, which was chosen because it is a relatively popular platform among hardware developers.
+## Introduction
 
-We want to create versions of this guide for other FPGAs and development boards, so if you want to have this guide ported to another platform please let us know by opening a [new issue](https://github.com/riscv-steel/riscv-steel/issues) on GitHub.
+The easiest way to get started with RISC-V Steel is to modify its [Hello World Project](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world). It runs on RISC-V Steel a simple program that sends the classic "Hello World!" message to your computer over UART protocol. This guide shows how to implement this project on an [Arty A7-35T FPGA board](https://digilent.com/shop/arty-a7-100t-artix-7-fpga-development-board/), but you can implement it on other FPGAs from the source files by following similar steps.
 
-## Hello World Project overview
+Arty was chosen because it is a relatively popular FPGA. If you'd like to have this guide ported to another platform please let us know by opening a [new issue](https://github.com/riscv-steel/riscv-steel/issues) on GitHub. We are creating versions of this guide for other FPGA boards and kits.
 
-The figure below shows the project's main hardware devices and how they interconnect. A Hello World design composed of a RISC-V Steel instance, an AXI Crossbar, a RAM memory and a UART unit will be programmed into Arty's FPGA and connected to its UART-USB bridge. Then, with a USB cable, you can connect the board to your computer and interact with the Hello World program (loaded into the 8K RAM during programming) from a serial terminal.
+## The Hello World Project
+
+The figure below shows the main hardware devices in the Hello World Project and how they interconnect. A RISC-V Steel processor core instance interfaces with a RAM memory and a UART unit through an AXI4 crossbar, and Arty's UART-USB bridge provides the interface between the system and your computer. By connecting Arty to your computer via USB cable to you can interact with the Hello World program (loaded into the 8K RAM during programming) from a serial terminal.
 
 <figure markdown>
   ![](images/hello-world.svg)
@@ -48,22 +50,29 @@ Make sure you have the following software installed on your machine before you s
 
 ## 3. Program the FPGA
 
-- Open project at `hello-world/hello-world-arty-a7-35t.xpr` on Xilinx Vivado.
+- Open project at `./hello-world/arty-a7-35t-board/hello-world.xpr` on Xilinx Vivado.
 
-- In Vivado, click on *Open Hardware Manager*.
+- Click on *Open Hardware Manager*.
 
 - Next, click on *Open Target* -> *Auto Connect*.
 
 - Vivado will autodetect Arty's FPGA device. The hardware box will show `xc7a35t_0` - right-click on it and choose *Program Device*.
 
-- In the *Bitstream file* input box choose the file `hello_world_arty_a7_35t.bit`.
+- In the *Bitstream file* input box choose `hello_world_arty.bit` (located at `./hello-world/arty-a7-57t-board/`).
 
-    This file is located at `hello-world/hello-world-arty-a7-35t.runs/impl_1`
+- Click on *Program*.
 
-- Click on the *Program* button.
+- Go back to the serial terminal window. The board sends the following message to your computer as soon as Vivado finishes programming the FPGA:
 
-- Get back to the serial terminal window. The board sends the following message to your computer as soon Vivado finishes programming the FPGA:
+    ```
+    RISC-V Steel Hello World Project!
+    Type something and press enter:
+    ```
 
-<figure markdown>
-  ![pyserial-hello](images/getting-started/pyserial-0.png)
-</figure>
+If you've reached this point, congratulations! You now have a working instance of RISC-V Steel that you can modify to meet your project needs.
+
+</br>
+</br>
+</br>
+</br>
+</br>

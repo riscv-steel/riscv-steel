@@ -31,7 +31,7 @@ Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    ram_memory_axi4_lite
+Top Module:    ram
  
 **************************************************************************************************/
 
@@ -48,7 +48,7 @@ Remarks:
     to be within the allowed range
 
 **************************************************************************************************/
-module ram_memory_axi4_lite #(
+module ram #(
 
   // Memory size in bytes - must be a multiple of 32
   parameter MEMORY_SIZE      = 8192,

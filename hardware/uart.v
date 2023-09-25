@@ -31,7 +31,7 @@ Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    uart_axi4_lite
+Top Module:    uart
  
 **************************************************************************************************/
 
@@ -46,7 +46,7 @@ Remarks:
     CLOCK_FREQUENCY / BAUD_RATE > 50        (clock cycles per baud)
 
 **************************************************************************************************/
-module uart_axi4_lite #(
+module uart #(
 
   parameter CLOCK_FREQUENCY = 50000000,
   parameter BAUD_RATE  = 9600

@@ -31,7 +31,7 @@ Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    crossbar_axi4_lite
+Top Module:    axi4_lite_crossbar
  
 **************************************************************************************************/
 
@@ -44,7 +44,7 @@ Remarks:
   - Subordinate 1 is assigned the address range  0x00010000 - 0x0001ffff
 
 **************************************************************************************************/
-module crossbar_axi4_lite (
+module axi4_lite_crossbar (
 
   input   wire       clock,
   input   wire       reset_n,
