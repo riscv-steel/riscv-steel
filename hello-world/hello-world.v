@@ -26,8 +26,8 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel Core / Hello World example
-Project Repo:  github.com/riscv-steel/riscv-steel-core
+Project Name:  RISC-V Steel / Hello World example
+Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 

@@ -4,11 +4,11 @@ RISC-V Steel is a free and open platform for embedded systems development based 
 
 ### How to get started
 
-The easiest way to start with RISC-V Steel is to modify the [Hello World](https://github.com/riscv-steel/riscv-steel-core/tree/main/hello-world-project) project. Steps for running this project on an **Arty A7-35T** FPGA board can be found in the [Quick Start Guide](https://riscv-steel.github.io/riscv-steel-core/quick-start-guide/).
+The easiest way to start with RISC-V Steel is to modify the [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world-project) project. Steps for running this project on an **Arty A7-35T** FPGA board can be found in the [Quick Start Guide](https://riscv-steel.github.io/riscv-steel/quick-start-guide/).
 
-[**Check out the Quick Start Guide!**](https://riscv-steel.github.io/riscv-steel-core/quick-start-guide/)
+[**Check out the Quick Start Guide!**](https://riscv-steel.github.io/riscv-steel/quick-start-guide/)
 
-Would you like a version of it for other FPGA boards and kits? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel-core/discussions).
+Would you like a version of it for other FPGA boards and kits? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel/discussions).
 
 ### Features
 
@@ -28,7 +28,7 @@ RISC-V Steel is distributed under the [MIT License](../LICENSE).
 
 ### Need help?
 
-Please open a [new issue](https://github.com/riscv-steel/riscv-steel-core/issues).
+Please open a [new issue](https://github.com/riscv-steel/riscv-steel/issues).
 
 ### Roadmap and project status
 

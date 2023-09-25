@@ -4,7 +4,7 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="63" Path="C:/Users/rafcal0v/riscv-steel-core/tests/riscv-arch-test/riscv-arch-test.xpr">
+<Project Product="Vivado" Version="7" Minor="63" Path="C:/Users/rafcal0v/riscv-steel/tests/riscv-arch-test/riscv-arch-test.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="e33ef82a21344c6fa87be1881eba272b"/>
@@ -868,7 +868,7 @@
     <MsgAttr Name="Note" Val=""/>
     <MsgAttr Name="Author" Val=""/>
     <MsgAttr Name="CreatedTimestamp" Val=""/>
-    <MsgAttr Name="StringsToMatch" Val="CRITICAL WARNING: [Project 1-19] Could not find the file &apos;C:/Users/rafcal0v/riscv-steel-core/single-dual-port-ram-axi4-lite.v&apos;."/>
+    <MsgAttr Name="StringsToMatch" Val="CRITICAL WARNING: [Project 1-19] Could not find the file &apos;C:/Users/rafcal0v/riscv-steel/single-dual-port-ram-axi4-lite.v&apos;."/>
   </MsgRule>
   <MsgRule>
     <MsgAttr Name="RuleType" Val="0"/>
@@ -940,7 +940,7 @@
     <MsgAttr Name="Note" Val=""/>
     <MsgAttr Name="Author" Val=""/>
     <MsgAttr Name="CreatedTimestamp" Val=""/>
-    <MsgAttr Name="StringsToMatch" Val="ERROR: [USF-XSim-62] &apos;elaborate&apos; step failed with error(s). Please check the Tcl console output or &apos;C:/Users/rafcal0v/riscv-steel-core/tests/riscv-architectural-test-suite/riscv-arch-test.sim/sim_1/behav/xsim/elaborate.log&apos; file for more information."/>
+    <MsgAttr Name="StringsToMatch" Val="ERROR: [USF-XSim-62] &apos;elaborate&apos; step failed with error(s). Please check the Tcl console output or &apos;C:/Users/rafcal0v/riscv-steel/tests/riscv-architectural-test-suite/riscv-arch-test.sim/sim_1/behav/xsim/elaborate.log&apos; file for more information."/>
   </MsgRule>
   <MsgRule>
     <MsgAttr Name="RuleType" Val="0"/>
@@ -985,7 +985,7 @@
     <MsgAttr Name="Note" Val=""/>
     <MsgAttr Name="Author" Val=""/>
     <MsgAttr Name="CreatedTimestamp" Val=""/>
-    <MsgAttr Name="StringsToMatch" Val="WARNING: [XSIM 43-4099] &quot;C:/Users/rafcal0v/riscv-steel-core/single-port-ram-axi4-lite.v&quot; Line 38. Module single_port_ram_axi4_lite doesn&apos;t have a timescale but at least one module in design has a timescale."/>
+    <MsgAttr Name="StringsToMatch" Val="WARNING: [XSIM 43-4099] &quot;C:/Users/rafcal0v/riscv-steel/single-port-ram-axi4-lite.v&quot; Line 38. Module single_port_ram_axi4_lite doesn&apos;t have a timescale but at least one module in design has a timescale."/>
   </MsgRule>
   <Board/>
   <DashboardSummary Version="1" Minor="0">

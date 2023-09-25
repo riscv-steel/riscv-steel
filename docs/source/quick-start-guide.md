@@ -1,6 +1,6 @@
-RISC-V Steel comes with a [Hello World Project](https://github.com/riscv-steel/riscv-steel-core/tree/main/hello-world-project) to quickly get you started in hardware development with the core. The project is designed to provide you with some basic elements for your own projects as the core alone does not form a complete system. In this guide, we'll show you how to run the project on the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board, which was chosen because it is a relatively popular platform among hardware developers.
+RISC-V Steel comes with a [Hello World Project](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world-project) to quickly get you started in hardware development with the core. The project is designed to provide you with some basic elements for your own projects as the core alone does not form a complete system. In this guide, we'll show you how to run the project on the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board, which was chosen because it is a relatively popular platform among hardware developers.
 
-We want to create versions of this guide for other FPGAs and development boards, so if you want to have this guide ported to another platform please let us know by opening a [new issue](https://github.com/riscv-steel/riscv-steel-core/issues) on GitHub.
+We want to create versions of this guide for other FPGAs and development boards, so if you want to have this guide ported to another platform please let us know by opening a [new issue](https://github.com/riscv-steel/riscv-steel/issues) on GitHub.
 
 ## Hello World Project overview
 
@@ -28,10 +28,10 @@ Make sure you have the following software installed on your machine before you s
 
 ## 1. Get RISC-V Steel
 
-* Clone RISC-V Steel Core repository from GitHub:
+* Clone RISC-V Steel repository from GitHub:
 
     ```
-    $ git clone https://github.com/riscv-steel/riscv-steel-core.git
+    $ git clone https://github.com/riscv-steel/riscv-steel.git
     ```
 
 ## 2. Open a serial terminal

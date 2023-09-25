@@ -26,8 +26,8 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel Core
-Project Repo:  github.com/riscv-steel/riscv-steel-core
+Project Name:  RISC-V Steel
+Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
@@ -49,7 +49,7 @@ module crossbar_axi4_lite (
   input   wire       clock,
   input   wire       reset_n,
 
-  // Connected to Master => RISC-V Steel Core
+  // Connected to Master => RISC-V Steel
 
   output  wire          m_axil_arready,
   input   wire          m_axil_arvalid,
