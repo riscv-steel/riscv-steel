@@ -12,13 +12,15 @@ Would you like a version of it for other FPGA boards and kits? Please let us kno
 
 ### Features
 
-- **RV32I** base integer instruction set
-- **Zicsr** extension
-- **Machine-Level** privileged ISA
-- Native **AXI4 Lite** Master Interface
-- Verified with [RISC-V Architectural Test Suite](https://github.com/riscv-non-isa/riscv-arch-test)
-- Single [source file](../riscv-steel-core.v) (Verilog)
-- Free and open-source ([MIT License](../LICENSE))
+- RISC-V processor core
+  
+  - RV32I + Zicsr extension + Machine-mode
+  - AXI4-Lite interface
+  - Verified with [RISC-V Architectural Test Suite](https://github.com/riscv-non-isa/riscv-arch-test)
+    
+- Programmable RAM memory  
+- UART  
+- Software toolchain
 
 ### License
 
