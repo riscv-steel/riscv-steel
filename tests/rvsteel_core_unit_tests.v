@@ -26,8 +26,8 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel Core
-Project Repo:  github.com/riscv-steel/riscv-steel-core
+Project Name:  RISC-V Steel
+Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
@@ -35,14 +35,14 @@ E-mail:        rafaelcalcada@gmail.com
 
 /**************************************************************************************************
 
-This is a testbench/simulation for module riscv_steel_core intended to be run in AMD Xilinx Vivado.
+This is a testbench/simulation for module rvsteel_core intended to be run in AMD Xilinx Vivado.
 
 How to run it in Vivado:
 ------------------------
 
   - Open project riscv-arch-test.xpr (located in tests/riscv-arch-test) in Vivado
     and click on "Run simulation > Run behavioral simulation".
-  - Run the simulation for at least 3ms by executing "run 3ms" in Vivado's integraged Tcl Console.
+  - Run the simulation for at least 20ms by executing "run 20ms" in Vivado's integraged Tcl Console.
 
 The following message is displayed on the Tcl Console for a successful run:
 
@@ -82,7 +82,7 @@ then executed.
 
 `timescale 1ns / 1ps
 
-module riscv_steel_unit_tests();
+module rvsteel_core_unit_tests();
 
   reg clock;
   reg reset_n;
@@ -107,7 +107,7 @@ module riscv_steel_unit_tests();
   wire  [31:0]  axil_rdata;
   wire  [1:0 ]  axil_rresp;
   
-  riscv_steel_core
+  rvsteel_core
   dut0 (
 
     // Global clock and active-low reset

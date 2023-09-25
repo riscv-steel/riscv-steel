@@ -26,16 +26,16 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel Core
-Project Repo:  github.com/riscv-steel/riscv-steel-core
+Project Name:  RISC-V Steel
+Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    riscv_steel_core
+Top Module:    rvsteel_core
  
 **************************************************************************************************/
 
-module riscv_steel_core #(
+module rvsteel_core #(
   
   parameter     [31:0]  BOOT_ADDRESS = 32'h00000000
 
