@@ -9,11 +9,11 @@ RISCV_OBJCOPY			?= ${RISCV_PREFIX}objcopy
 # Path to linker script
 LINKER_SCRIPT			= etc/link.ld
 # Generated ELF name
-ELF_NAME					= hello_world.elf
+ELF_NAME					= hello-world.elf
 # Generated object dump file name
-OBJDUMP_NAME			= hello_world.objdump
+OBJDUMP_NAME			= hello-world.objdump
 # Generated hexdump file name
-HEXDUMP_NAME			= hello_world.mem
+HEXDUMP_NAME			= hello-world.mem
 
 # The compiler options
 # ---------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ endif
 all:
 	@mkdir -p build/
 	@echo "Build directory (./build) created."
-	@$(RISCV_GCC) -T ${LINKER_SCRIPT} ${COMPILER_OPTIONS} -Iinclude/ source/hello_world.c -o build/${ELF_NAME}
+	@$(RISCV_GCC) -T ${LINKER_SCRIPT} ${COMPILER_OPTIONS} -Iinclude/ source/hello-world.c -o build/${ELF_NAME}
 	@${RISCV_OBJDUMP} -D build/${ELF_NAME} > build/${OBJDUMP_NAME}
 	@${RISCV_OBJCOPY} build/${ELF_NAME} -O binary build/__temp1__.bin --pad-to=0x00002000 --gap-fill=0x00
 	@od -t x4 -v -An -w4 build/__temp1__.bin > build/__temp2__.hex

@@ -1,4 +1,4 @@
-RISC-V Steel comes with a [Hello World Project](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world-project) to quickly get you started in hardware development with the core. The project is designed to provide you with some basic elements for your own projects as the core alone does not form a complete system. In this guide, we'll show you how to run the project on the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board, which was chosen because it is a relatively popular platform among hardware developers.
+RISC-V Steel comes with a [Hello World Project](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) to quickly get you started in hardware development with the core. The project is designed to provide you with some basic elements for your own projects as the core alone does not form a complete system. In this guide, we'll show you how to run the project on the [Arty A7-35T](https://digilent.com/shop/arty-a7-artix-7-fpga-development-board/) development board, which was chosen because it is a relatively popular platform among hardware developers.
 
 We want to create versions of this guide for other FPGAs and development boards, so if you want to have this guide ported to another platform please let us know by opening a [new issue](https://github.com/riscv-steel/riscv-steel/issues) on GitHub.
 
@@ -48,7 +48,7 @@ Make sure you have the following software installed on your machine before you s
 
 ## 3. Program the FPGA
 
-- Open project at `hello-world-project/hello-world-arty-a7-35t.xpr` on Xilinx Vivado.
+- Open project at `hello-world/hello-world-arty-a7-35t.xpr` on Xilinx Vivado.
 
 - In Vivado, click on *Open Hardware Manager*.
 
@@ -58,7 +58,7 @@ Make sure you have the following software installed on your machine before you s
 
 - In the *Bitstream file* input box choose the file `hello_world_arty_a7_35t.bit`.
 
-    This file is located at `hello-world-project/hello-world-arty-a7-35t.runs/impl_1`
+    This file is located at `hello-world/hello-world-arty-a7-35t.runs/impl_1`
 
 - Click on the *Program* button.
 
