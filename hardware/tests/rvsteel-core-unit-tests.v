@@ -40,11 +40,11 @@ This is a testbench/simulation for module rvsteel_core intended to be run in AMD
 How to run it in Vivado:
 ------------------------
 
-  - Open project riscv-arch-test.xpr (located in tests/riscv-arch-test) in Vivado
-    and click on "Run simulation > Run behavioral simulation".
+  - Open project rvsteel-core-unit-tests.xpr (located in hardware/tests/rvsteel-core-unit-tests)
+    in Vivado and click on "Run simulation > Run behavioral simulation".
   - Run the simulation for at least 20ms by executing "run 20ms" in Vivado's integraged Tcl Console.
 
-The following message is displayed on the Tcl Console for a successful run:
+The following message is displayed in the Tcl Console after a successful run:
 
     "RISC-V Steel passed ALL unit tests from RISC-V Architectural Test Suite."
 
@@ -52,15 +52,14 @@ How this simulation work:
 -------------------------
 
 The RISC-V Architectural Test Suite (https://github.com/riscv-non-isa/riscv-arch-test/) provides a
-set of unit test programs written in assembly that can be used to check whether a device meets the
+set of unit test programs written in assembly to check whether a device meets the
 functional specifications of the RISC-V architecture. Each unit test is intended to test a single
-instruction and generates a signature with the results of its execution. A instruction following
-its functional specification must generate the same signature from a golden reference signature
-provided by the Test Suite.
+instruction and generates a 'signature' with the results of its execution. An instruction following
+its functional specification must generate a signature that matches exactly the golden reference
+signature provided by the Test Suite.
 
-For this simulation we compiled all unit test programs for a RV32I device. As required by the Test
-Suite we modified the assembly macro RVMODEL_HALT (called when a unit test completes execution)
-such that:
+For this simulation we compiled all unit test programs for a RV32I device. As required, we modified
+the assembly macro RVMODEL_HALT (called when a unit test completes execution) such that:
 
   - the memory address where the generated signature begins gets saved at 0x00001ffc
   - the memory address where the generated signature ends gets saved at 0x00001ff8
