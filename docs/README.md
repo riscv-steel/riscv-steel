@@ -1,14 +1,14 @@
-## RISC-V Steel Core
+## Welcome to RISC-V Steel
 
-RISC-V Steel is a free and open 32-bit processor core that implements the RV32I instruction set of the RISC-V architecture. It is designed to be easily reused in new RISC-V based hardware designs, from small embedded projects to complex systems on a chip.
+RISC-V Steel is a free and open platform for embedded systems development based on the RISC-V instruction set architecture. It is intended for use as a soft-core on FPGA boards and kits and features a 32-bit RISC-V processor core, programmable memory, UART transceiver and an API for software development.
 
 ### How to get started
 
-The easiest way to start a new project with RISC-V Steel is to modify the [Hello World](https://github.com/riscv-steel/riscv-steel-core/tree/main/hello-world-project) project. It contains some basic devices in addition to the core so that it can be easily expanded into a larger system. The steps to run this project on an **Arty A7-35T** development board can be found in the Quick Start Guide.
+The easiest way to start with RISC-V Steel is to modify the [Hello World](https://github.com/riscv-steel/riscv-steel-core/tree/main/hello-world-project) project. Steps for running this project on an **Arty A7-35T** FPGA board can be found in the [Quick Start Guide](https://riscv-steel.github.io/riscv-steel-core/quick-start-guide/).
 
 [**Check out the Quick Start Guide!**](https://riscv-steel.github.io/riscv-steel-core/quick-start-guide/)
 
-Would you like a version of the Quick Start Guide for other FPGAs and development boards? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel-core/discussions).
+Would you like a version of it for other FPGA boards and kits? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel-core/discussions).
 
 ### Features
 
@@ -22,23 +22,23 @@ Would you like a version of the Quick Start Guide for other FPGAs and developmen
 
 ### License
 
-RISC-V Steel Core is distributed under the [MIT License](../LICENSE).
-
-### Project goal
-
-The project goal is to help expand the adoption of the RISC-V architecture by creating free and open RISC-V hardware that is easy to reuse.
+RISC-V Steel is distributed under the [MIT License](../LICENSE).
 
 ### Need help?
 
 Please open a [new issue](https://github.com/riscv-steel/riscv-steel-core/issues).
 
-### Project roadmap
+### Roadmap and project status
 
 - RV32I base instruction set ✔️
 - Zicsr extension ✔️
 - Support to M-mode ✔️
 - AXI4-Lite Master Interface ✔️
-- Documentation
+- Documentation - in progress
+- Software toolchain - in progress
+- SPI interface
+- I2C interface
+- GPIO interface
 - Support to U-mode
 - C extension
 - M extension
