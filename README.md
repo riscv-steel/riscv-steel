@@ -4,13 +4,13 @@ RISC-V Steel is a free and open platform for embedded systems development based 
 
 ### How to get started
 
-The easiest way to get started with RISC-V Steel is to modify the [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) project. Steps for running this project on an **Arty A7-35T** FPGA board can be found in the [Quick Start Guide](https://riscv-steel.github.io/riscv-steel/quick-start-guide/).
+The easiest way to get started with RISC-V Steel is to modify its [Hello World Project](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world). In the [Quick Start Guide](https://riscv-steel.github.io/riscv-steel/quick-start-guide/) you found the steps to get this project running on an **Arty A7-35T** development board.
 
 [**Check out the Quick Start Guide!**](https://riscv-steel.github.io/riscv-steel/quick-start-guide/)
 
-Would you like a version of it for other FPGA boards and kits? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel/discussions).
+Would you like a version of the Quick Start Guide for other FPGA boards and kits? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel/discussions).
 
-### Features
+### Features 
 
 - RISC-V processor core
   
@@ -24,7 +24,7 @@ Would you like a version of it for other FPGA boards and kits? Please let us kno
 
 ### License
 
-RISC-V Steel is distributed under the [MIT License](../LICENSE).
+RISC-V Steel is distributed under the [MIT License](LICENSE.md).
 
 ### Need help?
 
@@ -32,15 +32,28 @@ Please open a [new issue](https://github.com/riscv-steel/riscv-steel/issues).
 
 ### Roadmap and project status
 
-- RV32I base instruction set ✔️
-- Zicsr extension ✔️
-- Support to M-mode ✔️
-- AXI4-Lite Master Interface ✔️
-- Documentation - in progress
-- Software toolchain - in progress
-- SPI interface
-- I2C interface
-- GPIO interface
-- Support to U-mode
-- C extension
-- M extension
+The following features are planned to be developed soon. You can help us contributing!
+
+:white_check_mark: RV32I base instruction set
+
+:white_check_mark: Zicsr extension
+
+:white_check_mark: Support to M-mode
+
+:white_check_mark: AXI4-Lite Master Interface
+
+:black_square_button: Documentation *(in progress)*
+
+:black_square_button: Software toolchain *(in progress)*
+
+:black_square_button: SPI interface
+
+:black_square_button: I2C interface
+
+:black_square_button: GPIO interface
+
+:black_square_button: Support to U-mode
+
+:black_square_button: C extension
+
+:black_square_button: M extension
