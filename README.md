@@ -12,15 +12,10 @@ Would you like a version of the Quick Start Guide for other FPGA boards and kits
 
 ### Features 
 
-- RISC-V processor core
-  
-  - RV32I + Zicsr extension + Machine-mode
-  - AXI4-Lite interface
-  - Verified with [RISC-V Architectural Test Suite](https://github.com/riscv-non-isa/riscv-arch-test)
-    
-- Programmable RAM memory  
-- UART  
-- Software toolchain
+:white_check_mark: RISC-V processor core (RV32I, Zicsr extension, Machine-mode, AXI4-Lite)  
+:white_check_mark: Programmable RAM memory  
+:white_check_mark: UART  
+:white_check_mark: Software toolchain  
 
 ### License
 
@@ -34,26 +29,15 @@ Please open a [new issue](https://github.com/riscv-steel/riscv-steel/issues).
 
 The following features are planned to be developed soon. You can help us contributing!
 
-:white_check_mark: RV32I base instruction set
-
-:white_check_mark: Zicsr extension
-
-:white_check_mark: Support to M-mode
-
-:white_check_mark: AXI4-Lite Master Interface
-
-:black_square_button: Documentation *(in progress)*
-
-:black_square_button: Software toolchain *(in progress)*
-
-:black_square_button: SPI interface
-
-:black_square_button: I2C interface
-
-:black_square_button: GPIO interface
-
-:black_square_button: Support to U-mode
-
-:black_square_button: C extension
-
-:black_square_button: M extension
+:white_check_mark: RV32I base instruction set  
+:white_check_mark: Zicsr extension  
+:white_check_mark: Support to M-mode  
+:white_check_mark: AXI4-Lite Master Interface  
+:arrow_forward: Documentation *(in progress)*  
+:arrow_forward: Software toolchain *(in progress)*  
+:arrow_forward: SPI interface  
+:arrow_forward: I2C interface  
+:arrow_forward: GPIO interface  
+:arrow_forward: Support to U-mode  
+:arrow_forward: C extension  
+:arrow_forward: M extension  
