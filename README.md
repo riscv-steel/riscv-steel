@@ -4,11 +4,11 @@ RISC-V Steel is a free and open platform for embedded systems development based 
 
 ### How to get started
 
-The easiest way to get started with RISC-V Steel is to modify its [Hello World Project](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world). In the [Quick Start Guide](https://riscv-steel.github.io/riscv-steel/quick-start-guide/) you find the steps to get this project running on an **Arty A7-35T** development board.
+The easiest way to get started with RISC-V Steel is to implement its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) project on an FPGA development board and expand it to meet your project requirements. We provide a [Quick Start Guide](https://riscv-steel.github.io/riscv-steel/quick-start-guide/) with the steps to implement the Hello World project on three FPGA boards: **Arty A7-35T**, **Arty A7-100T**, and **Cmod-A7**.
 
-[**Check out the Quick Start Guide!**](https://riscv-steel.github.io/riscv-steel/quick-start-guide/)
+[**>>> Check out the Quick Start Guide! <<<**](https://riscv-steel.github.io/riscv-steel/quick-start-guide/)
 
-Would you like a version of the Quick Start Guide for other FPGA boards and kits? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel/discussions).
+Would you like a version of this guide for other FPGA boards and kits? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel/discussions).
 
 ### Features 
 
