@@ -40,8 +40,8 @@ Top Module:    axi4_lite_crossbar
 Remarks:
 
   - This is a 1 manager x 2 subordinates AXI4 Lite Crossbar for the Hello World project
-  - Subordinate 0 is assigned the address ranges 0x00000000 - 0x0000ffff, 0x00020000 - 0xffffffff
-  - Subordinate 1 is assigned the address range  0x00010000 - 0x0001ffff
+  - Subordinate 0 is assigned the address ranges 0x00000000 - 0x7fffffff
+  - Subordinate 1 is assigned the address range  0x80000000 - 0xffffffff
 
 **************************************************************************************************/
 module axi4_lite_crossbar (
