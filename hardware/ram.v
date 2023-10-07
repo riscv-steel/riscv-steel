@@ -54,9 +54,9 @@ module ram #(
   parameter MEMORY_SIZE      = 8192,
   
   // Value to fill every memory position
-  parameter FILL_MEMORY_WITH = 32'hdeadbeef,
+  parameter FILL_UNUSED_MEMORY_WITH = 32'hdeadbeef,
   
-  // Init .mem file (for use with AMD Vivado)
+  // Text file with program and data (one hex value per line)
   parameter MEMORY_INIT_FILE = ""
 
   ) (
@@ -132,7 +132,7 @@ module ram #(
 
   integer i;  
   initial begin
-    for (i = 0; i < MEMORY_SIZE/4; i = i + 1) ram[i] = FILL_MEMORY_WITH;
+    for (i = 0; i < MEMORY_SIZE/4; i = i + 1) ram[i] = FILL_UNUSED_MEMORY_WITH;
     if (MEMORY_INIT_FILE != "")      
       $readmemh(MEMORY_INIT_FILE,ram);
   end

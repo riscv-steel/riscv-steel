@@ -43,13 +43,13 @@ Remarks:
   - It only partially implements AXI4 Slave Interface requirements
   - The baud rate can be adjusted to any value as long as the following condition is satisfied:
     
-    CLOCK_FREQUENCY / BAUD_RATE > 50        (clock cycles per baud)
+    CLOCK_FREQUENCY / UART_BAUD_RATE > 50        (clock cycles per baud)
 
 **************************************************************************************************/
 module uart #(
 
   parameter CLOCK_FREQUENCY = 50000000,
-  parameter BAUD_RATE  = 9600
+  parameter UART_BAUD_RATE  = 9600
 
   )(
 
@@ -85,7 +85,7 @@ module uart #(
     
   );
 
-  localparam CYCLES_PER_BAUD = CLOCK_FREQUENCY / BAUD_RATE;
+  localparam CYCLES_PER_BAUD = CLOCK_FREQUENCY / UART_BAUD_RATE;
   
   reg [$clog2(CYCLES_PER_BAUD):0] tx_cycle_counter = 0;
   reg [$clog2(CYCLES_PER_BAUD):0] rx_cycle_counter = 0;
