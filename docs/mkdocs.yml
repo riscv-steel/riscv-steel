@@ -29,6 +29,7 @@ markdown_extensions:
             - overrides/.icons
 theme: 
     icon:
+        annotation: material/plus-circle
         logo: bootstrap/cpu
         favicon: bootstrap/cpu
     name: material

@@ -14,12 +14,6 @@ FPGA boards often include a UART-USB bridge for communicating with a host comput
 
 To send the message, a *Hello World!* program is loaded into memory and executed by the RISC-V processor in RISC-V Steel. The program controls the UART interface by sending the message and echoing back any bytes received in response.
 
-The figure below depicts the main hardware devices in the Hello World project and how they interconnect. The RISC-V processor interfaces with the memory and the UART unit through an AXI4 crossbar. The UART interface is connected to the UART-USB bridge, which provides the interface between the system and a host computer.
-
-<figure markdown>
-  ![](images/hello-world.svg)
-</figure>
-
 ## Requirements
 
 ### Hardware
@@ -59,6 +53,10 @@ Make sure you have the following software installed on your machine before you s
 
 ### 2. Start a serial terminal
 
+<div class="annotate" markdown>
+
+Click on :material-plus-circle: to see screenshots.
+
 * Connect the development board to your computer using a USB cable.
 * Start a PySerial terminal by running:
 
@@ -66,29 +64,51 @@ Make sure you have the following software installed on your machine before you s
     $ python -m serial.tools.miniterm
     ```
 
-* A list of available serial ports will follow. Select the serial port the board is connected to ([see picture](images/pyserial.png)).
+* (1) A list of available serial ports will follow. Select the serial port the board is connected to.
 * **Keep the terminal open** for the next steps.
+
+</div>
+
+1. ![](images/pyserial.png)
 
 ### 3. Program the FPGA
 
+<div class="annotate" markdown>
+
+Click on :material-plus-circle: to see screenshots.
+
 - Open the project at `./hello-world/<board-name>/hello-world.xpr` on AMD Xilinx Vivado.
 
-- Click on *Open Hardware Manager* ([see picture](images/open-hardware-manager.png)).
+- (1) Click on *Open Hardware Manager*, located at the bottom of the *Flow Navigator*.
 
-- Next, click on *Open Target* -> *Auto Connect* ([see picture](images/auto-connect.png)).
+- (2) Next, click on *Open Target* -> *Auto Connect*.
 
-- Vivado will autodetect the FPGA. The hardware box will show either `xc7a35t_0` or `xc7a100t_0`. Right-click on the device name and choose *Program Device* ([see picture](images/program-device.png)).
+- (3) Vivado will autodetect the FPGA. The hardware box will show either `xc7a35t_0` or `xc7a100t_0`. Right-click on the device name and choose *Program Device*.
 
-- A dialog box asking you to choose a bitstream programming file will open. Choose the file `hello_world_<board-name>.bit`, located at `./hello-world/<board-name>/` ([see picture](images/bitstream.png)).
+- (4) A dialog box asking you to choose a bitstream programming file will open. Choose `hello_world_<board-name>.bit`, located at `./hello-world/<board-name>/`.
 
-- Click on *Program* ([see picture](images/bitstream.png)).
+- (5) Click on *Program* and wait Vivado finish programming the FPGA.
 
-- Go back to the serial terminal window. The following message should appear on the terminal as soon as Vivado finishes programming the FPGA ([see picture](images/hello-world.png)):
+- (6) Go back to the serial terminal window. The message below should appear:
 
     ```
     RISC-V Steel Hello World Project!
     Type something and press enter:
     ```
+
+</div>
+
+1. ![](images/open-hardware-manager.png)
+
+2. ![](images/auto-connect.png)
+
+3. ![](images/program-device.png)
+
+4. ![](images/bitstream.png)
+
+5. ![](images/bitstream.png)
+
+6. ![](images/hello-world.png)
 
 If you've reached this point, congratulations! You now have a working instance of RISC-V Steel that you can modify to meet your project needs.
 
