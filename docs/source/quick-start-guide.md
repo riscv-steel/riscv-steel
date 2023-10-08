@@ -10,9 +10,7 @@ If you'd like to have this guide ported to another platform please let us know b
 
 The Hello World project was developed to be a minimal system easily portable to different FPGA boards, upon which it can then be expanded.
 
-FPGA boards often include a UART-USB bridge for communicating with a host computer. The Hello World project takes advantage of this feature to send a *Hello World!* message via UART protocol. This message can be read on a host computer connected via USB cable to the FPGA's UART-USB bridge.
-
-To send the message, a *Hello World!* program is loaded into memory and executed by the RISC-V processor in RISC-V Steel. The program controls the UART interface by sending the message and echoing back any bytes received in response.
+FPGA boards often include a UART-USB bridge for communicating with a host computer. The Hello World project takes advantage of this feature to send a *Hello World!* message via UART protocol, which can be read on a host computer connected via USB cable to the board. To send the message, a *Hello World!* program is loaded into the programmable RAM memory in RISC-V Steel and then executed on the 32-bit RISC-V processor. The program communicates with the UART interface and sends the *Hello World!* message, echoing back any bytes received in response.
 
 ## Requirements
 
