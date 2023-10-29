@@ -10,8 +10,6 @@ The easiest way to get started with RISC-V Steel is to implement its [Hello Worl
 
 [Click here for the Reference Guide](https://riscv-steel.github.io/riscv-steel/hardware-reference/)
 
-Would you like a version of this guide for other platforms? Please let us know by answering this [poll](https://github.com/riscv-steel/riscv-steel/discussions/10) on GitHub.
-
 ### Features 
 
 :white_check_mark: RISC-V processor core (RV32I, Zicsr extension, Machine-mode, AXI4-Lite)  
