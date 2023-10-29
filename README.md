@@ -1,4 +1,4 @@
-## Welcome to RISC-V Steel
+## RISC-V Steel
 
 RISC-V Steel is a free and open platform for embedded systems development based on the RISC-V instruction set architecture. It is intended for use on FPGA development boards but it can also be the start point for a new system-on-a-chip design. It features a 32-bit RISC-V processor core, programmable memory, UART transceiver and an API for software development.
 
