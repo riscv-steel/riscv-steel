@@ -1,14 +1,15 @@
 ## Welcome to RISC-V Steel
 
-RISC-V Steel is a free and open platform for embedded systems development based on the RISC-V instruction set architecture. It is intended for use as a soft-core on FPGA boards and kits and features a 32-bit RISC-V processor core, programmable memory, UART transceiver and an API for software development.
+RISC-V Steel is a free and open platform for embedded systems development based on the RISC-V instruction set architecture. It is intended for use on FPGA development boards but it can also be the start point for a new system-on-a-chip design. It features a 32-bit RISC-V processor core, programmable memory, UART transceiver and an API for software development.
 
 ### How to get started
 
-The easiest way to get started with RISC-V Steel is to implement its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) project on an FPGA development board and expand it to meet your project requirements. We provide a [Quick Start Guide](https://riscv-steel.github.io/riscv-steel/quick-start-guide/) with the steps to implement the Hello World project on three FPGA boards: **Arty A7-35T**, **Arty A7-100T**, and **Cmod-A7**.
+The easiest way to get started with RISC-V Steel is to implement its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) project on your FPGA development board and expand it to meet your project requirements. We provide a guide with the steps to implement it on three Digilent FPGA boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
 
-[Check out the Quick Start Guide!](https://riscv-steel.github.io/riscv-steel/quick-start-guide/)
+[Get Started with RISC-V Steel!](https://riscv-steel.github.io/riscv-steel/getting-started/)
+[Check here the Reference Guide](https://riscv-steel.github.io/riscv-steel/hardware-reference/)
 
-Would you like a version of this guide for other FPGA boards and kits? Please let us know by opening a [new discussion](https://github.com/riscv-steel/riscv-steel/discussions).
+Would you like a version of this guide for other platforms? Please let us know by answering this [poll](https://github.com/riscv-steel/riscv-steel/discussions/10) on GitHub.
 
 ### Features 
 
