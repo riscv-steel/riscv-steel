@@ -4,7 +4,7 @@ RISC-V Steel is a free and open platform for embedded systems development based 
 
 ### How to get started
 
-The easiest way to get started with RISC-V Steel is to implement its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) project on your FPGA development board and expand it to meet your project requirements. We provide a guide with the steps to implement it on three Digilent FPGA boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
+The easiest way to get started with RISC-V Steel is to implement its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) project on your FPGA development board and expand it to meet your project requirements. We provide a guide with the steps to implement it on three Digilent boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
 
 [Get Started with RISC-V Steel!](https://riscv-steel.github.io/riscv-steel/getting-started/)
 
