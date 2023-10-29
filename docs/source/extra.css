@@ -1,4 +1,5 @@
-th, td {
+th,
+td {
   padding: 10px;
 }
 
@@ -6,7 +7,8 @@ table {
   margin-bottom: 20px;
 }
 
-.wy-menu-vertical header, .wy-menu-vertical p.caption {
+.wy-menu-vertical header,
+.wy-menu-vertical p.caption {
   color: #ffffcc;
 }
 
@@ -25,7 +27,9 @@ table {
   line-height: 2.6rem;
 }
 
-
+img.getting-started-screenshot {
+  margin-top: 0.5em;
+}
 
 .mdx-hero__content {
   -webkit-backface-visibility: hidden;
@@ -56,34 +60,35 @@ table {
   color: #000000;
 }
 
-.wy-side-nav-search .wy-dropdown>a img.logo, .wy-side-nav-search>a img.logo {
-    display: block;
-    margin: 0 auto;
-    height: auto;
-    width: auto;
-    border-radius: 0;
-    border: 0px;
-    max-width: 80%;
-    background: transparent;
-    margin-top: .0em;
+.wy-side-nav-search .wy-dropdown>a img.logo,
+.wy-side-nav-search>a img.logo {
+  display: block;
+  margin: 0 auto;
+  height: auto;
+  width: auto;
+  border-radius: 0;
+  border: 0px;
+  max-width: 80%;
+  background: transparent;
+  margin-top: .0em;
 }
 
 .wy-side-nav-search {
-    display: block;
-    width: 300px;
-    padding: .809em;
-    margin-bottom: .809em;
-    z-index: 200;
-    background-color: #000000;
-    text-align: center;
-    padding: .809em;
-    display: block;
-    color: #fcfcfc;
-    margin-bottom: .809em;
+  display: block;
+  width: 300px;
+  padding: .809em;
+  margin-bottom: .809em;
+  z-index: 200;
+  background-color: #000000;
+  text-align: center;
+  padding: .809em;
+  display: block;
+  color: #fcfcfc;
+  margin-bottom: .809em;
 }
 
 .wy-nav-side {
-	background-color: #0f0f0f;
+  background-color: #0f0f0f;
 }
 
 .toctree-expand {
@@ -91,22 +96,25 @@ table {
 }
 
 blockquote {
-    background: #f9f9f9;
-    border-left: 10px solid #ccc;
-    margin: 1.5em 10px;
-    padding: 12px 10px .1em 10px;
-    quotes: "\201C""\201D""\2018""\2019";
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 12px 10px .1em 10px;
+  quotes: "\201C" "\201D" "\2018" "\2019";
 }
+
 .rst-content blockquote {
-	margin-left: 0px;
+  margin-left: 0px;
 }
 
 .rst-content blockquote p {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-code, .rst-content tt, .rst-content code {
-    white-space: pre;
-    word-wrap:normal;
+code,
+.rst-content tt,
+.rst-content code {
+  white-space: pre;
+  word-wrap: normal;
 
 }

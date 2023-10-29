@@ -11,11 +11,12 @@ markdown_extensions:
     - admonition
     - pymdownx.details
     - pymdownx.superfences
-    - pymdownx.superfences
     - pymdownx.tabbed:
         alternate_style: true 
     - pymdownx.highlight:
         anchor_linenums: true
+        line_spans: __span
+        pygments_lang_class: true
     - pymdownx.inlinehilite
     - pymdownx.snippets
     - def_list
@@ -47,9 +48,8 @@ theme:
     features:
         - navigation.tabs
         - toc.integrate
-    hljs_languages:
-        - verilog
-        - console
+        - content.code.copy
+        - content.code.select
 extra:
     analytics:
         provider: google
@@ -61,8 +61,8 @@ docs_dir: source/
 copyright: Copyright &copy; Rafael Calcada
 nav:
     - Home: 'index.md'
-    - Quick Start Guide: 'quick-start-guide.md'
-    #- Reference Guide:
+    - Getting Started: 'getting-started.md'
+    - Hardware Reference: 'hardware-reference.md'
     #  - reference.md
     #  - Microarchitecture: 'microarchitecture.md'
     #  - Interfaces: 'interfaces.md'
