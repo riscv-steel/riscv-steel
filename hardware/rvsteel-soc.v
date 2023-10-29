@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) RISC-V Steel
+Copyright (c) Rafael Calcada
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -144,7 +144,7 @@ module rvsteel_soc #(
     .clock                        (clock                              ),
     .reset_n                      (!reset                             ),
 
-    // AXI4 Lite Master Interface
+    // AXI4 Lite Manager Interface
 
     .m_axil_arready               (m_axil_arready                     ),
     .m_axil_arvalid               (m_axil_arvalid                     ),
