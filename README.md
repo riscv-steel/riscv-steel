@@ -12,10 +12,10 @@ The easiest way to get started with RISC-V Steel is to synthesize its [Hello Wor
 
 ### Available IP cores
 
-#### [RISC-V Processor Core](hardware/rvsteel_core.v)
+#### :eight_spoked_asterisk: [RISC-V Processor Core](hardware/rvsteel-core.v)
 Unpipelined RV32I processor + Zicsr extension + Machine-mode + AXI4-Lite interface
 
-#### [RISC-V Steel SoC](hardware/rvsteel_soc.v)
+#### :eight_spoked_asterisk: [RISC-V Steel SoC](hardware/rvsteel-soc.v)
 All configurable system-on-chip with RISC-V processor + memory + UART
 
 ### License
@@ -25,20 +25,3 @@ RISC-V Steel is distributed under the [MIT License](LICENSE.md).
 ### Need help?
 
 Please open a [new issue](https://github.com/riscv-steel/riscv-steel/issues).
-
-### Roadmap and project status
-
-The following features are planned to be developed soon. You can help us contributing!
-
-:white_check_mark: RV32I base instruction set  
-:white_check_mark: Zicsr extension  
-:white_check_mark: Support to M-mode  
-:white_check_mark: AXI4-Lite Manager Interface  
-:arrow_forward: Documentation *(in progress)*  
-:arrow_forward: Software toolchain *(in progress)*  
-:arrow_forward: SPI interface  
-:arrow_forward: I2C interface  
-:arrow_forward: GPIO interface  
-:arrow_forward: Support to U-mode  
-:arrow_forward: C extension  
-:arrow_forward: M extension  
