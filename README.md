@@ -1,4 +1,4 @@
-**RISC-V Steel** is a free collection of RISC-V based IP cores. It features a 32-bit RISC-V processor and a system-on-chip design plus a suite of software and hardware tools aimed to speed up building new RISC-V systems from scratch.
+**RISC-V Steel** is a free collection of RISC-V based IP cores. It features a 32-bit RISC-V processor and a configurable system-on-chip design plus a suite of software and hardware tools aimed to speed up building new RISC-V systems from scratch.
 
 RISC-V Steel IP cores are written in Verilog and can be either synthesized on FPGAs or reused in system-on-a-chip designs.
 
