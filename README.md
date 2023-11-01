@@ -4,9 +4,9 @@ RISC-V Steel IP cores are written in Verilog and can be either synthesized on FP
 
 ## How to get started
 
-The easiest way to get started with RISC-V Steel is to synthesize its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo on an FPGA and then modify it to meet your project requirements. We provide a guide with the steps to synthesize it on three different Digilent FPGA boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
-
 [Check out the Getting Started Guide!](https://riscv-steel.github.io/riscv-steel/getting-started/)
+
+The easiest way to get started with RISC-V Steel is to synthesize its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo on an FPGA and then modify it to meet your project requirements. We provide a guide with the steps to synthesize it on three different Digilent FPGA boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
 
 ## Available IP cores
 
