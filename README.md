@@ -1,21 +1,22 @@
 ## RISC-V Steel
 
-RISC-V Steel is a free and open platform for embedded systems development based on the RISC-V instruction set architecture. It is intended for use on FPGA development boards but it can also be the start point for a new system-on-a-chip design. It features a 32-bit RISC-V processor core, programmable memory, UART transceiver and an API for software development.
+**RISC-V Steel** is a free collection of RISC-V based IP cores. It features a 32-bit RISC-V processor and a suite of software and hardware tools aimed to speed up building new RISC-V systems from scratch.
+
+RISC-V Steel IP cores are written in Verilog and can be either synthesized on FPGAs or reused in system-on-a-chip designs.
 
 ### How to get started
 
-The easiest way to get started with RISC-V Steel is to implement its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) project on your FPGA development board and expand it to meet your project requirements. We provide a guide with the steps to implement it on three Digilent boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
+The easiest way to get started with RISC-V Steel is to synthesize its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo on an FPGA and then modify it to meet your project requirements. We provide a guide with the steps to synthesize it on three different Digilent FPGA boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
 
 [Get Started with RISC-V Steel!](https://riscv-steel.github.io/riscv-steel/getting-started/)
 
-[Click here for the Reference Guide](https://riscv-steel.github.io/riscv-steel/hardware-reference/)
+### Available IP cores
 
-### Features 
+#### [RISC-V Processor Core](hardware/rvsteel_core.v)
+Unpipelined RV32I processor + Zicsr extension + Machine-mode + AXI4-Lite interface
 
-:white_check_mark: RISC-V processor core (RV32I, Zicsr extension, Machine-mode, AXI4-Lite)  
-:white_check_mark: Programmable RAM memory  
-:white_check_mark: UART  
-:white_check_mark: Software toolchain  
+#### [RISC-V Steel SoC](hardware/rvsteel_soc.v)
+All configurable system-on-chip with RISC-V processor + memory + UART
 
 ### License
 
