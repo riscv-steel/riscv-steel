@@ -62,7 +62,7 @@ copyright: Copyright &copy; Rafael Calcada
 nav:
     - Home: 'index.md'
     - Getting Started: 'getting-started.md'
-    - Hardware Reference: 'hardware-reference.md'
+    #  - Hardware Reference: 'hardware-reference.md'
     #  - reference.md
     #  - Microarchitecture: 'microarchitecture.md'
     #  - Interfaces: 'interfaces.md'
