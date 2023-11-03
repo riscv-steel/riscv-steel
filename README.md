@@ -6,15 +6,15 @@ RISC-V Steel IP cores are written in Verilog and can be either synthesized on FP
 
 [Check out the Getting Started Guide!](https://riscv-steel.github.io/riscv-steel/getting-started/)
 
-The easiest way to get started with RISC-V Steel is to synthesize its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo on an FPGA and then modify it to meet your project requirements. In the Getting Started Guide we provide the steps to synthesize it on three different Digilent FPGA boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
+The easiest way to get started with RISC-V Steel is to synthesize the [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo on an FPGA and then modify it to meet your project requirements. In the Getting Started Guide we provide the steps to synthesize it on three different Digilent FPGA boards: Arty A7-35T, Arty A7-100T, and Cmod-A7.
 
 ## Available IP cores
 
-#### [RISC-V Processor Core](hardware/rvsteel-core.v)
-Unpipelined RV32I processor + Zicsr extension + Machine-mode + AXI4-Lite interface
+#### [RISC-V 32-bit Processor](hardware/rvsteel-core.v)
+Area-optimized, unpipelined 32-bit processor. Implements the RV32I instruction set of RISC-V, the Zicsr extension and the Machine-mode privileged architecture. Interfaces with external devices via AXI4-Lite Manager interface.
 
 #### [RISC-V Steel SoC](hardware/rvsteel-soc.v)
-All configurable system-on-chip with RISC-V processor + memory + UART
+All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Memory + UART.
 
 ## License
 

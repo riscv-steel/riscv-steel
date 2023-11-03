@@ -4,10 +4,21 @@
 
 RISC-V Steel IP cores are written in Verilog and can be either synthesized on FPGAs or reused in custom integrated circuit designs.
 
+## Available IP cores
 
-## The Hello World demo
+#### RISC-V 32-bit Processor
 
-The easiest way to get started with RISC-V Steel is to synthesize its [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo on an FPGA and then modify it to meet your project requirements. This guide will show you the steps to synthesize it on three different FPGA boards:
+Area-optimized, unpipelined 32-bit processor. Implements the RV32I instruction set of RISC-V, the Zicsr extension and the Machine-mode privileged architecture. Interfaces with external devices via AXI4-Lite Manager interface.
+
+#### RISC-V Steel SoC
+  
+All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Memory + UART.
+
+## Hello World demo
+
+The Hello World demo is an instance of RISC-V Steel SoC (`rvsteel_soc.v`) that runs a program that sends a Hello World message to a host computer. The message is sent via UART protocol, so to run this demo you need an FPGA board that has a UART interface (most FPGA boards have one).
+
+This guide will show you the steps to synthesize the Hello World demo for three different FPGA boards:
 
 * **Digilent** [**Arty A7-35T**](https://digilent.com/reference/programmable-logic/arty-a7/reference-manual)
 
@@ -17,11 +28,9 @@ The easiest way to get started with RISC-V Steel is to synthesize its [Hello Wor
 
 ??? question "What if I don't have any of these boards?"
 
-    If you do not have any of these boards try implementing `rvsteel-soc.v` (located at `riscv-steel/hardware/`) in your FPGA. This file contains RISC-V Steel top module.
+    If you do not have any of these boards try implementing `rvsteel-soc.v` (located at `riscv-steel/hardware/`) in your FPGA. This file is the top module of RISC-V Steel SoC.
     
     We are working to create versions of this guide for other platforms so please let us know which FPGA you use by answering our [poll](https://github.com/riscv-steel/riscv-steel/discussions/10) on GitHub.
-
-The demo is an instance of RISC-V Steel SoC IP core - `rvsteel_soc.v` - that runs a Hello World program and uses the UART interface on the FPGA board to send a Hello World message to a computer connected to it. 
 
 ## Pre-requisites
 
@@ -41,7 +50,7 @@ To follow this guide you'll need one of the FPGA boards listed above. Also, make
 
 ## Step by step guide
 
-### 1. Get RISC-V Steel
+### 1 - Get RISC-V Steel
 
 * First, clone RISC-V Steel repository from GitHub:
 
@@ -49,7 +58,7 @@ To follow this guide you'll need one of the FPGA boards listed above. Also, make
     $ git clone https://github.com/riscv-steel/riscv-steel.git
     ```
 
-### 2. Start a serial terminal
+### 2 - Start a serial terminal
 
 * Connect your development board to your computer using a USB cable.
 * Start PySerial terminal by running:
@@ -64,7 +73,7 @@ To follow this guide you'll need one of the FPGA boards listed above. Also, make
 
 * **Keep the terminal open** for the next steps.
 
-### 3. Program the FPGA
+### 3 - Program the FPGA
 
 - Open the project at `riscv-steel/hello-world/<board-name>/hello-world.xpr` on AMD Xilinx Vivado.
 

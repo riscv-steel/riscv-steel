@@ -1,6 +1,6 @@
 site_name: RISC-V Steel
 site_author: Rafael Calcada
-site_description: A free and open platform for embedded systems development based on the RISC-V instruction set architecture.
+site_description: RISC-V Steel is a free collection of RISC-V based IP cores aimed to speed up building new RISC-V systems from scratch.
 repo_url: https://github.com/riscv-steel/riscv-steel
 edit_uri: edit/main/docs/source/
 markdown_extensions:
