@@ -1,21 +1,33 @@
-## Devices overview 
+In this Reference Guide you find detailed information about RISC-V Steel IP cores.
 
-RISC-V Steel features de following hardware devices:
+### RISC-V 32-bit Processor
 
-### 32-bit RISC-V processor
+#### Overview
 
-At the core of RISC-V Steel is a 32-bit RISC-V processor that implements the RV32I integer ISA, the Zicsr extension and the Machine-mode privileged architecture of the RISC-V specifications. The processor core is unpipelined and was written in Verilog. It implements an AXI4-Lite Manager interface for communication with other devices.
+RISC-V Steel 32-bit processor core implements the RV32I instruction set, the Zicsr extension and the Machine-mode privileged architecture of the RISC-V specifications. It communicates with other devices through an AXI4-Lite Manager interface.
 
-The set of features present in the processor core makes it perfect for embedded systems and systems-on-a-chip (SoCs). The core is capable of running both real-time operating systems and bare-metal embedded software. Also, it can easily interconnect with a myriad of pre-existing devices compatible with the AXI architecture.
+The set of features present in the processor core makes it perfect for embedded and system-on-a-chip (SoC) designs. The core is capable of running both real-time operating systems and bare-metal embedded software. Also, it can easily interconnect with a myriad of pre-existing devices compatible with the AXI architecture.
 
 **Table 1.** RISC-V Processor features summary
 
-| Feature     | Notes                                    |
-| ----------- | ---------------------------------------- |
-| RV32I Integer ISA | Version 2.1. [Link to specifications](https://riscv.org/technical/specifications/). |
-| Zicsr Extension   | Version 2.0. [Link to specifications](https://riscv.org/technical/specifications/). |
+| Feature                              | Notes                                                                                |
+| ------------------------------------ | ------------------------------------------------------------------------------------ |
+| RV32I Integer ISA                    | Version 2.1. [Link to specifications](https://riscv.org/technical/specifications/).  |
+| Zicsr Extension                      | Version 2.0. [Link to specifications](https://riscv.org/technical/specifications/).  |
 | Machine-mode privileged architecture | Version 1.12. [Link to specifications](https://riscv.org/technical/specifications/). |
-| AXI4-Lite Manager interface | [Link to specifications](https://developer.arm.com/documentation/ihi0022/latest/). |
+| AXI4-Lite Manager interface          | [Link to specifications](https://developer.arm.com/documentation/ihi0022/latest/).   |
+
+#### Files
+
+#### I/O signals
+
+#### Configuration parameters
+
+#### AXI4 Manager interface
+
+#### Interrupt handling
+
+#### Real-time clock
 
 ### Programmable memory
 

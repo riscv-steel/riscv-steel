@@ -1,22 +1,22 @@
 ## What is RISC-V Steel?
 
-**RISC-V Steel** is a free collection of RISC-V based IP cores. It features a 32-bit RISC-V processor and a configurable system-on-chip design plus a suite of software and hardware tools aimed to speed up building new RISC-V systems from scratch.
+**RISC-V Steel** is a free collection of RISC-V IP cores. It features a 32-bit RISC-V processor and a configurable system-on-chip design plus a suite of software and hardware tools aimed to speed up building new RISC-V systems from scratch.
 
-RISC-V Steel IP cores are written in Verilog and can be either synthesized on FPGAs or reused in custom integrated circuit designs.
+RISC-V Steel IP cores are written in Verilog and can be either synthesized on FPGAs or manufactured as custom integrated circuits.
 
 ## Available IP cores
 
 #### RISC-V 32-bit Processor
 
-Area-optimized, unpipelined 32-bit processor. Implements the RV32I instruction set of RISC-V, the Zicsr extension and the Machine-mode privileged architecture. Interfaces with external devices via AXI4-Lite Manager interface.
+Area-optimized 32-bit processor. Implements the RV32I instruction set of RISC-V, the Zicsr extension and the Machine-mode privileged architecture.
 
 #### RISC-V Steel SoC
   
-All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Memory + UART.
+All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Tightly Coupled Memory + UART.
 
 ## Hello World demo
 
-The Hello World demo is an instance of RISC-V Steel SoC (`rvsteel_soc.v`) that runs a program that sends a Hello World message to a host computer. The message is sent via UART protocol, so to run this demo you need an FPGA board that has a UART interface (most FPGA boards have one).
+The Hello World demo is an instance of RISC-V Steel SoC that runs a program that sends a Hello World message to a host computer via UART protocol. The goal of the demo is to introduce you to our SoC design so that you can expand it and run your own software in it.
 
 This guide will show you the steps to synthesize the Hello World demo for three different FPGA boards:
 
