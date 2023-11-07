@@ -49,9 +49,6 @@ module rvsteel_soc #(
   // Text file with program and data (one hex value per line)
   parameter MEMORY_INIT_FILE = "",
 
-  // Value to fill unused memory space
-  parameter FILL_UNUSED_MEMORY_WITH = 32'hdeadbeef,
-
   // Address of the first instruction to fetch from memory
   parameter BOOT_ADDRESS = 32'h00000000
 
@@ -67,71 +64,38 @@ module rvsteel_soc #(
   wire          irq_external;
   wire          irq_external_ack;
 
-  // RISC-V Steel <=> AXI4 Lite Crossbar
+  // RISC-V Steel 32-bit Processor <=> Crossbar Manager #0
 
-  wire          m_axil_awready;
-  wire          m_axil_awvalid;
-  wire  [31:0]  m_axil_awaddr;
-  wire  [2:0 ]  m_axil_awprot;
-  wire          m_axil_arready;
-  wire          m_axil_arvalid;
-  wire  [31:0]  m_axil_araddr;
-  wire  [2:0 ]  m_axil_arprot;
-  wire          m_axil_wready;
-  wire          m_axil_wvalid;
-  wire  [31:0]  m_axil_wdata;
-  wire  [3:0 ]  m_axil_wstrb;
-  wire          m_axil_bready;
-  wire          m_axil_bvalid;
-  wire  [1:0]   m_axil_bresp;
-  wire          m_axil_rready;
-  wire          m_axil_rvalid;
-  wire  [31:0]  m_axil_rdata;
-  wire  [1:0 ]  m_axil_rresp;
+  wire  [31:0]  m0_mem_address;
+  wire  [31:0]  m0_mem_read_data;
+  wire          m0_mem_read_request;
+  wire          m0_mem_read_request_ack;
+  wire  [31:0]  m0_mem_write_data;
+  wire  [3:0 ]  m0_mem_write_strobe;
+  wire          m0_mem_write_request;
+  wire          m0_mem_write_request_ack;
   
-  // RAM Memory <=> AXI4 Lite Crossbar
+  // Tightly Coupled Memory <=> Crossbar Subordinate #0
 
-  wire          s0_axil_awready;
-  wire          s0_axil_awvalid;
-  wire  [31:0]  s0_axil_awaddr;
-  wire  [2:0 ]  s0_axil_awprot;
-  wire          s0_axil_arready;
-  wire          s0_axil_arvalid;
-  wire  [31:0]  s0_axil_araddr;
-  wire  [2:0 ]  s0_axil_arprot;
-  wire          s0_axil_wready;
-  wire          s0_axil_wvalid;
-  wire  [31:0]  s0_axil_wdata;
-  wire  [3:0 ]  s0_axil_wstrb;
-  wire          s0_axil_bready;
-  wire          s0_axil_bvalid;
-  wire  [1:0]   s0_axil_bresp;
-  wire          s0_axil_rready;
-  wire          s0_axil_rvalid;
-  wire  [31:0]  s0_axil_rdata;
-  wire  [1:0 ]  s0_axil_rresp;
+  wire  [31:0]  s0_mem_address;
+  wire  [31:0]  s0_mem_read_data;
+  wire          s0_mem_read_request;
+  wire          s0_mem_read_request_ack;
+  wire  [31:0]  s0_mem_write_data;
+  wire  [3:0 ]  s0_mem_write_strobe;
+  wire          s0_mem_write_request;
+  wire          s0_mem_write_request_ack;
   
-  // UART <=> AXI4 Lite Crossbar
+  // UART <=> Crossbar Subordinate #1
 
-  wire          s1_axil_awready;
-  wire          s1_axil_awvalid;
-  wire  [31:0]  s1_axil_awaddr;
-  wire  [2:0 ]  s1_axil_awprot;
-  wire          s1_axil_arready;
-  wire          s1_axil_arvalid;
-  wire  [31:0]  s1_axil_araddr;
-  wire  [2:0 ]  s1_axil_arprot;
-  wire          s1_axil_wready;
-  wire          s1_axil_wvalid;
-  wire  [31:0]  s1_axil_wdata;
-  wire  [3:0 ]  s1_axil_wstrb;
-  wire          s1_axil_bready;
-  wire          s1_axil_bvalid;
-  wire  [1:0]   s1_axil_bresp;
-  wire          s1_axil_rready;
-  wire          s1_axil_rvalid;
-  wire  [31:0]  s1_axil_rdata;
-  wire  [1:0 ]  s1_axil_rresp;
+  wire  [31:0]  s1_mem_address;
+  wire  [31:0]  s1_mem_read_data;
+  wire          s1_mem_read_request;
+  wire          s1_mem_read_request_ack;
+  wire  [31:0]  s1_mem_write_data;
+  wire  [3:0 ]  s1_mem_write_strobe;
+  wire          s1_mem_write_request;
+  wire          s1_mem_write_request_ack;
 
   rvsteel_core #(
 
@@ -139,32 +103,21 @@ module rvsteel_soc #(
 
   ) rvsteel_core_instance (
 
-    // Global clock and active-low reset
+    // Global clock and active-high reset
 
     .clock                        (clock                              ),
-    .reset_n                      (!reset                             ),
+    .reset                        (reset                              ),
 
-    // AXI4 Lite Manager Interface
+    // Memory Interface
 
-    .m_axil_arready               (m_axil_arready                     ),
-    .m_axil_arvalid               (m_axil_arvalid                     ),
-    .m_axil_araddr                (m_axil_araddr                      ),
-    .m_axil_arprot                (m_axil_arprot                      ),
-    .m_axil_rready                (m_axil_rready                      ),
-    .m_axil_rvalid                (m_axil_rvalid                      ),
-    .m_axil_rdata                 (m_axil_rdata                       ),
-    .m_axil_rresp                 (m_axil_rresp                       ),
-    .m_axil_awready               (m_axil_awready                     ),
-    .m_axil_awvalid               (m_axil_awvalid                     ),
-    .m_axil_awaddr                (m_axil_awaddr                      ),
-    .m_axil_awprot                (m_axil_awprot                      ),
-    .m_axil_wready                (m_axil_wready                      ),
-    .m_axil_wvalid                (m_axil_wvalid                      ),
-    .m_axil_wdata                 (m_axil_wdata                       ),
-    .m_axil_wstrb                 (m_axil_wstrb                       ),
-    .m_axil_bready                (m_axil_bready                      ),
-    .m_axil_bvalid                (m_axil_bvalid                      ),
-    .m_axil_bresp                 (m_axil_bresp                       ),
+    .mem_address                  (m0_mem_address                     ),
+    .mem_read_data                (m0_mem_read_data                   ),
+    .mem_read_request             (m0_mem_read_request                ),
+    .mem_read_request_ack         (m0_mem_read_request_ack            ),
+    .mem_write_data               (m0_mem_write_data                  ),
+    .mem_write_strobe             (m0_mem_write_strobe                ),
+    .mem_write_request            (m0_mem_write_request               ),
+    .mem_write_request_ack        (m0_mem_write_request_ack           ),
 
     // Interrupt signals (hardwire inputs to zero if unused)
 
@@ -175,120 +128,75 @@ module rvsteel_soc #(
     .irq_software                 (0), // unused
     .irq_software_ack             (),  // unused
 
-    // Real Time Counter (hardwire to zero if unused)
+    // Real Time Clock (hardwire to zero if unused)
 
-    .real_time_counter            (0)  // unused
+    .real_time_clock              (0)  // unused
 
   );
   
-  axi4_lite_crossbar
-  axi4_lite_crossbar_instance (
+  bus_crossbar
+  bus_crossbar_instance (
   
     .clock                        (clock                              ),
-    .reset_n                      (!reset                             ),
+    .reset                        (reset                              ),
 
-    // RISC-V Steel <=> AXI4 Lite Crossbar
+    // RISC-V Steel 32-bit Processor <=> Crossbar Manager #0
 
-    .m_axil_arready               (m_axil_arready                     ),
-    .m_axil_arvalid               (m_axil_arvalid                     ),
-    .m_axil_araddr                (m_axil_araddr                      ),
-    .m_axil_arprot                (m_axil_arprot                      ),
-    .m_axil_rready                (m_axil_rready                      ),
-    .m_axil_rvalid                (m_axil_rvalid                      ),
-    .m_axil_rdata                 (m_axil_rdata                       ),
-    .m_axil_rresp                 (m_axil_rresp                       ),
-    .m_axil_awready               (m_axil_awready                     ),
-    .m_axil_awvalid               (m_axil_awvalid                     ),
-    .m_axil_awaddr                (m_axil_awaddr                      ),
-    .m_axil_awprot                (m_axil_awprot                      ),
-    .m_axil_wready                (m_axil_wready                      ),
-    .m_axil_wvalid                (m_axil_wvalid                      ),
-    .m_axil_wdata                 (m_axil_wdata                       ),
-    .m_axil_wstrb                 (m_axil_wstrb                       ),
-    .m_axil_bready                (m_axil_bready                      ),
-    .m_axil_bvalid                (m_axil_bvalid                      ),
-    .m_axil_bresp                 (m_axil_bresp                       ),
+    .m0_mem_address               (m0_mem_address                     ),
+    .m0_mem_read_data             (m0_mem_read_data                   ),
+    .m0_mem_read_request          (m0_mem_read_request                ),
+    .m0_mem_read_request_ack      (m0_mem_read_request_ack            ),
+    .m0_mem_write_data            (m0_mem_write_data                  ),
+    .m0_mem_write_strobe          (m0_mem_write_strobe                ),
+    .m0_mem_write_request         (m0_mem_write_request               ),
+    .m0_mem_write_request_ack     (m0_mem_write_request_ack           ),
     
-    // RAM Memory <=> AXI4 Lite Crossbar
+    // Tightly Coupled Memory <=> Crossbar Subordinate #0
 
-    .s0_axil_arready               (s0_axil_arready                    ),
-    .s0_axil_arvalid               (s0_axil_arvalid                    ),
-    .s0_axil_araddr                (s0_axil_araddr                     ),
-    .s0_axil_arprot                (s0_axil_arprot                     ),
-    .s0_axil_awready               (s0_axil_awready                    ),
-    .s0_axil_rvalid                (s0_axil_rvalid                     ),
-    .s0_axil_rdata                 (s0_axil_rdata                      ),
-    .s0_axil_rresp                 (s0_axil_rresp                      ),
-    .s0_axil_awvalid               (s0_axil_awvalid                    ),
-    .s0_axil_awaddr                (s0_axil_awaddr                     ),
-    .s0_axil_awprot                (s0_axil_awprot                     ),
-    .s0_axil_wready                (s0_axil_wready                     ),
-    .s0_axil_wvalid                (s0_axil_wvalid                     ),
-    .s0_axil_wdata                 (s0_axil_wdata                      ),
-    .s0_axil_wstrb                 (s0_axil_wstrb                      ),
-    .s0_axil_bready                (s0_axil_bready                     ),
-    .s0_axil_bvalid                (s0_axil_bvalid                     ),
-    .s0_axil_bresp                 (s0_axil_bresp                      ),
-    .s0_axil_rready                (s0_axil_rready                     ),
+    .s0_mem_address               (s0_mem_address                     ),
+    .s0_mem_read_data             (s0_mem_read_data                   ),
+    .s0_mem_read_request          (s0_mem_read_request                ),
+    .s0_mem_read_request_ack      (s0_mem_read_request_ack            ),
+    .s0_mem_write_data            (s0_mem_write_data                  ),
+    .s0_mem_write_strobe          (s0_mem_write_strobe                ),
+    .s0_mem_write_request         (s0_mem_write_request               ),
+    .s0_mem_write_request_ack     (s0_mem_write_request_ack           ),
     
-    // UART <=> AXI4 Lite Crossbar
+    // UART <=> Crossbar Subordinate #1
 
-    .s1_axil_arready               (s1_axil_arready                    ),
-    .s1_axil_arvalid               (s1_axil_arvalid                    ),
-    .s1_axil_araddr                (s1_axil_araddr                     ),
-    .s1_axil_arprot                (s1_axil_arprot                     ),
-    .s1_axil_awready               (s1_axil_awready                    ),
-    .s1_axil_rvalid                (s1_axil_rvalid                     ),
-    .s1_axil_rdata                 (s1_axil_rdata                      ),
-    .s1_axil_rresp                 (s1_axil_rresp                      ),
-    .s1_axil_awvalid               (s1_axil_awvalid                    ),
-    .s1_axil_awaddr                (s1_axil_awaddr                     ),
-    .s1_axil_awprot                (s1_axil_awprot                     ),
-    .s1_axil_wready                (s1_axil_wready                     ),
-    .s1_axil_wvalid                (s1_axil_wvalid                     ),
-    .s1_axil_wdata                 (s1_axil_wdata                      ),
-    .s1_axil_wstrb                 (s1_axil_wstrb                      ),
-    .s1_axil_bready                (s1_axil_bready                     ),
-    .s1_axil_bvalid                (s1_axil_bvalid                     ),
-    .s1_axil_bresp                 (s1_axil_bresp                      ),
-    .s1_axil_rready                (s1_axil_rready                     )
+    .s1_mem_address               (s1_mem_address                     ),
+    .s1_mem_read_data             (s1_mem_read_data                   ),
+    .s1_mem_read_request          (s1_mem_read_request                ),
+    .s1_mem_read_request_ack      (s1_mem_read_request_ack            ),
+    .s1_mem_write_data            (s1_mem_write_data                  ),
+    .s1_mem_write_strobe          (s1_mem_write_strobe                ),
+    .s1_mem_write_request         (s1_mem_write_request               ),
+    .s1_mem_write_request_ack     (s1_mem_write_request_ack           )
 
   );
   
-  ram #(
+  tightly_coupled_memory #(
   
     .MEMORY_SIZE                  (MEMORY_SIZE                        ),
-    .MEMORY_INIT_FILE             (MEMORY_INIT_FILE                   ),
-    .FILL_UNUSED_MEMORY_WITH      (FILL_UNUSED_MEMORY_WITH            )
+    .MEMORY_INIT_FILE             (MEMORY_INIT_FILE                   )
   
-  ) ram_instance (
+  ) tightly_coupled_memory_instance (
   
-    // Global clock and active-low reset
+    // Global clock and active-high reset
   
     .clock                        (clock                              ),
-    .reset_n                      (!reset                             ),
+    .reset                        (reset                              ),
     
-    // AXI4-Lite Slave Interface
+    // Memory Interface
   
-    .s_axil_arready               (s0_axil_arready                    ),
-    .s_axil_arvalid               (s0_axil_arvalid                    ),
-    .s_axil_araddr                (s0_axil_araddr                     ),
-    .s_axil_arprot                (s0_axil_arprot                     ),
-    .s_axil_awready               (s0_axil_awready                    ),
-    .s_axil_rvalid                (s0_axil_rvalid                     ),
-    .s_axil_rdata                 (s0_axil_rdata                      ),
-    .s_axil_rresp                 (s0_axil_rresp                      ),
-    .s_axil_awvalid               (s0_axil_awvalid                    ),
-    .s_axil_awaddr                (s0_axil_awaddr                     ),
-    .s_axil_awprot                (s0_axil_awprot                     ),
-    .s_axil_wready                (s0_axil_wready                     ),
-    .s_axil_wvalid                (s0_axil_wvalid                     ),
-    .s_axil_wdata                 (s0_axil_wdata                      ),
-    .s_axil_wstrb                 (s0_axil_wstrb                      ),
-    .s_axil_bready                (s0_axil_bready                     ),
-    .s_axil_bvalid                (s0_axil_bvalid                     ),
-    .s_axil_bresp                 (s0_axil_bresp                      ),
-    .s_axil_rready                (s0_axil_rready                     )
+    .mem_address                  (s0_mem_address                     ),
+    .mem_read_data                (s0_mem_read_data                   ),
+    .mem_read_request             (s0_mem_read_request                ),
+    .mem_read_request_ack         (s0_mem_read_request_ack            ),
+    .mem_write_data               (s0_mem_write_data                  ),
+    .mem_write_strobe             (s0_mem_write_strobe                ),
+    .mem_write_request            (s0_mem_write_request               ),
+    .mem_write_request_ack        (s0_mem_write_request_ack           )
 
   );
 
@@ -299,25 +207,20 @@ module rvsteel_soc #(
 
   ) uart_instance (
 
-    // Global clock and active-low reset
+    // Global clock and active-high reset
 
     .clock                        (clock                              ),
-    .reset_n                      (!reset                             ),
+    .reset                        (reset                              ),
 
-    // AXI4-Lite Slave Interface
+    // Memory Interface
 
-    .s_axil_arready               (s1_axil_arready                    ),
-    .s_axil_arvalid               (s1_axil_arvalid                    ),
-    .s_axil_araddr                (s1_axil_araddr                     ),
-    .s_axil_awready               (s1_axil_awready                    ),
-    .s_axil_rvalid                (s1_axil_rvalid                     ),
-    .s_axil_rdata                 (s1_axil_rdata                      ),
-    .s_axil_rresp                 (s1_axil_rresp                      ),
-    .s_axil_wready                (s1_axil_wready                     ),
-    .s_axil_wvalid                (s1_axil_wvalid                     ),
-    .s_axil_wdata                 (s1_axil_wdata[7:0]                 ),
-    .s_axil_bvalid                (s1_axil_bvalid                     ),
-    .s_axil_bresp                 (s1_axil_bresp                      ),
+    .mem_address                  (s1_mem_address                     ),
+    .mem_read_data                (s1_mem_read_data                   ),
+    .mem_read_request             (s1_mem_read_request                ),
+    .mem_read_request_ack         (s1_mem_read_request_ack            ),
+    .mem_write_data               (s1_mem_write_data[7:0]             ),
+    .mem_write_request            (s1_mem_write_request               ),
+    .mem_write_request_ack        (s1_mem_write_request_ack           ),
 
     // RX/TX signals
 

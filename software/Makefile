@@ -26,9 +26,8 @@ HEXDUMP_NAME			= hello-world.mem
 # -mstrict-align							Do not generate unaligned addresses
 # -O2													Set optimization level to 2
 # -Wl,--no-warn-rwx-segments	Disable hateful linker warning
-COMPILER_OPTIONS 	?= 	-march=rv32izicsr -mabi=ilp32 -nostartfiles -nostdlib 					\
+COMPILER_OPTIONS 	?= 	-march=rv32i -mabi=ilp32 -nostartfiles -nostdlib 								\
 											-nolibc -nodefaultlibs -mstrict-align -O2												\
-											-Wl,--no-warn-rwx-segments
 
 # Octal dump (od) is needed for hexdump generation
 ifeq (, $(shell which od))

@@ -26,7 +26,7 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel
+Project Name:  RISC-V Steel 32-bit Processor Core
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
@@ -41,32 +41,21 @@ module rvsteel_core #(
 
   ) (
 
-  // Global clock and active-low reset
+  // Global clock and active-high reset
   
   input  wire           clock,
-  input  wire           reset_n,
+  input  wire           reset,
 
-  // AXI4 Lite Manager Interface
+  // Interface with Memory
 
-  input   wire          m_axil_arready,
-  output  reg           m_axil_arvalid,
-  output  wire  [31:0]  m_axil_araddr,
-  output  wire  [2:0 ]  m_axil_arprot,
-  output  reg           m_axil_rready,
-  input   wire          m_axil_rvalid,
-  input   wire  [31:0]  m_axil_rdata,
-  input   wire  [1:0 ]  m_axil_rresp,
-  input   wire          m_axil_awready,
-  output  reg           m_axil_awvalid,
-  output  wire  [31:0]  m_axil_awaddr,
-  output  wire  [2:0 ]  m_axil_awprot,  
-  input   wire          m_axil_wready,
-  output  reg           m_axil_wvalid,
-  output  wire  [31:0]  m_axil_wdata,
-  output  wire  [3:0 ]  m_axil_wstrb,
-  output  reg           m_axil_bready,
-  input   wire          m_axil_bvalid,
-  input   wire  [1:0]   m_axil_bresp,  
+  output wire   [31:0]  mem_address,
+  input  wire   [31:0]  mem_read_data,
+  output wire           mem_read_request,
+  input  wire           mem_read_request_ack,
+  output wire   [31:0]  mem_write_data,
+  output wire   [3:0 ]  mem_write_strobe,
+  output wire           mem_write_request,
+  input  wire           mem_write_request_ack,
 
   // Interrupt signals (hardwire inputs to zero if unused)
 
@@ -77,9 +66,9 @@ module rvsteel_core #(
   input  wire           irq_software,  
   output wire           irq_software_ack,
 
-  // Real Time Counter (hardwire to zero if unused)
+  // Real Time Clock (hardwire to zero if unused)
 
-  input  wire   [63:0]  real_time_counter
+  input  wire   [63:0]  real_time_clock
 
   );
 
@@ -264,19 +253,6 @@ module rvsteel_core #(
   localparam RD_EBREAK            = 5'b00000;
   localparam RD_MRET              = 5'b00000;
 
-  // AXI4 Lite Read Channel state machine
-
-  localparam AXIL_READ_RESET         = 4'b0001;
-  localparam AXIL_READ_WAIT_ARREADY  = 4'b0010;
-  localparam AXIL_READ_WAIT_RVALID   = 4'b0100;
-
-  // AXI4 Lite Write Channel state machine
-
-  localparam AXIL_WRITE_RESET        = 4'b0001;
-  localparam AXIL_WRITE_WAIT_AWREADY = 4'b0010;
-  localparam AXIL_WRITE_WAIT_WREADY  = 4'b0100;
-  localparam AXIL_WRITE_WAIT_BVALID  = 4'b1000;
-  
   //-----------------------------------------------------------------------------------------------//
   // Wires and regs                                                                                //
   //-----------------------------------------------------------------------------------------------//
@@ -292,10 +268,6 @@ module rvsteel_core #(
   wire          alu_sltu_result;
   wire  [31:0]  alu_sra_result;
   wire  [31:0]  alu_srl_result;
-  reg   [2:0]   axil_read_curr_state;
-  reg   [2:0]   axil_read_next_state;
-  reg   [3:0]   axil_write_curr_state;
-  reg   [3:0]   axil_write_next_state;
   reg           branch_condition_satisfied;
   wire  [31:0]  branch_target_address;
   wire          clock_enable;
@@ -364,16 +336,8 @@ module rvsteel_core #(
   wire          load_request;
   wire  [1:0 ]  load_size;
   wire          load_unsigned;
-  wire  [31:0]  mem_address;
   wire  [31:0]  mem_address_internal;
-  wire  [31:0]  mem_read_data;
-  wire          mem_read_request;
-  reg           mem_read_request_ack;
-  wire  [31:0]  mem_write_data;
   reg   [31:0]  mem_write_data_internal;
-  wire  [3:0 ]  mem_write_strobe;
-  wire          mem_write_request;
-  reg           mem_write_request_ack; 
   wire          misaligned_address_exception;
   wire          misaligned_instruction_address;
   wire          misaligned_load;
@@ -381,10 +345,10 @@ module rvsteel_core #(
   wire          mret;
   wire  [31:0]  next_address;
   reg   [31:0]  next_program_counter;
-  reg   [3:0 ]  next_state;  
+  reg   [3:0 ]  next_state;
   reg   [31:0]  prev_instruction;
   reg   [31:0]  prev_instruction_address;  
-  reg           prev_load_request;  
+  reg           prev_load_request;
   reg   [31:0]  prev_mem_address;
   reg           prev_mem_read_request;
   reg   [31:0]  prev_mem_write_data;  
@@ -395,8 +359,8 @@ module rvsteel_core #(
   reg   [1:0 ]  program_counter_source;
   wire  [4:0 ]  rd_addr;
   wire  [31:0]  rd_data;
-  wire          reset;
-  reg           reset_n_reg;
+  wire          reset_internal;
+  reg           reset_reg;
   wire  [4:0 ]  rs1_addr;
   wire  [31:0]  rs1_data;
   wire  [31:0]  rs1_mux;
@@ -425,16 +389,16 @@ module rvsteel_core #(
   //-----------------------------------------------------------------------------------------------//
 
   always @(posedge clock)
-    reset_n_reg <= reset_n;
+    reset_reg <= reset;
 
-  assign reset = !reset_n | !reset_n_reg;
+  assign reset_internal = reset | reset_reg;
 
   assign clock_enable = !(
     (prev_mem_read_request   & !mem_read_request_ack    ) |
     (prev_mem_write_request  & !mem_write_request_ack   ) );
 
   always @(posedge clock) begin
-    if (reset) begin      
+    if (reset_internal) begin      
       prev_instruction_address  <= BOOT_ADDRESS;
       prev_load_request         <= 1'b0;
       prev_mem_address          <= 32'h00000000;
@@ -453,149 +417,6 @@ module rvsteel_core #(
       prev_mem_write_strobe     <= mem_write_strobe;
     end
   end
-  
-  //---------------------------------------------------------------------------------------------//
-  // AXI4 Lite Read Channel                                                                      //
-  //---------------------------------------------------------------------------------------------//
-
-  always @(posedge clock) begin
-    if (reset)
-      axil_read_curr_state <= AXIL_READ_RESET;
-    else
-      axil_read_curr_state <= axil_read_next_state;
-  end
-
-  assign m_axil_araddr =
-    mem_address;
-
-  assign m_axil_arprot =
-    {!load_request, 2'b00};
-
-  assign mem_read_data =
-    m_axil_rdata;
-  
-  always @* begin
-    case (axil_read_curr_state)
-      AXIL_READ_RESET: begin
-        m_axil_arvalid           = 1'b0;
-        m_axil_rready            = 1'b0;
-        mem_read_request_ack     = 1'b0;
-        axil_read_next_state     = AXIL_READ_WAIT_ARREADY;
-      end
-      AXIL_READ_WAIT_ARREADY: begin
-        m_axil_arvalid           = mem_read_request;
-        m_axil_rready            = 1'b0;
-        mem_read_request_ack     = 1'b0;
-        if (reset)
-          axil_read_next_state   = AXIL_READ_RESET;
-        else if (!m_axil_arready)
-          axil_read_next_state   = AXIL_READ_WAIT_ARREADY;
-        else if (m_axil_arready & mem_read_request)
-          axil_read_next_state   = AXIL_READ_WAIT_RVALID;
-        else
-          axil_read_next_state   = AXIL_READ_WAIT_ARREADY;
-      end
-      AXIL_READ_WAIT_RVALID: begin
-        m_axil_arvalid           = mem_read_request & m_axil_rready & m_axil_rvalid & (m_axil_rresp == 2'b00);
-        m_axil_rready            = 1'b1;
-        mem_read_request_ack     = m_axil_rvalid & (m_axil_rresp == 2'b00);
-        if (reset)
-          axil_read_next_state   = AXIL_READ_RESET;
-        else if (!mem_read_request_ack)
-          axil_read_next_state   = AXIL_READ_WAIT_RVALID;
-        else if (!m_axil_arready | !mem_read_request)
-          axil_read_next_state   = AXIL_READ_WAIT_ARREADY;
-        else
-          axil_read_next_state   = AXIL_READ_WAIT_RVALID;
-      end
-      default: begin
-        m_axil_arvalid           = 1'b0;
-        m_axil_rready            = 1'b0;
-        mem_read_request_ack     = 1'b0;
-        axil_read_next_state     = AXIL_READ_WAIT_ARREADY;
-      end
-    endcase
-  end
-
-  //---------------------------------------------------------------------------------------------//
-  // AXI4 Lite Write Channel                                                                     //
-  //---------------------------------------------------------------------------------------------//
-
-  always @(posedge clock) begin
-    if (reset)
-      axil_write_curr_state <= AXIL_WRITE_RESET;
-    else
-      axil_write_curr_state <= axil_write_next_state;
-  end
-
-  assign m_axil_awaddr =
-    mem_address;
-  
-  assign m_axil_awprot =
-    3'b000;
-
-  assign m_axil_wdata =
-    mem_write_data;
-
-  assign m_axil_wstrb =
-    mem_write_strobe;
-  
-  always @* begin
-    case (axil_write_curr_state)
-      AXIL_WRITE_RESET: begin
-        m_axil_awvalid           = 1'b0;
-        m_axil_wvalid            = 1'b0;
-        m_axil_bready            = 1'b0;
-        mem_write_request_ack    = 1'b0;
-        axil_write_next_state    = AXIL_WRITE_WAIT_AWREADY;
-      end
-      AXIL_WRITE_WAIT_AWREADY: begin
-        m_axil_awvalid           = mem_write_request;
-        m_axil_wvalid            = mem_write_request;
-        m_axil_bready            = 1'b0;
-        mem_write_request_ack    = 1'b0;
-        if (reset)
-          axil_write_next_state  = AXIL_WRITE_RESET;
-        else if (mem_write_request & m_axil_awready & m_axil_wready)
-          axil_write_next_state  = AXIL_WRITE_WAIT_BVALID;
-        else if (mem_write_request & m_axil_awready & !m_axil_wready)
-          axil_write_next_state  = AXIL_WRITE_WAIT_WREADY;
-        else
-          axil_write_next_state  = AXIL_WRITE_WAIT_AWREADY;
-      end
-      AXIL_WRITE_WAIT_WREADY: begin
-        m_axil_awvalid           = 1'b0;
-        m_axil_wvalid            = mem_write_request;
-        m_axil_bready            = 1'b0;
-        mem_write_request_ack    = 1'b0;
-        if (reset)
-          axil_write_next_state  = AXIL_WRITE_RESET;
-        else if (mem_write_request & m_axil_wready)
-          axil_write_next_state  = AXIL_WRITE_WAIT_BVALID;
-        else
-          axil_write_next_state  = AXIL_WRITE_WAIT_WREADY;
-      end
-      AXIL_WRITE_WAIT_BVALID: begin
-        m_axil_awvalid           = 1'b0;
-        m_axil_wvalid            = 1'b0;
-        m_axil_bready            = 1'b1;
-        mem_write_request_ack    = m_axil_bready & m_axil_bvalid & (m_axil_bresp == 2'b00);
-        if (reset)
-          axil_write_next_state  = AXIL_WRITE_RESET;
-        else if (mem_write_request_ack)
-          axil_write_next_state  = AXIL_WRITE_WAIT_AWREADY;
-        else
-          axil_write_next_state  = AXIL_WRITE_WAIT_BVALID;
-      end
-      default: begin
-        m_axil_awvalid           = 1'b0;
-        m_axil_wvalid            = 1'b0;
-        m_axil_bready            = 1'b0;
-        mem_write_request_ack    = 1'b0;
-        axil_write_next_state    = AXIL_WRITE_WAIT_AWREADY;
-      end
-    endcase
-  end
 
   //-----------------------------------------------------------------------------------------------//
   // Instruction fetch and instruction address logic                                               //
@@ -606,11 +427,11 @@ module rvsteel_core #(
     BOOT_ADDRESS :
     (clock_enable ?
       next_program_counter :
-      prev_instruction_address);   
-  
-  always @(posedge clock)
-    if (reset)
-      prev_instruction <= 32'h00000000;
+      prev_instruction_address);
+
+    always @(posedge clock)
+    if (reset_internal)
+      prev_instruction <= NOP_INSTRUCTION;
     else
       prev_instruction <= instruction;
     
@@ -640,7 +461,7 @@ module rvsteel_core #(
    program_counter_plus_4;
     
   always @(posedge clock) begin : program_counter_reg_implementation
-    if (reset)
+    if (reset_internal)
       program_counter <= BOOT_ADDRESS;
     else if (clock_enable & !load_pending & !store_pending)
       program_counter <= next_program_counter;
@@ -679,35 +500,35 @@ module rvsteel_core #(
   //-----------------------------------------------------------------------------------------------//
 
   assign mem_read_request =
-    reset ?
+    reset_internal ?
     1'b0 :
     (clock_enable ?
       ~store_request :
       prev_mem_read_request);
 
   assign mem_address =
-    reset ?
+    reset_internal ?
     32'h00000000 :
     (clock_enable ?
       mem_address_internal :
       prev_mem_address);
   
   assign mem_write_request =
-    reset ?
+    reset_internal ?
     1'b0 :
     (clock_enable ?
       store_request :
       prev_mem_write_request);
 
   assign mem_write_data =
-    reset ?
+    reset_internal ?
     32'h00000000 :
     (clock_enable ?
       mem_write_data_internal :
       prev_mem_write_data);
 
   assign mem_write_strobe =
-    reset ?
+    reset_internal ?
     4'b0 :
     (clock_enable ?
       write_strobe :
@@ -739,20 +560,20 @@ module rvsteel_core #(
   always @* begin
     case(instruction_funct3)
       FUNCT3_SB: begin
-        write_strobe            = write_strobe_for_byte;
-        mem_write_data_internal = store_byte_data;
+        write_strobe              = write_strobe_for_byte;
+        mem_write_data_internal  = store_byte_data;
       end
       FUNCT3_SH: begin
-        write_strobe            = write_strobe_for_half;
-        mem_write_data_internal = store_half_data;
+        write_strobe              = write_strobe_for_half;
+        mem_write_data_internal  = store_half_data;
       end
       FUNCT3_SW: begin
-        write_strobe            = {4{mem_write_request}};
-        mem_write_data_internal = rs2_data;
+        write_strobe              = {4{mem_write_request}};
+        mem_write_data_internal  = rs2_data;
       end
       default: begin
-        write_strobe            = {4{mem_write_request}};
-        mem_write_data_internal = rs2_data;
+        write_strobe              = {4{mem_write_request}};
+        mem_write_data_internal  = rs2_data;
       end 
     endcase
   end
@@ -1218,7 +1039,7 @@ module rvsteel_core #(
 
   integer i;
   always @(posedge clock) begin
-    if (reset)
+    if (reset_internal)
       for (i = 1; i < 32; i = i + 1) integer_file[i] <= 32'h00000000;
     else if (clock_enable & integer_file_write_enable)
       integer_file[instruction_rd_address] <= writeback_multiplexer_output;
@@ -1279,7 +1100,7 @@ module rvsteel_core #(
   end
   
   always @(posedge clock) begin : m_mode_fsm_current_state_register
-    if(reset)
+    if(reset_internal)
       current_state <= STATE_RESET;
     else if (clock_enable)
       current_state <= next_state;
@@ -1383,7 +1204,7 @@ module rvsteel_core #(
   };
   
   always @(posedge clock) begin : mstatus_csr_fields_update
-    if(reset) begin
+    if(reset_internal) begin
       csr_mstatus_mie   <= 1'b0;
       csr_mstatus_mpie  <= 1'b1;
     end
@@ -1418,7 +1239,7 @@ module rvsteel_core #(
   };
 
   always @(posedge clock) begin : mie_csr_fields_implementation
-    if(reset) begin
+    if(reset_internal) begin
       csr_mie_meie <= 1'b0;
       csr_mie_mtie <= 1'b0;
       csr_mie_msie <= 1'b0;
@@ -1445,7 +1266,7 @@ module rvsteel_core #(
   };
 
   always @(posedge clock) begin : mip_csr_fields_implementation
-    if(reset) begin
+    if(reset_internal) begin
       csr_mip_meip <= 1'b0;
       csr_mip_mtip <= 1'b0;
       csr_mip_msip <= 1'b0;
@@ -1462,7 +1283,7 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : mepc_implementation
-    if(reset)
+    if(reset_internal)
       csr_mepc <= 32'h00000000;
     else if (clock_enable) begin
       if(take_trap)
@@ -1477,7 +1298,7 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin
-    if(reset)
+    if(reset_internal)
       csr_mscratch <= 32'h00000000;
     else if(clock_enable & instruction_csr_address == MSCRATCH && csr_file_write_enable)
       csr_mscratch <= csr_write_data;
@@ -1488,7 +1309,7 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : mcycle_implementation
-    if (reset)
+    if (reset_internal)
       csr_mcycle <= 64'b0;
     else begin 
       if (clock_enable & instruction_csr_address == MCYCLE && csr_file_write_enable)
@@ -1505,7 +1326,7 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : minstret_implementation
-    if (reset)
+    if (reset_internal)
       csr_minstret  <= 64'b0;
     else if (clock_enable) begin 
       if (instruction_csr_address == MINSTRET && csr_file_write_enable) begin
@@ -1534,7 +1355,7 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : utime_csr_implementation
-    csr_utime <= real_time_counter;
+    csr_utime <= real_time_clock;
   end
   
   //---------------------------------------------------------------------------------------------//
@@ -1542,7 +1363,7 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : mcause_implementation
-    if(reset) 
+    if(reset_internal) 
       csr_mcause <= 32'h00000000;
     else if (clock_enable) begin
       if(current_state == STATE_TRAP_TAKEN)
@@ -1553,7 +1374,7 @@ module rvsteel_core #(
   end
 
   always @(posedge clock) begin : trap_cause_implementation
-    if(reset) begin
+    if(reset_internal) begin
       csr_mcause_code           <= 4'b0;
       csr_mcause_interrupt_flag <= 1'b0;
     end
@@ -1605,7 +1426,7 @@ module rvsteel_core #(
     misaligned_load | misaligned_store | misaligned_instruction_address;
 
   always @(posedge clock) begin : mtval_implementation
-    if(reset) 
+    if(reset_internal) 
       csr_mtval <= 32'h00000000;
     else if (clock_enable) begin
       if(take_trap) begin
@@ -1634,7 +1455,7 @@ module rvsteel_core #(
     {csr_mtvec[31:2], 2'b00};
 
   always @(posedge clock) begin : mtvec_implementation
-    if(reset)
+    if(reset_internal)
       csr_mtvec <= 32'h00000000;
     else if(clock_enable & instruction_csr_address == MTVEC && csr_file_write_enable)
       csr_mtvec <= {csr_write_data[31:2], 1'b0, csr_write_data[0]};

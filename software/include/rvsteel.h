@@ -44,13 +44,13 @@ asm(".section .boot, \"ax\";            "
     "  mret;                            ");
 
 // Address for sending data to UART
-volatile int *__RVSTEEL_UART_TX = (int *)0x80000000;
+volatile char *__RVSTEEL_UART_TX = (char *)0x80000000;
 
 // Address for receiving data from UART
-volatile int *__RVSTEEL_UART_RX = (int *)0x80000004;
+volatile char *__RVSTEEL_UART_RX = (char *)0x80000004;
 
 // Address of the interrupt handler
-volatile int *__RVSTEEL_INT_HANDLER = (int *)0x00000000;
+volatile void *__RVSTEEL_INT_HANDLER = 0x00000000;
 
 // Send a single character over the UART
 void rvsteel_uart_send_char(const char c)
@@ -98,7 +98,7 @@ void rvsteel_wait_for_interrupt()
 // Sets the function to be called on interrupts
 void rvsteel_set_interrupt_handler(void (*interrupt_handler)())
 {
-  __RVSTEEL_INT_HANDLER = (int *)interrupt_handler;
+  __RVSTEEL_INT_HANDLER = interrupt_handler;
 }
 
 #endif

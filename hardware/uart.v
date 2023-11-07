@@ -53,35 +53,30 @@ module uart #(
 
   )(
 
-  // Global clock and active-low reset
+  // Global clock and active-high reset
 
   input   wire          clock,
-  input   wire          reset_n,
+  input   wire          reset,
 
-  // AXI4-Lite Slave Interface
+  // Memory Interface
 
-  output  wire          s_axil_arready,
-  input   wire          s_axil_arvalid,
-  input   wire  [31:0]  s_axil_araddr,
-  output  wire          s_axil_rvalid,
-  output  reg   [31:0]  s_axil_rdata,
-  output  wire  [1:0 ]  s_axil_rresp,
-  output  wire          s_axil_awready, 
-  output  wire          s_axil_wready,
-  input   wire          s_axil_wvalid,
-  input   wire  [7:0]   s_axil_wdata,
-  output  wire          s_axil_bvalid,
-  output  wire  [1:0]   s_axil_bresp,
+  input  wire   [31:0]  mem_address,
+  output reg    [31:0]  mem_read_data,
+  input  wire           mem_read_request,
+  output reg            mem_read_request_ack,
+  input  wire   [7:0]   mem_write_data,
+  input  wire           mem_write_request,
+  output reg            mem_write_request_ack,
 
   // RX/TX signals
 
-  input   wire        uart_rx,
-  output  wire        uart_tx,
+  input   wire          uart_rx,
+  output  wire          uart_tx,
 
   // Interrupt signaling
 
-  output  reg         uart_irq,
-  input   wire        uart_irq_ack
+  output  reg           uart_irq,
+  input   wire          uart_irq_ack
     
   );
 
@@ -95,27 +90,28 @@ module uart #(
   reg [7:0] rx_register;
   reg [7:0] rx_data;
   reg       rx_active;
-  reg       reset_n_reg;
+  reg       reset_reg;
 
-  wire      reset;
+  wire      reset_internal;
 
   always @(posedge clock)
-    reset_n_reg <= reset_n;
+    reset_reg <= reset;
 
-  assign reset = !reset_n | !reset_n_reg;
+  assign reset_internal = reset | reset_reg;
   
   assign uart_tx = tx_register[0];
   
   always @(posedge clock) begin
-    if (reset) begin
+    if (reset_internal) begin
       tx_cycle_counter <= 0;
       tx_register <= 10'b1111111111;
       tx_bit_counter <= 0;
     end
     else if (tx_bit_counter == 0 &&
-             s_axil_wvalid == 1'b1) begin
+             mem_address == 32'h80000000 &&
+             mem_write_request == 1'b1) begin
       tx_cycle_counter <= 0;
-      tx_register <= {1'b1, s_axil_wdata[7:0], 1'b0};
+      tx_register <= {1'b1, mem_write_data[7:0], 1'b0};
       tx_bit_counter <= 10;
     end
     else begin
@@ -133,7 +129,7 @@ module uart #(
   end
   
   always @(posedge clock) begin
-    if (reset) begin
+    if (reset_internal) begin
       rx_cycle_counter <= 0;
       rx_register <= 8'h00;
       rx_data <= 8'h00;
@@ -142,7 +138,7 @@ module uart #(
       rx_active <= 1'b0;
     end
     else if (uart_irq == 1'b1) begin
-      if ((s_axil_araddr == 32'h80000004 && s_axil_arvalid == 1'b1) || uart_irq_ack == 1'b1) begin
+      if ((mem_address == 32'h80000004 && mem_read_request == 1'b1) || uart_irq_ack == 1'b1) begin
         rx_cycle_counter <= 0;
         rx_register <= 8'h00;
         rx_data <= rx_data;
@@ -206,24 +202,27 @@ module uart #(
       end
     end
   end
-  
-  assign s_axil_arready = 1'b1;
-  assign s_axil_awready = 1'b1;
-  assign s_axil_wready  = 1'b1;
-  assign s_axil_rvalid  = 1'b1;
-  assign s_axil_rresp   = 2'b00;
-  assign s_axil_bvalid  = 1'b1;
-  assign s_axil_bresp   = 2'b00;
 
   always @(posedge clock) begin
-    if (reset) 
-      s_axil_rdata <= 32'h00000000;
-    else if (s_axil_araddr == 32'h80000000 && s_axil_arvalid == 1'b1)
-      s_axil_rdata <= {31'b0, tx_bit_counter == 0};
-    else if (s_axil_araddr == 32'h80000004 && s_axil_arvalid == 1'b1)
-      s_axil_rdata <= {24'b0, rx_data};
+    if (reset_internal) begin
+      mem_read_request_ack  <= 1'b0;
+      mem_write_request_ack <= 1'b0;
+    end
+    else begin
+      mem_read_request_ack  <= mem_read_request;
+      mem_write_request_ack <= mem_write_request;
+    end
+  end
+
+  always @(posedge clock) begin
+    if (reset_internal)
+      mem_read_data <= 32'h00000000;
+    else if (mem_address == 32'h80000000 && mem_read_request == 1'b1)
+      mem_read_data <= {31'b0, tx_bit_counter == 0};
+    else if (mem_address == 32'h80000004 && mem_read_request == 1'b1)
+      mem_read_data <= {24'b0, rx_data};
     else
-      s_axil_rdata <= 32'h00000000;
+      mem_read_data <= 32'h00000000;
   end
   
 endmodule

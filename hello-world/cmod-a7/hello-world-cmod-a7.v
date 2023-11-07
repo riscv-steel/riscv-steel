@@ -59,7 +59,6 @@ module hello_world_cmod_a7 (
     .UART_BAUD_RATE           (9600               ),
     .MEMORY_SIZE              (8192               ),
     .MEMORY_INIT_FILE         ("hello-world.mem"  ),
-    .FILL_UNUSED_MEMORY_WITH  (32'hdeadbeef       ),
     .BOOT_ADDRESS             (32'h00000000       )
 
   ) rvsteel_soc_instance (

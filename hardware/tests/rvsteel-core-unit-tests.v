@@ -40,42 +40,13 @@ This is a testbench/simulation for module rvsteel_core intended to be run in AMD
 How to run it in Vivado:
 ------------------------
 
-  - Open project rvsteel-core-unit-tests.xpr (located in hardware/tests/rvsteel-core-unit-tests)
+  - Open rvsteel-core-unit-tests.xpr (located in hardware/tests/rvsteel-core-unit-tests)
     in Vivado and click on "Run simulation > Run behavioral simulation".
   - Run the simulation for at least 20ms by executing "run 20ms" in Vivado's integraged Tcl Console.
 
-The following message is displayed in the Tcl Console after a successful run:
+The following message is displayed in the Tcl Console for a successful run:
 
-    "RISC-V Steel passed ALL unit tests from RISC-V Architectural Test Suite."
-
-How this simulation work:
--------------------------
-
-The RISC-V Architectural Test Suite (https://github.com/riscv-non-isa/riscv-arch-test/) provides a
-set of unit test programs written in assembly to check whether a device meets the
-functional specifications of the RISC-V architecture. Each unit test is intended to test a single
-instruction and generates a 'signature' with the results of its execution. An instruction following
-its functional specification must generate a signature that matches exactly the golden reference
-signature provided by the Test Suite.
-
-For this simulation we compiled all unit test programs for a RV32I device. As required, we modified
-the assembly macro RVMODEL_HALT (called when a unit test completes execution) such that:
-
-  - the memory address where the generated signature begins gets saved at 0x00001ffc
-  - the memory address where the generated signature ends gets saved at 0x00001ff8
-  - a STORE instruction writing 1 to address 0x00001000 is executed after a unit test finishes
-    running. This flags to the simulator the end of a unit test.
-    
-This simulation runs a loop to detect the moment a STORE to address 0x00001000 is executed in
-RISC-V Steel, triggering the comparision between the generated signature and the golden
-reference.
-
-The compilation of the unit tests generates ELFs (binaries). Using objdump and elf2hex tools
-from RISC-V GNU Toolchain the binaries are converted to 'hex dumps' and saved with *.mem 
-extension so they can be used with Vivado to initialize RAM memories.
-
-The compiled unit tests are loaded into a RAM memory connected to RISC-V Steel one at a time and
-then executed.
+    "RISC-V Steel 32-bit Processor passed ALL unit tests from RISC-V Architectural Test Suite"
  
 **************************************************************************************************/
 
@@ -84,105 +55,72 @@ then executed.
 module rvsteel_core_unit_tests();
 
   reg clock;
-  reg reset_n;
+  reg reset;
 
-  wire          axil_awready;
-  wire          axil_awvalid;
-  wire  [31:0]  axil_awaddr;
-  wire  [2:0 ]  axil_awprot;
-  wire          axil_arready;
-  wire          axil_arvalid;
-  wire  [31:0]  axil_araddr;
-  wire  [2:0 ]  axil_arprot;
-  wire          axil_wready;
-  wire          axil_wvalid;
-  wire  [31:0]  axil_wdata;
-  wire  [3:0 ]  axil_wstrb;
-  wire          axil_bready;
-  wire          axil_bvalid;
-  wire  [1:0]   axil_bresp;
-  wire          axil_rready;
-  wire          axil_rvalid;
-  wire  [31:0]  axil_rdata;
-  wire  [1:0 ]  axil_rresp;
+  wire   [31:0]  mem_address;
+  wire   [31:0]  mem_read_data;
+  wire           mem_read_request;
+  wire           mem_read_request_ack;
+  wire   [31:0]  mem_write_data;
+  wire   [3:0 ]  mem_write_strobe;
+  wire           mem_write_request;
+  wire           mem_write_request_ack;
   
   rvsteel_core
   dut0 (
 
-    // Global clock and active-low reset
+    // Global clock and active-high reset
   
-    .clock                    (clock            ),
-    .reset_n                  (reset_n          ),
+    .clock                        (clock                        ),
+    .reset                        (reset                        ),
   
-    // AXI4 Lite Manager Interface
+    // Interface with Memory
   
-    .m_axil_arready           (axil_arready    ),
-    .m_axil_arvalid           (axil_arvalid    ),
-    .m_axil_araddr            (axil_araddr     ),
-    .m_axil_arprot            (axil_arprot     ),
-    .m_axil_rready            (axil_rready     ),
-    .m_axil_rvalid            (axil_rvalid     ),
-    .m_axil_rdata             (axil_rdata      ),
-    .m_axil_rresp             (axil_rresp      ),
-    .m_axil_awready           (axil_awready    ),
-    .m_axil_awvalid           (axil_awvalid    ),
-    .m_axil_awaddr            (axil_awaddr     ),
-    .m_axil_awprot            (axil_awprot     ),    
-    .m_axil_wready            (axil_wready     ),
-    .m_axil_wvalid            (axil_wvalid     ),
-    .m_axil_wdata             (axil_wdata      ),
-    .m_axil_wstrb             (axil_wstrb      ),
-    .m_axil_bready            (axil_bready     ),
-    .m_axil_bvalid            (axil_bvalid     ),
-    .m_axil_bresp             (axil_bresp      ),    
+    .mem_address                  (mem_address                 ),
+    .mem_read_data                (mem_read_data               ),
+    .mem_read_request             (mem_read_request            ),
+    .mem_read_request_ack         (mem_read_request_ack        ),
+    .mem_write_data               (mem_write_data              ),
+    .mem_write_strobe             (mem_write_strobe            ),
+    .mem_write_request            (mem_write_request           ),
+    .mem_write_request_ack        (mem_write_request_ack       ),
   
     // Interrupt signals (hardwire inputs to zero if unused)
   
-    .irq_external             (1'b0),
-    .irq_external_ack         (),
-    .irq_timer                (1'b0),
-    .irq_timer_ack            (),
-    .irq_software             (1'b0),  
-    .irq_software_ack         (),
+    .irq_external                 (1'b0),
+    .irq_external_ack             (),
+    .irq_timer                    (1'b0),
+    .irq_timer_ack                (),
+    .irq_software                 (1'b0),  
+    .irq_software_ack             (),
   
-    // Real Time Counter (hardwire to zero if unused)
+    // Real Time Clock (hardwire to zero if unused)
   
-    .real_time_counter        (64'b0)
+    .real_time_clock              (64'b0)
 
   );
   
-  ram_memory_axi4_lite #(
+  tightly_coupled_memory #(
     
     .MEMORY_SIZE                (2097152          )
   
   ) dut1 (
   
-    // Global clock and active-low reset
+    // Global clock and active-high reset
   
-    .clock                      (clock            ),
-    .reset_n                    (reset_n          ),
+    .clock                        (clock                        ),
+    .reset                        (reset                        ),
     
-    // AXI4-Lite Slave Interface
+    // Memory Interface
   
-    .s_axil_arready             (axil_arready    ),
-    .s_axil_arvalid             (axil_arvalid    ),
-    .s_axil_araddr              (axil_araddr     ),
-    .s_axil_arprot              (axil_arprot     ),
-    .s_axil_awready             (axil_awready    ),
-    .s_axil_rvalid              (axil_rvalid     ),
-    .s_axil_rdata               (axil_rdata      ),
-    .s_axil_rresp               (axil_rresp      ),
-    .s_axil_awvalid             (axil_awvalid    ),
-    .s_axil_awaddr              (axil_awaddr     ),
-    .s_axil_awprot              (axil_awprot     ),    
-    .s_axil_wready              (axil_wready     ),
-    .s_axil_wvalid              (axil_wvalid     ),
-    .s_axil_wdata               (axil_wdata      ),
-    .s_axil_wstrb               (axil_wstrb      ),
-    .s_axil_bready              (axil_bready     ),
-    .s_axil_bvalid              (axil_bvalid     ),
-    .s_axil_bresp               (axil_bresp      ),
-    .s_axil_rready              (axil_rready     )    
+    .mem_address                  (mem_address                 ),
+    .mem_read_data                (mem_read_data               ),
+    .mem_read_request             (mem_read_request            ),
+    .mem_read_request_ack         (mem_read_request_ack        ),
+    .mem_write_data               (mem_write_data              ),
+    .mem_write_strobe             (mem_write_strobe            ),
+    .mem_write_request            (mem_write_request           ),
+    .mem_write_request_ack        (mem_write_request_ack       )    
 
   );
   
@@ -290,7 +228,7 @@ module rvsteel_core_unit_tests();
   reg [31:0]  current_golden_reference [0:2047];
  
   initial begin
-  
+    
     i = 0;
     j = 0;
     k = 0;
@@ -300,33 +238,32 @@ module rvsteel_core_unit_tests();
     current_test_failed_flag = 0;
     failing_tests_counter = 0;
     clock   = 1'b0;
-    reset_n = 1'b1;
+    reset   = 1'b0;
       
     $display("Running unit test programs from RISC-V Architectural Test Suite.");
     
     for(k = 0; k < 45; k=k+1) begin
     
       // Reset     
-      reset_n = 1'b0;
+      reset = 1'b1;
       for(i = 0; i < 524287; i=i+1) dut1.ram[i] = 32'hdeadbeef;
       for(i = 0; i < 2048;   i=i+1) current_golden_reference[i] = 32'hdeadbeef;
       #40;
-      reset_n = 1'b1;
+      reset = 1'b0;
       
       // Initialization
       $readmemh(unit_test_programs_array[k],  dut1.ram                );      
       $readmemh(golden_reference_array[k],    current_golden_reference);
-      
+            
       // Main loop: run test
       for(j = 0; j < 500000; j=j+1) begin
                 
         // After each clock cycle it tests whether the test program finished its execution
         // This event is signaled by writing 1 to the address 0x00001000
         #20;        
-        if(axil_awvalid == 1'b1 &&
-           axil_awaddr  == 32'h00001000 &&
-           axil_wvalid  == 1'b1 &&
-           axil_wdata   == 32'h00000001) begin
+        if(mem_address == 32'h00001000 &&
+           mem_write_request == 1'b1 &&
+           mem_write_data == 32'h00000001) begin
            
           // The beginning and end of signature are stored at
           // 0x00001ffc (ram[2046]) and 0x00001ff8 (ram[2047]).
@@ -366,7 +303,7 @@ module rvsteel_core_unit_tests();
     end
     
     if (failing_tests_counter == 0) begin
-      $display("RISC-V Steel passed ALL unit tests from RISC-V Architectural Test Suite");
+      $display("RISC-V Steel 32-bit Processor passed ALL unit tests from RISC-V Architectural Test Suite");
       $finish();
     end    
     else begin
