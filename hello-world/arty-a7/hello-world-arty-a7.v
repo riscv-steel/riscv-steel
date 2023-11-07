@@ -37,8 +37,6 @@ Top Module:    rvsteel_soc
 
 /**************************************************************************************************
 
-Remarks:
-
   - 'clock' is connected to Arty's 100MHz board clock. Internally this clock is divided by 2.
   - 'reset' is connected to BTN0 on the board
   - UART signals are connect to Arty's UART-USB bridge

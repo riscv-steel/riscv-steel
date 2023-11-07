@@ -37,8 +37,6 @@ Top Module:    uart
 
 /**************************************************************************************************
 
-Remarks:
-
   - This UART module works with 8 data bits, 1 stop bit, no parity bit and no flow control signals
   - It only partially implements AXI4 Slave Interface requirements
   - The baud rate can be adjusted to any value as long as the following condition is satisfied:
