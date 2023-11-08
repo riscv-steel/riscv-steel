@@ -14,7 +14,7 @@ All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor +
 
 [Check out the Getting Started Guide!](https://riscv-steel.github.io/riscv-steel/getting-started/)
 
-To quickly get you started with RISC-V Steel we provide a [guide](https://riscv-steel.github.io/riscv-steel/getting-started/) demonstrating how to synthesize our [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo for popular FPGA boards. The demo is an instance of RISC-V Steel SoC that runs a program that sends a Hello World message to a host computer via UART protocol. The goal of the demo is to introduce you to our SoC design so that you can expand it and run your own software in it.
+To quickly get you started with RISC-V Steel we provide a [guide](https://riscv-steel.github.io/riscv-steel/getting-started/) demonstrating how to synthesize our [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo for some popular FPGA boards. The demo is an instance of RISC-V Steel SoC that runs a program that sends a Hello World message to a host computer via UART protocol. The goal of the demo is to introduce you to our SoC design so that you can expand it and run your own software in it.
 
 ## License
 
