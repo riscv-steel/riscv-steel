@@ -1,24 +1,14 @@
-## What is RISC-V Steel?
+## Introduction
 
-**RISC-V Steel** is a free collection of RISC-V IP cores. It features a 32-bit RISC-V processor and a configurable system-on-chip design plus a suite of software and hardware tools aimed to speed up building new RISC-V systems from scratch.
+This guide demonstrates how to synthesize the Hello World demo on an FPGA so that you can quickly get started with RISC-V Steel.
 
-RISC-V Steel IP cores are written in Verilog and can be either synthesized on FPGAs or manufactured as custom integrated circuits.
+The Hello World demo is an instance of RISC-V Steel SoC IP that sends a Hello World message to a host computer via UART protocol. The goal is to introduce you to the SoC design so that you can expand it and run your own software in it.
 
-## Available IP cores
+---
 
-#### RISC-V 32-bit Processor
+## Pre-requisites
 
-Area-optimized 32-bit processor. Implements the RV32I instruction set of RISC-V, the Zicsr extension and the Machine-mode privileged architecture.
-
-#### RISC-V Steel SoC
-  
-All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Tightly Coupled Memory + UART.
-
-## Hello World demo
-
-The Hello World demo is an instance of RISC-V Steel SoC that runs a program that sends a Hello World message to a host computer via UART protocol. The goal of the demo is to introduce you to our SoC design so that you can expand it and run your own software in it.
-
-This guide will show you the steps to synthesize the Hello World demo for two different FPGA boards:
+To follow this guide you'll need one of the following FPGA boards:
 
 * **Digilent** [**Arty A7**](https://digilent.com/reference/programmable-logic/arty-a7/reference-manual)
 
@@ -26,27 +16,27 @@ This guide will show you the steps to synthesize the Hello World demo for two di
 
 ??? question "What if I don't have any of these boards?"
 
-    If you do not have any of these boards try implementing `rvsteel-soc.v` (located at `riscv-steel/hardware/`) in your FPGA. This file is the top module of RISC-V Steel SoC.
+    If you do not have any of these boards try implementing `rvsteel-soc.v` (located at `riscv-steel/hardware/`) in your FPGA. This file contains RISC-V Steel SoC top module.
     
-    We are working to create versions of this guide for other platforms so please let us know which FPGA you use by answering our [poll](https://github.com/riscv-steel/riscv-steel/discussions/10) on GitHub.
+    We are creating versions of this guide for other platforms so please let us know which FPGA you use by answering our [poll](https://github.com/riscv-steel/riscv-steel/discussions/10) on GitHub.
 
-## Pre-requisites
+Also, make sure you have the following software installed on your computer:
 
-To follow this guide you'll need one of the FPGA boards listed above. Also, make sure you have the following software installed on your machine before you start:
+* **AMD Xilinx Vivado**
 
-**AMD Xilinx Vivado**
+    The latest version of AMD Xilinx Vivado is available for [download here](https://www.xilinx.com/support/download.html).
 
-The latest version of AMD Xilinx Vivado is available for [download here](https://www.xilinx.com/support/download.html).
+    During installation, remember to include support for the Artix-7 device family and the cable drivers.
 
-During installation, remember to include support for the Artix-7 device family and the cable drivers.
+* **PySerial**
 
-**PySerial**
+    [PySerial](https://pyserial.readthedocs.io/en/latest/index.html) is a Python package for communication over serial protocol. It can be installed by running:
 
-[PySerial](https://pyserial.readthedocs.io/en/latest/index.html) is a Python package for communication over serial protocol. It can be installed by running:
+    ```
+    python -m pip install pyserial
+    ```
 
-```
-python -m pip install pyserial
-```
+---
 
 ## Hands-on Guide
 
