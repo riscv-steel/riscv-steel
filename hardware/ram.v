@@ -26,16 +26,16 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel Tightly Coupled Random Access Memory
+Project Name:  RISC-V Steel SoC - Programmable Random Access Memory
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    tightly_coupled_memory
+Top Module:    ram
  
 **************************************************************************************************/
 
-module tightly_coupled_memory #(
+module ram #(
 
   // Memory size in bytes (must be a multiple of 32)
   parameter MEMORY_SIZE      = 8192,

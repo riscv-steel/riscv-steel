@@ -31,7 +31,7 @@ rvsteel_soc                 #(
 );
 ```
 
-#### Tightly Coupled Memory
+#### Programmable Memory
 
 RISC-V Steel has a programmable RAM memory tighly coupled to the processor core. The size of this memory can be adjusted to suit your FPGA capacity. The more powerful your FPGA, the more memory you can get. By default, the size of the memory is set to the small amount of 8KB.
 
@@ -82,7 +82,7 @@ The table below describes the available configuration parameters. The value for 
 | `BOOT_ADDRESS`     | `32'h00000000` | -     | Memory address of the first instruction to be fetched and executed.                                                 |
 | `CLOCK_FREQUENCY`  | `50000000`     | Hz    | Frequency (in Hertz) of the **clock** input signal.                                                                 |
 | `UART_BAUD_RATE`   | `9600`         | Bps   | The desired baud rate (in bauds per second) for the UART.                                                           |
-| `MEMORY_SIZE`      | `8192`         | Bytes | The desired size (in bytes) for the tightly coupled memory. Value must be a multiple of                             |
+| `MEMORY_SIZE`      | `8192`         | Bytes | The desired size (in bytes) for the programmable memory. Value must be a multiple of 32                             |
 | `MEMORY_INIT_FILE` | `""`           | -     | A string with the path to a memory initialization file. By default the memory is left uninitialized (empty string). |
 
 ### RISC-V 32-bit Processor

@@ -18,4 +18,4 @@ Area-optimized 32-bit processor. Implements the RV32I instruction set of RISC-V,
 
 #### RISC-V Steel SoC
   
-All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Tightly Coupled Memory + UART.
+All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Programmable Memory + UART.

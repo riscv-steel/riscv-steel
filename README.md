@@ -8,7 +8,7 @@ RISC-V Steel IP cores are written in Verilog and can be either synthesized on FP
 Area-optimized 32-bit processor. Implements the RV32I instruction set of RISC-V, the Zicsr extension and the Machine-mode privileged architecture.
 
 #### [RISC-V Steel SoC](hardware/rvsteel-soc.v)
-All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Tightly Coupled Memory + UART.
+All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Programmable Memory + UART.
 
 ## Getting Started
 

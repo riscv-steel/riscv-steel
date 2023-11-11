@@ -26,24 +26,23 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel
+Project Name:  RISC-V Steel SoC - Bus Multiplexer Module
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    bus_crossbar
+Top Module:    bus_mux
  
 **************************************************************************************************/
 
 /**************************************************************************************************
 
-  - 1 manager x 2 subordinates crossbar
   - Subordinate 0 is assigned the address range  0x00000000 - 0x7fffffff
   - Subordinate 1 is assigned the address range  0x80000000 - 0xffffffff
 
 **************************************************************************************************/
 
-module bus_crossbar (
+module bus_mux (
 
   input   wire       clock,
   input   wire       reset,

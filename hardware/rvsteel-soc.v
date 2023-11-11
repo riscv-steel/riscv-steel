@@ -75,7 +75,7 @@ module rvsteel_soc #(
   wire          m0_mem_write_request;
   wire          m0_mem_write_request_ack;
   
-  // Tightly Coupled Memory <=> Crossbar Subordinate #0
+  // Programmable Memory <=> Crossbar Subordinate #0
 
   wire  [31:0]  s0_mem_address;
   wire  [31:0]  s0_mem_read_data;
@@ -134,8 +134,8 @@ module rvsteel_soc #(
 
   );
   
-  bus_crossbar
-  bus_crossbar_instance (
+  bus_mux
+  bus_mux_instance (
   
     .clock                        (clock                              ),
     .reset                        (reset                              ),
@@ -151,7 +151,7 @@ module rvsteel_soc #(
     .m0_mem_write_request         (m0_mem_write_request               ),
     .m0_mem_write_request_ack     (m0_mem_write_request_ack           ),
     
-    // Tightly Coupled Memory <=> Crossbar Subordinate #0
+    // Programmable Memory <=> Crossbar Subordinate #0
 
     .s0_mem_address               (s0_mem_address                     ),
     .s0_mem_read_data             (s0_mem_read_data                   ),
@@ -175,12 +175,12 @@ module rvsteel_soc #(
 
   );
   
-  tightly_coupled_memory #(
+  ram #(
   
     .MEMORY_SIZE                  (MEMORY_SIZE                        ),
     .MEMORY_INIT_FILE             (MEMORY_INIT_FILE                   )
   
-  ) tightly_coupled_memory_instance (
+  ) ram_instance (
   
     // Global clock and active-high reset
   
