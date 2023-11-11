@@ -64,7 +64,7 @@ module rvsteel_soc #(
   wire          irq_external;
   wire          irq_external_ack;
 
-  // RISC-V Steel 32-bit Processor <=> Crossbar Manager #0
+  // RISC-V Steel 32-bit Processor (Manager #0) <=> Bus Multiplexer
 
   wire  [31:0]  m0_mem_address;
   wire  [31:0]  m0_mem_read_data;
@@ -75,7 +75,7 @@ module rvsteel_soc #(
   wire          m0_mem_write_request;
   wire          m0_mem_write_request_ack;
   
-  // Programmable Memory <=> Crossbar Subordinate #0
+  // Programmable Memory (Subordinate #0) <=> Bus Multiplexer
 
   wire  [31:0]  s0_mem_address;
   wire  [31:0]  s0_mem_read_data;
@@ -86,7 +86,7 @@ module rvsteel_soc #(
   wire          s0_mem_write_request;
   wire          s0_mem_write_request_ack;
   
-  // UART <=> Crossbar Subordinate #1
+  // UART (Subordinate #1) <=> Bus Multiplexer
 
   wire  [31:0]  s1_mem_address;
   wire  [31:0]  s1_mem_read_data;
@@ -140,7 +140,7 @@ module rvsteel_soc #(
     .clock                        (clock                              ),
     .reset                        (reset                              ),
 
-    // RISC-V Steel 32-bit Processor <=> Crossbar Manager #0
+    // RISC-V Steel 32-bit Processor (Manager #0) <=> Bus Multiplexer
 
     .m0_mem_address               (m0_mem_address                     ),
     .m0_mem_read_data             (m0_mem_read_data                   ),
@@ -151,7 +151,7 @@ module rvsteel_soc #(
     .m0_mem_write_request         (m0_mem_write_request               ),
     .m0_mem_write_request_ack     (m0_mem_write_request_ack           ),
     
-    // Programmable Memory <=> Crossbar Subordinate #0
+    // Programmable Memory (Subordinate #0) <=> Bus Multiplexer
 
     .s0_mem_address               (s0_mem_address                     ),
     .s0_mem_read_data             (s0_mem_read_data                   ),
@@ -162,7 +162,7 @@ module rvsteel_soc #(
     .s0_mem_write_request         (s0_mem_write_request               ),
     .s0_mem_write_request_ack     (s0_mem_write_request_ack           ),
     
-    // UART <=> Crossbar Subordinate #1
+    // UART (Subordinate #1) <=> Bus Multiplexer
 
     .s1_mem_address               (s1_mem_address                     ),
     .s1_mem_read_data             (s1_mem_read_data                   ),
