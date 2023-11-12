@@ -134,8 +134,14 @@ module rvsteel_soc #(
 
   );
   
-  bus_mux
-  bus_mux_instance (
+  bus_mux #(
+
+    .S0_START_ADDRESS             (32'h00000000                       ),
+    .S0_FINAL_ADDRESS             (MEMORY_SIZE-1                      ),
+    .S1_START_ADDRESS             (32'h80000000                       ),
+    .S1_FINAL_ADDRESS             (32'h80000004                       )
+
+  ) bus_mux_instance (
   
     .clock                        (clock                              ),
     .reset                        (reset                              ),

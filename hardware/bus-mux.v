@@ -35,14 +35,14 @@ Top Module:    bus_mux
  
 **************************************************************************************************/
 
-/**************************************************************************************************
+module bus_mux # (
 
-  - Subordinate 0 is assigned the address range  0x00000000 - 0x7fffffff
-  - Subordinate 1 is assigned the address range  0x80000000 - 0xffffffff
+  parameter S0_START_ADDRESS = 32'h00000000,
+  parameter S0_FINAL_ADDRESS = 32'h7fffffff,
+  parameter S1_START_ADDRESS = 32'h80000000,
+  parameter S1_FINAL_ADDRESS = 32'hffffffff
 
-**************************************************************************************************/
-
-module bus_mux (
+  )(
 
   input   wire       clock,
   input   wire       reset,
@@ -87,6 +87,8 @@ module bus_mux (
   localparam    SEL_S1      = 3'b100;
 
   wire          reset_internal;
+  wire          s0_valid_access;
+  wire          s1_valid_access;
 
   reg           reset_reg;
   reg [2:0]     response_sel;
@@ -96,33 +98,43 @@ module bus_mux (
 
   assign reset_internal = reset | reset_reg;
 
+  assign s0_valid_access =
+    $unsigned(m0_mem_address) >= $unsigned(S0_START_ADDRESS) && 
+    $unsigned(m0_mem_address) <= $unsigned(S0_FINAL_ADDRESS);
+  
+  assign s1_valid_access =
+    $unsigned(m0_mem_address) >= $unsigned(S1_START_ADDRESS) && 
+    $unsigned(m0_mem_address) <= $unsigned(S1_FINAL_ADDRESS);
+
   assign s0_mem_address       = m0_mem_address;
   assign s0_mem_write_data    = m0_mem_write_data;
   assign s0_mem_write_strobe  = m0_mem_write_strobe;
-  assign s0_mem_read_request  = m0_mem_address[31] == 1'b0 ? m0_mem_read_request : 1'b0;
-  assign s0_mem_write_request = m0_mem_address[31] == 1'b0 ? m0_mem_write_request : 1'b0;
+  assign s0_mem_read_request  = s0_valid_access ? m0_mem_read_request : 1'b0;
+  assign s0_mem_write_request = s0_valid_access ? m0_mem_write_request : 1'b0;
 
   assign s1_mem_address       = m0_mem_address;
   assign s1_mem_write_data    = m0_mem_write_data;
   assign s1_mem_write_strobe  = m0_mem_write_strobe;
-  assign s1_mem_read_request  = m0_mem_address[31] == 1'b1 ? m0_mem_read_request : 1'b0;
-  assign s1_mem_write_request = m0_mem_address[31] == 1'b1 ? m0_mem_write_request : 1'b0;
+  assign s1_mem_read_request  = s1_valid_access ? m0_mem_read_request : 1'b0;
+  assign s1_mem_write_request = s1_valid_access ? m0_mem_write_request : 1'b0;
 
   always @(posedge clock) begin
     if (reset_internal)
       response_sel <= SEL_RESET;
-    else if (m0_mem_address[31] != 1'b1)
+    else if (s0_valid_access)
       response_sel <= SEL_S0;
-    else
+    else if (s1_valid_access)
       response_sel <= SEL_S1;
+    else
+      response_sel <= SEL_RESET;
   end
 
   always @* begin
     case (response_sel)
       SEL_RESET: begin
-        m0_mem_write_request_ack  <= 1'b0;
+        m0_mem_write_request_ack  <= 1'b1;
         m0_mem_read_data          <= 32'h00000000;
-        m0_mem_read_request_ack   <= 2'b0;
+        m0_mem_read_request_ack   <= 2'b1;
       end
       SEL_S0: begin
         m0_mem_write_request_ack  <= s0_mem_write_request_ack;
@@ -135,9 +147,9 @@ module bus_mux (
         m0_mem_read_request_ack   <= s1_mem_read_request_ack;
       end
       default: begin
-        m0_mem_write_request_ack  <= 1'b0;
+        m0_mem_write_request_ack  <= 1'b1;
         m0_mem_read_data          <= 32'h00000000;
-        m0_mem_read_request_ack   <= 2'b0;
+        m0_mem_read_request_ack   <= 2'b1;
       end
     endcase
   end

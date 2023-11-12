@@ -37,7 +37,7 @@ Top Module:    ram
 
 module ram #(
 
-  // Memory size in bytes (must be a multiple of 32)
+  // Memory size in bytes
   parameter MEMORY_SIZE      = 8192,
   
   // File with program and data
@@ -71,6 +71,7 @@ module ram #(
 
   wire                        reset_internal;
   wire [ADDR_BUS_WIDTH:0]     effective_address;
+  wire                        invalid_address;
   
   reg                         reset_reg;
   reg [31:0]                  ram [0:(MEMORY_SIZE/4)-1];
@@ -83,6 +84,12 @@ module ram #(
     reset_reg <= reset;
 
   assign reset_internal = reset | reset_reg;
+
+  //-----------------------------------------------------------------------------------------------//
+  // Invalid address detection                                                                     //
+  //-----------------------------------------------------------------------------------------------//
+
+  assign invalid_address = $unsigned(mem_address) >= $unsigned(MEMORY_SIZE);
 
   //---------------------------------------------------------------------------------------------//
   // Memory initialization                                                                       //
@@ -107,7 +114,7 @@ module ram #(
   //---------------------------------------------------------------------------------------------//
   
   always @(posedge clock) begin
-    if (reset_internal)
+    if (reset_internal | invalid_address)
       mem_read_data <= 32'h00000000;
     else
       mem_read_data <= ram[effective_address];
