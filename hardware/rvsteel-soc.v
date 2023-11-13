@@ -64,179 +64,240 @@ module rvsteel_soc #(
   wire          irq_external;
   wire          irq_external_ack;
 
-  // RISC-V Steel 32-bit Processor (Manager #0) <=> Bus Multiplexer
+  // RISC-V Steel 32-bit Processor (Manager Device) <=> Bus Multiplexer
 
-  wire  [31:0]  m0_mem_address;
-  wire  [31:0]  m0_mem_read_data;
-  wire          m0_mem_read_request;
-  wire          m0_mem_read_request_ack;
-  wire  [31:0]  m0_mem_write_data;
-  wire  [3:0 ]  m0_mem_write_strobe;
-  wire          m0_mem_write_request;
-  wire          m0_mem_write_request_ack;
+  wire  [31:0]  mem_address;
+  wire  [31:0]  mem_read_data;
+  wire          mem_read_request;
+  wire          mem_read_request_ack;
+  wire  [31:0]  mem_write_data;
+  wire  [3:0 ]  mem_write_strobe;
+  wire          mem_write_request;
+  wire          mem_write_request_ack;
   
-  // Programmable Memory (Subordinate #0) <=> Bus Multiplexer
+  // Programmable Memory (Device #0) <=> Bus Multiplexer
 
-  wire  [31:0]  s0_mem_address;
-  wire  [31:0]  s0_mem_read_data;
-  wire          s0_mem_read_request;
-  wire          s0_mem_read_request_ack;
-  wire  [31:0]  s0_mem_write_data;
-  wire  [3:0 ]  s0_mem_write_strobe;
-  wire          s0_mem_write_request;
-  wire          s0_mem_write_request_ack;
+  wire  [31:0]  device0_mem_address;
+  wire  [31:0]  device0_mem_read_data;
+  wire          device0_mem_read_request;
+  wire          device0_mem_read_request_ack;
+  wire  [31:0]  device0_mem_write_data;
+  wire  [3:0 ]  device0_mem_write_strobe;
+  wire          device0_mem_write_request;
+  wire          device0_mem_write_request_ack;
   
-  // UART (Subordinate #1) <=> Bus Multiplexer
+  // UART (Device #1) <=> Bus Multiplexer
 
-  wire  [31:0]  s1_mem_address;
-  wire  [31:0]  s1_mem_read_data;
-  wire          s1_mem_read_request;
-  wire          s1_mem_read_request_ack;
-  wire  [31:0]  s1_mem_write_data;
-  wire  [3:0 ]  s1_mem_write_strobe;
-  wire          s1_mem_write_request;
-  wire          s1_mem_write_request_ack;
+  wire  [31:0]  device1_mem_address;
+  wire  [31:0]  device1_mem_read_data;
+  wire          device1_mem_read_request;
+  wire          device1_mem_read_request_ack;
+  wire  [31:0]  device1_mem_write_data;
+  wire  [3:0 ]  device1_mem_write_strobe;
+  wire          device1_mem_write_request;
+  wire          device1_mem_write_request_ack;
+
+  /* Uncomment to add new devices
+
+  // Device #2 <=> Bus Multiplexer
+
+  wire  [31:0]  device2_mem_address;
+  wire  [31:0]  device2_mem_read_data;
+  wire          device2_mem_read_request;
+  wire          device2_mem_read_request_ack;
+  wire  [31:0]  device2_mem_write_data;
+  wire  [3:0 ]  device2_mem_write_strobe;
+  wire          device2_mem_write_request;
+  wire          device2_mem_write_request_ack;
+
+  // Device #3 <=> Bus Multiplexer
+
+  wire  [31:0]  device3_mem_address;
+  wire  [31:0]  device3_mem_read_data;
+  wire          device3_mem_read_request;
+  wire          device3_mem_read_request_ack;
+  wire  [31:0]  device3_mem_write_data;
+  wire  [3:0 ]  device3_mem_write_strobe;
+  wire          device3_mem_write_request;
+  wire          device3_mem_write_request_ack;
+
+  */
 
   rvsteel_core #(
 
-    .BOOT_ADDRESS                 (BOOT_ADDRESS                       )
+    .BOOT_ADDRESS                   (BOOT_ADDRESS                       )
 
   ) rvsteel_core_instance (
 
     // Global clock and active-high reset
 
-    .clock                        (clock                              ),
-    .reset                        (reset                              ),
+    .clock                          (clock                              ),
+    .reset                          (reset                              ),
 
     // Memory Interface
 
-    .mem_address                  (m0_mem_address                     ),
-    .mem_read_data                (m0_mem_read_data                   ),
-    .mem_read_request             (m0_mem_read_request                ),
-    .mem_read_request_ack         (m0_mem_read_request_ack            ),
-    .mem_write_data               (m0_mem_write_data                  ),
-    .mem_write_strobe             (m0_mem_write_strobe                ),
-    .mem_write_request            (m0_mem_write_request               ),
-    .mem_write_request_ack        (m0_mem_write_request_ack           ),
+    .mem_address                    (mem_address                        ),
+    .mem_read_data                  (mem_read_data                      ),
+    .mem_read_request               (mem_read_request                   ),
+    .mem_read_request_ack           (mem_read_request_ack               ),
+    .mem_write_data                 (mem_write_data                     ),
+    .mem_write_strobe               (mem_write_strobe                   ),
+    .mem_write_request              (mem_write_request                  ),
+    .mem_write_request_ack          (mem_write_request_ack              ),
 
     // Interrupt signals (hardwire inputs to zero if unused)
 
-    .irq_external                 (irq_external                       ),
-    .irq_external_ack             (irq_external_ack                   ),
-    .irq_timer                    (0), // unused
-    .irq_timer_ack                (),  // unused
-    .irq_software                 (0), // unused
-    .irq_software_ack             (),  // unused
+    .irq_external                   (irq_external                       ),
+    .irq_external_ack               (irq_external_ack                   ),
+    .irq_timer                      (0), // unused
+    .irq_timer_ack                  (),  // unused
+    .irq_software                   (0), // unused
+    .irq_software_ack               (),  // unused
 
     // Real Time Clock (hardwire to zero if unused)
 
-    .real_time_clock              (0)  // unused
+    .real_time_clock                (0)  // unused
 
   );
   
   bus_mux #(
 
-    .S0_START_ADDRESS             (32'h00000000                       ),
-    .S0_FINAL_ADDRESS             (MEMORY_SIZE-1                      ),
-    .S1_START_ADDRESS             (32'h80000000                       ),
-    .S1_FINAL_ADDRESS             (32'h80000004                       )
+    .DEVICE0_START_ADDRESS          (32'h00000000                       ),
+    .DEVICE0_FINAL_ADDRESS          (MEMORY_SIZE-1                      ),
+    .DEVICE1_START_ADDRESS          (32'h80000000                       ),
+    .DEVICE1_FINAL_ADDRESS          (32'h80000004                       )
+
+    /* Uncomment to add new devices
+
+    .DEVICE2_START_ADDRESS          (32'hdeadbeef                       ),
+    .DEVICE2_FINAL_ADDRESS          (32'hdeadbeef                       ),
+    .DEVICE3_START_ADDRESS          (32'hdeadbeef                       ),
+    .DEVICE3_FINAL_ADDRESS          (32'hdeadbeef                       )
+
+    */
 
   ) bus_mux_instance (
   
-    .clock                        (clock                              ),
-    .reset                        (reset                              ),
+    .clock                          (clock                              ),
+    .reset                          (reset                              ),
 
-    // RISC-V Steel 32-bit Processor (Manager #0) <=> Bus Multiplexer
+    // RISC-V Steel 32-bit Processor (Manager Device) <=> Bus Multiplexer
 
-    .m0_mem_address               (m0_mem_address                     ),
-    .m0_mem_read_data             (m0_mem_read_data                   ),
-    .m0_mem_read_request          (m0_mem_read_request                ),
-    .m0_mem_read_request_ack      (m0_mem_read_request_ack            ),
-    .m0_mem_write_data            (m0_mem_write_data                  ),
-    .m0_mem_write_strobe          (m0_mem_write_strobe                ),
-    .m0_mem_write_request         (m0_mem_write_request               ),
-    .m0_mem_write_request_ack     (m0_mem_write_request_ack           ),
+    .mem_address                    (mem_address                        ),
+    .mem_read_data                  (mem_read_data                      ),
+    .mem_read_request               (mem_read_request                   ),
+    .mem_read_request_ack           (mem_read_request_ack               ),
+    .mem_write_data                 (mem_write_data                     ),
+    .mem_write_strobe               (mem_write_strobe                   ),
+    .mem_write_request              (mem_write_request                  ),
+    .mem_write_request_ack          (mem_write_request_ack              ),
     
-    // Programmable Memory (Subordinate #0) <=> Bus Multiplexer
+    // Programmable Memory (Device #0) <=> Bus Multiplexer
 
-    .s0_mem_address               (s0_mem_address                     ),
-    .s0_mem_read_data             (s0_mem_read_data                   ),
-    .s0_mem_read_request          (s0_mem_read_request                ),
-    .s0_mem_read_request_ack      (s0_mem_read_request_ack            ),
-    .s0_mem_write_data            (s0_mem_write_data                  ),
-    .s0_mem_write_strobe          (s0_mem_write_strobe                ),
-    .s0_mem_write_request         (s0_mem_write_request               ),
-    .s0_mem_write_request_ack     (s0_mem_write_request_ack           ),
+    .device0_mem_address            (device0_mem_address                ),
+    .device0_mem_read_data          (device0_mem_read_data              ),
+    .device0_mem_read_request       (device0_mem_read_request           ),
+    .device0_mem_read_request_ack   (device0_mem_read_request_ack       ),
+    .device0_mem_write_data         (device0_mem_write_data             ),
+    .device0_mem_write_strobe       (device0_mem_write_strobe           ),
+    .device0_mem_write_request      (device0_mem_write_request          ),
+    .device0_mem_write_request_ack  (device0_mem_write_request_ack      ),
     
-    // UART (Subordinate #1) <=> Bus Multiplexer
+    // UART (Device #1) <=> Bus Multiplexer
 
-    .s1_mem_address               (s1_mem_address                     ),
-    .s1_mem_read_data             (s1_mem_read_data                   ),
-    .s1_mem_read_request          (s1_mem_read_request                ),
-    .s1_mem_read_request_ack      (s1_mem_read_request_ack            ),
-    .s1_mem_write_data            (s1_mem_write_data                  ),
-    .s1_mem_write_strobe          (s1_mem_write_strobe                ),
-    .s1_mem_write_request         (s1_mem_write_request               ),
-    .s1_mem_write_request_ack     (s1_mem_write_request_ack           )
+    .device1_mem_address            (device1_mem_address                ),
+    .device1_mem_read_data          (device1_mem_read_data              ),
+    .device1_mem_read_request       (device1_mem_read_request           ),
+    .device1_mem_read_request_ack   (device1_mem_read_request_ack       ),
+    .device1_mem_write_data         (device1_mem_write_data             ),
+    .device1_mem_write_strobe       (device1_mem_write_strobe           ),
+    .device1_mem_write_request      (device1_mem_write_request          ),
+    .device1_mem_write_request_ack  (device1_mem_write_request_ack      )
+
+    /* Uncomment to add new devices
+
+    // Device #2 <=> Bus Multiplexer
+
+    .device2_mem_address            (device2_mem_address                ),
+    .device2_mem_read_data          (device2_mem_read_data              ),
+    .device2_mem_read_request       (device2_mem_read_request           ),
+    .device2_mem_read_request_ack   (device2_mem_read_request_ack       ),
+    .device2_mem_write_data         (device2_mem_write_data             ),
+    .device2_mem_write_strobe       (device2_mem_write_strobe           ),
+    .device2_mem_write_request      (device2_mem_write_request          ),
+    .device2_mem_write_request_ack  (device2_mem_write_request_ack      )
+
+    // Device #3 <=> Bus Multiplexer
+
+    .device3_mem_address            (device3_mem_address                ),
+    .device3_mem_read_data          (device3_mem_read_data              ),
+    .device3_mem_read_request       (device3_mem_read_request           ),
+    .device3_mem_read_request_ack   (device3_mem_read_request_ack       ),
+    .device3_mem_write_data         (device3_mem_write_data             ),
+    .device3_mem_write_strobe       (device3_mem_write_strobe           ),
+    .device3_mem_write_request      (device3_mem_write_request          ),
+    .device3_mem_write_request_ack  (device3_mem_write_request_ack      )
+
+    */
 
   );
   
   ram #(
   
-    .MEMORY_SIZE                  (MEMORY_SIZE                        ),
-    .MEMORY_INIT_FILE             (MEMORY_INIT_FILE                   )
+    .MEMORY_SIZE                    (MEMORY_SIZE                        ),
+    .MEMORY_INIT_FILE               (MEMORY_INIT_FILE                   )
   
   ) ram_instance (
   
     // Global clock and active-high reset
   
-    .clock                        (clock                              ),
-    .reset                        (reset                              ),
+    .clock                          (clock                              ),
+    .reset                          (reset                              ),
     
     // Memory Interface
   
-    .mem_address                  (s0_mem_address                     ),
-    .mem_read_data                (s0_mem_read_data                   ),
-    .mem_read_request             (s0_mem_read_request                ),
-    .mem_read_request_ack         (s0_mem_read_request_ack            ),
-    .mem_write_data               (s0_mem_write_data                  ),
-    .mem_write_strobe             (s0_mem_write_strobe                ),
-    .mem_write_request            (s0_mem_write_request               ),
-    .mem_write_request_ack        (s0_mem_write_request_ack           )
+    .mem_address                    (device0_mem_address                ),
+    .mem_read_data                  (device0_mem_read_data              ),
+    .mem_read_request               (device0_mem_read_request           ),
+    .mem_read_request_ack           (device0_mem_read_request_ack       ),
+    .mem_write_data                 (device0_mem_write_data             ),
+    .mem_write_strobe               (device0_mem_write_strobe           ),
+    .mem_write_request              (device0_mem_write_request          ),
+    .mem_write_request_ack          (device0_mem_write_request_ack      )
 
   );
 
   uart #(
 
-    .CLOCK_FREQUENCY              (CLOCK_FREQUENCY                    ),
-    .UART_BAUD_RATE               (UART_BAUD_RATE                     )
+    .CLOCK_FREQUENCY                (CLOCK_FREQUENCY                    ),
+    .UART_BAUD_RATE                 (UART_BAUD_RATE                     )
 
   ) uart_instance (
 
     // Global clock and active-high reset
 
-    .clock                        (clock                              ),
-    .reset                        (reset                              ),
+    .clock                          (clock                              ),
+    .reset                          (reset                              ),
 
     // Memory Interface
 
-    .mem_address                  (s1_mem_address                     ),
-    .mem_read_data                (s1_mem_read_data                   ),
-    .mem_read_request             (s1_mem_read_request                ),
-    .mem_read_request_ack         (s1_mem_read_request_ack            ),
-    .mem_write_data               (s1_mem_write_data[7:0]             ),
-    .mem_write_request            (s1_mem_write_request               ),
-    .mem_write_request_ack        (s1_mem_write_request_ack           ),
+    .mem_address                    (device1_mem_address                ),
+    .mem_read_data                  (device1_mem_read_data              ),
+    .mem_read_request               (device1_mem_read_request           ),
+    .mem_read_request_ack           (device1_mem_read_request_ack       ),
+    .mem_write_data                 (device1_mem_write_data[7:0]        ),
+    .mem_write_request              (device1_mem_write_request          ),
+    .mem_write_request_ack          (device1_mem_write_request_ack      ),
 
     // RX/TX signals
 
-    .uart_tx                      (uart_tx                            ),
-    .uart_rx                      (uart_rx                            ),
+    .uart_tx                        (uart_tx                            ),
+    .uart_rx                        (uart_rx                            ),
 
     // Interrupt signaling
 
-    .uart_irq                     (irq_external                       ),
-    .uart_irq_ack                 (irq_external_ack                   )
+    .uart_irq                       (irq_external                       ),
+    .uart_irq_ack                   (irq_external_ack                   )
 
   );
 

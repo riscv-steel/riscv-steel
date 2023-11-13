@@ -1,3 +1,26 @@
 .md-typeset h1 {
   color: var(--md-default-fg-color);
 }
+
+.md-nav__item .md-nav__link--active,
+.md-nav__item .md-nav__link--active code {
+  color: var(--md-accent-fg-color);
+}
+
+.md-nav__title {
+  color: var(--md-default-fg-color);
+  display: block;
+  font-weight: 700;
+  overflow: hidden;
+  padding: 0 0.6rem;
+  text-overflow: ellipsis;
+}
+
+.md-nav__item--section>.md-nav__link[for] {
+  color: var(--md-default-fg-color);
+}
+
+/*.md-typeset a {
+  color: #009485;
+  word-break: break-word;
+}*/

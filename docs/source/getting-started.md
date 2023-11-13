@@ -1,10 +1,8 @@
-## Introduction
+# Getting Started
 
-This guide demonstrates how to synthesize the Hello World demo on an FPGA so that you can quickly get started with RISC-V Steel.
+This guide shows you how to synthesize the Hello World demo for some popular FPGAs so that you can quickly get started with RISC-V Steel SoC IP.
 
-The Hello World demo is an instance of RISC-V Steel SoC IP that sends a Hello World message to a host computer via UART protocol. The goal is to introduce you to the SoC design so that you can expand it and run your own software in it.
-
----
+The Hello World demo is an instance of RISC-V Steel SoC IP that sends a Hello World message to a host computer via UART protocol. The goal is to introduce you to the SoC design so that you can expand it and run your own software.
 
 ## Pre-requisites
 
@@ -13,12 +11,6 @@ To follow this guide you'll need one of the following FPGA boards:
 * **Digilent** [**Arty A7**](https://digilent.com/reference/programmable-logic/arty-a7/reference-manual)
 
 * **Digilent** [**Cmod A7**](https://digilent.com/reference/programmable-logic/cmod-a7/reference-manual)
-
-??? question "What if I don't have any of these boards?"
-
-    If you do not have any of these boards try implementing `rvsteel-soc.v` (located at `riscv-steel/hardware/`) in your FPGA. This file contains RISC-V Steel SoC top module.
-    
-    We are creating versions of this guide for other platforms so please let us know which FPGA you use by answering our [poll](https://github.com/riscv-steel/riscv-steel/discussions/10) on GitHub.
 
 Also, make sure you have the following software installed on your computer:
 
@@ -36,11 +28,7 @@ Also, make sure you have the following software installed on your computer:
     python -m pip install pyserial
     ```
 
----
-
-## Hands-on Guide
-
-### Get RISC-V Steel
+## Get RISC-V Steel
 
 Clone RISC-V Steel repository from GitHub:
 
@@ -48,21 +36,21 @@ Clone RISC-V Steel repository from GitHub:
 git clone https://github.com/riscv-steel/riscv-steel.git
 ```
 
-### Start PySerial terminal
+## Start PySerial terminal
 
-Connect the board to your computer using a USB cable. Then start a PySerial terminal by running:
+Connect the board to your computer using a USB cable. Then start PySerial terminal by running:
 
 ```
 python -m serial.tools.miniterm
 ```
 
-A list of available serial ports will follow. Select the serial port the board is connected to.
+A list of available serial ports will follow. Select the serial port your board is connected to.
 
 ![](images/pyserial.png){ class="getting-started-screenshot" width="500" }
 
 **Keep the terminal open** for the next steps.
 
-### Program the FPGA
+## Program the FPGA
 
 Open **AMD Xilinx Vivado** and follow the steps:
 
@@ -76,7 +64,9 @@ Open **AMD Xilinx Vivado** and follow the steps:
 
 5. A dialog box asking you to provide the bitstream programming file will open.
 
-6. Choose file **`hello_world_<board-name>.bit`**, located at **`riscv-steel/hello-world/<board-name>/`**.
+6. Choose file **`hello_world_<board-name>.bit`**.
+
+    This file is saved in **`riscv-steel/hello-world/<board-name>/`**.
 
 7. Click on **Program** and wait it finish programming the FPGA.
 

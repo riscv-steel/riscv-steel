@@ -1,21 +1,15 @@
-# Welcome to **RISC-V Steel**
+# **RISC-V Steel** Documentation
 
-This is the official documentation page for RISC-V Steel IP cores.
+Welcome to RISC-V Steel documentation website.
 
-[Get Started!](getting-started){ .md-button }
+RISC-V Steel is a free and open collection of RISC-V IP. It features a 32-bit RISC-V processor core, a configurable system-on-chip design and a suite of software and hardware tools aimed to speed up building RISC-V embedded applications.
 
-## Introduction
+## Available Hardware IP
 
-RISC-V Steel is a free collection of RISC-V IP cores aimed to speed up building RISC-V systems. 
-
-RISC-V Steel IP cores are available as Verilog files and can be either synthesized on FPGAs or manufactured as custom integrated circuits.
-
-## Available IP cores
-
-#### RISC-V 32-bit Processor
-
-Area-optimized 32-bit processor. Implements the RV32I instruction set of RISC-V, the Zicsr extension and the Machine-mode privileged architecture.
-
-#### RISC-V Steel SoC
+**[RISC-V Steel SoC](soc-reference.md)**
   
-All configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Programmable Memory + UART.
+Configurable system-on-chip design featuring RISC-V Steel 32-bit Processor + Programmable Memory + UART.
+
+**[RISC-V Steel 32-bit Processor Core](core-reference.md)**
+
+Area-optimized 32-bit processor design. Implements the RV32I instruction set, the Zicsr extension and the Machine-mode privileged architecture of the RISC-V specifications.

@@ -1,6 +1,6 @@
 # License
 
-**RISC-V Steel** is free and open. It is distributed under the [MIT License](https://choosealicense.com/licenses/mit/), reproduced below.
+RISC-V Steel is free and open. It is distributed under the [MIT License](https://choosealicense.com/licenses/mit/), reproduced below.
 
 ---
 
