@@ -117,7 +117,7 @@ The design of the processor core is quite large so it has its own [Reference Gui
 
 ### Programmable memory
 
-RISC-V Steel has an on-chip programmable RAM memory tighly coupled to the processor core. The size of the memory is set to 8 KB by default but it can be adjusted by changing the value of the `MEMORY_SIZE` parameter. 
+RISC-V Steel has an on-chip programmable random access memory tightly coupled to the processor core. The size of the memory is 8 KB by default but it can be adjusted by changing the value of the `MEMORY_SIZE` parameter. 
 
 To initialize the memory contents on power-up you need to provide a memory initialization file via `MEMORY_INIT_FILE` parameter. You find the instructions on how to generate this file in the [Software Guide](#software-guide) section.
 
