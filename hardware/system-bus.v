@@ -26,16 +26,16 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel SoC - Bus Multiplexer Module
+Project Name:  RISC-V Steel SoC - System Bus
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    bus_mux
+Top Module:    system_bus
  
 **************************************************************************************************/
 
-module bus_mux #(
+module system_bus #(
 
   parameter DEVICE0_START_ADDRESS = 32'h00000000,
   parameter DEVICE0_FINAL_ADDRESS = 32'h7fffffff,
@@ -43,9 +43,6 @@ module bus_mux #(
   parameter DEVICE1_FINAL_ADDRESS = 32'hffffffff
 
   /* Uncomment to add new devices
-
-  Read RISC-V Steel SoC Reference Guide for more information:
-  https://riscv-steel.github.io/riscv-steel/soc-reference/#adding-a-new-device
 
   parameter DEVICE2_START_ADDRESS = 32'hdeadbeef,
   parameter DEVICE2_FINAL_ADDRESS = 32'hdeadbeef,

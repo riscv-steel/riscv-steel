@@ -64,7 +64,7 @@ module rvsteel_soc #(
   wire          irq_external;
   wire          irq_external_ack;
 
-  // RISC-V Steel 32-bit Processor (Manager Device) <=> Bus Multiplexer
+  // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
   wire  [31:0]  mem_address;
   wire  [31:0]  mem_read_data;
@@ -75,7 +75,7 @@ module rvsteel_soc #(
   wire          mem_write_request;
   wire          mem_write_request_ack;
   
-  // Programmable Memory (Device #0) <=> Bus Multiplexer
+  // RAM Memory (Device #0) <=> System Bus
 
   wire  [31:0]  device0_mem_address;
   wire  [31:0]  device0_mem_read_data;
@@ -86,7 +86,7 @@ module rvsteel_soc #(
   wire          device0_mem_write_request;
   wire          device0_mem_write_request_ack;
   
-  // UART (Device #1) <=> Bus Multiplexer
+  // UART (Device #1) <=> System Bus
 
   wire  [31:0]  device1_mem_address;
   wire  [31:0]  device1_mem_read_data;
@@ -99,7 +99,7 @@ module rvsteel_soc #(
 
   /* Uncomment to add new devices
 
-  // Device #2 <=> Bus Multiplexer
+  // Device #2 <=> System Bus
 
   wire  [31:0]  device2_mem_address;
   wire  [31:0]  device2_mem_read_data;
@@ -110,7 +110,7 @@ module rvsteel_soc #(
   wire          device2_mem_write_request;
   wire          device2_mem_write_request_ack;
 
-  // Device #3 <=> Bus Multiplexer
+  // Device #3 <=> System Bus
 
   wire  [31:0]  device3_mem_address;
   wire  [31:0]  device3_mem_read_data;
@@ -160,7 +160,7 @@ module rvsteel_soc #(
 
   );
   
-  bus_mux #(
+  system_bus #(
 
     .DEVICE0_START_ADDRESS          (32'h00000000                       ),
     .DEVICE0_FINAL_ADDRESS          (MEMORY_SIZE-1                      ),
@@ -176,12 +176,12 @@ module rvsteel_soc #(
 
     */
 
-  ) bus_mux_instance (
+  ) system_bus_instance (
   
     .clock                          (clock                              ),
     .reset                          (reset                              ),
 
-    // RISC-V Steel 32-bit Processor (Manager Device) <=> Bus Multiplexer
+    // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
     .mem_address                    (mem_address                        ),
     .mem_read_data                  (mem_read_data                      ),
@@ -192,7 +192,7 @@ module rvsteel_soc #(
     .mem_write_request              (mem_write_request                  ),
     .mem_write_request_ack          (mem_write_request_ack              ),
     
-    // Programmable Memory (Device #0) <=> Bus Multiplexer
+    // RAM Memory (Device #0) <=> System Bus
 
     .device0_mem_address            (device0_mem_address                ),
     .device0_mem_read_data          (device0_mem_read_data              ),
@@ -203,7 +203,7 @@ module rvsteel_soc #(
     .device0_mem_write_request      (device0_mem_write_request          ),
     .device0_mem_write_request_ack  (device0_mem_write_request_ack      ),
     
-    // UART (Device #1) <=> Bus Multiplexer
+    // UART (Device #1) <=> System Bus
 
     .device1_mem_address            (device1_mem_address                ),
     .device1_mem_read_data          (device1_mem_read_data              ),
@@ -216,7 +216,7 @@ module rvsteel_soc #(
 
     /* Uncomment to add new devices
 
-    // Device #2 <=> Bus Multiplexer
+    // Device #2 <=> System Bus
 
     .device2_mem_address            (device2_mem_address                ),
     .device2_mem_read_data          (device2_mem_read_data              ),
@@ -227,7 +227,7 @@ module rvsteel_soc #(
     .device2_mem_write_request      (device2_mem_write_request          ),
     .device2_mem_write_request_ack  (device2_mem_write_request_ack      )
 
-    // Device #3 <=> Bus Multiplexer
+    // Device #3 <=> System Bus
 
     .device3_mem_address            (device3_mem_address                ),
     .device3_mem_read_data          (device3_mem_read_data              ),
@@ -242,7 +242,7 @@ module rvsteel_soc #(
 
   );
   
-  ram #(
+  ram_memory #(
   
     .MEMORY_SIZE                    (MEMORY_SIZE                        ),
     .MEMORY_INIT_FILE               (MEMORY_INIT_FILE                   )
@@ -300,5 +300,39 @@ module rvsteel_soc #(
     .uart_irq_ack                   (irq_external_ack                   )
 
   );
+
+  /* Uncomment to add new devices
+
+  mydevice2
+  mydevice2_instance (
+
+    ... device 2 signals ...
+
+    .mydevice2_address              (device2_mem_address                ),
+    .mydevice2_read_data            (device2_mem_read_data              ),
+    .mydevice2_read_request         (device2_mem_read_request           ),
+    .mydevice2_read_request_ack     (device2_mem_read_request_ack       ),
+    .mydevice2_write_data           (device2_mem_write_data             ),
+    .mydevice2_write_request        (device2_mem_write_request          ),
+    .mydevice2_write_request_ack    (device2_mem_write_request_ack      )
+
+  );
+
+  mydevice3
+  mydevice3_instance (
+
+    ... device 3 signals ...
+
+    .mydevice3_address              (device3_mem_address                ),
+    .mydevice3_read_data            (device3_mem_read_data              ),
+    .mydevice3_read_request         (device3_mem_read_request           ),
+    .mydevice3_read_request_ack     (device3_mem_read_request_ack       ),
+    .mydevice3_write_data           (device3_mem_write_data             ),
+    .mydevice3_write_request        (device3_mem_write_request          ),
+    .mydevice3_write_request_ack    (device3_mem_write_request_ack      )
+
+  );
+
+  */
 
 endmodule

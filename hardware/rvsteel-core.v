@@ -26,7 +26,7 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel 32-bit Processor Core
+Project Name:  RISC-V Steel Core
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com

@@ -7,8 +7,8 @@
     <FileList>
         <File path="hello-word-tang-nano-20k.v" type="file.verilog" enable="1"/>
         <File path="../../hardware/uart.v" type="file.verilog" enable="1"/>
-        <File path="../../hardware/ram.v" type="file.verilog" enable="1"/>
-        <File path="../../hardware/bus-mux.v" type="file.verilog" enable="1"/>
+        <File path="../../hardware/ram-memory.v" type="file.verilog" enable="1"/>
+        <File path="../../hardware/system-bus.v" type="file.verilog" enable="1"/>
         <File path="../../hardware/rvsteel-core.v" type="file.verilog" enable="1"/>
         <File path="../../hardware/rvsteel-soc.v" type="file.verilog" enable="1"/>
         <File path="tang-nano-20k-constraints.cst" type="file.cst" enable="1"/>

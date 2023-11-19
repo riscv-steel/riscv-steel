@@ -26,16 +26,16 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel SoC - Programmable Random Access Memory
+Project Name:  RISC-V Steel SoC - Random Access Memory
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com
 
-Top Module:    ram
+Top Module:    ram_memory
  
 **************************************************************************************************/
 
-module ram #(
+module ram_memory #(
 
   // Memory size in bytes
   parameter MEMORY_SIZE      = 8192,
