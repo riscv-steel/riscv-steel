@@ -1,37 +1,56 @@
-# RISC-V Steel System-on-Chip IP
+# RISC-V Steel SoC </br><small>Reference Guide</small>
 
 ## Introduction
 
-RISC-V Steel SoC IP is a configurable system-on-chip design featuring RISC-V Steel 32-bit Processor Core, a programmable memory and an UART module. It comes with an API for software development that makes it easier for hardware engineers to develop and deploy new RISC-V embedded applications.
+RISC-V Steel SoC is a configurable system-on-chip design featuring RISC-V Steel Core, a RAM memory and a UART module. It comes with an [API](steel-api.md) for software development that makes it easier for hardware engineers to develop and deploy new RISC-V embedded applications.
 
-## Design overview
-
-The figure below depicts the on-chip devices of RISC-V Steel SoC IP and how they interconnect. An overview of each device is provided in the [On-chip devices](#on-chip-devices) section.
+The figure below depicts the main components of RISC-V Steel SoC and how they interconnect. Detailed information about each device in the system is provided in the following sections.
 
 <figure markdown>
-  ![Image title](images/rvsteel-soc.drawio.svg)
-  <figcaption>RISC-V Steel SoC design overview</figcaption>
+  ![Image title](images/rvsteel-soc.drawio.svg){#figure-1}
+  <figcaption><strong>Figure 1</strong> - Overview of RISC-V Steel SoC</figcaption>
 </figure>
 
-## Source files
+## General information
 
-The table below lists the source files of RISC-V Steel SoC modules. They are all written in Verilog and saved in the **`riscv-steel/hardware/`** folder.
+This section provides information about the source files, the input/output signals and the configuration parameters of RISC-V Steel SoC.
 
-???+ info
+### Source files
 
-    The top module depends on all source files so you need to import them all into your project.
+**Table 1** - RISC-V Steel SoC source files
 
-**Table 1.** RISC-V Steel SoC modules and source files
+| File                 | Module name      | Location                |  Description                    |
+| -------------------- | ---------------- | ----------------------- |------------------------------ |
+| **`rvsteel-soc.v`**  | **rvsteel_soc**  | `riscv-steel/hardware/` | Top module of RISC-V Steel SoC |
+| **`rvsteel-core.v`** | **rvsteel_core** | `riscv-steel/hardware/` | RISC-V Steel Core              |
+| **`ram-memory.v`**   | **ram_memory**   | `riscv-steel/hardware/` | RAM memory                     |
+| **`uart.v`**         | **uart**         | `riscv-steel/hardware/` | UART                           |
+| **`system-bus.v`**   | **system_bus**   | `riscv-steel/hardware/` | System Bus                     |
 
-| Module name                  | File name                  | Description                         |
-| ---------------------------- | -------------------------- | ----------------------------------- |
-| **`rvsteel_soc`**            | `rvsteel-soc.v`            | RISC-V Steel SoC Top Module         |
-| **`rvsteel_core`**           | `rvsteel-core.v`           | RISC-V Steel 32-bit Processor Core  |
-| **`ram`**                    | `ram.v`                    | Programmable RAM Memory             |
-| **`uart`**                   | `uart.v`                   | UART Receiver / Transmitter         |
-| **`bus_mux`**                | `bus-mux.v`                | Bus Multiplexer                     |
+### Input/output signals
 
-## Instantiation
+**Table 2** - RISC-V Steel SoC top module input and output signals
+
+| Pin name       | Direction | Size  | Description          |
+| -------------- | --------- | ----- | -------------------- |
+| **clock**      | Input     | 1 bit | Clock input.         |
+| **reset**      | Input     | 1 bit | Reset (active-high). |
+| **uart_rx**    | Input     | 1 bit | UART receiver pin. Must be connected to the transmitter (`TX`) pin of another UART device. |
+| **uart_tx**    | Output    | 1 bit | UART transmitter pin. Must be connected to the receiver (`RX`) pin of another UART device. |
+
+### Configuration
+
+**Table 3** - Configuration parameters of RISC-V Steel SoC
+
+| Parameter name       | Default value  | Value type and description                                                                    |
+| -------------------- | -------------- | --------------------------------------------------------------------------------------------- |
+| **BOOT_ADDRESS**     | 32'h00000000   | 32-bit hexadecimal value. Memory address of the first instruction to be fetched and executed. |
+| **CLOCK_FREQUENCY**  | 50000000       | Integer. Frequency (in hertz) of the **clock** input signal.                                  |
+| **UART_BAUD_RATE**   | 9600           | Integer. UART baud rate (in bauds per second).                                                |
+| **MEMORY_SIZE**      | 8192           | Integer. RAM memory size (in bytes).                                             |
+| **MEMORY_INIT_FILE** | (empty string) | String. Path to a memory initialization file.                                                 |
+
+## Instantiation template
 
 An instantiation template for RISC-V Steel SoC top module is provided below.
 
@@ -47,104 +66,76 @@ rvsteel_soc #(
   .MEMORY_SIZE              (),  // Default value: 8192
   .MEMORY_INIT_FILE         ())  // Default value: Empty string (uninitialized)
 
-rvsteel_soc_instance (
+  rvsteel_soc_instance (
 
-  // I/O signals. For more information read the 'I/O signals'
+  // I/O signals. For more information read the 'Input/output signals'
   // section of RISC-V Steel SoC Reference Guide
 
   .clock                    (),  // Connect this pin to a clock source
   .reset                    (),  // Active-high reset. Connect to a reset switch
   .uart_rx                  (),  // Connect to the TX pin of other UART
-  .uart_tx                  ()); // Connect to the RX pin of other UART
+  .uart_tx                  ()   // Connect to the RX pin of other UART
+
+);
 ```
 
-## Configuration
+## Integrated devices
 
-The table below presents RISC-V Steel SoC configuration parameters, their default values and the allowed value type for each parameter.
+This section provides further information about the devices instantiated in RISC-V Steel SoC top module.
 
-???+ info
+### RISC-V Steel Core
 
-    If you leave a parameter blank it will be set to its default value.
+RISC-V Steel Core is the processing unit of RISC-V Steel SoC. Its design is quite large so it has its own [Reference Guide](core-reference.md). Please check it out for more information.
 
-**Table 2.** RISC-V Steel SoC configuration parameters
+### RAM memory
 
-| Parameter name   | Default value  | Value type / description                                                             |
-| ---------------- | -------------- | ------------------------------------------------------------------------------------ |
-| BOOT_ADDRESS     | 32'h00000000   | 32-bit value. Memory address of the first instruction to be fetched and executed.    |
-| CLOCK_FREQUENCY  | 50000000       | Integer value. Frequency (in Hertz) of the **clock** input signal.                   |
-| UART_BAUD_RATE   | 9600           | Integer value. The desired baud rate (in bauds per second) for the UART.             |
-| MEMORY_SIZE      | 8192           | Integer value. The desired size (in bytes) for the programmmable memory.             |
-| MEMORY_INIT_FILE | (empty string) | String value. Path to a memory initialization file containing your program and data. |
+RISC-V Steel SoC has a RAM memory tightly coupled to the processor core, with read/write latency of a single clock cycle.
 
-## I/O signals
+The memory size can be changed by adjusting the `MEMORY_SIZE` parameter (see [Configuration](#configuration)). Memory addresses start at `0x00000000` and end at `0x(MEMORY_SIZE-1)`.
 
-RISC-V Steel SoC top module has 4 input/output signals, described below.
-
-| Pin name       | Direction | Size  | Description          |
-| -------------- | --------- | ----- | -------------------- |
-| **`clock`**    | Input     | 1 bit | Clock input. Connect it to a clock source and inform its frequency via CLOCK_FREQUENCY parameter. |
-| **`reset`**    | Input     | 1 bit | Reset (active-high). Connect it to a switch, button, or tie it to logic HIGH. |
-| **`uart_rx`**  | Input     | 1 bit | UART receiver pin. It must be connected to the transmitter (TX) pin of the UART device. |
-| **`uart_tx`**  | Output    | 1 bit | UART transmitter pin. It must be connected to the receiver (RX) pin of the UART device. |
-
-## Memory Map
-
-In the RISC-V architecture all peripheral devices communicate with the processor via memory-mapped I/O. The processor address space is shared between main memory and peripherals, and each device is mapped to part of the address space. This is achieved by multiplexing the memory signals according to the address the processor tries to access.
-
-In RISC-V Steel SoC the processor address space is shared between the programmable memory and the UART. The memory range that each device is mapped to is shown in Table 3.
-
-???+ info
-    Reading data from a region not mapped to any device will return 0, and writing data to these regions will have no effect.
-
-**Table 3.**{#table-3} RISC-V Steel SoC Memory Map
-
-| Start address     | Final address       | Mapped device              |
-| ----------------- | ------------------- | -------------------------- |
-| `0x00000000`      | `0x(MEMORY_SIZE-1)` | Programmable memory        |
-| `0x(MEMORY_SIZE)` | `0x7fffffff`        | No device                  |
-| `0x80000000`      | `0x80000004`        | UART module                |
-| `0x80000005`      | `0xffffffff`        | No device                  |
-
-## On-chip devices
-
-This section provides further information about RISC-V Steel SoC on-chip devices.
-
-### 32-bit Processor Core
-
-RISC-V Steel 32-bit Processor Core is the processing unit of RISC-V Steel SoC. The processor implements the RV32I instruction set, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
-
-The design of the processor core is quite large so it has its own [Reference Guide](core-reference.md). Check it out for more information.
-
-### Programmable memory
-
-RISC-V Steel has an on-chip programmable random access memory tightly coupled to the processor core. The size of the memory is 8 KB by default but it can be adjusted by changing the value of the `MEMORY_SIZE` parameter. 
-
-To initialize the memory contents on power-up you need to provide a memory initialization file via `MEMORY_INIT_FILE` parameter. You find the instructions on how to generate this file in the [Software Guide](#software-guide) section.
+Check out the [Software Guide](software-guide.md) for instructions on how to generate a memory initialization file and load it into memory at startup.
 
 ### UART
 
-RISC-V Steel SoC has an on-chip UART module with adjustable baud rate, and Steel API provides function calls to send and receive data over the UART.
+RISC-V Steel SoC has an UART module with configurable baud rate. The module works with 8 data bits, 1 stop bit, no parity bits and no flow control signals (most UARTs work the same way).
 
-The table below provides the configuration parameters for the UART.
+[Steel API](steel-api.md) provides a set of function calls for sending and receiving data over the UART. Check it out for more information.
 
-**Table 2.** RISC-V Steel SoC UART module configuration
+### System Bus
 
-| Configuration   | Value                                    |
-| --------------- | ---------------------------------------- |
-| Baud rate       | Adjustable (see the [Configuration](#configuration) section). The default value is 9600. |
-| Data bits       | 8 bits |
-| Stop bits       | 1 bit |
-| Parity bits     | None |
-| Flow control    | None |
+The system bus module interconnects RISC-V Steel Core (manager device) to the UART and the RAM memory (subordinate devices), as shown in [Figure 1](#figure-1). The module multiplexes the signals from the processor's memory interface to the appropriate subordinate device according to the address the processor is requesting.
 
-### Bus multiplexer
+Each subordinate device in RISC-V Steel SoC is assigned a portion of the address space. The address range to which each device is mapped is shown in [Table 4](#table-4).
 
-The bus multiplexer interconnects all components of RISC-V Steel SoC, multiplexing memory signals according to the address the processor tries to access. On one side, it is connected to the processor's memory interface, and on the other side, it is connected to subordinate devices (the UART and programmable memory). The processor acts as a manager, requesting access to subordinate devices one at a time.
+## Memory Map
 
-The [Memory Map](#memory-map) section above lists the address range assigned to each subordinate device. The memory signals are multiplexed by the bus multiplexer module according to [Table 3](#table-3).
+Like all RISC-V systems, I/O devices in RISC-V Steel SoC are *memory mapped*, so they share the address space and are assigned a region within it. The table below shows the address range that each device in RISC-V Steel SoC is assigned.
 
-</br>
-</br>
-</br>
+???+ info
+    Reading data from a region not mapped to any device will return 0. Writing data to these regions will have no effect.
+
+**Table 4**{#table-4} - Memory Map of RISC-V Steel SoC
+
+| Start address     | Final address       | Mapped device              |
+| ----------------- | ------------------- | -------------------------- |
+| `0x00000000`      | `0x(MEMORY_SIZE-1)` | RAM memory                 |
+| `0x(MEMORY_SIZE)` | `0x7fffffff`        | ---------                  |
+| `0x80000000`      | `0x80000004`        | UART                       |
+| `0x80000005`      | `0xffffffff`        | ---------                  |
+
+## Adding new devices
+
+A new device can be added to RISC-V Steel SoC by adapting the system bus module (**`system-bus.v`**) and the top module (**`rvsteel-soc.v`**). All changes that need to be made in these files were left as comments in their source code. You only need to uncomment.
+
+All source code that needs to be uncommented follow the template below:
+
+``` systemverilog
+  /* Uncomment to add new devices
+
+  ... code for adding the new device ...
+
+  */
+```
+
 </br>
 </br>

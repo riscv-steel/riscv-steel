@@ -20,7 +20,6 @@
   color: var(--md-default-fg-color);
 }
 
-/*.md-typeset a {
-  color: #009485;
-  word-break: break-word;
-}*/
+tr:has(.rvsteel-core-io-table) {
+  background-color: #f5f5f5;
+}

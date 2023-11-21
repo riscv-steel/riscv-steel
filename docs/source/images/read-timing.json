@@ -1,0 +1,9 @@
+{signal: [
+  {name: 'clock', wave: 'P........'},
+  {name: 'mem_address', wave: '2x2.2x2xx', data: ['A0', 'A1', 'A2', 'A3']},
+  {name: 'mem_read_request', wave: '101..010.'},
+  {name: 'mem_read_data', wave: 'x2xx22x2x', data: ['mem[A0]', 'mem[A1]', 'mem[A2]', 'mem[A3]']},
+  {name: 'mem_read_request_ack', wave: '010.1.010'}
+],
+config: { hscale: 2 }
+}
