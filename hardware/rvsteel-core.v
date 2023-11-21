@@ -1102,7 +1102,7 @@ module rvsteel_core #(
   always @(posedge clock) begin : m_mode_fsm_current_state_register
     if(reset_internal)
       current_state <= STATE_RESET;
-    else if (clock_enable)
+    else if (clock_enable | interrupt_pending)
       current_state <= next_state;
   end
 
@@ -1271,7 +1271,7 @@ module rvsteel_core #(
       csr_mip_mtip <= 1'b0;
       csr_mip_msip <= 1'b0;
     end
-    else if (clock_enable) begin
+    else begin
       csr_mip_meip <= irq_external;
       csr_mip_mtip <= irq_timer;
       csr_mip_msip <= irq_software;
