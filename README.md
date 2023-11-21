@@ -7,11 +7,11 @@
 
 ## Available Hardware IP
 
-**RISC-V Steel SoC**
+ [**RISC-V Steel SoC**](https://riscv-steel.github.io/riscv-steel/soc-reference/)
 
 Configurable system-on-chip design featuring RISC-V Steel Core, a RAM memory and a UART module.
 
-**RISC-V Steel Core**
+[**RISC-V Steel Core**](https://riscv-steel.github.io/riscv-steel/core-reference/)
 
 Area-optimized 32-bit processor design. Implements the RV32I ISA, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
 
