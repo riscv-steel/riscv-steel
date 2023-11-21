@@ -9,9 +9,9 @@
 
 **RISC-V Steel SoC**
 
-Configurable system-on-chip design featuring RISC-V Steel 32-bit Processor Core + Programmable Memory + UART.
+Configurable system-on-chip design featuring RISC-V Steel Core, a RAM memory and a UART module.
 
-**RISC-V Steel 32-bit Processor Core**
+**RISC-V Steel Core**
 
 Area-optimized 32-bit processor design. Implements the RV32I ISA, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
 
