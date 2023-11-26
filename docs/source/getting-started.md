@@ -68,7 +68,7 @@ Open **AMD Xilinx Vivado** and follow the steps:
 
     This file is located at **`riscv-steel/hello-world/<board-name>/`**.
 
-7. Click on **Program** and wait it finish programming the FPGA.
+7. Click on **Program** and wait for Vivado to finish programming the FPGA.
 
 Now go back to PySerial terminal window. You should see the message below:
 

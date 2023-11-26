@@ -30,7 +30,7 @@ RISC-V Steel Core has a single source file, **`rvsteel-core.v`**, saved in the `
 | mem_address | Output | 32 bits     | The address for the read/write operation.  |
 | mem_read_data | Input | 32 bits     | The data read from memory.  |
 | mem_read_request | Output | 1 bit     | This signal is set to logic `HIGH` when the processor requests to read from memory.  |
-| mem_read_request_ack | Input | 1 bit | The response to the read request from the previous clock cycle.</br></br>Must be asserted to logic `HIGH` if and only if **mem_read_data** holds valid data read from **mem_address**. |
+| mem_read_request_ack | Input | 1 bit | The response to the read request from the previous clock cycle.</br></br>Must be asserted to logic `HIGH` if and only if **mem_read_data** holds valid data. |
 | mem_write_data | Output | 32 bits | The data to write in memory.  |
 | mem_write_strobe | Output | 4 bits | A signal indicating which byte lanes of **mem_write_data** must be written.</br></br>For example, if this signal holds `4'b0001`, then only the least significant byte of **mem_write_data** must be written. |
 | mem_write_request | Output | 1 bit | This signal is set to logic `HIGH` when the processor requests to write to memory.  |
@@ -114,7 +114,7 @@ The memory interface signals are driven as follows during a read operation:
 
 - **mem_address** and **mem_read_request** hold their values until **mem_read_request_ack** is driven to `HIGH`.
 
-The processor core expects to receive the response in the following clock cycle. A response must never be given in the same clock cycle that **mem_read_request** was driven `HIGH`.
+The processor core expects to receive the response in the following clock cycles. A response must never be given in the same clock cycle that **mem_read_request** was driven `HIGH`.
 
 The figure below shows a timing diagram exemplifying the read operation handshaking:
 
@@ -133,13 +133,13 @@ The memory interface signals are driven as follows during a write operation:
 
 - the data to be written is placed in the **mem_write_data** bus.
 
-- the **mem_write_strobe** will indicate which byte lanes of **mem_write_data** must be written.
+- the **mem_write_strobe** signal will indicate which byte lanes of **mem_write_data** must be written.
 
     For example, if this signal holds `4'b0001`, then only the least significant byte must be written. The upper 24 bits of **mem_write_data** must be ignored.
 
 - all signals above hold their values until **mem_write_request_ack** is driven to `HIGH`.
 
-The processor core expects to receive the response in the following clock cycle. A response must never be given in the same clock cycle that **mem_write_request** was driven `HIGH`.
+The processor core expects to receive the response in the following clock cycles. A response must never be given in the same clock cycle that **mem_write_request** was driven `HIGH`.
 
 The figure below shows a timing diagram exemplifying the write operation handshaking:
 
