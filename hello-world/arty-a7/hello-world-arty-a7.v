@@ -61,7 +61,7 @@ module hello_world_arty_a7 (
     .CLOCK_FREQUENCY          (50000000           ),
     .UART_BAUD_RATE           (9600               ),
     .MEMORY_SIZE              (8192               ),
-    .MEMORY_INIT_FILE         ("hello-world.mem"  ),
+    .MEMORY_INIT_FILE         ("hello-world.hex"  ),
     .BOOT_ADDRESS             (32'h00000000       )
 
   ) rvsteel_soc_instance (

@@ -8,186 +8,158 @@ Disassembly of section .boot:
    0:	00000097          	auipc	ra,0x0
    4:	00008093          	mv	ra,ra
    8:	00002117          	auipc	sp,0x2
-   c:	ff810113          	addi	sp,sp,-8 # 2000 <_end>
+   c:	ff810113          	add	sp,sp,-8 # 2000 <_end>
   10:	00000297          	auipc	t0,0x0
-  14:	01028293          	addi	t0,t0,16 # 20 <__rvsteel_int_handler>
+  14:	01028293          	add	t0,t0,16 # 20 <__rvsteel_irq_handler>
   18:	30529073          	csrw	mtvec,t0
-  1c:	11c0006f          	j	138 <main>
+  1c:	0e00006f          	j	fc <main>
 
-00000020 <__rvsteel_int_handler>:
-  20:	1ec00293          	li	t0,492
-  24:	0002a303          	lw	t1,0(t0)
-  28:	000300e7          	jalr	t1
-  2c:	30200073          	mret
+00000020 <__rvsteel_irq_handler>:
+  20:	00001297          	auipc	t0,0x1
+  24:	fe828293          	add	t0,t0,-24 # 1008 <__R5_IRQ_HANDLER>
+  28:	0002a303          	lw	t1,0(t0)
+  2c:	000300e7          	jalr	t1
+  30:	30200073          	mret
 
 Disassembly of section .text:
 
-00000030 <process_received_character>:
-  30:	1e402703          	lw	a4,484(zero) # 1e4 <__RVSTEEL_UART_RX>
-  34:	00d00793          	li	a5,13
-  38:	00074703          	lbu	a4,0(a4)
-  3c:	0ff77713          	andi	a4,a4,255
-  40:	02f70463          	beq	a4,a5,68 <process_received_character+0x38>
-  44:	07e00793          	li	a5,126
-  48:	00e7ee63          	bltu	a5,a4,64 <process_received_character+0x34>
-  4c:	1e802683          	lw	a3,488(zero) # 1e8 <__RVSTEEL_UART_TX>
-  50:	00100613          	li	a2,1
-  54:	0006c783          	lbu	a5,0(a3)
-  58:	0ff7f793          	andi	a5,a5,255
-  5c:	fec79ce3          	bne	a5,a2,54 <process_received_character+0x24>
-  60:	00e68023          	sb	a4,0(a3)
-  64:	00008067          	ret
-  68:	05400593          	li	a1,84
-  6c:	16800613          	li	a2,360
-  70:	00a00513          	li	a0,10
-  74:	00100693          	li	a3,1
-  78:	1e802703          	lw	a4,488(zero) # 1e8 <__RVSTEEL_UART_TX>
-  7c:	00074783          	lbu	a5,0(a4)
-  80:	0ff7f793          	andi	a5,a5,255
-  84:	fed79ce3          	bne	a5,a3,7c <process_received_character+0x4c>
-  88:	00a70023          	sb	a0,0(a4)
-  8c:	00160613          	addi	a2,a2,1
-  90:	fc058ae3          	beqz	a1,64 <process_received_character+0x34>
-  94:	00058513          	mv	a0,a1
-  98:	00164583          	lbu	a1,1(a2)
-  9c:	fddff06f          	j	78 <process_received_character+0x48>
+00000034 <process_received_character>:
+  34:	000017b7          	lui	a5,0x1
+  38:	0007a783          	lw	a5,0(a5) # 1000 <__R5_UART_RX>
+  3c:	00d00713          	li	a4,13
+  40:	0007c783          	lbu	a5,0(a5)
+  44:	0ff7f613          	zext.b	a2,a5
+  48:	02e78463          	beq	a5,a4,70 <process_received_character+0x3c>
+  4c:	07e00793          	li	a5,126
+  50:	00c7ee63          	bltu	a5,a2,6c <process_received_character+0x38>
+  54:	000017b7          	lui	a5,0x1
+  58:	0047a703          	lw	a4,4(a5) # 1004 <__R5_UART_TX>
+  5c:	00100693          	li	a3,1
+  60:	00074783          	lbu	a5,0(a4)
+  64:	fed79ee3          	bne	a5,a3,60 <process_received_character+0x2c>
+  68:	00c70023          	sb	a2,0(a4)
+  6c:	00008067          	ret
+  70:	13000613          	li	a2,304
+  74:	00a00593          	li	a1,10
+  78:	00001537          	lui	a0,0x1
+  7c:	00100693          	li	a3,1
+  80:	00452703          	lw	a4,4(a0) # 1004 <__R5_UART_TX>
+  84:	00074783          	lbu	a5,0(a4)
+  88:	fed79ee3          	bne	a5,a3,84 <process_received_character+0x50>
+  8c:	00160613          	add	a2,a2,1
+  90:	00b70023          	sb	a1,0(a4)
+  94:	00064583          	lbu	a1,0(a2)
+  98:	fe0594e3          	bnez	a1,80 <process_received_character+0x4c>
+  9c:	00008067          	ret
 
-000000a0 <rvsteel_uart_send_char>:
-  a0:	1e802703          	lw	a4,488(zero) # 1e8 <__RVSTEEL_UART_TX>
-  a4:	00100693          	li	a3,1
-  a8:	00074783          	lbu	a5,0(a4)
-  ac:	0ff7f793          	andi	a5,a5,255
-  b0:	fed79ce3          	bne	a5,a3,a8 <rvsteel_uart_send_char+0x8>
+000000a0 <r5_uart_send_char>:
+  a0:	000017b7          	lui	a5,0x1
+  a4:	0047a703          	lw	a4,4(a5) # 1004 <__R5_UART_TX>
+  a8:	00100693          	li	a3,1
+  ac:	00074783          	lbu	a5,0(a4)
+  b0:	fed79ee3          	bne	a5,a3,ac <r5_uart_send_char+0xc>
   b4:	00a70023          	sb	a0,0(a4)
   b8:	00008067          	ret
 
-000000bc <rvsteel_uart_send_string>:
+000000bc <r5_uart_send_string>:
   bc:	00054603          	lbu	a2,0(a0)
-  c0:	02060463          	beqz	a2,e8 <rvsteel_uart_send_string+0x2c>
-  c4:	00100693          	li	a3,1
-  c8:	1e802703          	lw	a4,488(zero) # 1e8 <__RVSTEEL_UART_TX>
-  cc:	00074783          	lbu	a5,0(a4)
-  d0:	0ff7f793          	andi	a5,a5,255
-  d4:	fed79ce3          	bne	a5,a3,cc <rvsteel_uart_send_string+0x10>
+  c0:	02060463          	beqz	a2,e8 <r5_uart_send_string+0x2c>
+  c4:	000015b7          	lui	a1,0x1
+  c8:	00100693          	li	a3,1
+  cc:	0045a703          	lw	a4,4(a1) # 1004 <__R5_UART_TX>
+  d0:	00074783          	lbu	a5,0(a4)
+  d4:	fed79ee3          	bne	a5,a3,d0 <r5_uart_send_string+0x14>
   d8:	00c70023          	sb	a2,0(a4)
   dc:	00154603          	lbu	a2,1(a0)
-  e0:	00150513          	addi	a0,a0,1
-  e4:	fe0612e3          	bnez	a2,c8 <rvsteel_uart_send_string+0xc>
+  e0:	00150513          	add	a0,a0,1
+  e4:	fe0614e3          	bnez	a2,cc <r5_uart_send_string+0x10>
   e8:	00008067          	ret
 
-000000ec <rvsteel_uart_get_char>:
-  ec:	1e402783          	lw	a5,484(zero) # 1e4 <__RVSTEEL_UART_RX>
-  f0:	0007c503          	lbu	a0,0(a5)
-  f4:	0ff57513          	andi	a0,a0,255
+000000ec <r5_uart_receive_char>:
+  ec:	000017b7          	lui	a5,0x1
+  f0:	0007a783          	lw	a5,0(a5) # 1000 <__R5_UART_RX>
+  f4:	0007c503          	lbu	a0,0(a5)
   f8:	00008067          	ret
-
-000000fc <rvsteel_enable_all_interrupt_types>:
-  fc:	fe512e23          	sw	t0,-4(sp)
- 100:	fff00293          	li	t0,-1
- 104:	30029073          	csrw	mstatus,t0
- 108:	30429073          	csrw	mie,t0
- 10c:	ffc12283          	lw	t0,-4(sp)
- 110:	00008067          	ret
-
-00000114 <rvsteel_disable_all_interrupt_types>:
- 114:	fe512e23          	sw	t0,-4(sp)
- 118:	00000293          	li	t0,0
- 11c:	30029073          	csrw	mstatus,t0
- 120:	30429073          	csrw	mie,t0
- 124:	ffc12283          	lw	t0,-4(sp)
- 128:	00008067          	ret
-
-0000012c <rvsteel_wait_for_interrupt>:
- 12c:	0000006f          	j	12c <rvsteel_wait_for_interrupt>
-
-00000130 <rvsteel_set_interrupt_handler>:
- 130:	1ea02623          	sw	a0,492(zero) # 1ec <__RVSTEEL_INT_HANDLER>
- 134:	00008067          	ret
 
 Disassembly of section .text.startup:
 
-00000138 <main>:
- 138:	ff010113          	addi	sp,sp,-16
- 13c:	19000513          	li	a0,400
- 140:	00112623          	sw	ra,12(sp)
- 144:	f79ff0ef          	jal	ra,bc <rvsteel_uart_send_string>
- 148:	03000793          	li	a5,48
- 14c:	1ef02623          	sw	a5,492(zero) # 1ec <__RVSTEEL_INT_HANDLER>
- 150:	fe512e23          	sw	t0,-4(sp)
- 154:	fff00293          	li	t0,-1
- 158:	30029073          	csrw	mstatus,t0
- 15c:	30429073          	csrw	mie,t0
- 160:	ffc12283          	lw	t0,-4(sp)
- 164:	0000006f          	j	164 <main+0x2c>
+000000fc <main>:
+  fc:	ff010113          	add	sp,sp,-16
+ 100:	15800513          	li	a0,344
+ 104:	00112623          	sw	ra,12(sp)
+ 108:	fb5ff0ef          	jal	bc <r5_uart_send_string>
+ 10c:	00001737          	lui	a4,0x1
+ 110:	03400793          	li	a5,52
+ 114:	00f72423          	sw	a5,8(a4) # 1008 <__R5_IRQ_HANDLER>
+ 118:	fe512e23          	sw	t0,-4(sp)
+ 11c:	fff00293          	li	t0,-1
+ 120:	30029073          	csrw	mstatus,t0
+ 124:	30429073          	csrw	mie,t0
+ 128:	ffc12283          	lw	t0,-4(sp)
+ 12c:	0000006f          	j	12c <main+0x30>
 
 Disassembly of section .rodata.str1.4:
 
-00000168 <.rodata.str1.4>:
- 168:	540a                	lw	s0,160(sp)
- 16a:	7079                	c.lui	zero,0xffffe
- 16c:	2065                	jal	214 <__RVSTEEL_INT_HANDLER+0x28>
- 16e:	656d6f73          	csrrsi	t5,0x656,26
- 172:	6874                	flw	fa3,84(s0)
- 174:	6e69                	lui	t3,0x1a
- 176:	6c652067          	0x6c652067
- 17a:	61206573          	csrrsi	a0,0x612,0
- 17e:	646e                	flw	fs0,216(sp)
- 180:	7020                	flw	fs0,96(s0)
- 182:	6572                	flw	fa0,28(sp)
- 184:	65207373          	csrrci	t1,0x652,0
- 188:	746e                	flw	fs0,248(sp)
- 18a:	7265                	lui	tp,0xffff9
- 18c:	203a                	fld	ft0,392(sp)
- 18e:	0000                	unimp
- 190:	520a                	lw	tp,160(sp)
- 192:	5349                	li	t1,-14
- 194:	20562d43          	fmadd.s	fs10,fa2,ft5,ft4,rdn
- 198:	65657453          	0x65657453
- 19c:	206c                	fld	fa1,192(s0)
- 19e:	0a436f53          	fsub.d	ft10,ft6,ft4,unknown
- 1a2:	2d2d                	jal	7dc <__RVSTEEL_INT_HANDLER+0x5f0>
- 1a4:	2d2d                	jal	7de <__RVSTEEL_INT_HANDLER+0x5f2>
- 1a6:	2d2d                	jal	7e0 <__RVSTEEL_INT_HANDLER+0x5f4>
- 1a8:	2d2d                	jal	7e2 <__RVSTEEL_INT_HANDLER+0x5f6>
- 1aa:	2d2d                	jal	7e4 <__RVSTEEL_INT_HANDLER+0x5f8>
- 1ac:	2d2d                	jal	7e6 <__RVSTEEL_INT_HANDLER+0x5fa>
- 1ae:	2d2d                	jal	7e8 <__RVSTEEL_INT_HANDLER+0x5fc>
- 1b0:	2d2d                	jal	7ea <__RVSTEEL_INT_HANDLER+0x5fe>
- 1b2:	0a0a                	slli	s4,s4,0x2
- 1b4:	6548                	flw	fa0,12(a0)
- 1b6:	6c6c                	flw	fa1,92(s0)
- 1b8:	6f57206f          	j	730ac <_end+0x710ac>
- 1bc:	6c72                	flw	fs8,28(sp)
- 1be:	2164                	fld	fs1,192(a0)
- 1c0:	0a0a                	slli	s4,s4,0x2
- 1c2:	7954                	flw	fa3,52(a0)
- 1c4:	6570                	flw	fa2,76(a0)
- 1c6:	7320                	flw	fs0,96(a4)
- 1c8:	74656d6f          	jal	s10,5690e <_end+0x5490e>
- 1cc:	6968                	flw	fa0,84(a0)
- 1ce:	676e                	flw	fa4,216(sp)
- 1d0:	6120                	flw	fs0,64(a0)
- 1d2:	646e                	flw	fs0,216(sp)
- 1d4:	7020                	flw	fs0,96(s0)
- 1d6:	6572                	flw	fa0,28(sp)
- 1d8:	65207373          	csrrci	t1,0x652,0
- 1dc:	746e                	flw	fs0,248(sp)
- 1de:	7265                	lui	tp,0xffff9
- 1e0:	203a                	fld	ft0,392(sp)
- 1e2:	000a                	c.slli	zero,0x2
+00000130 <.rodata.str1.4>:
+ 130:	540a                	.insn	2, 0x540a
+ 132:	7079                	.insn	2, 0x7079
+ 134:	2065                	.insn	2, 0x2065
+ 136:	656d6f73          	csrrs	t5,hviprio1h,26
+ 13a:	6874                	.insn	2, 0x6874
+ 13c:	6e69                	.insn	2, 0x6e69
+ 13e:	6c652067          	.insn	4, 0x6c652067
+ 142:	61206573          	csrrs	a0,0x612,0
+ 146:	646e                	.insn	2, 0x646e
+ 148:	7020                	.insn	2, 0x7020
+ 14a:	6572                	.insn	2, 0x6572
+ 14c:	65207373          	csrrc	t1,0x652,0
+ 150:	746e                	.insn	2, 0x746e
+ 152:	7265                	.insn	2, 0x7265
+ 154:	203a                	.insn	2, 0x203a
+ 156:	0000                	.insn	2, 0x
+ 158:	520a                	.insn	2, 0x520a
+ 15a:	5349                	.insn	2, 0x5349
+ 15c:	20562d43          	.insn	4, 0x20562d43
+ 160:	65657453          	.insn	4, 0x65657453
+ 164:	206c                	.insn	2, 0x206c
+ 166:	0a436f53          	.insn	4, 0x0a436f53
+ 16a:	2d2d                	.insn	2, 0x2d2d
+ 16c:	2d2d                	.insn	2, 0x2d2d
+ 16e:	2d2d                	.insn	2, 0x2d2d
+ 170:	2d2d                	.insn	2, 0x2d2d
+ 172:	2d2d                	.insn	2, 0x2d2d
+ 174:	2d2d                	.insn	2, 0x2d2d
+ 176:	2d2d                	.insn	2, 0x2d2d
+ 178:	2d2d                	.insn	2, 0x2d2d
+ 17a:	0a0a                	.insn	2, 0x0a0a
+ 17c:	6548                	.insn	2, 0x6548
+ 17e:	6c6c                	.insn	2, 0x6c6c
+ 180:	6f57206f          	j	73074 <_end+0x71074>
+ 184:	6c72                	.insn	2, 0x6c72
+ 186:	2164                	.insn	2, 0x2164
+ 188:	0a0a                	.insn	2, 0x0a0a
+ 18a:	7954                	.insn	2, 0x7954
+ 18c:	6570                	.insn	2, 0x6570
+ 18e:	7320                	.insn	2, 0x7320
+ 190:	74656d6f          	jal	s10,568d6 <_end+0x548d6>
+ 194:	6968                	.insn	2, 0x6968
+ 196:	676e                	.insn	2, 0x676e
+ 198:	6120                	.insn	2, 0x6120
+ 19a:	646e                	.insn	2, 0x646e
+ 19c:	7020                	.insn	2, 0x7020
+ 19e:	6572                	.insn	2, 0x6572
+ 1a0:	65207373          	csrrc	t1,0x652,0
+ 1a4:	746e                	.insn	2, 0x746e
+ 1a6:	7265                	.insn	2, 0x7265
+ 1a8:	203a                	.insn	2, 0x203a
+ 1aa:	000a                	.insn	2, 0x000a
 
 Disassembly of section .sdata:
 
-000001e4 <__RVSTEEL_UART_RX>:
- 1e4:	0004                	0x4
- 1e6:	8000                	0x8000
+00001000 <__R5_UART_RX>:
+    1000:	0004                	.insn	2, 0x0004
+    1002:	8000                	.insn	2, 0x8000
 
-000001e8 <__RVSTEEL_UART_TX>:
- 1e8:	0000                	unimp
- 1ea:	8000                	0x8000
-
-Disassembly of section .sbss:
-
-000001ec <__RVSTEEL_INT_HANDLER>:
- 1ec:	0000                	unimp
-	...
+00001004 <__R5_UART_TX>:
+    1004:	0000                	.insn	2, 0x
+    1006:	8000                	.insn	2, 0x8000

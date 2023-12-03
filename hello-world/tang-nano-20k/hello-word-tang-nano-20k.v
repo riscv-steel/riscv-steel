@@ -48,7 +48,7 @@ module top (
     .CLOCK_FREQUENCY          (27000000           ),
     .UART_BAUD_RATE           (9600               ),
     .MEMORY_SIZE              (4096               ),
-    .MEMORY_INIT_FILE         ("hello-world.mem"  ),
+    .MEMORY_INIT_FILE         ("hello-world.hex"  ),
     .BOOT_ADDRESS             (32'h00000000       )
 
   ) rvsteel_soc_instance (
