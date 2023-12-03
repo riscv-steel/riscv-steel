@@ -1,5 +1,5 @@
 </br>
-<img src="https://github.com/riscv-steel/riscv-steel/assets/133501827/35f6c303-a911-4ee0-86a1-b498191372e2)" width="150"/>
+<p align="center"><img src="https://github.com/riscv-steel/riscv-steel/assets/133501827/35f6c303-a911-4ee0-86a1-b498191372e2)" width="150"/></p>
 
 ## Welcome!
 
