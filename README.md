@@ -1,6 +1,5 @@
 </br>
-
-![rvsteel-logo-small](https://github.com/riscv-steel/riscv-steel/assets/133501827/33260040-8e4f-4851-abbf-2bd6d3c5e2ab)
+<img src="https://github.com/riscv-steel/riscv-steel/assets/133501827/35f6c303-a911-4ee0-86a1-b498191372e2)" width="150"/>
 
 ## Welcome!
 
