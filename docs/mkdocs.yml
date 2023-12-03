@@ -29,7 +29,8 @@ markdown_extensions:
         options:
           custom_icons:
             - overrides/.icons
-theme: 
+theme:
+    logo: images/rvsteel-logo-r5.drawio.svg
     icon:
         annotation: material/plus-circle
         logo: bootstrap/cpu
@@ -38,7 +39,8 @@ theme:
     custom_dir: overrides
     highlightjs: true
     palette: 
-        primary: indigo
+        primary: black
+        accent: pink
     features:
         - navigation.top
         - navigation.tabs
