@@ -21,11 +21,11 @@ This section provides information about the source files, the input/output signa
 
 | File                 | Module name      | Location                |  Description                    |
 | -------------------- | ---------------- | ----------------------- |------------------------------ |
-| **`rvsteel-soc.v`**  | **rvsteel_soc**  | `riscv-steel/hardware/` | Top module of RISC-V Steel SoC |
-| **`rvsteel-core.v`** | **rvsteel_core** | `riscv-steel/hardware/` | RISC-V Steel Core              |
-| **`ram-memory.v`**   | **ram_memory**   | `riscv-steel/hardware/` | RAM memory                     |
-| **`uart.v`**         | **uart**         | `riscv-steel/hardware/` | UART                           |
-| **`system-bus.v`**   | **system_bus**   | `riscv-steel/hardware/` | System Bus                     |
+| **`rvsteel-soc.v`**  | **rvsteel_soc**  | `riscv-steel/ip/` | Top module of RISC-V Steel SoC |
+| **`rvsteel-core.v`** | **rvsteel_core** | `riscv-steel/ip/` | RISC-V Steel Core              |
+| **`ram-memory.v`**   | **ram_memory**   | `riscv-steel/ip/` | RAM memory                     |
+| **`uart.v`**         | **uart**         | `riscv-steel/ip/` | UART                           |
+| **`system-bus.v`**   | **system_bus**   | `riscv-steel/ip/` | System Bus                     |
 
 ### Input/output signals
 

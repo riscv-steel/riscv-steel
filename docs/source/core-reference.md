@@ -14,7 +14,7 @@ This section provides information about the source files, the input/output signa
 
 ### Source files
 
-RISC-V Steel Core has a single source file, **`rvsteel-core.v`**, saved in the `riscv-steel/hardware/` folder.
+RISC-V Steel Core has a single source file, **`rvsteel-core.v`**, saved in the `riscv-steel/ip/` folder.
 
 ### Input/output signals
 
