@@ -2,7 +2,7 @@
 
 This guide shows you how to synthesize the Hello World demo for some popular FPGAs so that you can quickly get started with RISC-V Steel SoC.
 
-The Hello World demo is an instance of RISC-V Steel SoC that sends a Hello World message to a host computer via UART protocol. The goal is to introduce you to the SoC design so that you can expand it and develop your own embedded applications.
+The Hello World demo is an instance of RISC-V Steel SoC that sends a Hello World message to a host computer via UART protocol. Its goal is to introduce you to the SoC design so that you can expand it and develop your own embedded applications.
 
 ## Pre-requisites
 
