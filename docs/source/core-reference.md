@@ -186,7 +186,7 @@ The value in the `mepc` register is the address of the instruction aborted by th
 
 ## Real time clock
 
-RISC-V Steel Core provides a 64-bit bus to update the `mtime` CSR with the value measured from a real time clock. The value of `mtime` is update on every rising edge of the **clock** signal and can be read with the `csrr` instruction.
+RISC-V Steel Core provides a 64-bit bus to update the `mtime` CSR with the value measured from a real time clock. The value of `mtime` is updated on every rising edge of the **clock** signal and can be read with the `csrr` instruction.
 
 ???+ info
 

@@ -30,13 +30,8 @@ markdown_extensions:
           custom_icons:
             - overrides/.icons
 theme:
-    logo: images/rvsteel-logo-r5.drawio.svg
-    icon:
-        annotation: material/plus-circle
-        logo: bootstrap/cpu
-        favicon: bootstrap/cpu
     name: material
-    custom_dir: overrides
+    logo: images/rvsteel-logo-r5.drawio.svg    
     highlightjs: true
     palette: 
         primary: black
