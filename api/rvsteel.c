@@ -57,15 +57,12 @@ volatile char *__R5_UART_RX = (volatile char *)0x80000004;
 // Address of the interrupt handler
 volatile void *__R5_IRQ_HANDLER = (volatile void *)0x00000000;
 
-// r5_uart_send_char ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void r5_uart_send_char(const char c)
 {
-  while ((*__R5_UART_TX) != 1)
-    ;
+  while ((*__R5_UART_TX) != 1);
   *(__R5_UART_TX) = c;
 }
 
-// r5_uart_send_string ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void r5_uart_send_string(const char *str)
 {
   while (*(str) != '\0')
@@ -75,33 +72,27 @@ void r5_uart_send_string(const char *str)
   }
 }
 
-// r5_uart_receive_char :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 volatile char r5_uart_receive_char()
 {
   return (*__R5_UART_RX);
 }
 
-// r5_irq_enable_all ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void r5_irq_enable_all()
 {
   asm("sw t0, -4(sp); li t0, 0xffffffff; csrw mstatus, t0; csrw mie, t0; lw t0, -4(sp);");
 }
 
-// r5_irq_disable_all :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void r5_irq_disable_all()
 {
   asm("sw t0, -4(sp); li t0, 0x00000000; csrw mstatus, t0; csrw mie, t0; lw t0, -4(sp);");
 }
 
-// r5_irq_set_interrupt_handler :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void r5_irq_set_interrupt_handler(void (*interrupt_handler)())
 {
   __R5_IRQ_HANDLER = (volatile void *)interrupt_handler;
 }
 
-// r5_busy_wait :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 void r5_busy_wait()
 {
-  while (1)
-    ;
+  while (1);
 }
