@@ -6,7 +6,7 @@ PROGRAM_NAME      ?= hello-world
 # Memory size (must be set to the same value of the MEMORY_SIZE parameter of RISC-V Steel SoC)
 MEMORY_SIZE       ?= 8192
 # Path to RISC-V Steel API
-R5_API            ?= ../../r5-api
+RVSTEEL_API_DIR   ?= ../../api
 # The full path to RISC-V GNU Toolchain in this machine + RISC-V binaries prefix
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
 # Compiler binary
@@ -44,9 +44,9 @@ COMPILER_OPTIONS  ?=  -march=rv32izicsr -mabi=ilp32 -nostartfiles -nostdlib \
 # Basic checks: test whether the API and the required binaries are available
 # --------------------------------------------------------------------------------------------
 
-ifeq (,$(wildcard $(R5_API)/r5-api.h))
-  $(error Could not find the RISC-V Steel API files in '$(R5_API)'. Please fix the R5_API \
-          variable in the Makefile)
+ifeq (,$(wildcard $(RVSTEEL_API_DIR)/rvsteel.h))
+  $(error Could not find the RISC-V Steel API files in '$(RVSTEEL_API_DIR)'. Please fix the \
+          RVSTEEL_API_DIR variable in the Makefile)
 endif
 
 # Octal dump (od) is needed for hexdump generation
@@ -76,10 +76,10 @@ endif
 # Targets
 # --------------------------------------------------------------------------------------------
 
-all: mkdir-build r5-api $(OBJ_FILES)
+all: mkdir-build rvsteel-api $(OBJ_FILES)
 	@echo -n "Linking ${ELF_NAME}"
 	@$(RISCV_GCC) -T ${LINKER_SCRIPT} ${COMPILER_OPTIONS} \
-                   $(OBJ_FILES) build/obj/r5-api.o -o build/${ELF_NAME}
+                   $(OBJ_FILES) build/obj/rvsteel.o -o build/${ELF_NAME}
 	@echo ": ok."
 	@${RISCV_OBJDUMP} -D build/${ELF_NAME} > build/${OBJDUMP_NAME}
 	@${RISCV_OBJCOPY} build/${ELF_NAME} -O binary build/__temp1__.bin --pad-to=$(MEMORY_SIZE) --gap-fill=0x00
@@ -97,15 +97,15 @@ mkdir-build:
 	@mkdir -p build/
 	@mkdir -p build/obj/
 
-r5-api: $(R5_API)/r5-api.c
-	@echo -n "Building R5 API"
-	@$(RISCV_GCC) -I ${R5_API} ${COMPILER_OPTIONS} \
-                -D MEMORY_SIZE=\"$(MEMORY_SIZE)\" -c -o build/obj/r5-api.o $(R5_API)/r5-api.c
+rvsteel-api: $(RVSTEEL_API_DIR)/rvsteel.c
+	@echo -n "Building RISC-V Steel API"
+	@$(RISCV_GCC) -I ${RVSTEEL_API_DIR} ${COMPILER_OPTIONS} \
+                -D MEMORY_SIZE=\"$(MEMORY_SIZE)\" -c -o build/obj/rvsteel.o $(RVSTEEL_API_DIR)/rvsteel.c
 	@echo ": ok."
 
 build/obj/%.o: %.c
 	@echo -n "Making $(notdir $@)"
-	@$(RISCV_GCC) -I ${R5_API} ${COMPILER_OPTIONS} -c -o $@ $<
+	@$(RISCV_GCC) -I ${RVSTEEL_API_DIR} ${COMPILER_OPTIONS} -c -o $@ $<
 	@echo ": ok."
 
 clean:
