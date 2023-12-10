@@ -164,14 +164,14 @@ There are three types of interrupts in the RISC-V architecture: external, timer,
 
 A device can request an interrupt by driving the **irq_\*** signal to logic `HIGH` and holding it `HIGH` until the request is accepted. When the processor core accepts the request it drives the **irq_\*_ack** signal to logic `HIGH` for one clock cycle. The requesting device must drive the **irq_\*** signal to logic `LOW` in the next clock cycle after the acknowledgement and hold it `LOW` for at least one clock cycle before making a new request.
 
-The timing diagram below contains the example of a valid interrupt request:
+The timing diagram below is an example of a valid interrupt request:
 
 <figure markdown>
   ![](images/irq.svg)
   <figcaption><strong>Figure 3</strong> - Interrupt request timing diagram</figcaption>
 </figure>
 
-An interrupt request is accepted only when:
+An interrupt request is accepted by the processor core only when:
 
 - the global interrupt enable bit is set (field **mie** in the **mstatus** CSR), and
 

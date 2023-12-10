@@ -33,8 +33,6 @@ theme:
     name: material
     logo: images/rvsteel-logo-r5.drawio.svg    
     highlightjs: true
-    palette: 
-        primary: indigo
     features:
         - navigation.top
         - navigation.tabs
@@ -55,9 +53,8 @@ docs_dir: source/
 copyright: Copyright &copy; 2020-present Rafael Calcada
 nav:
     - Homepage: 'index.md'
-    - Getting Started: 'getting-started.md'
+    - Getting Started: 'getting-started.md'    
+    - Processor Core IP: 'core.md'
     - SoC IP: 'soc.md'
-    - Processor Core IP: 'core.md'        
-    - RISC-V Steel API: 'api.md'
     - Software Guide: 'software-guide.md'
     - License: 'license.md'

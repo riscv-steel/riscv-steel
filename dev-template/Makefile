@@ -1,4 +1,4 @@
-# Variables
+# Configure your project by setting the variables below
 # --------------------------------------------------------------------------------------------
 
 # Name of the program to be created
@@ -9,6 +9,10 @@ MEMORY_SIZE       ?= 8192
 RVSTEEL_API_DIR   ?= ../api
 # The full path to RISC-V GNU Toolchain in this machine + RISC-V binaries prefix
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
+
+# Other variables (do not edit)
+# --------------------------------------------------------------------------------------------
+
 # Compiler binary
 RISCV_GCC         ?= ${RISCV_PREFIX}gcc
 # Object dump binary

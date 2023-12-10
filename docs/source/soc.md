@@ -2,7 +2,7 @@
 
 ## Introduction
 
-RISC-V Steel SoC is a configurable system-on-chip IP with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API](api.md) for software development that makes it easier for hardware engineers to develop and deploy new RISC-V embedded applications.
+RISC-V Steel SoC is a configurable system-on-chip IP with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API](software-guide.md#programming-api) for software development that makes it easier for hardware engineers to develop and deploy new RISC-V embedded applications.
 
 The figure below depicts the main components of RISC-V Steel SoC and how they interconnect. Detailed information about each device in the system is provided in the following sections.
 
@@ -97,13 +97,13 @@ Check out the [Software Guide](software-guide.md) for instructions on how to gen
 
 RISC-V Steel SoC has an UART module with configurable baud rate. The module works with 8 data bits, 1 stop bit, no parity bits and no flow control signals (most UARTs work the same way).
 
-[RISC-V Steel API](api.md) provides a set of function calls for sending and receiving data over the UART. Check it out for more information.
+[RISC-V Steel SoC API](software-guide.md#programming-api) provides a set of function calls for sending and receiving data over the UART. Check it out for more information.
 
 ### System Bus
 
 The system bus module interconnects RISC-V Steel Processor Core (manager device) to the UART and the RAM memory (subordinate devices), as shown in [Figure 1](#figure-1). The module multiplexes the signals from the processor's memory interface to the appropriate subordinate device according to the address the processor requests.
 
-Each subordinate device in RISC-V Steel SoC is assigned a region of the processor's address space. [Table 4](#table-4) lists the address range to which each device is mapped.
+Each subordinate device in RISC-V Steel SoC is assigned a region of the processor's address space. The address range to which each device is mapped is listed in [Table 4](#table-4).
 
 ## Memory Map
 
