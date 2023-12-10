@@ -33,6 +33,8 @@ theme:
     name: material
     logo: images/rvsteel-logo-r5.drawio.svg    
     highlightjs: true
+    palette: 
+        primary: indigo
     features:
         - navigation.top
         - navigation.tabs

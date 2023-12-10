@@ -79,10 +79,10 @@ tr:has(.rvsteel-core-io-table) {
   background-color: transparent;
 }
 
-.md-search__input {
+/*.md-search__input {
   background: #fff2;
   height: 100%;
   width: 100%;
   z-index: 2;
   border-radius: .1em;
-}
+}*/
