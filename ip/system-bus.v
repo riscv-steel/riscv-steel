@@ -26,7 +26,7 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel SoC - System Bus
+Project Name:  RISC-V Steel System-on-Chip - System Bus
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com

@@ -26,7 +26,7 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel SoC - Random Access Memory
+Project Name:  RISC-V Steel System-on-Chip - Random Access Memory
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        Rafael Calcada 
 E-mail:        rafaelcalcada@gmail.com

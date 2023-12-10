@@ -30,7 +30,7 @@ OBJ_FILES         := $(patsubst %.c,build/obj/%.o,$(SRC_FILES))
 
 # Compiler options:
 # --------------------------------------------------------------------------------------------
-# -march=rv32izicsr           RISC-V extensions present in RISC-V Steel Core (RV32I and Zicsr)
+# -march=rv32izicsr           RISC-V extensions present in RISC-V Steel (RV32I and Zicsr)
 # -mabi=ilp32                 ABI used (32-bit with soft floating point)
 # -nostartfiles               Do not link with standard startup code
 # -nostdlib                   Do not link with standard libraries

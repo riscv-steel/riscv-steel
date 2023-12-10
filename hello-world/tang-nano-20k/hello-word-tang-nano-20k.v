@@ -26,15 +26,15 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel Hello World Demo for Tang Nano 20K
+Project Name:  RISC-V Steel System-on-Chip - Hello World demo for Tang Nano 20K FPGA dev boards
 Project Repo:  github.com/riscv-steel/riscv-steel
 Author:        github.com/JN513
 
-Top Module:    top
+Top Module:    hello_world_tang_nano_20k
  
 **************************************************************************************************/
 
-module top (
+module hello_world_tang_nano_20k (
 
   input   wire clock,
   input   wire reset,

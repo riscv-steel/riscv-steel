@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide shows you how to synthesize the Hello World demo for some popular FPGAs so that you can quickly get started with RISC-V Steel SoC.
+This guide shows you how to synthesize the Hello World demo for some popular FPGAs so that you can quickly get started with RISC-V Steel SoC IP.
 
 The Hello World demo is an instance of RISC-V Steel SoC that sends a Hello World message to a host computer via UART protocol. Its goal is to introduce you to the SoC design so that you can expand it and develop your own embedded applications.
 
@@ -64,9 +64,9 @@ Open **AMD Xilinx Vivado** and follow the steps:
 
 5. A dialog box asking you to provide the bitstream programming file will open.
 
-6. Search for **`hello_world_<board-name>.bit`**.
+6. Search for `hello_world_<board-name>.bit`.
 
-    This file is located at **`riscv-steel/hello-world/<board-name>/`**.
+    This file is located at `riscv-steel/hello-world/<board-name>/`.
 
 7. Click on **Program** and wait for Vivado to finish programming the FPGA.
 
@@ -82,11 +82,11 @@ If you've reached this point, congratulations! You have a working instance of RI
 
 - **Run your own software**
 
-    The [Software Guide](software-guide.md) shows you how to write, compile, run and debug RISC-V applications for RISC-V Steel SoC. Also, [Steel API](steel-api.md) provides you a collection of function calls that makes it easier for you to write your own software.
+    In the [Software Guide](software-guide.md) you find how to write, compile, and run software applications for RISC-V Steel SoC.
 
 - **Configure and expand the hardware**
 
-    The [RISC-V Steel SoC Reference Guide](soc-reference.md) contains detailed information about RISC-V Steel SoC design. You can configure the design to meet your project requirements and expand it by adding new hardware resources.
+    On the [SoC IP](soc.md) page you find detailed information about the design of RISC-V Steel SoC so that you can configure and expand it to meet your needs.
 
 </br>
 </br>

@@ -1,10 +1,15 @@
 {signal: [
   {name: 'clock', wave: 'P........'},
-  {name: 'mem_address', wave: '2x2.2x2xx', data: ['A0', 'A1', 'A2', 'A3']},
-  {name: 'mem_write_data', wave: '2x2.2x2xx', data: ['D0', 'D1', 'D2', 'D3']},
-  {name: 'mem_write_strobe', wave: '2x2.2x2xx', data: ['4b\'0001', '4b\'0011', '4b\'1111', '4b\'0001']},
-  {name: 'mem_write_request', wave: '101..010.'},
-  {name: 'mem_write_request_ack', wave: '010.1.010'}
+  {},
+  ['Processor',
+  {name: 'mem_address', wave: '22..2x222', data: ['A0', 'A1', 'A2', 'A3','A4','A5']},
+  {name: 'mem_write_data', wave: '22..2x222', data: ['D0', 'D1', 'D2', 'D3', 'D4', 'D5']},
+  {name: 'mem_write_strobe', wave: '22..2x222', data: ['4b\'0001', '4b\'0011', '4b\'1111', '4b\'0001', '4b\'1111', '4b\'0011']},
+  {name: 'mem_write_request', wave: '1....01..'}],
+  {},
+  ['Memory',
+  {name: 'mem_write_request_ack', wave: '010.1.01.'}],
+  {},
 ],
 config: { hscale: 2 }
 }

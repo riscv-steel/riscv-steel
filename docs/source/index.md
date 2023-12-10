@@ -2,25 +2,22 @@
 hide:
   - navigation
 ---
-# RISC-V Steel Documentation
+![Image title](images/rvsteel-logo.png){ align=left width=80 }
+# RISC-V Steel</br><small>Free and open RISC-V IP</small>
 
-Welcome to RISC-V Steel documentation page.
+RISC-V Steel is a free and open collection of RISC-V IP that is simple, robust and easy to use. It features a 32-bit RISC-V processor core, a configurable system-on-chip design and a suite of software and hardware tools aimed to speed up building RISC-V embedded applications.
 
-RISC-V Steel is a free and open collection of RISC-V IP. It features a 32-bit RISC-V processor core, a configurable system-on-chip design and a suite of software and hardware tools aimed to speed up building RISC-V embedded applications.
+[**Get Started**](getting-started.md){ .md-button .md-button--primary } [**GitHub :material-github: **](https://github.com/riscv-steel/riscv-steel){ .md-button }  
 
-[Get Started](getting-started.md){ .md-button .md-button--primary } [GitHub :material-github:](https://github.com/riscv-steel/riscv-steel){ .md-button }
+## Available RISC-V IP
 
----
-
-<h2>Available Hardware IP</h2>
-
-- [**RISC-V Steel SoC**](soc-reference.md)
+- [**RISC-V Steel System-on-Chip**](soc.md)
   
-    Configurable system-on-chip design featuring RISC-V Steel Core, a RAM memory and a UART module.
+    System-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module.
 
-- [**RISC-V Steel Core**](core-reference.md)
+- [**RISC-V Steel Processor Core**](core.md)
 
-    Area-optimized 32-bit processor design. Implements the RV32I ISA, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
+    32-bit processor core design implementing the RV32I ISA, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
 
 </br>
 </br>

@@ -33,9 +33,6 @@ theme:
     name: material
     logo: images/rvsteel-logo-r5.drawio.svg    
     highlightjs: true
-    palette: 
-        primary: black
-        accent: pink
     features:
         - navigation.top
         - navigation.tabs
@@ -57,8 +54,8 @@ copyright: Copyright &copy; 2020-present Rafael Calcada
 nav:
     - Homepage: 'index.md'
     - Getting Started: 'getting-started.md'
-    - SoC Reference: 'soc-reference.md'
-    - Core Reference: 'core-reference.md'        
-    - Steel API: 'steel-api.md'
+    - SoC IP: 'soc.md'
+    - Processor Core IP: 'core.md'        
+    - RISC-V Steel API: 'api.md'
     - Software Guide: 'software-guide.md'
     - License: 'license.md'
