@@ -88,3 +88,15 @@ tr:has(.rvsteel-core-io-table) {
   z-index: 2;
   border-radius: .1em;
 }*/
+
+.home-title {
+  height: 90px;
+  line-height: 90px;
+}
+
+.home-title h1 {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0px !important;
+  line-height: 1.1em !important;
+}

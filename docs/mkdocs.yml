@@ -31,7 +31,8 @@ markdown_extensions:
             - overrides/.icons
 theme:
     name: material
-    logo: images/rvsteel-logo-r5.drawio.svg    
+    logo: images/rvsteel-logo-white-small.svg
+    favicon: images/rvsteel-logo-favicon.svg
     highlightjs: true
     features:
         - navigation.top
