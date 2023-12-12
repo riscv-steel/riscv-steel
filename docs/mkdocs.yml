@@ -1,6 +1,6 @@
 site_name: RISC-V Steel Docs
 site_author: Rafael Calcada
-site_description: RISC-V Steel is a free and open collection of RISC-V IP aimed to speed up building new RISC-V systems from scratch.
+site_description: RISC-V Steel is a free and open collection of RISC-V IP that is simple, robust and easy to use.
 repo_url: https://github.com/riscv-steel/riscv-steel
 edit_uri: edit/main/docs/source/
 markdown_extensions:

@@ -27,8 +27,8 @@ tr:has(.rvsteel-core-io-table) {
 
 :root {
   --md-primary-fg-color: #4051b5;
-  --md-primary-fg-color--light: #333333;
-  --md-primary-fg-color--dark: #000000;
+  --md-primary-fg-color--light: #5d6cc0;
+  --md-primary-fg-color--dark: #303fa1;
   --md-accent-fg-color: #526cfe;
   --md-accent-fg-color--light: #333333;
   --md-accent-fg-color--dark: #000000;
@@ -37,7 +37,7 @@ tr:has(.rvsteel-core-io-table) {
 .md-typeset .md-button {
   border: 0.1rem solid;
   border-radius: 0.1rem;
-  color: #4051b5;
+  color: #303fa1;
   cursor: pointer;
   display: inline-block;
   font-weight: 700;
@@ -52,8 +52,8 @@ tr:has(.rvsteel-core-io-table) {
 }
 
 .md-typeset .md-button--primary {
-  background-color: #4051b5;
-  border-color: #4051b5;
+  background-color: #303fa1;
+  border-color: #303fa1;
   color: var(--md-primary-bg-color);
 }
 
