@@ -26,18 +26,18 @@ tr:has(.rvsteel-core-io-table) {
 
 
 :root {
-  --md-primary-fg-color: #4051b5;
-  --md-primary-fg-color--light: #5d6cc0;
-  --md-primary-fg-color--dark: #303fa1;
+  --md-primary-fg-color: #222222;
+  --md-primary-fg-color--light: #333333;
+  --md-primary-fg-color--dark: #000000;
   --md-accent-fg-color: #526cfe;
-  --md-accent-fg-color--light: #333333;
-  --md-accent-fg-color--dark: #000000;
+  --md-accent-fg-color--light: #526cfe;
+  --md-accent-fg-color--dark: #303fa1;
 }
 
 .md-typeset .md-button {
   border: 0.1rem solid;
   border-radius: 0.1rem;
-  color: #303fa1;
+  color: var(--md-primary-fg-color--dark);
   cursor: pointer;
   display: inline-block;
   font-weight: 700;
@@ -46,30 +46,30 @@ tr:has(.rvsteel-core-io-table) {
 }
 
 .md-typeset a.md-button:hover {
-  background-color: var(--md-accent-fg-color);
-  border-color: var(--md-accent-fg-color);
+  background-color: var(--md-primary-fg-color--light);
+  border-color: var(--md-primary-fg-color--light);
   color: var(--md-primary-bg-color);
 }
 
 .md-typeset .md-button--primary {
-  background-color: #303fa1;
-  border-color: #303fa1;
+  background-color: var(--md-primary-fg-color);
+  border-color: var(--md-primary-fg-color);
   color: var(--md-primary-bg-color);
 }
 
 .md-typeset a.md-button--primary:hover {
-  background-color: var(--md-accent-fg-color);
-  border-color: var(--md-accent-fg-color);
+  background-color: var(--md-primary-fg-color--light);
+  border-color: var(--md-primary-fg-color--light);
   color: var(--md-primary-bg-color);
 }
 
 .md-typeset a {
-  color: #526cfe;
+  color: var(--md-accent-fg-color--light);
   word-break: break-word;
 }
 
 .md-typeset a:hover {
-  color: #8b9cfc;
+  color: var(--md-accent-fg-color--dark);
   word-break: break-word;
 }
 
@@ -81,13 +81,13 @@ tr:has(.rvsteel-core-io-table) {
   background-color: transparent;
 }
 
-/*.md-search__input {
-  background: #fff2;
+.md-search__input {
+  background: #ffffff1a;
   height: 100%;
   width: 100%;
   z-index: 2;
   border-radius: .1em;
-}*/
+}
 
 .home-title {
   height: 90px;
@@ -99,4 +99,5 @@ tr:has(.rvsteel-core-io-table) {
   vertical-align: middle;
   margin: 0px !important;
   line-height: 1.1em !important;
+  color: #222222 !important;
 }

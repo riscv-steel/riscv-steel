@@ -11,7 +11,7 @@ Welcome to RISC-V Steel documentation page.
 
 RISC-V Steel is a free and open collection of RISC-V IP that is simple, robust and easy to use. It features a 32-bit RISC-V processor core, a configurable system-on-chip design and a suite of software and hardware tools aimed to speed up building RISC-V embedded applications.
 
-[Get Started](getting-started.md){ .md-button .md-button--primary } [GitHub :material-github:](https://github.com/riscv-steel/riscv-steel){ .md-button }  
+[Get Started :material-open-in-new:](getting-started.md){ .md-button .md-button--primary } [GitHub :material-git:](https://github.com/riscv-steel/riscv-steel){ .md-button }
 
 ---
 
