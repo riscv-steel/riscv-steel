@@ -160,9 +160,9 @@ The timing diagram below contains examples of valid write operations:
 
 ## Interrupt requests
 
-There are three types of interrupts in the RISC-V architecture: external, timer, and software. RISC-V Steel Processor Core provides dedicated signals (**irq_external**, **irq_timer** and **irq_software**) to request each of these interrupt types.
+There are three interrupt types in the RISC-V architecture: external, timer, and software. RISC-V Steel Processor Core provides dedicated signals (**irq_external**, **irq_timer** and **irq_software**) to request each of these interrupt types.
 
-A device can request an interrupt by driving the **irq_\*** signal to logic `HIGH` and holding it `HIGH` until the request is accepted. When the processor core accepts the request it drives the **irq_\*_ack** signal to logic `HIGH` for one clock cycle. The requesting device must drive the **irq_\*** signal to logic `LOW` in the next clock cycle after the acknowledgement and hold it `LOW` for at least one clock cycle before making a new request.
+A device can request an interrupt by driving the **irq_\*** signal to logic `HIGH` and holding it `HIGH` until the request is accepted. The processor accepts the request by driving the **irq_\*_ack** signal to logic `HIGH` for one clock cycle. The requesting device can drive the **irq_\*** signal to logic `LOW` in the next clock cycle after the acknowledgement, or keep it `HIGH` to make a new request.
 
 The timing diagram below is an example of a valid interrupt request:
 
@@ -171,13 +171,13 @@ The timing diagram below is an example of a valid interrupt request:
   <figcaption><strong>Figure 3</strong> - Interrupt request timing diagram</figcaption>
 </figure>
 
-An interrupt request is accepted by the processor core only when:
+An interrupt request is accepted if:
 
 - the global interrupt enable bit is set (field **mie** in the **mstatus** CSR), and
 
 - the corresponding interrupt type is enabled (fields **meie**, **mtie** and **msie** in the **mie** CSR).
 
-The processor core proceeds as follows when an interrupt request is accepted:
+The processor proceeds as follows when an interrupt request is accepted:
 
 - the execution of the current instruction is aborted.
 
@@ -207,7 +207,7 @@ The value in the **mepc** register is the address of the instruction aborted by 
 
 ## Real time clock
 
-RISC-V Steel Processor Core provides a 64-bit bus to update the **mtime** CSR with the value measured from a real time clock. The value of **mtime** is updated on every rising edge of the **clock** signal and can be read with the **csrr** instruction.
+RISC-V Steel Processor Core provides a 64-bit bus to update the **utime** CSR with the value measured from a real time clock. The value of **utime** is updated on every rising edge of the **clock** signal and can be read with the **csrr** instruction.
 
 ???+ info
 

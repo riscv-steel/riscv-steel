@@ -7,7 +7,7 @@ RISC-V Steel SoC is a configurable system-on-chip IP with RISC-V Steel Processor
 The figure below depicts the main components of RISC-V Steel SoC and how they interconnect. Detailed information about each device in the system is provided in the following sections.
 
 <figure markdown>
-  ![Image title](images/rvsteel-soc.drawio.svg){#figure-1}
+  ![Image title](images/rvsteel-soc.svg){#figure-1}
   <figcaption><strong>Figure 1</strong> - Overview of RISC-V Steel SoC</figcaption>
 </figure>
 
