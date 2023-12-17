@@ -50,16 +50,16 @@ module ram_memory #(
   input   wire          clock,
   input   wire          reset,
 
-  // Memory Interface
+  // IO interface
 
-  input  wire   [31:0]  mem_address,
-  output reg    [31:0]  mem_read_data,
-  input  wire           mem_read_request,
-  output reg            mem_read_request_ack,
-  input  wire   [31:0]  mem_write_data,
-  input  wire   [3:0 ]  mem_write_strobe,
-  input  wire           mem_write_request,
-  output reg            mem_write_request_ack
+  input  wire   [31:0]  rw_address,
+  output reg    [31:0]  read_data,
+  input  wire           read_request,
+  output reg            read_response,
+  input  wire   [31:0]  write_data,
+  input  wire   [3:0 ]  write_strobe,
+  input  wire           write_request,
+  output reg            write_response
 
   );
 
@@ -89,7 +89,7 @@ module ram_memory #(
   // Invalid address detection                                                                     //
   //-----------------------------------------------------------------------------------------------//
 
-  assign invalid_address = $unsigned(mem_address) >= $unsigned(MEMORY_SIZE);
+  assign invalid_address = $unsigned(rw_address) >= $unsigned(MEMORY_SIZE);
 
   //---------------------------------------------------------------------------------------------//
   // Memory initialization                                                                       //
@@ -107,7 +107,7 @@ module ram_memory #(
   //---------------------------------------------------------------------------------------------//
 
   assign effective_address =
-    $unsigned(mem_address[31:0] >> 2);
+    $unsigned(rw_address[31:0] >> 2);
 
   //---------------------------------------------------------------------------------------------//
   // Memory read                                                                                 //
@@ -115,9 +115,9 @@ module ram_memory #(
   
   always @(posedge clock) begin
     if (reset_internal | invalid_address)
-      mem_read_data <= 32'h00000000;
+      read_data <= 32'h00000000;
     else
-      mem_read_data <= ram[effective_address];
+      read_data <= ram[effective_address];
   end
 
   //---------------------------------------------------------------------------------------------//
@@ -125,15 +125,15 @@ module ram_memory #(
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin
-    if(mem_write_request) begin
-      if(mem_write_strobe[0])
-        ram[effective_address][7:0  ] <= mem_write_data[7:0  ];
-      if(mem_write_strobe[1])
-        ram[effective_address][15:8 ] <= mem_write_data[15:8 ];
-      if(mem_write_strobe[2])
-        ram[effective_address][23:16] <= mem_write_data[23:16];
-      if(mem_write_strobe[3])
-        ram[effective_address][31:24] <= mem_write_data[31:24];
+    if(write_request) begin
+      if(write_strobe[0])
+        ram[effective_address][7:0  ] <= write_data[7:0  ];
+      if(write_strobe[1])
+        ram[effective_address][15:8 ] <= write_data[15:8 ];
+      if(write_strobe[2])
+        ram[effective_address][23:16] <= write_data[23:16];
+      if(write_strobe[3])
+        ram[effective_address][31:24] <= write_data[31:24];
     end
   end
 
@@ -143,12 +143,12 @@ module ram_memory #(
 
   always @(posedge clock) begin
     if (reset_internal) begin
-      mem_read_request_ack  <= 1'b0;
-      mem_write_request_ack <= 1'b0;
+      read_response  <= 1'b0;
+      write_response <= 1'b0;
     end
     else begin
-      mem_read_request_ack  <= mem_read_request;
-      mem_write_request_ack <= mem_write_request;
+      read_response  <= read_request;
+      write_response <= write_request;
     end
   end
   

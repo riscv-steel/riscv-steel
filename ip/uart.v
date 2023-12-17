@@ -56,15 +56,15 @@ module uart #(
   input   wire          clock,
   input   wire          reset,
 
-  // Memory Interface
+  // IO interface
 
-  input  wire   [31:0]  mem_address,
-  output reg    [31:0]  mem_read_data,
-  input  wire           mem_read_request,
-  output reg            mem_read_request_ack,
-  input  wire   [7:0]   mem_write_data,
-  input  wire           mem_write_request,
-  output reg            mem_write_request_ack,
+  input  wire   [31:0]  rw_address,
+  output reg    [31:0]  read_data,
+  input  wire           read_request,
+  output reg            read_response,
+  input  wire   [7:0]   write_data,
+  input  wire           write_request,
+  output reg            write_response,
 
   // RX/TX signals
 
@@ -74,7 +74,7 @@ module uart #(
   // Interrupt signaling
 
   output  reg           uart_irq,
-  input   wire          uart_irq_ack
+  input   wire          uart_irq_response
     
   );
 
@@ -106,10 +106,10 @@ module uart #(
       tx_bit_counter <= 0;
     end
     else if (tx_bit_counter == 0 &&
-             mem_address == 32'h80000000 &&
-             mem_write_request == 1'b1) begin
+             rw_address == 32'h80000000 &&
+             write_request == 1'b1) begin
       tx_cycle_counter <= 0;
-      tx_register <= {1'b1, mem_write_data[7:0], 1'b0};
+      tx_register <= {1'b1, write_data[7:0], 1'b0};
       tx_bit_counter <= 10;
     end
     else begin
@@ -136,7 +136,7 @@ module uart #(
       rx_active <= 1'b0;
     end
     else if (uart_irq == 1'b1) begin
-      if ((mem_address == 32'h80000004 && mem_read_request == 1'b1) || uart_irq_ack == 1'b1) begin
+      if ((rw_address == 32'h80000004 && read_request == 1'b1) || uart_irq_response == 1'b1) begin
         rx_cycle_counter <= 0;
         rx_register <= 8'h00;
         rx_data <= rx_data;
@@ -203,24 +203,24 @@ module uart #(
 
   always @(posedge clock) begin
     if (reset_internal) begin
-      mem_read_request_ack  <= 1'b0;
-      mem_write_request_ack <= 1'b0;
+      read_response  <= 1'b0;
+      write_response <= 1'b0;
     end
     else begin
-      mem_read_request_ack  <= mem_read_request;
-      mem_write_request_ack <= mem_write_request;
+      read_response  <= read_request;
+      write_response <= write_request;
     end
   end
 
   always @(posedge clock) begin
     if (reset_internal)
-      mem_read_data <= 32'h00000000;
-    else if (mem_address == 32'h80000000 && mem_read_request == 1'b1)
-      mem_read_data <= {31'b0, tx_bit_counter == 0};
-    else if (mem_address == 32'h80000004 && mem_read_request == 1'b1)
-      mem_read_data <= {24'b0, rx_data};
+      read_data <= 32'h00000000;
+    else if (rw_address == 32'h80000000 && read_request == 1'b1)
+      read_data <= {31'b0, tx_bit_counter == 0};
+    else if (rw_address == 32'h80000004 && read_request == 1'b1)
+      read_data <= {24'b0, rx_data};
     else
-      mem_read_data <= 32'h00000000;
+      read_data <= 32'h00000000;
   end
   
 endmodule

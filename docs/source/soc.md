@@ -11,11 +11,7 @@ The figure below depicts the main components of RISC-V Steel SoC and how they in
   <figcaption><strong>Figure 1</strong> - Overview of RISC-V Steel SoC</figcaption>
 </figure>
 
-## General information
-
-This section provides information about the source files, the input/output signals and the configuration parameters of RISC-V Steel SoC.
-
-### Source files
+## Source files
 
 **Table 1** - RISC-V Steel SoC source files
 
@@ -27,7 +23,7 @@ This section provides information about the source files, the input/output signa
 | **uart**         | `uart.v`             | `riscv-steel/ip/` | UART                           |
 | **system_bus**   | `system-bus.v`       | `riscv-steel/ip/` | System Bus                     |
 
-### Input/output signals
+## I/O signals
 
 **Table 2** - RISC-V Steel SoC top module input and output signals
 
@@ -38,7 +34,7 @@ This section provides information about the source files, the input/output signa
 | **uart_rx**    | Input     | 1 bit | UART receiver pin. Must be connected to the transmitter (`TX`) pin of another UART device. |
 | **uart_tx**    | Output    | 1 bit | UART transmitter pin. Must be connected to the receiver (`RX`) pin of another UART device. |
 
-### Configuration
+## Configuration
 
 **Table 3** - Configuration parameters of RISC-V Steel SoC
 
@@ -101,7 +97,7 @@ RISC-V Steel SoC has an UART module with configurable baud rate. The module work
 
 ### System Bus
 
-The system bus module interconnects RISC-V Steel Processor Core (manager device) to the UART and the RAM memory (subordinate devices), as shown in [Figure 1](#figure-1). The module multiplexes the signals from the processor's memory interface to the appropriate subordinate device according to the address the processor requests.
+The system bus module interconnects RISC-V Steel Processor Core (manager device) to the UART and the RAM memory (subordinate devices), as shown in [Figure 1](#figure-1). The module multiplexes the signals from the processor's I/O interface to the appropriate subordinate device according to the address the processor requests.
 
 Each subordinate device in RISC-V Steel SoC is assigned a region of the processor's address space. The address range to which each device is mapped is listed in [Table 4](#table-4).
 

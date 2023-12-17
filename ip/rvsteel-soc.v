@@ -62,64 +62,64 @@ module rvsteel_soc #(
   );
   
   wire          irq_external;
-  wire          irq_external_ack;
+  wire          irq_external_response;
 
   // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
-  wire  [31:0]  mem_address;
-  wire  [31:0]  mem_read_data;
-  wire          mem_read_request;
-  wire          mem_read_request_ack;
-  wire  [31:0]  mem_write_data;
-  wire  [3:0 ]  mem_write_strobe;
-  wire          mem_write_request;
-  wire          mem_write_request_ack;
+  wire  [31:0]  rw_address;
+  wire  [31:0]  read_data;
+  wire          read_request;
+  wire          read_response;
+  wire  [31:0]  write_data;
+  wire  [3:0 ]  write_strobe;
+  wire          write_request;
+  wire          write_response;
   
   // RAM Memory (Device #0) <=> System Bus
 
-  wire  [31:0]  device0_mem_address;
-  wire  [31:0]  device0_mem_read_data;
-  wire          device0_mem_read_request;
-  wire          device0_mem_read_request_ack;
-  wire  [31:0]  device0_mem_write_data;
-  wire  [3:0 ]  device0_mem_write_strobe;
-  wire          device0_mem_write_request;
-  wire          device0_mem_write_request_ack;
+  wire  [31:0]  device0_rw_address;
+  wire  [31:0]  device0_read_data;
+  wire          device0_read_request;
+  wire          device0_read_response;
+  wire  [31:0]  device0_write_data;
+  wire  [3:0 ]  device0_write_strobe;
+  wire          device0_write_request;
+  wire          device0_write_response;
   
   // UART (Device #1) <=> System Bus
 
-  wire  [31:0]  device1_mem_address;
-  wire  [31:0]  device1_mem_read_data;
-  wire          device1_mem_read_request;
-  wire          device1_mem_read_request_ack;
-  wire  [31:0]  device1_mem_write_data;
-  wire  [3:0 ]  device1_mem_write_strobe;
-  wire          device1_mem_write_request;
-  wire          device1_mem_write_request_ack;
+  wire  [31:0]  device1_rw_address;
+  wire  [31:0]  device1_read_data;
+  wire          device1_read_request;
+  wire          device1_read_response;
+  wire  [31:0]  device1_write_data;
+  wire  [3:0 ]  device1_write_strobe;
+  wire          device1_write_request;
+  wire          device1_write_response;
 
   /* Uncomment to add new devices
 
   // Device #2 <=> System Bus
 
-  wire  [31:0]  device2_mem_address;
-  wire  [31:0]  device2_mem_read_data;
-  wire          device2_mem_read_request;
-  wire          device2_mem_read_request_ack;
-  wire  [31:0]  device2_mem_write_data;
-  wire  [3:0 ]  device2_mem_write_strobe;
-  wire          device2_mem_write_request;
-  wire          device2_mem_write_request_ack;
+  wire  [31:0]  device2_rw_address;
+  wire  [31:0]  device2_read_data;
+  wire          device2_read_request;
+  wire          device2_read_response;
+  wire  [31:0]  device2_write_data;
+  wire  [3:0 ]  device2_write_strobe;
+  wire          device2_write_request;
+  wire          device2_write_response;
 
   // Device #3 <=> System Bus
 
-  wire  [31:0]  device3_mem_address;
-  wire  [31:0]  device3_mem_read_data;
-  wire          device3_mem_read_request;
-  wire          device3_mem_read_request_ack;
-  wire  [31:0]  device3_mem_write_data;
-  wire  [3:0 ]  device3_mem_write_strobe;
-  wire          device3_mem_write_request;
-  wire          device3_mem_write_request_ack;
+  wire  [31:0]  device3_rw_address;
+  wire  [31:0]  device3_read_data;
+  wire          device3_read_request;
+  wire          device3_read_response;
+  wire  [31:0]  device3_write_data;
+  wire  [3:0 ]  device3_write_strobe;
+  wire          device3_write_request;
+  wire          device3_write_response;
 
   */
 
@@ -134,25 +134,25 @@ module rvsteel_soc #(
     .clock                          (clock                              ),
     .reset                          (reset                              ),
 
-    // Memory Interface
+    // IO interface
 
-    .mem_address                    (mem_address                        ),
-    .mem_read_data                  (mem_read_data                      ),
-    .mem_read_request               (mem_read_request                   ),
-    .mem_read_request_ack           (mem_read_request_ack               ),
-    .mem_write_data                 (mem_write_data                     ),
-    .mem_write_strobe               (mem_write_strobe                   ),
-    .mem_write_request              (mem_write_request                  ),
-    .mem_write_request_ack          (mem_write_request_ack              ),
+    .rw_address                     (rw_address                         ),
+    .read_data                      (read_data                          ),
+    .read_request                   (read_request                       ),
+    .read_response                  (read_response                      ),
+    .write_data                     (write_data                         ),
+    .write_strobe                   (write_strobe                       ),
+    .write_request                  (write_request                      ),
+    .write_response                 (write_response                     ),
 
     // Interrupt signals (hardwire inputs to zero if unused)
 
     .irq_external                   (irq_external                       ),
-    .irq_external_ack               (irq_external_ack                   ),
+    .irq_external_response          (irq_external_response              ),
     .irq_timer                      (0), // unused
-    .irq_timer_ack                  (),  // unused
+    .irq_timer_response             (),  // unused
     .irq_software                   (0), // unused
-    .irq_software_ack               (),  // unused
+    .irq_software_response          (),  // unused
 
     // Real Time Clock (hardwire to zero if unused)
 
@@ -183,60 +183,60 @@ module rvsteel_soc #(
 
     // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
-    .mem_address                    (mem_address                        ),
-    .mem_read_data                  (mem_read_data                      ),
-    .mem_read_request               (mem_read_request                   ),
-    .mem_read_request_ack           (mem_read_request_ack               ),
-    .mem_write_data                 (mem_write_data                     ),
-    .mem_write_strobe               (mem_write_strobe                   ),
-    .mem_write_request              (mem_write_request                  ),
-    .mem_write_request_ack          (mem_write_request_ack              ),
+    .rw_address                     (rw_address                         ),
+    .read_data                      (read_data                          ),
+    .read_request                   (read_request                       ),
+    .read_response                  (read_response                      ),
+    .write_data                     (write_data                         ),
+    .write_strobe                   (write_strobe                       ),
+    .write_request                  (write_request                      ),
+    .write_response                 (write_response                     ),
     
     // RAM Memory (Device #0) <=> System Bus
 
-    .device0_mem_address            (device0_mem_address                ),
-    .device0_mem_read_data          (device0_mem_read_data              ),
-    .device0_mem_read_request       (device0_mem_read_request           ),
-    .device0_mem_read_request_ack   (device0_mem_read_request_ack       ),
-    .device0_mem_write_data         (device0_mem_write_data             ),
-    .device0_mem_write_strobe       (device0_mem_write_strobe           ),
-    .device0_mem_write_request      (device0_mem_write_request          ),
-    .device0_mem_write_request_ack  (device0_mem_write_request_ack      ),
+    .device0_rw_address             (device0_rw_address                 ),
+    .device0_read_data              (device0_read_data                  ),
+    .device0_read_request           (device0_read_request               ),
+    .device0_read_response          (device0_read_response              ),
+    .device0_write_data             (device0_write_data                 ),
+    .device0_write_strobe           (device0_write_strobe               ),
+    .device0_write_request          (device0_write_request              ),
+    .device0_write_response         (device0_write_response             ),
     
     // UART (Device #1) <=> System Bus
 
-    .device1_mem_address            (device1_mem_address                ),
-    .device1_mem_read_data          (device1_mem_read_data              ),
-    .device1_mem_read_request       (device1_mem_read_request           ),
-    .device1_mem_read_request_ack   (device1_mem_read_request_ack       ),
-    .device1_mem_write_data         (device1_mem_write_data             ),
-    .device1_mem_write_strobe       (device1_mem_write_strobe           ),
-    .device1_mem_write_request      (device1_mem_write_request          ),
-    .device1_mem_write_request_ack  (device1_mem_write_request_ack      )
+    .device1_rw_address             (device1_rw_address                 ),
+    .device1_read_data              (device1_read_data                  ),
+    .device1_read_request           (device1_read_request               ),
+    .device1_read_response          (device1_read_response              ),
+    .device1_write_data             (device1_write_data                 ),
+    .device1_write_strobe           (device1_write_strobe               ),
+    .device1_write_request          (device1_write_request              ),
+    .device1_write_response         (device1_write_response             )
 
     /* Uncomment to add new devices
 
     // Device #2 <=> System Bus
 
-    .device2_mem_address            (device2_mem_address                ),
-    .device2_mem_read_data          (device2_mem_read_data              ),
-    .device2_mem_read_request       (device2_mem_read_request           ),
-    .device2_mem_read_request_ack   (device2_mem_read_request_ack       ),
-    .device2_mem_write_data         (device2_mem_write_data             ),
-    .device2_mem_write_strobe       (device2_mem_write_strobe           ),
-    .device2_mem_write_request      (device2_mem_write_request          ),
-    .device2_mem_write_request_ack  (device2_mem_write_request_ack      )
+    .device2_rw_address             (device2_rw_address                 ),
+    .device2_read_data              (device2_read_data                  ),
+    .device2_read_request           (device2_read_request               ),
+    .device2_read_response          (device2_read_response              ),
+    .device2_write_data             (device2_write_data                 ),
+    .device2_write_strobe           (device2_write_strobe               ),
+    .device2_write_request          (device2_write_request              ),
+    .device2_write_response         (device2_write_response             )
 
     // Device #3 <=> System Bus
 
-    .device3_mem_address            (device3_mem_address                ),
-    .device3_mem_read_data          (device3_mem_read_data              ),
-    .device3_mem_read_request       (device3_mem_read_request           ),
-    .device3_mem_read_request_ack   (device3_mem_read_request_ack       ),
-    .device3_mem_write_data         (device3_mem_write_data             ),
-    .device3_mem_write_strobe       (device3_mem_write_strobe           ),
-    .device3_mem_write_request      (device3_mem_write_request          ),
-    .device3_mem_write_request_ack  (device3_mem_write_request_ack      )
+    .device3_rw_address             (device3_rw_address                 ),
+    .device3_read_data              (device3_read_data                  ),
+    .device3_read_request           (device3_read_request               ),
+    .device3_read_response          (device3_read_response              ),
+    .device3_write_data             (device3_write_data                 ),
+    .device3_write_strobe           (device3_write_strobe               ),
+    .device3_write_request          (device3_write_request              ),
+    .device3_write_response         (device3_write_response             )
 
     */
 
@@ -254,16 +254,16 @@ module rvsteel_soc #(
     .clock                          (clock                              ),
     .reset                          (reset                              ),
     
-    // Memory Interface
+    // IO interface
   
-    .mem_address                    (device0_mem_address                ),
-    .mem_read_data                  (device0_mem_read_data              ),
-    .mem_read_request               (device0_mem_read_request           ),
-    .mem_read_request_ack           (device0_mem_read_request_ack       ),
-    .mem_write_data                 (device0_mem_write_data             ),
-    .mem_write_strobe               (device0_mem_write_strobe           ),
-    .mem_write_request              (device0_mem_write_request          ),
-    .mem_write_request_ack          (device0_mem_write_request_ack      )
+    .rw_address                     (device0_rw_address                 ),
+    .read_data                      (device0_read_data                  ),
+    .read_request                   (device0_read_request               ),
+    .read_response                  (device0_read_response              ),
+    .write_data                     (device0_write_data                 ),
+    .write_strobe                   (device0_write_strobe               ),
+    .write_request                  (device0_write_request              ),
+    .write_response                 (device0_write_response             )
 
   );
 
@@ -279,15 +279,15 @@ module rvsteel_soc #(
     .clock                          (clock                              ),
     .reset                          (reset                              ),
 
-    // Memory Interface
+    // IO interface
 
-    .mem_address                    (device1_mem_address                ),
-    .mem_read_data                  (device1_mem_read_data              ),
-    .mem_read_request               (device1_mem_read_request           ),
-    .mem_read_request_ack           (device1_mem_read_request_ack       ),
-    .mem_write_data                 (device1_mem_write_data[7:0]        ),
-    .mem_write_request              (device1_mem_write_request          ),
-    .mem_write_request_ack          (device1_mem_write_request_ack      ),
+    .rw_address                     (device1_rw_address                 ),
+    .read_data                      (device1_read_data                  ),
+    .read_request                   (device1_read_request               ),
+    .read_response                  (device1_read_response              ),
+    .write_data                     (device1_write_data[7:0]            ),
+    .write_request                  (device1_write_request              ),
+    .write_response                 (device1_write_response             ),
 
     // RX/TX signals
 
@@ -297,7 +297,7 @@ module rvsteel_soc #(
     // Interrupt signaling
 
     .uart_irq                       (irq_external                       ),
-    .uart_irq_ack                   (irq_external_ack                   )
+    .uart_irq_response              (irq_external_response              )
 
   );
 
@@ -308,13 +308,13 @@ module rvsteel_soc #(
 
     ... device 2 signals ...
 
-    .mydevice2_address              (device2_mem_address                ),
-    .mydevice2_read_data            (device2_mem_read_data              ),
-    .mydevice2_read_request         (device2_mem_read_request           ),
-    .mydevice2_read_request_ack     (device2_mem_read_request_ack       ),
-    .mydevice2_write_data           (device2_mem_write_data             ),
-    .mydevice2_write_request        (device2_mem_write_request          ),
-    .mydevice2_write_request_ack    (device2_mem_write_request_ack      )
+    .mydevice2_rw_address           (device2_rw_address                 ),
+    .mydevice2_read_data            (device2_read_data                  ),
+    .mydevice2_read_request         (device2_read_request               ),
+    .mydevice2_read_response        (device2_read_response              ),
+    .mydevice2_write_data           (device2_write_data                 ),
+    .mydevice2_write_request        (device2_write_request              ),
+    .mydevice2_write_response       (device2_write_response             )
 
   );
 
@@ -323,13 +323,13 @@ module rvsteel_soc #(
 
     ... device 3 signals ...
 
-    .mydevice3_address              (device3_mem_address                ),
-    .mydevice3_read_data            (device3_mem_read_data              ),
-    .mydevice3_read_request         (device3_mem_read_request           ),
-    .mydevice3_read_request_ack     (device3_mem_read_request_ack       ),
-    .mydevice3_write_data           (device3_mem_write_data             ),
-    .mydevice3_write_request        (device3_mem_write_request          ),
-    .mydevice3_write_request_ack    (device3_mem_write_request_ack      )
+    .mydevice3_rw_address           (device3_rw_address                 ),
+    .mydevice3_read_data            (device3_read_data                  ),
+    .mydevice3_read_request         (device3_read_request               ),
+    .mydevice3_read_response        (device3_read_response              ),
+    .mydevice3_write_data           (device3_write_data                 ),
+    .mydevice3_write_request        (device3_write_request              ),
+    .mydevice3_write_response       (device3_write_response             )
 
   );
 

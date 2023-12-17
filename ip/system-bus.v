@@ -59,60 +59,60 @@ module system_bus #(
 
   // Interface with the Manager Device
 
-  input   wire  [31:0]  mem_address,
-  output  reg   [31:0]  mem_read_data,
-  input   wire          mem_read_request,
-  output  reg           mem_read_request_ack,
-  input   wire  [31:0]  mem_write_data,
-  input   wire  [3:0 ]  mem_write_strobe,
-  input   wire          mem_write_request,
-  output  reg           mem_write_request_ack,
+  input   wire  [31:0]  rw_address,
+  output  reg   [31:0]  read_data,
+  input   wire          read_request,
+  output  reg           read_response,
+  input   wire  [31:0]  write_data,
+  input   wire  [3:0 ]  write_strobe,
+  input   wire          write_request,
+  output  reg           write_response,
   
   // Device #0
 
-  output  wire  [31:0]  device0_mem_address,
-  input   wire  [31:0]  device0_mem_read_data,
-  output  wire          device0_mem_read_request,
-  input   wire          device0_mem_read_request_ack,
-  output  wire  [31:0]  device0_mem_write_data,
-  output  wire  [3:0 ]  device0_mem_write_strobe,
-  output  wire          device0_mem_write_request,
-  input   wire          device0_mem_write_request_ack,
+  output  wire  [31:0]  device0_rw_address,
+  input   wire  [31:0]  device0_read_data,
+  output  wire          device0_read_request,
+  input   wire          device0_read_response,
+  output  wire  [31:0]  device0_write_data,
+  output  wire  [3:0 ]  device0_write_strobe,
+  output  wire          device0_write_request,
+  input   wire          device0_write_response,
 
   // Device #1
 
-  output  wire  [31:0]  device1_mem_address,
-  input   wire  [31:0]  device1_mem_read_data,
-  output  wire          device1_mem_read_request,
-  input   wire          device1_mem_read_request_ack,
-  output  wire  [31:0]  device1_mem_write_data,
-  output  wire  [3:0 ]  device1_mem_write_strobe,
-  output  wire          device1_mem_write_request,
-  input   wire          device1_mem_write_request_ack
+  output  wire  [31:0]  device1_rw_address,
+  input   wire  [31:0]  device1_read_data,
+  output  wire          device1_read_request,
+  input   wire          device1_read_response,
+  output  wire  [31:0]  device1_write_data,
+  output  wire  [3:0 ]  device1_write_strobe,
+  output  wire          device1_write_request,
+  input   wire          device1_write_response
 
   /* Uncomment to add new devices
 
   // Device #2
 
-  output  wire  [31:0]  device2_mem_address,
-  input   wire  [31:0]  device2_mem_read_data,
-  output  wire          device2_mem_read_request,
-  input   wire          device2_mem_read_request_ack,
-  output  wire  [31:0]  device2_mem_write_data,
-  output  wire  [3:0 ]  device2_mem_write_strobe,
-  output  wire          device2_mem_write_request,
-  input   wire          device2_mem_write_request_ack,
+  output  wire  [31:0]  device2_rw_address,
+  input   wire  [31:0]  device2_read_data,
+  output  wire          device2_read_request,
+  input   wire          device2_read_response,
+  output  wire  [31:0]  device2_write_data,
+  output  wire  [3:0 ]  device2_write_strobe,
+  output  wire          device2_write_request,
+  input   wire          device2_write_response,
 
   // Device #3
 
-  output  wire  [31:0]  device3_mem_address,
-  input   wire  [31:0]  device3_mem_read_data,
-  output  wire          device3_mem_read_request,
-  input   wire          device3_mem_read_request_ack,
-  output  wire  [31:0]  device3_mem_write_data,
-  output  wire  [3:0 ]  device3_mem_write_strobe,
-  output  wire          device3_mem_write_request,
-  input   wire          device3_mem_write_request_ack
+  output  wire  [31:0]  device3_rw_address,
+  input   wire  [31:0]  device3_read_data,
+  output  wire          device3_read_request,
+  input   wire          device3_read_response,
+  output  wire  [31:0]  device3_write_data,
+  output  wire  [3:0 ]  device3_write_strobe,
+  output  wire          device3_write_request,
+  input   wire          device3_write_response
   
   */
 
@@ -150,50 +150,50 @@ module system_bus #(
   assign reset_internal = reset | reset_reg;
 
   assign device0_valid_access =
-    $unsigned(mem_address) >= $unsigned(DEVICE0_START_ADDRESS) && 
-    $unsigned(mem_address) <= $unsigned(DEVICE0_FINAL_ADDRESS);
+    $unsigned(rw_address) >= $unsigned(DEVICE0_START_ADDRESS) && 
+    $unsigned(rw_address) <= $unsigned(DEVICE0_FINAL_ADDRESS);
   
   assign device1_valid_access =
-    $unsigned(mem_address) >= $unsigned(DEVICE1_START_ADDRESS) && 
-    $unsigned(mem_address) <= $unsigned(DEVICE1_FINAL_ADDRESS);
+    $unsigned(rw_address) >= $unsigned(DEVICE1_START_ADDRESS) && 
+    $unsigned(rw_address) <= $unsigned(DEVICE1_FINAL_ADDRESS);
 
   /* Uncomment to add new devices
 
   assign device2_valid_access =
-    $unsigned(mem_address) >= $unsigned(DEVICE2_START_ADDRESS) && 
-    $unsigned(mem_address) <= $unsigned(DEVICE2_FINAL_ADDRESS);
+    $unsigned(rw_address) >= $unsigned(DEVICE2_START_ADDRESS) && 
+    $unsigned(rw_address) <= $unsigned(DEVICE2_FINAL_ADDRESS);
   
   assign device3_valid_access =
-    $unsigned(mem_address) >= $unsigned(DEVICE3_START_ADDRESS) && 
-    $unsigned(mem_address) <= $unsigned(DEVICE3_FINAL_ADDRESS);
+    $unsigned(rw_address) >= $unsigned(DEVICE3_START_ADDRESS) && 
+    $unsigned(rw_address) <= $unsigned(DEVICE3_FINAL_ADDRESS);
 
   */
 
-  assign device0_mem_address       = device0_valid_access ? mem_address       : 1'b0;
-  assign device0_mem_write_data    = device0_valid_access ? mem_write_data    : 32'h0;
-  assign device0_mem_write_strobe  = device0_valid_access ? mem_write_strobe  : 4'h0;
-  assign device0_mem_read_request  = device0_valid_access ? mem_read_request  : 1'b0;
-  assign device0_mem_write_request = device0_valid_access ? mem_write_request : 1'b0;
+  assign device0_rw_address    = device0_valid_access ? rw_address    : 1'b0;
+  assign device0_write_data    = device0_valid_access ? write_data    : 32'h0;
+  assign device0_write_strobe  = device0_valid_access ? write_strobe  : 4'h0;
+  assign device0_read_request  = device0_valid_access ? read_request  : 1'b0;
+  assign device0_write_request = device0_valid_access ? write_request : 1'b0;
 
-  assign device1_mem_address       = device1_valid_access ? mem_address       : 1'b0;
-  assign device1_mem_write_data    = device1_valid_access ? mem_write_data    : 32'h0;
-  assign device1_mem_write_strobe  = device1_valid_access ? mem_write_strobe  : 4'h0;
-  assign device1_mem_read_request  = device1_valid_access ? mem_read_request  : 1'b0;
-  assign device1_mem_write_request = device1_valid_access ? mem_write_request : 1'b0;
+  assign device1_rw_address    = device1_valid_access ? rw_address    : 1'b0;
+  assign device1_write_data    = device1_valid_access ? write_data    : 32'h0;
+  assign device1_write_strobe  = device1_valid_access ? write_strobe  : 4'h0;
+  assign device1_read_request  = device1_valid_access ? read_request  : 1'b0;
+  assign device1_write_request = device1_valid_access ? write_request : 1'b0;
 
   /* Uncomment to add new devices
 
-  assign device2_mem_address       = device2_valid_access ? mem_address       : 1'b0;
-  assign device2_mem_write_data    = device2_valid_access ? mem_write_data    : 32'h0;
-  assign device2_mem_write_strobe  = device2_valid_access ? mem_write_strobe  : 4'h0;
-  assign device2_mem_read_request  = device2_valid_access ? mem_read_request  : 1'b0;
-  assign device2_mem_write_request = device2_valid_access ? mem_write_request : 1'b0;
+  assign device2_rw_address    = device2_valid_access ? rw_address    : 1'b0;
+  assign device2_write_data    = device2_valid_access ? write_data    : 32'h0;
+  assign device2_write_strobe  = device2_valid_access ? write_strobe  : 4'h0;
+  assign device2_read_request  = device2_valid_access ? read_request  : 1'b0;
+  assign device2_write_request = device2_valid_access ? write_request : 1'b0;
 
-  assign device3_mem_address       = device3_valid_access ? mem_address       : 1'b0;
-  assign device3_mem_write_data    = device3_valid_access ? mem_write_data    : 32'h0;
-  assign device3_mem_write_strobe  = device3_valid_access ? mem_write_strobe  : 4'h0;
-  assign device3_mem_read_request  = device3_valid_access ? mem_read_request  : 1'b0;
-  assign device3_mem_write_request = device3_valid_access ? mem_write_request : 1'b0;
+  assign device3_rw_address    = device3_valid_access ? rw_address    : 1'b0;
+  assign device3_write_data    = device3_valid_access ? write_data    : 32'h0;
+  assign device3_write_strobe  = device3_valid_access ? write_strobe  : 4'h0;
+  assign device3_read_request  = device3_valid_access ? read_request  : 1'b0;
+  assign device3_write_request = device3_valid_access ? write_request : 1'b0;
 
   */
 
@@ -228,38 +228,38 @@ module system_bus #(
   always @* begin
     case (selected_response)
       default: begin
-        mem_write_request_ack  <= 1'b1;
-        mem_read_data          <= 32'h00000000;
-        mem_read_request_ack   <= 2'b1;
+        write_response  <= 1'b1;
+        read_data       <= 32'h00000000;
+        read_response   <= 2'b1;
       end
       RESET: begin
-        mem_write_request_ack  <= 1'b1;
-        mem_read_data          <= 32'h00000000;
-        mem_read_request_ack   <= 2'b1;
+        write_response  <= 1'b1;
+        read_data       <= 32'h00000000;
+        read_response   <= 2'b1;
       end
       DEVICE0: begin
-        mem_write_request_ack  <= device0_mem_write_request_ack;
-        mem_read_data          <= device0_mem_read_data;
-        mem_read_request_ack   <= device0_mem_read_request_ack;
+        write_response  <= device0_write_response;
+        read_data       <= device0_read_data;
+        read_response   <= device0_read_response;
       end
       DEVICE1: begin
-        mem_write_request_ack  <= device1_mem_write_request_ack;
-        mem_read_data          <= device1_mem_read_data;
-        mem_read_request_ack   <= device1_mem_read_request_ack;
+        write_response  <= device1_write_response;
+        read_data       <= device1_read_data;
+        read_response   <= device1_read_response;
       end
 
       /* Uncomment to add new devices
 
       DEVICE2: begin
-        mem_write_request_ack  <= device2_mem_write_request_ack;
-        mem_read_data          <= device2_mem_read_data;
-        mem_read_request_ack   <= device2_mem_read_request_ack;
+        write_response  <= device2_write_response;
+        read_data       <= device2_read_data;
+        read_response   <= device2_read_response;
       end
 
       DEVICE3: begin
-        mem_write_request_ack  <= device3_mem_write_request_ack;
-        mem_read_data          <= device3_mem_read_data;
-        mem_read_request_ack   <= device3_mem_read_request_ack;
+        write_response  <= device3_write_response;
+        read_data       <= device3_read_data;
+        read_response   <= device3_read_response;
       end
       
       */

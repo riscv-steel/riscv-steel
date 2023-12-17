@@ -46,25 +46,25 @@ module rvsteel_core #(
   input  wire           clock,
   input  wire           reset,
 
-  // Interface with Memory
+  // IO interface
 
-  output wire   [31:0]  mem_address,
-  input  wire   [31:0]  mem_read_data,
-  output wire           mem_read_request,
-  input  wire           mem_read_request_ack,
-  output wire   [31:0]  mem_write_data,
-  output wire   [3:0 ]  mem_write_strobe,
-  output wire           mem_write_request,
-  input  wire           mem_write_request_ack,
+  output wire   [31:0]  rw_address,
+  input  wire   [31:0]  read_data,
+  output wire           read_request,
+  input  wire           read_response,
+  output wire   [31:0]  write_data,
+  output wire   [3:0 ]  write_strobe,
+  output wire           write_request,
+  input  wire           write_response,
 
   // Interrupt signals (hardwire inputs to zero if unused)
 
   input  wire           irq_external,
-  output wire           irq_external_ack,
+  output wire           irq_external_response,
   input  wire           irq_timer,
-  output wire           irq_timer_ack,
+  output wire           irq_timer_response,
   input  wire           irq_software,  
-  output wire           irq_software_ack,
+  output wire           irq_software_response,
 
   // Real Time Clock (hardwire to zero if unused)
 
@@ -336,8 +336,6 @@ module rvsteel_core #(
   wire          load_request;
   wire  [1:0 ]  load_size;
   wire          load_unsigned;
-  wire  [31:0]  mem_address_internal;
-  reg   [31:0]  mem_write_data_internal;
   wire          misaligned_address_exception;
   wire          misaligned_instruction_address;
   wire          misaligned_load;
@@ -349,11 +347,11 @@ module rvsteel_core #(
   reg   [31:0]  prev_instruction;
   reg   [31:0]  prev_instruction_address;  
   reg           prev_load_request;
-  reg   [31:0]  prev_mem_address;
-  reg           prev_mem_read_request;
-  reg   [31:0]  prev_mem_write_data;  
-  reg           prev_mem_write_request; 
-  reg   [3:0 ]  prev_mem_write_strobe;  
+  reg           prev_read_request;
+  reg   [31:0]  prev_rw_address;  
+  reg   [31:0]  prev_write_data;  
+  reg           prev_write_request; 
+  reg   [3:0 ]  prev_write_strobe;  
   reg   [31:0]  program_counter;
   wire  [31:0]  program_counter_plus_4; 
   reg   [1:0 ]  program_counter_source;
@@ -366,7 +364,8 @@ module rvsteel_core #(
   wire  [31:0]  rs1_mux;
   wire  [4:0 ]  rs2_addr;    
   wire  [31:0]  rs2_mux;  
-  wire  [31:0]  rs2_data;    
+  wire  [31:0]  rs2_data;
+  wire  [31:0]  rw_address_internal;
   wire          store;
   reg   [31:0]  store_byte_data;
   wire          store_commit_cycle;
@@ -378,9 +377,10 @@ module rvsteel_core #(
   wire  [31:0]  target_address_adder;
   wire          target_address_source;
   wire  [31:0]  trap_address;
+  reg   [31:0]  write_data_internal;
   reg   [3:0 ]  write_strobe_for_byte;
   reg   [3:0 ]  write_strobe_for_half;  
-  reg   [3:0 ]  write_strobe;
+  reg   [3:0 ]  write_strobe_internal;
   reg   [2:0 ]  writeback_mux_selector; 
   reg   [31:0]  writeback_multiplexer_output;  
 
@@ -394,27 +394,27 @@ module rvsteel_core #(
   assign reset_internal = reset | reset_reg;
 
   assign clock_enable = !(
-    (prev_mem_read_request   & !mem_read_request_ack    ) |
-    (prev_mem_write_request  & !mem_write_request_ack   ) );
+    (prev_read_request   & !read_response    ) |
+    (prev_write_request  & !write_response   ) );
 
   always @(posedge clock) begin
     if (reset_internal) begin      
       prev_instruction_address  <= BOOT_ADDRESS;
       prev_load_request         <= 1'b0;
-      prev_mem_address          <= 32'h00000000;
-      prev_mem_read_request     <= 1'b0;
-      prev_mem_write_data       <= 32'h00000000;
-      prev_mem_write_request    <= 1'b0;
-      prev_mem_write_strobe     <= 4'b0000;
+      prev_rw_address           <= 32'h00000000;
+      prev_read_request         <= 1'b0;
+      prev_write_data           <= 32'h00000000;
+      prev_write_request        <= 1'b0;
+      prev_write_strobe         <= 4'b0000;
     end
     else if(clock_enable) begin            
       prev_instruction_address  <= instruction_address;
       prev_load_request         <= load_request;
-      prev_mem_address          <= mem_address;
-      prev_mem_read_request     <= mem_read_request;
-      prev_mem_write_data       <= mem_write_data;
-      prev_mem_write_request    <= mem_write_request;      
-      prev_mem_write_strobe     <= mem_write_strobe;
+      prev_rw_address           <= rw_address;
+      prev_read_request         <= read_request;
+      prev_write_data           <= write_data;
+      prev_write_request        <= write_request;      
+      prev_write_strobe         <= write_strobe;
     end
   end
 
@@ -472,7 +472,7 @@ module rvsteel_core #(
     NOP_INSTRUCTION :
     (!clock_enable | load_commit_cycle | store_commit_cycle) ?
       prev_instruction :
-      mem_read_data;
+      read_data;
   
   assign instruction_opcode =
     instruction[6:0];
@@ -496,49 +496,49 @@ module rvsteel_core #(
     instruction[31:20];   
 
   //-----------------------------------------------------------------------------------------------//
-  // Memory read / write                                                                           //
+  // IO read / write                                                                               //
   //-----------------------------------------------------------------------------------------------//
 
-  assign mem_read_request =
+  assign read_request =
     reset_internal ?
     1'b0 :
     (clock_enable ?
       ~store_request :
-      prev_mem_read_request);
+      prev_read_request);
 
-  assign mem_address =
+  assign rw_address =
     reset_internal ?
     32'h00000000 :
     (clock_enable ?
-      mem_address_internal :
-      prev_mem_address);
+      rw_address_internal :
+      prev_rw_address);
   
-  assign mem_write_request =
+  assign write_request =
     reset_internal ?
     1'b0 :
     (clock_enable ?
       store_request :
-      prev_mem_write_request);
+      prev_write_request);
 
-  assign mem_write_data =
+  assign write_data =
     reset_internal ?
     32'h00000000 :
     (clock_enable ?
-      mem_write_data_internal :
-      prev_mem_write_data);
+      write_data_internal :
+      prev_write_data);
 
-  assign mem_write_strobe =
+  assign write_strobe =
     reset_internal ?
     4'b0 :
     (clock_enable ?
-      write_strobe :
-      prev_mem_write_strobe);
+      write_strobe_internal :
+      prev_write_strobe);
 
   assign load_commit_cycle =
-    prev_load_request & mem_read_request_ack;
+    prev_load_request & read_response;
 
   assign store_commit_cycle =
-    prev_mem_write_request & mem_write_request_ack;
+    prev_write_request & write_response;
 
   assign load_pending =
     load  & !load_commit_cycle;
@@ -552,7 +552,7 @@ module rvsteel_core #(
   assign store_request =
     store & ~misaligned_store & ~take_trap & ~store_commit_cycle;
   
-  assign mem_address_internal = 
+  assign rw_address_internal = 
     load_request | store_request ?
     {target_address_adder[31:2], 2'b00} :
     instruction_address;
@@ -560,20 +560,20 @@ module rvsteel_core #(
   always @* begin
     case(instruction_funct3)
       FUNCT3_SB: begin
-        write_strobe              = write_strobe_for_byte;
-        mem_write_data_internal  = store_byte_data;
+        write_strobe_internal = write_strobe_for_byte;
+        write_data_internal   = store_byte_data;
       end
       FUNCT3_SH: begin
-        write_strobe              = write_strobe_for_half;
-        mem_write_data_internal  = store_half_data;
+        write_strobe_internal = write_strobe_for_half;
+        write_data_internal   = store_half_data;
       end
       FUNCT3_SW: begin
-        write_strobe              = {4{mem_write_request}};
-        mem_write_data_internal  = rs2_data;
+        write_strobe_internal = {4{write_request}};
+        write_data_internal   = rs2_data;
       end
       default: begin
-        write_strobe              = {4{mem_write_request}};
-        mem_write_data_internal  = rs2_data;
+        write_strobe_internal = {4{write_request}};
+        write_data_internal   = rs2_data;
       end 
     endcase
   end
@@ -582,19 +582,19 @@ module rvsteel_core #(
     case(target_address_adder[1:0])
       2'b00: begin 
         store_byte_data       = {24'b0, rs2_data[7:0]};
-        write_strobe_for_byte = {3'b0, mem_write_request};
+        write_strobe_for_byte = {3'b0, write_request};
       end
       2'b01: begin
         store_byte_data       = {16'b0, rs2_data[7:0], 8'b0};
-        write_strobe_for_byte = {2'b0, mem_write_request, 1'b0};
+        write_strobe_for_byte = {2'b0, write_request, 1'b0};
       end
       2'b10: begin
         store_byte_data       = {8'b0, rs2_data[7:0], 16'b0};
-        write_strobe_for_byte = {1'b0, mem_write_request, 2'b0};
+        write_strobe_for_byte = {1'b0, write_request, 2'b0};
       end
       2'b11: begin
         store_byte_data       = {rs2_data[7:0], 24'b0};
-        write_strobe_for_byte = {mem_write_request, 3'b0};
+        write_strobe_for_byte = {write_request, 3'b0};
       end
     endcase    
   end
@@ -603,11 +603,11 @@ module rvsteel_core #(
     case(target_address_adder[1])
       1'b0: begin
         store_half_data       = {16'b0, rs2_data[15:0]};
-        write_strobe_for_half = {2'b0, {2{mem_write_request}}};
+        write_strobe_for_half = {2'b0, {2{write_request}}};
       end
       1'b1: begin
         store_half_data       = {rs2_data[15:0], 16'b0};
-        write_strobe_for_half = {{2{mem_write_request}}, 2'b0};
+        write_strobe_for_half = {{2{write_request}}, 2'b0};
       end
     endcase
   end
@@ -1121,16 +1121,16 @@ module rvsteel_core #(
     endcase
   end
 
-  assign irq_external_ack =
-    (current_state      == STATE_TRAP_TAKEN) &&
+  assign irq_external_response =
+    (current_state    == STATE_TRAP_TAKEN) &&
     (csr_mcause_code  == 4'b1011);
   
-  assign irq_timer_ack =
-    (current_state      == STATE_TRAP_TAKEN) &&
+  assign irq_timer_response =
+    (current_state    == STATE_TRAP_TAKEN) &&
     (csr_mcause_code  == 4'b0111);
 
-  assign irq_software_ack =
-    (current_state      == STATE_TRAP_TAKEN) &&
+  assign irq_software_response =
+    (current_state    == STATE_TRAP_TAKEN) &&
     (csr_mcause_code  == 4'b0011);
 
   //---------------------------------------------------------------------------------------------//
@@ -1488,31 +1488,31 @@ module rvsteel_core #(
       LOAD_SIZE_HALF:
         load_data = {load_half_upper_bits, load_half_data};
       LOAD_SIZE_WORD:
-        load_data = mem_read_data;
+        load_data = read_data;
       default:
-        load_data = mem_read_data;
+        load_data = read_data;
     endcase
   end
     
   always @* begin : load_byte_data_mux
     case (target_address_adder[1:0])    
       2'b00:
-        load_byte_data = mem_read_data[7:0];
+        load_byte_data = read_data[7:0];
       2'b01:
-        load_byte_data = mem_read_data[15:8];
+        load_byte_data = read_data[15:8];
       2'b10:
-        load_byte_data = mem_read_data[23:16];
+        load_byte_data = read_data[23:16];
       2'b11:
-        load_byte_data = mem_read_data[31:24];
+        load_byte_data = read_data[31:24];
     endcase
   end
     
   always @* begin : load_half_data_mux
     case (target_address_adder[1])
       1'b0:
-        load_half_data = mem_read_data[15:0];
+        load_half_data = read_data[15:0];
       1'b1:
-        load_half_data = mem_read_data[31:16];
+        load_half_data = read_data[31:16];
     endcase
   end
     
