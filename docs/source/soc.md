@@ -1,23 +1,23 @@
-# RISC-V Steel System-on-Chip IP</br><small>Documentation</small>
+# RISC-V Steel System-on-Chip IP </br><small>Reference Guide</small>
 
 ## Introduction
 
-RISC-V Steel SoC is a configurable system-on-chip IP with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API](software-guide.md#programming-api) for software development that makes it easier for hardware engineers to develop and deploy new RISC-V embedded applications.
+RISC-V Steel SoC IP is a configurable system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API](software-guide.md#programming-api) for software development that makes it easier for hardware engineers to develop and deploy new RISC-V embedded applications.
 
-The figure below depicts the main components of RISC-V Steel SoC and how they interconnect. Detailed information about each device in the system is provided in the following sections.
+The figure below depicts the main components of RISC-V Steel SoC IP and how they interconnect. Detailed information about each device in the system is provided in the following sections.
 
 <figure markdown>
   ![Image title](images/rvsteel-soc.svg){#figure-1}
-  <figcaption><strong>Figure 1</strong> - Overview of RISC-V Steel SoC</figcaption>
+  <figcaption><strong>Figure 1</strong> - RISC-V Steel SoC IP design overview</figcaption>
 </figure>
 
 ## Source files
 
-**Table 1** - RISC-V Steel SoC source files
+**Table 1** - RISC-V Steel SoC IP source files
 
 | Module name      | File                 | Location                |  Description                    |
 | ---------------- | -------------------- | ----------------------- |------------------------------ |
-| **rvsteel_soc**  | `rvsteel-soc.v`      | `riscv-steel/ip/` | Top module of RISC-V Steel SoC |
+| **rvsteel_soc**  | `rvsteel-soc.v`      | `riscv-steel/ip/` | Top module of RISC-V Steel SoC IP |
 | **rvsteel_core** | `rvsteel-core.v`     | `riscv-steel/ip/` | RISC-V Steel Processor Core              |
 | **ram_memory**   | `ram-memory.v`       | `riscv-steel/ip/` | RAM memory                     |
 | **uart**         | `uart.v`             | `riscv-steel/ip/` | UART                           |
@@ -25,7 +25,7 @@ The figure below depicts the main components of RISC-V Steel SoC and how they in
 
 ## I/O signals
 
-**Table 2** - RISC-V Steel SoC top module input and output signals
+**Table 2** - RISC-V Steel SoC IP top module input and output signals
 
 | Pin name       | Direction | Size  | Description          |
 | -------------- | --------- | ----- | -------------------- |
@@ -36,7 +36,7 @@ The figure below depicts the main components of RISC-V Steel SoC and how they in
 
 ## Configuration
 
-**Table 3** - Configuration parameters of RISC-V Steel SoC
+**Table 3** - Configuration parameters of RISC-V Steel SoC IP
 
 | Parameter name         | Default value    | Value type and description                                                                    |
 | ---------------------- | ---------------- | --------------------------------------------------------------------------------------------- |
@@ -48,13 +48,13 @@ The figure below depicts the main components of RISC-V Steel SoC and how they in
 
 ## Instantiation template
 
-An instantiation template for RISC-V Steel SoC top module is provided below.
+An instantiation template for RISC-V Steel SoC IP top module is provided below.
 
 ``` systemverilog
 rvsteel_soc #(
 
   // Configuration parameters. For more information read the 'Configuration'
-  // section of RISC-V Steel SoC Reference Guide
+  // section of RISC-V Steel SoC IP Reference Guide
 
   .BOOT_ADDRESS             (),  // Default value: 32'h00000000
   .CLOCK_FREQUENCY          (),  // Default value: 50000000
@@ -64,8 +64,8 @@ rvsteel_soc #(
 
   rvsteel_soc_instance (
 
-  // I/O signals. For more information read the 'Input/output signals'
-  // section of RISC-V Steel SoC Reference Guide
+  // I/O signals. For more information read the 'I/O signals'
+  // section of RISC-V Steel SoC IP Reference Guide
 
   .clock                    (),  // Connect this pin to a clock source
   .reset                    (),  // Connect it to a reset switch/button. Reset is active-high.
@@ -77,38 +77,32 @@ rvsteel_soc #(
 
 ## Components
 
-This section provides further information about the components of RISC-V Steel SoC IP.
-
 ### RISC-V Steel Processor Core
 
-RISC-V Steel Processor Core is the processing unit of RISC-V Steel SoC. Its design is quite large so it has its own [documentation page](core.md). Please check it out for more information.
+RISC-V Steel Processor Core is the processing unit of RISC-V Steel SoC IP. Its design is quite large so it has its own [Reference Guide](core.md). Please check it out for more information.
 
 ### RAM memory
 
-RISC-V Steel SoC has a RAM memory tightly coupled to the processor core, with read/write latency of a single clock cycle. The memory size can be changed by adjusting the `MEMORY_SIZE` parameter (see [Configuration](#configuration)). 
-
-Check out the [Software Guide](software-guide.md) for instructions on how to generate a memory initialization file and load it into memory at startup.
+RISC-V Steel SoC IP has a RAM memory tightly coupled to the processor core, with read/write latency of a single clock cycle. The memory size can be changed by adjusting the `MEMORY_SIZE` parameter (see [Configuration](#configuration)). 
 
 ### UART
 
-RISC-V Steel SoC has an UART module with configurable baud rate. The module works with 8 data bits, 1 stop bit, no parity bits and no flow control signals (most UARTs work the same way).
-
-[RISC-V Steel SoC API](software-guide.md#programming-api) provides a set of function calls for sending and receiving data over the UART. Check it out for more information.
+RISC-V Steel SoC IP has an UART module with configurable baud rate. The module works with 8 data bits, 1 stop bit, no parity bits and no flow control signals (most UARTs work the same way).
 
 ### System Bus
 
 The system bus module interconnects RISC-V Steel Processor Core (manager device) to the UART and the RAM memory (subordinate devices), as shown in [Figure 1](#figure-1). The module multiplexes the signals from the processor's I/O interface to the appropriate subordinate device according to the address the processor requests.
 
-Each subordinate device in RISC-V Steel SoC is assigned a region of the processor's address space. The address range to which each device is mapped is listed in [Table 4](#table-4).
+Each subordinate device in RISC-V Steel SoC IP is assigned a region of the processor's address space. The address range to which each device is mapped is listed in [Table 4](#table-4).
 
 ## Memory Map
 
-Like all RISC-V systems, I/O devices in RISC-V Steel SoC are *memory mapped*. This means they share the processor's address space and are assigned a region within it. The table below lists the memory region to which each device in RISC-V Steel SoC is assigned.
+Like all RISC-V systems, I/O devices in RISC-V Steel SoC IP are *memory mapped*. This means they share the processor's address space and are assigned a region within it. The table below lists the memory region to which each device in RISC-V Steel SoC IP is assigned.
 
 ???+ info
     Reading data from a region not mapped to any device will return 0. Writing data to these regions will have no effect.
 
-**Table 4**{#table-4} - Memory Map of RISC-V Steel SoC
+**Table 4**{#table-4} - Memory Map of RISC-V Steel SoC IP
 
 | Start address     | Final address       | Mapped device              |
 | ----------------- | ------------------- | -------------------------- |
@@ -119,7 +113,7 @@ Like all RISC-V systems, I/O devices in RISC-V Steel SoC are *memory mapped*. Th
 
 ## Adding new devices
 
-A new device can be added to RISC-V Steel SoC by adapting the system bus module (`system-bus.v`) and the top module (`rvsteel-soc.v`). All changes that need to be made in these files were left as comments in the source code.
+A new device can be added to RISC-V Steel SoC IP by adapting the system bus module (`system-bus.v`) and the top module (`rvsteel-soc.v`). All changes that need to be made in these files were left as comments in the source code.
 
 All source code that needs to be uncommented follow the template below:
 

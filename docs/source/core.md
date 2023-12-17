@@ -1,4 +1,4 @@
-# RISC-V Steel Processor Core IP</br><small>Documentation</small>
+# RISC-V Steel Processor Core IP </br><small>Reference Guide</small>
 
 ## Introduction
 

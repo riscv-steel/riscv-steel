@@ -24,9 +24,7 @@ A 32-bit processor core design implementing the RV32I ISA, the Zicsr extension a
 
 - [Reference](https://riscv-steel.github.io/riscv-steel/core/)
 
-## Getting Started
-
-The [Getting Started Guide](https://riscv-steel.github.io/riscv-steel/getting-started/) shows you how to synthesize the SoC IP [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo for some popular FPGA boards. The demo is an instance of the SoC IP loaded with a program that sends a Hello World message to a host computer via UART protocol.
+The [Getting Started Guide](https://riscv-steel.github.io/riscv-steel/getting-started/) shows you how to synthesize the [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo for some popular FPGA boards. The demo is an instance of RISC-V Steel SoC IP that sends a Hello World message to a host computer via UART protocol. Its goal is to introduce you to the SoC design so that you can expand it and run your own software.
 
 ## License
 

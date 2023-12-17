@@ -1,10 +1,10 @@
 # Getting Started
 
-This guide shows you how to synthesize the Hello World demo for some popular FPGAs so that you can quickly get started with RISC-V Steel SoC IP.
+This guide shows you how to synthesize the Hello World demo for some popular FPGAs so you can quickly get started with RISC-V Steel SoC IP.
 
-The Hello World demo is an instance of RISC-V Steel SoC that sends a Hello World message to a host computer via UART protocol. Its goal is to introduce you to the SoC design so that you can expand it and develop your own embedded applications.
+The Hello World demo is an instance of the SoC IP that sends a Hello World message to a host computer via UART protocol. Its goal is to introduce you to the SoC design so that you can expand it and develop your own embedded applications.
 
-## Pre-requisites
+## Prerequisites
 
 To follow this guide you'll need one of the following FPGA boards:
 
@@ -78,15 +78,15 @@ Now go back to PySerial terminal window. You should see the message below:
 
 ## Next steps
 
-If you've reached this point, congratulations! You have a working instance of RISC-V Steel SoC. You can now change it to create your own embedded applications.
+If you've reached this point, congratulations! You have a working instance of the SoC IP. You can now change it to create your own embedded applications.
 
 - **Run your own software**
 
-    In the [Software Guide](software-guide.md) you find how to write, compile, and run software applications for RISC-V Steel SoC.
+    In the [Software Guide](software-guide.md) you find how to write, compile, and run software applications for RISC-V Steel SoC IP.
 
-- **Configure and expand the hardware**
+- **Expand the hardware**
 
-    On the [SoC IP](soc.md) page you find detailed information about the design of RISC-V Steel SoC so that you can configure and expand it to meet your needs.
+    In the [SoC IP Reference Guide](soc.md) you find detailed information about the design so that you can expand it to create larger projects.
 
 </br>
 </br>

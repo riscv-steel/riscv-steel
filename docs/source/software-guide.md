@@ -1,26 +1,20 @@
-# Software Guide
+# RISC-V Steel System-on-Chip IP </br><small>Software Guide</small>
 
 ## Introduction
 
-This guide shows how to write, compile and run new software applications for RISC-V Steel SoC.
+This guide shows how to write, compile and run software applications for RISC-V Steel SoC IP.
 
-## Pre-requisites
+## Installing the RISC-V GNU Toolchain
 
-To be able to cross-compile software for RISC-V systems like RISC-V Steel SoC you need the [RISC-V GNU Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain).
-
-<h3>How to install the RISC-V GNU Toolchain in 4 steps</h3>
+To be able to cross-compile software for RISC-V systems you need the [RISC-V GNU Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain). Follow the steps below to install it on your machine.
 
 <h4>1. Get the source files</h4>
-
-Run the following command to download the RISC-V GNU Toolchain repository from GitHub:
 
 ```
 git clone https://github.com/riscv/riscv-gnu-toolchain
 ```
 
 <h4>2. Install dependencies</h4>
-
-Run the following command to install all RISC-V GNU Toolchain dependencies in your computer:
 
 === "Ubuntu"
 
@@ -46,71 +40,60 @@ Run the following command to install all RISC-V GNU Toolchain dependencies in yo
     brew install python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat texinfo flock
     ```
 
-<h4>3. Configure for RISC-V Steel</h4>
-
-Run the following command from the toolchain root folder to configure the installation for RISC-V Steel:
+<h4>3. Configure it for RISC-V Steel</h4>
 
 ```
 ./configure --with-arch=rv32i --with-abi=ilp32 --prefix=/opt/riscv
 ```
 
-The `--prefix=` option specifies the installation path. Make sure you choose a path where you have write permissions.
-
 <h4>4. Compile and install</h4>
-
-The following command compiles and installs the toolchain (this last step might take some time to complete):
 
 ```
 make -j $(nproc)
 ```
 
+This last step might take some time to complete.
+
 ## Building a new application
 
-Follow the steps below to build a new application for RISC-V Steel SoC.
+Follow the steps below to build a new application for RISC-V Steel SoC IP.
 
 1. **Make a copy of the `dev-template` folder.**
 
     This template project is all you need to start. It contains 3 files: `main.c`, `Makefile` and `linker-script.ld`.
 
-2. **Edit the Makefile to configure the project.**
+2. **Edit the Makefile.**
 
     The beginning of the Makefile (reproduced below) contain four variables you need to set to configure the project:
 
     ```
     # Configure your project by setting the variables below
-    # --------------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------------------------------
 
     # Name of the program to be created
     PROGRAM_NAME      ?= main
-    # Memory size (must be set to the same value of the MEMORY_SIZE parameter of RISC-V Steel SoC)
+    # Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
     MEMORY_SIZE       ?= 8192
     # Path to RISC-V Steel API
     RVSTEEL_API_DIR   ?= ../api
     # The full path to RISC-V GNU Toolchain in this machine + RISC-V binaries prefix
     RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
 
-    # Other variables (do not edit)
-    # --------------------------------------------------------------------------------------------
-
-    ...
     ```
 
 3. **Write your application.**
 
-    The `main.c` file is a Hello World example program. You can edit this file and rename it. You can add new source files to the project as well. They will all be compiled when you run `make`.
+    The `main.c` file is a Hello World example program. You can edit this file and rename it. You can also add as many new source files to the project as you want. They will all be compiled when you run `make`.
 
-    Use [RISC-V Steel API](#) to set up and control RISC-V Steel SoC devices.
+    Use [RISC-V Steel SoC API](#) to set up and control RISC-V Steel SoC IP devices.
 
 4. **Build your application.**
 
     To build your application, run `make` from the project root folder.
     
-    Once you run `make`, all `*.c` sources files will be compiled and linked into an executable called `PROGRAM_NAME.elf`, the name you set for the executable in the Makefile. Running `make` will also:
+    Once you run `make`, all `*.c` sources files will be compiled and linked into an executable with the name you set in the Makefile. Running `make` will also generate a memory initialization file (`*.hex` file).
 
-    - Compile RISC-V Steel API and link it to the executable.
-    - Generate a memory initialization file for RISC-V Steel SoC.
-
-    A successfull build will output a message similar to this:
+    A successfull build output is similar to this:
 
     ```
     Building RISC-V Steel API: ok.
@@ -127,7 +110,7 @@ Follow the steps below to build a new application for RISC-V Steel SoC.
     The memory size is set to 8192 bytes.
     ```
 
-    The generated `.hex` file can be used to initialize RISC-V Steel SoC memory and run the application.
+    The generated `.hex` file can now be used to initialize RISC-V Steel SoC IP memory and run the application.
 
 </br>
 </br>

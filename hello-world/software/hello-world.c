@@ -14,7 +14,7 @@ void process_received_character()
 int main()
 {
   r5_uart_send_string(
-      "\nRISC-V Steel SoC"
+      "\nRISC-V Steel SoC IP"
       "\n----------------"
       "\n\nHello World!"
       "\n\nType something and press enter: "

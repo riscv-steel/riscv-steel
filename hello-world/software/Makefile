@@ -1,9 +1,9 @@
 # Configure your project by setting the variables below
-# --------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 # Name of the program to be created
 PROGRAM_NAME      ?= hello-world
-# Memory size (must be set to the same value of the MEMORY_SIZE parameter of RISC-V Steel SoC)
+# Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
 MEMORY_SIZE       ?= 8192
 # Path to RISC-V Steel API
 RVSTEEL_API_DIR   ?= ../../api
@@ -11,7 +11,7 @@ RVSTEEL_API_DIR   ?= ../../api
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
 
 # Other variables (do not edit)
-# --------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 # Compiler binary
 RISCV_GCC         ?= ${RISCV_PREFIX}gcc
