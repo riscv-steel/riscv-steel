@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/source/images/rvsteel-logo.svg" width="80"/></p>
+<p align="center"><img src="docs/source/images/rvsteel-logo-black.svg" width="80"/></p>
 <p align="center"><strong>Free and open RISC-V IP!</strong></p>
 
 ---
