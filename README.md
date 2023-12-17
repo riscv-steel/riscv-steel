@@ -1,5 +1,5 @@
 </br>
-<p align="center"><img src="https://github.com/riscv-steel/riscv-steel/assets/133501827/4bd73a49-85cb-4d2e-84fe-210b4b72cea6" width="100"/></p>
+<p align="center"><img src="https://github.com/riscv-steel/riscv-steel/assets/133501827/941e58b2-d1dd-4287-b9a0-9a23583ee6df" width="100"/></p>
 
 **RISC-V Steel** is a free and open collection of RISC-V IP that is simple, robust and easy to use. It features a 32-bit RISC-V processor core, a configurable system-on-chip design and a suite of software and hardware tools aimed to speed up building RISC-V embedded applications.
 
