@@ -1,23 +1,32 @@
-<p align="center"><img src="https://github.com/riscv-steel/riscv-steel/assets/133501827/941e58b2-d1dd-4287-b9a0-9a23583ee6df" width="100"/></p>
+<p align="center"><img src="docs/source/images/rvsteel-logo.svg" width="80"/></p>
+<p align="center"><strong>Free and open RISC-V IP!</strong></p>
+
+---
 
 **RISC-V Steel** is a free and open collection of RISC-V IP that is simple, robust and easy to use. It features a 32-bit RISC-V processor core, a configurable system-on-chip design and a suite of software and hardware tools aimed to speed up building RISC-V embedded applications.
 
+- [Get Started!](https://riscv-steel.github.io/riscv-steel/getting-started/)
 - [Documentation](https://riscv-steel.github.io/riscv-steel/)
-- [Getting Started Guide](https://riscv-steel.github.io/riscv-steel/getting-started/)
+
 
 ## Available RISC-V IP
 
- [**RISC-V Steel System-on-Chip**](https://riscv-steel.github.io/riscv-steel/soc/)
+#### System-on-Chip IP
 
-System-on-chip design with RISC-V Steel Processor Core, memory and UART module.
+A system-on-chip design with RISC-V Steel Processor Core, memory and UART module.
 
-[**RISC-V Steel Processor Core**](https://riscv-steel.github.io/riscv-steel/core/)
+- [Reference](https://riscv-steel.github.io/riscv-steel/soc/)
+- [Software Guide](https://riscv-steel.github.io/riscv-steel/software-guide/)
 
-32-bit processor core design implementing the RV32I ISA, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
+#### Processor Core IP
 
-## Get Started!
+A 32-bit processor core design implementing the RV32I ISA, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
 
-The [Getting Started Guide](https://riscv-steel.github.io/riscv-steel/getting-started/) shows you how to synthesize the [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo for some popular FPGA boards. The demo is an instance of RISC-V Steel SoC that sends a Hello World message to a host computer via UART protocol. Its goal is to introduce you to the SoC design so that you can expand it and run your own software.
+- [Reference](https://riscv-steel.github.io/riscv-steel/core/)
+
+## Getting Started
+
+The [Getting Started Guide](https://riscv-steel.github.io/riscv-steel/getting-started/) shows you how to synthesize the SoC IP [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo for some popular FPGA boards. The demo is an instance of the SoC IP loaded with a program that sends a Hello World message to a host computer via UART protocol.
 
 ## License
 
