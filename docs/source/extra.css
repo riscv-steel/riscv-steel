@@ -112,3 +112,7 @@ body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul
 #available-ip {
   margin-bottom: -0.6em;
 }
+
+.md-typeset figcaption {
+  font-style: normal !important;
+}

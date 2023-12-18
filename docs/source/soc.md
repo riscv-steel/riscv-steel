@@ -2,14 +2,15 @@
 
 ## Introduction
 
-RISC-V Steel SoC IP is a configurable system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API](software-guide.md#programming-api) for software development that makes it easier for hardware engineers to develop and deploy new RISC-V embedded applications.
+RISC-V Steel SoC IP is a system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API for software development](software-guide.md#api) that makes it easier for hardware engineers to develop and deploy RISC-V embedded applications.
 
-The figure below depicts the main components of RISC-V Steel SoC IP and how they interconnect. Detailed information about each device in the system is provided in the following sections.
+In this Reference Guide you find information on the SoC IP hardware design. See the [Software Guide](software-guide.md) for instructions on how to write, compile and run software for the SoC IP.
 
-<figure markdown>
-  ![Image title](images/rvsteel-soc.svg){#figure-1}
-  <figcaption><strong>Figure 1</strong> - RISC-V Steel SoC IP design overview</figcaption>
-</figure>
+## Design overview
+
+**Figure 1**{#figure-1} - RISC-V Steel SoC IP design overview
+
+![Image title](images/rvsteel-soc.svg)
 
 ## Source files
 
@@ -33,6 +34,21 @@ The figure below depicts the main components of RISC-V Steel SoC IP and how they
 | **reset**      | Input     | 1 bit | Reset (active-high). |
 | **uart_rx**    | Input     | 1 bit | UART receiver pin. Must be connected to the transmitter (`TX`) pin of another UART device. |
 | **uart_tx**    | Output    | 1 bit | UART transmitter pin. Must be connected to the receiver (`RX`) pin of another UART device. |
+
+## Memory Map
+
+In RISC-V systems, all devices share the processor address space and are mapped to an exclusive region in it (*Memory Mapped I/O*). 
+
+The memory region assigned to each device of RISC-V Steel SoC IP is listed in the table below.
+
+**Table 4**{#table-4} - Memory Map of RISC-V Steel SoC IP
+
+| Start address     | Final address       | Mapped device              |
+| ----------------- | ------------------- | -------------------------- |
+| `0x00000000`      | `0x(MEMORY_SIZE-1)` | RAM memory                 |
+| `0x(MEMORY_SIZE)` | `0x7fffffff`        | -                          |
+| `0x80000000`      | `0x80000004`        | UART                       |
+| `0x80000005`      | `0xffffffff`        | -                          |
 
 ## Configuration
 
@@ -68,12 +84,28 @@ rvsteel_soc #(
   // section of RISC-V Steel SoC IP Reference Guide
 
   .clock                    (),  // Connect this pin to a clock source
-  .reset                    (),  // Connect it to a reset switch/button. Reset is active-high.
-  .uart_rx                  (),  // Connect it to the TX pin of another UART device
-  .uart_tx                  ()   // Connect it to the RX pin of another UART device
+  .reset                    (),  // Connect this pin to a reset switch/button. The reset is active-high.
+  .uart_rx                  (),  // Connect this to the TX pin of another UART device
+  .uart_tx                  ()   // Connect this to the RX pin of another UART device
 
 );
 ```
+
+## Adding devices
+
+A new device can be added to the SoC IP by modifying the system bus module (`system-bus.v`) and the top module (`rvsteel-soc.v`). All modifications that need to be made were left as comments in the source code of these files.
+
+The parts that need to be uncommented follow the template:
+
+``` systemverilog
+  /* Uncomment to add new devices
+
+  ... code for adding the new device ...
+
+  */
+```
+
+The new device will be assigned the memory region you define in the `DEVICEx_START_ADDRESS` and `DEVICEx_FINAL_ADDRESS` parameters. You can assign the device to any free region in the address space (see [Memory Map](#memory-map)).
 
 ## Components
 
@@ -91,39 +123,7 @@ RISC-V Steel SoC IP has an UART module with configurable baud rate. The module w
 
 ### System Bus
 
-The system bus module interconnects RISC-V Steel Processor Core (manager device) to the UART and the RAM memory (subordinate devices), as shown in [Figure 1](#figure-1). The module multiplexes the signals from the processor's I/O interface to the appropriate subordinate device according to the address the processor requests.
-
-Each subordinate device in RISC-V Steel SoC IP is assigned a region of the processor's address space. The address range to which each device is mapped is listed in [Table 4](#table-4).
-
-## Memory Map
-
-Like all RISC-V systems, I/O devices in RISC-V Steel SoC IP are *memory mapped*. This means they share the processor's address space and are assigned a region within it. The table below lists the memory region to which each device in RISC-V Steel SoC IP is assigned.
-
-???+ info
-    Reading data from a region not mapped to any device will return 0. Writing data to these regions will have no effect.
-
-**Table 4**{#table-4} - Memory Map of RISC-V Steel SoC IP
-
-| Start address     | Final address       | Mapped device              |
-| ----------------- | ------------------- | -------------------------- |
-| `0x00000000`      | `0x(MEMORY_SIZE-1)` | RAM memory                 |
-| `0x(MEMORY_SIZE)` | `0x7fffffff`        | ---------                  |
-| `0x80000000`      | `0x80000004`        | UART                       |
-| `0x80000005`      | `0xffffffff`        | ---------                  |
-
-## Adding new devices
-
-A new device can be added to RISC-V Steel SoC IP by adapting the system bus module (`system-bus.v`) and the top module (`rvsteel-soc.v`). All changes that need to be made in these files were left as comments in the source code.
-
-All source code that needs to be uncommented follow the template below:
-
-``` systemverilog
-  /* Uncomment to add new devices
-
-  ... code for adding the new device ...
-
-  */
-```
+The system bus module interconnects RISC-V Steel Processor Core (manager device) to the UART and the RAM memory (subordinate devices) as shown in [Figure 1](#figure-1). The module multiplexes the signals from the processor's I/O interface to the appropriate subordinate device according to the address the processor requests.
 
 </br>
 </br>

@@ -4,9 +4,8 @@
 
 This guide shows how to write, compile and run software applications for RISC-V Steel SoC IP.
 
-## Installing the RISC-V GNU Toolchain
 
-To be able to cross-compile software for RISC-V systems you need the [RISC-V GNU Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain). Follow the steps below to install it on your machine.
+## Installing the RISC-V GNU Toolchain
 
 <h4>1. Get the source files</h4>
 
@@ -56,61 +55,59 @@ This last step might take some time to complete.
 
 ## Building a new application
 
-Follow the steps below to build a new application for RISC-V Steel SoC IP.
+<h4>1. Make a copy of the software development template project.</h4>
 
-1. **Make a copy of the `dev-template` folder.**
+The template project is all you need to start and is located at `riscv-steel/dev-template/`.
 
-    This template project is all you need to start. It contains 3 files: `main.c`, `Makefile` and `linker-script.ld`.
+<h4>2. Edit the Makefile.</h4>
 
-2. **Edit the Makefile.**
+The template project comes with a Makefile to help you automatize the tasks of compiling the software and generating a memory initialization file.
 
-    The beginning of the Makefile (reproduced below) contain four variables you need to set to configure the project:
+The beginning of the Makefile (reproduced below) contain the four variables you need to set to configure the project:
 
-    ```
-    # Configure your project by setting the variables below
-    # -------------------------------------------------------------------------------------------------
+```
+# Configure your project by setting the variables below
+# -------------------------------------------------------------------------------------------------
 
-    # Name of the program to be created
-    PROGRAM_NAME      ?= main
-    # Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
-    MEMORY_SIZE       ?= 8192
-    # Path to RISC-V Steel API
-    RVSTEEL_API_DIR   ?= ../api
-    # The full path to RISC-V GNU Toolchain in this machine + RISC-V binaries prefix
-    RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
+# Name of the program to be created
+PROGRAM_NAME      ?= main
+# Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
+MEMORY_SIZE       ?= 8192
+# Path to RISC-V Steel API
+RVSTEEL_API_DIR   ?= ../api
+# The full path to RISC-V GNU Toolchain in this machine + RISC-V binaries prefix
+RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
 
-    ```
+```
 
-3. **Write your application.**
+<h4>3. Write your application.</h4>
 
-    The `main.c` file is a Hello World example program. You can edit this file and rename it. You can also add as many new source files to the project as you want. They will all be compiled when you run `make`.
+The template project comes with a `main.c` file containing a Hello World example. You can edit this file and rename it. You can also add as many source files to the project as you want.
 
-    Use [RISC-V Steel SoC API](#) to set up and control RISC-V Steel SoC IP devices.
+The Makefile was written so that all `*.c` source files added to the project get automatically compiled when you run `make`.
 
-4. **Build your application.**
+To simplify writing your application, [RISC-V Steel SoC API](#) provides a set of function calls to set up and control RISC-V Steel SoC IP devices. Check it out for more information.
 
-    To build your application, run `make` from the project root folder.
-    
-    Once you run `make`, all `*.c` sources files will be compiled and linked into an executable with the name you set in the Makefile. Running `make` will also generate a memory initialization file (`*.hex` file).
+<h4>4. Build your application.</h4>
 
-    A successfull build output is similar to this:
+Run `make` from the project root folder to build your application and generate a memory initialization file. A successfull build output is similar to this:
 
-    ```
-    Building RISC-V Steel API: ok.
-    Making my_app.o: ok.
-    Making srcfile1.o: ok.
-    Making srcfile2.o: ok.
-    Linking my_app.elf: ok.
+```
+Building RISC-V Steel API: ok.
+Making my_app.o: ok.
+Making srcfile1.o: ok.
+Making srcfile2.o: ok.
+Linking my_app.elf: ok.
 
-    Generated files:
-    -- ELF executable   : build/my_app.elf
-    -- Disassembly      : build/my_app.objdump
-    -- Memory init file : build/my_app.hex
+Generated files:
+-- ELF executable   : build/my_app.elf
+-- Disassembly      : build/my_app.objdump
+-- Memory init file : build/my_app.hex
 
-    The memory size is set to 8192 bytes.
-    ```
+The memory size is set to 8192 bytes.
+```
 
-    The generated `.hex` file can now be used to initialize RISC-V Steel SoC IP memory and run the application.
+The generated `.hex` file can now be used to initialize RISC-V Steel SoC IP memory and run the application.
 
 </br>
 </br>

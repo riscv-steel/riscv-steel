@@ -56,6 +56,6 @@ nav:
     - Homepage: 'index.md'
     - Getting Started: 'getting-started.md'    
     - Processor Core IP: 'core.md'
-    - SoC IP: 'soc.md'
+    - System-on-Chip IP: 'soc.md'
     - Software Guide: 'software-guide.md'
     - License: 'license.md'
