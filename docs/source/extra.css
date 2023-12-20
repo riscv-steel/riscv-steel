@@ -116,3 +116,25 @@ body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul
 .md-typeset figcaption {
   font-style: normal !important;
 }
+
+.api-call {
+  font-weight: bold;
+  font-size: 1.1em !important;
+}
+
+.api-call code {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+.api-doc {
+  font-size: 1em;
+  margin-left: 1em;
+}
+
+.hide-h4 {
+  height: 0px;
+  font-size: 0px;
+  margin: 0px;
+  padding: 0px;
+}

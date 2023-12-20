@@ -2,7 +2,7 @@
 
 ## Introduction
 
-RISC-V Steel SoC IP is a system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API for software development](software-guide.md#api) that makes it easier for hardware engineers to develop and deploy RISC-V embedded applications.
+RISC-V Steel SoC IP is a system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API for software development](software-guide.md#soc-ip-api-reference) that makes it easier for hardware engineers to develop and deploy RISC-V embedded applications.
 
 In this Reference Guide you find information on the SoC IP hardware design. See the [Software Guide](software-guide.md) for instructions on how to write, compile and run software for the SoC IP.
 

@@ -18,6 +18,7 @@ markdown_extensions:
         anchor_linenums: true
         line_spans: __span
         pygments_lang_class: true
+    - pymdownx.highlight
     - pymdownx.inlinehilite
     - pymdownx.snippets
     - def_list
@@ -40,7 +41,6 @@ theme:
         - toc.integrate
         - navigation.instant
         - navigation.instant.progress
-        - navigation.sections
         - content.code.copy
         - content.code.select
 extra:
