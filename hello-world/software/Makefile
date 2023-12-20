@@ -5,9 +5,9 @@
 PROGRAM_NAME      ?= hello-world
 # Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
 MEMORY_SIZE       ?= 8192
-# Path to RISC-V Steel API
-RVSTEEL_API_DIR   ?= ../../api
-# The full path to RISC-V GNU Toolchain in this machine + RISC-V binaries prefix
+# Path to RISC-V Steel SoC IP API
+RVSTEEL_API_DIR   ?= ../../soc-ip-api
+# The full path to RISC-V GNU Toolchain binaries in this machine + RISC-V binaries prefix
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
 
 # Other variables (do not edit)
@@ -48,8 +48,8 @@ COMPILER_OPTIONS  ?=  -march=rv32izicsr -mabi=ilp32 -nostartfiles -nostdlib \
 # Basic checks: test whether the API and the required binaries are available
 # --------------------------------------------------------------------------------------------
 
-ifeq (,$(wildcard $(RVSTEEL_API_DIR)/rvsteel.h))
-  $(error Could not find the RISC-V Steel API files in '$(RVSTEEL_API_DIR)'. Please fix the \
+ifeq (,$(wildcard $(RVSTEEL_API_DIR)/rvsteel-soc-ip-api.h))
+  $(error Could not find RISC-V Steel SoC IP API files in '$(RVSTEEL_API_DIR)'. Please fix the \
           RVSTEEL_API_DIR variable in the Makefile)
 endif
 
@@ -83,13 +83,13 @@ endif
 all: mkdir-build rvsteel-api $(OBJ_FILES)
 	@echo -n "Linking ${ELF_NAME}"
 	@$(RISCV_GCC) -T ${LINKER_SCRIPT} ${COMPILER_OPTIONS} \
-                   $(OBJ_FILES) build/obj/rvsteel.o -o build/${ELF_NAME}
+                   $(OBJ_FILES) build/obj/soc-ip-api.o -o build/${ELF_NAME}
 	@echo ": ok."
 	@${RISCV_OBJDUMP} -D build/${ELF_NAME} > build/${OBJDUMP_NAME}
 	@${RISCV_OBJCOPY} build/${ELF_NAME} -O binary build/__temp1__.bin --pad-to=$(MEMORY_SIZE) --gap-fill=0x00
 	@od -t x4 -v -An -w4 build/__temp1__.bin > build/__temp2__.hex
 	@cut -c2- build/__temp2__.hex > build/${HEXDUMP_NAME}
-	@rm -f build/__temp1__.bin build/__temp2__.hex	
+	@rm -rf build/__temp1__.bin build/__temp2__.hex build/obj
 	@echo "\nGenerated files:"
 	@echo "-- ELF executable   : build/${ELF_NAME}"
 	@echo "-- Disassembly      : build/${OBJDUMP_NAME}"
@@ -101,10 +101,10 @@ mkdir-build:
 	@mkdir -p build/
 	@mkdir -p build/obj/
 
-rvsteel-api: $(RVSTEEL_API_DIR)/rvsteel.c
-	@echo -n "Building RISC-V Steel API"
+rvsteel-api: $(RVSTEEL_API_DIR)/rvsteel-soc-ip-api.c
+	@echo -n "Building RISC-V Steel SoC IP API"
 	@$(RISCV_GCC) -I ${RVSTEEL_API_DIR} ${COMPILER_OPTIONS} \
-                -D MEMORY_SIZE=\"$(MEMORY_SIZE)\" -c -o build/obj/rvsteel.o $(RVSTEEL_API_DIR)/rvsteel.c
+                -D MEMORY_SIZE=\"$(MEMORY_SIZE)\" -c -o build/obj/soc-ip-api.o $(RVSTEEL_API_DIR)/rvsteel-soc-ip-api.c
 	@echo ": ok."
 
 build/obj/%.o: %.c
