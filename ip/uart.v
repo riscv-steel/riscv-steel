@@ -136,7 +136,7 @@ module uart #(
       rx_active <= 1'b0;
     end
     else if (uart_irq == 1'b1) begin
-      if ((rw_address == 32'h80000004 && read_request == 1'b1) || uart_irq_response == 1'b1) begin
+      if (uart_irq_response == 1'b1) begin
         rx_cycle_counter <= 0;
         rx_register <= 8'h00;
         rx_data <= rx_data;
