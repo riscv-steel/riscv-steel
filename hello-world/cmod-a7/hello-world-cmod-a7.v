@@ -35,13 +35,15 @@ Top Module:    rvsteel_soc
  
 **************************************************************************************************/
 
-/**************************************************************************************************
+/*
 
-  - 'clock' is connected to Cmod's 12MHz board clock.
-  - 'reset' is connected to BTN1 on the board
-  - UART signals are connect to Cmod's UART-USB bridge
+The 'clock' signal is connected to the 12MHz board clock
+The 'reset' signal is connected to BTN0
+The 'halt'  signal is connected to BTN1
+The UART signals are connect to the UART-USB bridge
 
-**************************************************************************************************/
+*/
+
 module hello_world_cmod_a7 (
 
   input   wire clock,
