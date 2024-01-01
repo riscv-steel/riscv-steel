@@ -32,6 +32,7 @@ In this Reference Guide you find information on the SoC IP hardware design. See 
 | -------------- | --------- | ----- | -------------------- |
 | **clock**      | Input     | 1 bit | Clock input.         |
 | **reset**      | Input     | 1 bit | Reset (active-high). |
+| **halt**       | Input     | 1 bit | Halts the processor core (active-high). |
 | **uart_rx**    | Input     | 1 bit | UART receiver pin. Must be connected to the transmitter (`TX`) pin of another UART device. |
 | **uart_tx**    | Output    | 1 bit | UART transmitter pin. Must be connected to the receiver (`RX`) pin of another UART device. |
 
@@ -84,9 +85,10 @@ rvsteel_soc #(
   // section of RISC-V Steel SoC IP Reference Guide
 
   .clock                    (),  // Connect this pin to a clock source
-  .reset                    (),  // Connect this pin to a reset switch/button. The reset is active-high.
-  .uart_rx                  (),  // Connect this to the TX pin of another UART device
-  .uart_tx                  ()   // Connect this to the RX pin of another UART device
+  .reset                    (),  // Connect this pin to a switch/button or hardwire it to 1'b0.
+  .halt                     (),  // Connect this pin to a switch/button or hardwire it to 1'b0.
+  .uart_rx                  (),  // Connect this pin to the TX pin of another UART device
+  .uart_tx                  ()   // Connect this pin to the RX pin of another UART device
 
 );
 ```

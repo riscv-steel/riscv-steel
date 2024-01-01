@@ -20,7 +20,8 @@ RISC-V Steel Processor Core has a single source file, `rvsteel-core.v`, saved in
 | -------------- | --------- | | -------------------- |
 | **Signal name** | **Direction** | **Size** | **Description** |
 | clock      | Input | 1 bit     | Clock input.         |
-| reset      | Input | 1bit     | Reset (active-high). |
+| reset      | Input | 1 bit     | Reset (active-high). |
+| halt       | Input | 1 bit     | Halts the processor core (active-high). |
 | **I/O interface**{ class="rvsteel-core-io-table" } | 
 | **Signal name** | **Direction** | **Size** | **Description** |
 | rw_address | Output | 32 bits     | The address for the read/write operation.  |
@@ -60,10 +61,11 @@ rvsteel_core #(
 
 ) rvsteel_core_instance (
 
-  // Global clock and active-high reset
+  // Global signals
 
   .clock                  (),
   .reset                  (), // reset is active-high
+  .halt                   (),
 
   // IO interface
 
