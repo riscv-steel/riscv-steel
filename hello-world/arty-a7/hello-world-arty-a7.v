@@ -35,26 +35,37 @@ Top Module:    hello_world_arty_a7
  
 **************************************************************************************************/
 
-/**************************************************************************************************
+/*
 
-  - 'clock' is connected to Arty's 100MHz board clock. Internally this clock is divided by 2.
-  - 'reset' is connected to BTN0 on the board
-  - UART signals are connect to Arty's UART-USB bridge
+The 'clock' signal is connected to Arty's 100MHz board clock and is divided by 2.
+The 'reset' signal is connected to BTN0
+The 'halt'  signal is connected to BTN1
+The UART signals are connect to the UART-USB bridge
 
-**************************************************************************************************/
+*/
+
 module hello_world_arty_a7 (
 
   input   wire clock,
   input   wire reset,
+  input   wire halt,
   input   wire uart_rx,
   output  wire uart_tx
 
   );
 
-  // Generate a 50MHz clock signal from Arty's onboard 100MHz clock
-  reg clock_50mhz;  
+  // Divides the 100MHz board block by 2
+  reg clock_50mhz;
   initial clock_50mhz = 1'b0;  
   always @(posedge clock) clock_50mhz <= !clock_50mhz;
+  
+  // Buttons debouncing
+  reg reset_debounced;
+  reg halt_debounced;  
+  always @(posedge clock_50mhz) begin
+    reset_debounced <= reset;
+    halt_debounced <= halt;
+  end
 
   rvsteel_soc #(
 
@@ -67,7 +78,8 @@ module hello_world_arty_a7 (
   ) rvsteel_soc_instance (
     
     .clock                    (clock_50mhz        ),
-    .reset                    (reset              ),
+    .reset                    (reset_debounced    ),
+    .halt                     (halt_debounced     ),
     .uart_rx                  (uart_rx            ),
     .uart_tx                  (uart_tx            )
 

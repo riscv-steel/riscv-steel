@@ -56,6 +56,7 @@ module rvsteel_soc #(
 
   input   wire  clock,
   input   wire  reset,
+  input   wire  halt,
   input   wire  uart_rx,
   output  wire  uart_tx
 
@@ -129,10 +130,11 @@ module rvsteel_soc #(
 
   ) rvsteel_core_instance (
 
-    // Global clock and active-high reset
+    // Global signals
 
     .clock                          (clock                              ),
-    .reset                          (reset                              ),
+    .reset                          (reset                              ),    
+    .halt                           (halt                               ),
 
     // IO interface
 
@@ -249,7 +251,7 @@ module rvsteel_soc #(
   
   ) ram_instance (
   
-    // Global clock and active-high reset
+    // Global signals
   
     .clock                          (clock                              ),
     .reset                          (reset                              ),
@@ -274,7 +276,7 @@ module rvsteel_soc #(
 
   ) uart_instance (
 
-    // Global clock and active-high reset
+    // Global signals
 
     .clock                          (clock                              ),
     .reset                          (reset                              ),

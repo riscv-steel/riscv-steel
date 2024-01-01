@@ -41,10 +41,11 @@ module rvsteel_core #(
 
   ) (
 
-  // Global clock and active-high reset
+  // Global signals
   
   input  wire           clock,
   input  wire           reset,
+  input  wire           halt,
 
   // IO interface
 
@@ -385,7 +386,7 @@ module rvsteel_core #(
   reg   [31:0]  writeback_multiplexer_output;  
 
   //-----------------------------------------------------------------------------------------------//
-  // Global reset and clock enable logic                                                           //
+  // Global signals                                                                                //
   //-----------------------------------------------------------------------------------------------//
 
   always @(posedge clock)
@@ -393,7 +394,7 @@ module rvsteel_core #(
 
   assign reset_internal = reset | reset_reg;
 
-  assign clock_enable = !(
+  assign clock_enable = !( halt                |
     (prev_read_request   & !read_response    ) |
     (prev_write_request  & !write_response   ) );
 

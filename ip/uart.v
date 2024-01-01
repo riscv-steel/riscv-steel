@@ -51,7 +51,7 @@ module uart #(
 
   )(
 
-  // Global clock and active-high reset
+  // Global signals
 
   input   wire          clock,
   input   wire          reset,

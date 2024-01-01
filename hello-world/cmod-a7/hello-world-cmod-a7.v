@@ -45,11 +45,20 @@ Top Module:    rvsteel_soc
 module hello_world_cmod_a7 (
 
   input   wire clock,
-  input   wire reset,
+  input   wire reset,  
+  input   wire halt,
   input   wire uart_rx,
   output  wire uart_tx
 
   );
+  
+  // Buttons debouncing
+  reg reset_debounced;
+  reg halt_debounced;  
+  always @(posedge clock) begin
+    reset_debounced <= reset;
+    halt_debounced <= halt;
+  end
 
   rvsteel_soc #(
 
@@ -62,7 +71,8 @@ module hello_world_cmod_a7 (
   ) rvsteel_soc_instance (
     
     .clock                    (clock              ),
-    .reset                    (reset              ),
+    .reset                    (reset_debounced    ),
+    .halt                     (halt_debounced     ),
     .uart_rx                  (uart_rx            ),
     .uart_tx                  (uart_tx            )
 
