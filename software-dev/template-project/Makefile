@@ -2,11 +2,11 @@
 # -------------------------------------------------------------------------------------------------
 
 # Name of the program to be created
-PROGRAM_NAME      ?= hello-world
+PROGRAM_NAME      ?= main
 # Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
 MEMORY_SIZE       ?= 8192
 # Path to RISC-V Steel SoC IP API
-RVSTEEL_API_DIR   ?= ../../software-dev/rvsteel-api
+RVSTEEL_API_DIR   ?= ../rvsteel-api
 # The full path to RISC-V GNU Toolchain binaries in this machine + RISC-V binaries prefix
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
 

@@ -1,4 +1,4 @@
-#include "rvsteel-soc-ip-api.h"
+#include "rvsteel-api.h"
 
 // Interrupt handler routine: echo back the received character
 void process_received_character()

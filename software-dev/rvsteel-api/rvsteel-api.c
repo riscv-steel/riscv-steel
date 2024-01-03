@@ -24,7 +24,7 @@ SOFTWARE.
 
 **************************************************************************************************/
 
-#include "rvsteel-soc-ip-api.h"
+#include "rvsteel-api.h"
 
 #ifndef MEMORY_SIZE
 #define __RVSTEEL_MEM_SIZE "8192"
