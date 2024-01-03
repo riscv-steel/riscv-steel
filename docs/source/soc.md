@@ -18,11 +18,11 @@ In this Reference Guide you find information on the SoC IP hardware design. See 
 
 | Module name      | File                 | Location                |  Description                    |
 | ---------------- | -------------------- | ----------------------- |------------------------------ |
-| **rvsteel_soc**  | `rvsteel-soc.v`      | `riscv-steel/ip/` | Top module of RISC-V Steel SoC IP |
-| **rvsteel_core** | `rvsteel-core.v`     | `riscv-steel/ip/` | RISC-V Steel Processor Core              |
-| **ram_memory**   | `ram-memory.v`       | `riscv-steel/ip/` | RAM memory                     |
-| **uart**         | `uart.v`             | `riscv-steel/ip/` | UART                           |
-| **system_bus**   | `system-bus.v`       | `riscv-steel/ip/` | System Bus                     |
+| **rvsteel_soc**  | `rvsteel-soc.v`      | `riscv-steel/ip/soc/` | Top module of RISC-V Steel SoC IP |
+| **rvsteel_core** | `rvsteel-core.v`     | `riscv-steel/ip/core/` | RISC-V Steel Processor Core              |
+| **ram_memory**   | `ram-memory.v`       | `riscv-steel/ip/soc` | RAM memory                     |
+| **uart**         | `uart.v`             | `riscv-steel/ip/soc` | UART                           |
+| **system_bus**   | `system-bus.v`       | `riscv-steel/ip/soc` | System Bus                     |
 
 ## I/O signals
 
