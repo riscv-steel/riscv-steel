@@ -56,7 +56,7 @@ module rvsteel_core_unit_tests();
   rvsteel_core
   dut0 (
 
-    // Global clock and active-high reset
+    // Global signals
   
     .clock                        (clock                        ),
     .reset                        (reset                        ),
@@ -96,7 +96,7 @@ module rvsteel_core_unit_tests();
   
   ) dut1 (
   
-    // Global clock and active-high reset
+    // Global signals
   
     .clock                        (clock                        ),
     .reset                        (reset                        ),
