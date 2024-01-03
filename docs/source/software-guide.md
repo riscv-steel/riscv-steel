@@ -56,7 +56,7 @@ make -j $(nproc)
 
 <h4>1. Make a copy of the software development template project.</h4>
 
-The template project is all you need to start and is located at `riscv-steel/dev-template/`.
+The template project is all you need to start and is located at `riscv-steel/software-dev/template-project/`.
 
 <h4>2. Edit the Makefile.</h4>
 
