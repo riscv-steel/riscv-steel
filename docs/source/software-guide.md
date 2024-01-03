@@ -72,7 +72,7 @@ The beginning of the Makefile (reproduced below) contain the four variables you 
 PROGRAM_NAME      ?= main
 # Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
 MEMORY_SIZE       ?= 8192
-# Path to RISC-V Steel SoC IP API
+# Path to RISC-V Steel API
 RVSTEEL_API_DIR   ?= ../rvsteel-api
 # The full path to RISC-V GNU Toolchain binaries in this machine + RISC-V binaries prefix
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
@@ -85,14 +85,14 @@ The template project comes with a `main.c` file containing a Hello World example
 
 You can add as many source files to the project as you want. The Makefile was written so that all `*.c` source files you add to the project get automatically compiled when you run `make`.
 
-To make it easier to develop your application, RISC-V Steel SoC IP API provides function calls to configure and control the SoC IP. [Check it out](#rvsteel-api-reference) for more information.
+To make it easier to develop your application, RISC-V Steel API provides function calls to configure and control the SoC IP. [Check it out](#rvsteel-api-reference) for more information.
 
 <h4>4. Build your application.</h4>
 
 Run `make` from the project root folder to build your application and generate a memory initialization file. A successfull build output is similar to this:
 
 ```
-Building RISC-V Steel SoC IP API: ok.
+Building RISC-V Steel API: ok.
 Making my_app.o: ok.
 Making srcfile1.o: ok.
 Making srcfile2.o: ok.
@@ -140,11 +140,11 @@ The `BOOT_ADDRESS` parameter does not need to be set if you generated the memory
 
 After configuring the parameters of your instance of the SoC IP, generate a new bitstream and upload it to your FPGA. The application will start running automatically when you power up the board.
 
-## SoC IP API Reference
+## RISC-V Steel API Reference
 
 ### Introduction
 
-RISC-V Steel SoC IP API is a set of function calls to configure and control RISC-V Steel SoC IP, making it easier to develop applications for it.
+RISC-V Steel API is a set of function calls to configure and control RISC-V Steel SoC IP, making it easier to develop applications for it.
 
 To use the API in your application you need to include  `rvsteel-api.h` in your source code:
 

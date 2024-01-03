@@ -5,7 +5,7 @@
 PROGRAM_NAME      ?= main
 # Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
 MEMORY_SIZE       ?= 8192
-# Path to RISC-V Steel SoC IP API
+# Path to RISC-V Steel API
 RVSTEEL_API_DIR   ?= ../rvsteel-api
 # The full path to RISC-V GNU Toolchain binaries in this machine + RISC-V binaries prefix
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
@@ -49,7 +49,7 @@ COMPILER_OPTIONS  ?=  -march=rv32izicsr -mabi=ilp32 -nostartfiles -nostdlib \
 # --------------------------------------------------------------------------------------------
 
 ifeq (,$(wildcard $(RVSTEEL_API_DIR)/rvsteel-api.h))
-  $(error Could not find RISC-V Steel SoC IP API files in '$(RVSTEEL_API_DIR)'. Please fix the \
+  $(error Could not find RISC-V Steel API files in '$(RVSTEEL_API_DIR)'. Please fix the \
           RVSTEEL_API_DIR variable in the Makefile)
 endif
 
@@ -102,7 +102,7 @@ mkdir-build:
 	@mkdir -p build/obj/
 
 rvsteel-api: $(RVSTEEL_API_DIR)/rvsteel-api.c
-	@echo -n "Building RISC-V Steel SoC IP API"
+	@echo -n "Building RISC-V Steel API"
 	@$(RISCV_GCC) -I ${RVSTEEL_API_DIR} ${COMPILER_OPTIONS} \
                 -D MEMORY_SIZE=\"$(MEMORY_SIZE)\" -c -o build/obj/rvsteel-api.o $(RVSTEEL_API_DIR)/rvsteel-api.c
 	@echo ": ok."

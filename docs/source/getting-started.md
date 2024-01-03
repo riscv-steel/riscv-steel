@@ -82,7 +82,7 @@ If you've reached this point, congratulations! You have a working instance of th
 
 - **Run your own software**
 
-    In the [Software Guide](software-guide.md) you find how to write, compile, and run software applications for RISC-V Steel SoC IP.
+    In the [SoC IP Software Guide](software-guide.md) you find how to write, compile, and run software applications for RISC-V Steel SoC IP.
 
 - **Expand the hardware**
 
