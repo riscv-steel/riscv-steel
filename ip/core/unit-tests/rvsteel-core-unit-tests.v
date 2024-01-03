@@ -117,99 +117,99 @@ module rvsteel_core_unit_tests();
   always #10 clock = !clock;
   
   reg [159:0] unit_test_programs_array [0:44] = {
-    "add-01.mem",
-    "addi-01.mem",
-    "and-01.mem",
-    "andi-01.mem",
-    "auipc-01.mem",
-    "beq-01.mem",
-    "bge-01.mem",
-    "bgeu-01.mem",
-    "blt-01.mem",
-    "bltu-01.mem",
-    "bne-01.mem",
-    "ebreak.mem",
-    "ecall.mem",
-    "fence-01.mem",
-    "jal-01.mem",
-    "jalr-01.mem",
-    "lb-align-01.mem",
-    "lbu-align-01.mem",
-    "lh-align-01.mem",
-    "lhu-align-01.mem",
-    "lui-01.mem",
-    "lw-align-01.mem",
-    "misalign-lh-01.mem",
-    "misalign-lhu-01.mem",
-    "misalign-lw-01.mem",
-    "misalign-sh-01.mem",
-    "misalign-sw-01.mem",
-    "or-01.mem",
-    "ori-01.mem",
-    "sb-align-01.mem",
-    "sh-align-01.mem",
-    "sll-01.mem",
-    "slli-01.mem",
-    "slt-01.mem",
-    "slti-01.mem",
-    "sltiu-01.mem",
-    "sltu-01.mem",
-    "sra-01.mem",
-    "srai-01.mem",
-    "srl-01.mem",
-    "srli-01.mem",
-    "sub-01.mem",
-    "sw-align-01.mem",
-    "xor-01.mem",
-    "xori-01.mem"
+    "add-01.hex",
+    "addi-01.hex",
+    "and-01.hex",
+    "andi-01.hex",
+    "auipc-01.hex",
+    "beq-01.hex",
+    "bge-01.hex",
+    "bgeu-01.hex",
+    "blt-01.hex",
+    "bltu-01.hex",
+    "bne-01.hex",
+    "ebreak.hex",
+    "ecall.hex",
+    "fence-01.hex",
+    "jal-01.hex",
+    "jalr-01.hex",
+    "lb-align-01.hex",
+    "lbu-align-01.hex",
+    "lh-align-01.hex",
+    "lhu-align-01.hex",
+    "lui-01.hex",
+    "lw-align-01.hex",
+    "misalign-lh-01.hex",
+    "misalign-lhu-01.hex",
+    "misalign-lw-01.hex",
+    "misalign-sh-01.hex",
+    "misalign-sw-01.hex",
+    "or-01.hex",
+    "ori-01.hex",
+    "sb-align-01.hex",
+    "sh-align-01.hex",
+    "sll-01.hex",
+    "slli-01.hex",
+    "slt-01.hex",
+    "slti-01.hex",
+    "sltiu-01.hex",
+    "sltu-01.hex",
+    "sra-01.hex",
+    "srai-01.hex",
+    "srl-01.hex",
+    "srli-01.hex",
+    "sub-01.hex",
+    "sw-align-01.hex",
+    "xor-01.hex",
+    "xori-01.hex"
   };
   
   reg [511:0] golden_reference_array [0:44] = {
-    "add-01.reference.mem",
-    "addi-01.reference.mem",
-    "and-01.reference.mem",
-    "andi-01.reference.mem",
-    "auipc-01.reference.mem",
-    "beq-01.reference.mem",
-    "bge-01.reference.mem",
-    "bgeu-01.reference.mem",
-    "blt-01.reference.mem",
-    "bltu-01.reference.mem",
-    "bne-01.reference.mem",
-    "ebreak.reference.mem",
-    "ecall.reference.mem",
-    "fence-01.reference.mem",
-    "jal-01.reference.mem",
-    "jalr-01.reference.mem",
-    "lb-align-01.reference.mem",
-    "lbu-align-01.reference.mem",
-    "lh-align-01.reference.mem",
-    "lhu-align-01.reference.mem",
-    "lui-01.reference.mem",
-    "lw-align-01.reference.mem",
-    "misalign-lh-01.reference.mem",
-    "misalign-lhu-01.reference.mem",
-    "misalign-lw-01.reference.mem",
-    "misalign-sh-01.reference.mem",
-    "misalign-sw-01.reference.mem",
-    "or-01.reference.mem",
-    "ori-01.reference.mem",
-    "sb-align-01.reference.mem",
-    "sh-align-01.reference.mem",
-    "sll-01.reference.mem",
-    "slli-01.reference.mem",
-    "slt-01.reference.mem",
-    "slti-01.reference.mem",
-    "sltiu-01.reference.mem",
-    "sltu-01.reference.mem",
-    "sra-01.reference.mem",
-    "srai-01.reference.mem",
-    "srl-01.reference.mem",
-    "srli-01.reference.mem",
-    "sub-01.reference.mem",
-    "sw-align-01.reference.mem",
-    "xor-01.reference.mem",
-    "xori-01.reference.mem"
+    "add-01.reference.hex",
+    "addi-01.reference.hex",
+    "and-01.reference.hex",
+    "andi-01.reference.hex",
+    "auipc-01.reference.hex",
+    "beq-01.reference.hex",
+    "bge-01.reference.hex",
+    "bgeu-01.reference.hex",
+    "blt-01.reference.hex",
+    "bltu-01.reference.hex",
+    "bne-01.reference.hex",
+    "ebreak.reference.hex",
+    "ecall.reference.hex",
+    "fence-01.reference.hex",
+    "jal-01.reference.hex",
+    "jalr-01.reference.hex",
+    "lb-align-01.reference.hex",
+    "lbu-align-01.reference.hex",
+    "lh-align-01.reference.hex",
+    "lhu-align-01.reference.hex",
+    "lui-01.reference.hex",
+    "lw-align-01.reference.hex",
+    "misalign-lh-01.reference.hex",
+    "misalign-lhu-01.reference.hex",
+    "misalign-lw-01.reference.hex",
+    "misalign-sh-01.reference.hex",
+    "misalign-sw-01.reference.hex",
+    "or-01.reference.hex",
+    "ori-01.reference.hex",
+    "sb-align-01.reference.hex",
+    "sh-align-01.reference.hex",
+    "sll-01.reference.hex",
+    "slli-01.reference.hex",
+    "slt-01.reference.hex",
+    "slti-01.reference.hex",
+    "sltiu-01.reference.hex",
+    "sltu-01.reference.hex",
+    "sra-01.reference.hex",
+    "srai-01.reference.hex",
+    "srl-01.reference.hex",
+    "srli-01.reference.hex",
+    "sub-01.reference.hex",
+    "sw-align-01.reference.hex",
+    "xor-01.reference.hex",
+    "xori-01.reference.hex"
   };
   
   integer     i, j, k, m, n, t, u, z;
@@ -275,6 +275,8 @@ module rvsteel_core_unit_tests();
       // Initialization
       $readmemh(unit_test_programs_array[k],  dut1.ram                );      
       $readmemh(golden_reference_array[k],    current_golden_reference);
+
+      $display("Running test: %s", unit_test_programs_array[k]);
             
       // Main loop: run test
       for(j = 0; j < 500000; j=j+1) begin
@@ -306,31 +308,33 @@ module rvsteel_core_unit_tests();
             z=z+1;
           end
           
-          // Skip main loop in a successful run 
-          if (current_test_failed_flag == 0) begin            
-            $display("Passed on test: %s", unit_test_programs_array[k]);            
-            j = 999999; // skip main loop
-          end
+          // Skip loop in a successful run 
+          if (current_test_failed_flag == 0) j = 999999;
           
         end
       end
       
       // The program ran for 500000 cycles and did not finish (something is wrong)
       if (j == 500000) begin
-        $display("TEST FAILED (probably hanging): %s", unit_test_programs_array[k]);
+        $info("TEST FAILED (probably hanging): %s", unit_test_programs_array[k]);
         $stop();
       end
       
     end
     
     if (failing_tests_counter == 0) begin
-      $display("RISC-V Steel 32-bit Processor passed ALL unit tests from RISC-V Architectural Test Suite");
-      $finish();
+      $display("------------------------------------------------------------------------------------------");
+      $display("");      
+      $display("RISC-V Steel Processor Core IP passed ALL unit tests from RISC-V Architectural Test Suite");
+      $display("");
+      $display("------------------------------------------------------------------------------------------");
     end    
-    else begin
+    else begin      
       $display("FAILED on one or more unit tests.");
-      $finish();
+      $fatal();
     end
+    
+    $finish(0);
    
   end
 
