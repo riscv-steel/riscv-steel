@@ -58,4 +58,5 @@ nav:
     - Processor Core IP: 'core.md'
     - System-on-Chip IP: 'soc.md'
     - Software Guide: 'software-guide.md'
+    - RISC-V Steel API: 'api.md'
     - License: 'license.md'
