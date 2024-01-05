@@ -80,17 +80,17 @@ module uart #(
 
   localparam CYCLES_PER_BAUD = CLOCK_FREQUENCY / UART_BAUD_RATE;
   
-  reg [$clog2(CYCLES_PER_BAUD):0] tx_cycle_counter = 0;
-  reg [$clog2(CYCLES_PER_BAUD):0] rx_cycle_counter = 0;
-  reg [3:0] tx_bit_counter;
-  reg [3:0] rx_bit_counter;
-  reg [9:0] tx_register;
-  reg [7:0] rx_register;
-  reg [7:0] rx_data;
-  reg       rx_active;
-  reg       reset_reg;
+  reg [31:0] tx_cycle_counter = 0;
+  reg [31:0] rx_cycle_counter = 0;
+  reg [3:0]  tx_bit_counter;
+  reg [3:0]  rx_bit_counter;
+  reg [9:0]  tx_register;
+  reg [7:0]  rx_register;
+  reg [7:0]  rx_data;
+  reg        rx_active;
+  reg        reset_reg;
 
-  wire      reset_internal;
+  wire       reset_internal;
 
   always @(posedge clock)
     reset_reg <= reset;

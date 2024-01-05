@@ -368,10 +368,8 @@ module ram_memory #(
 
   );
 
-  localparam ADDR_BUS_WIDTH = $clog2(MEMORY_SIZE)-1;
-
   wire                        reset_internal;
-  wire [ADDR_BUS_WIDTH:0]     effective_address;
+  wire [31:0]                 effective_address;
   wire                        invalid_address;
   
   reg                         reset_reg;
