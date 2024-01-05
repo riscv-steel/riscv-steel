@@ -18,11 +18,11 @@ In this Reference Guide you find information on the SoC IP hardware design. See 
 
 | Module name      | File                 | Location                |  Description                    |
 | ---------------- | -------------------- | ----------------------- |------------------------------ |
-| **rvsteel_soc**  | `rvsteel-soc.v`      | `riscv-steel/ip/soc/` | Top module of RISC-V Steel SoC IP |
-| **rvsteel_core** | `rvsteel-core.v`     | `riscv-steel/ip/core/` | RISC-V Steel Processor Core              |
-| **ram_memory**   | `ram-memory.v`       | `riscv-steel/ip/soc` | RAM memory                     |
+| **rvsteel_soc**  | `rvsteel_soc.v`      | `riscv-steel/ip/soc/` | Top module of RISC-V Steel SoC IP |
+| **rvsteel_core** | `rvsteel_core.v`     | `riscv-steel/ip/core/` | RISC-V Steel Processor Core              |
+| **ram_memory**   | `ram_memory.v`       | `riscv-steel/ip/soc` | RAM memory                     |
 | **uart**         | `uart.v`             | `riscv-steel/ip/soc` | UART                           |
-| **system_bus**   | `system-bus.v`       | `riscv-steel/ip/soc` | System Bus                     |
+| **system_bus**   | `system_bus.v`       | `riscv-steel/ip/soc` | System Bus                     |
 
 ## I/O signals
 
@@ -95,7 +95,7 @@ rvsteel_soc #(
 
 ## Adding devices
 
-A new device can be added to the SoC IP by modifying the system bus module (`system-bus.v`) and the top module (`rvsteel-soc.v`). All modifications that need to be made were left as comments in the source code of these files.
+A new device can be added to the SoC IP by modifying the system bus module (`system_bus.v`) and the top module (`rvsteel_soc.v`). All modifications that need to be made were left as comments in the source code of these files.
 
 The parts that need to be uncommented follow the template:
 

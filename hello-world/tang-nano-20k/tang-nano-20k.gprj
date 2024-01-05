@@ -7,10 +7,10 @@
     <FileList>
         <File path="hello-world-tang-nano-20k.v" type="file.verilog" enable="1"/>
         <File path="../../ip/soc/uart.v" type="file.verilog" enable="1"/>
-        <File path="../../ip/soc/ram-memory.v" type="file.verilog" enable="1"/>
-        <File path="../../ip/soc/system-bus.v" type="file.verilog" enable="1"/>
-        <File path="../../ip/core/rvsteel-core.v" type="file.verilog" enable="1"/>
-        <File path="../../ip/soc/rvsteel-soc.v" type="file.verilog" enable="1"/>
+        <File path="../../ip/soc/ram_memory.v" type="file.verilog" enable="1"/>
+        <File path="../../ip/soc/system_bus.v" type="file.verilog" enable="1"/>
+        <File path="../../ip/core/rvsteel_core.v" type="file.verilog" enable="1"/>
+        <File path="../../ip/soc/rvsteel_soc.v" type="file.verilog" enable="1"/>
         <File path="tang-nano-20k-constraints.cst" type="file.cst" enable="1"/>
     </FileList>
 </Project>
