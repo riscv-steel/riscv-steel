@@ -324,9 +324,7 @@ module rvsteel_core_unit_tests();
     
     if (failing_tests_counter == 0) begin
       $display("------------------------------------------------------------------------------------------");
-      $display("");      
       $display("RISC-V Steel Processor Core IP passed ALL unit tests from RISC-V Architectural Test Suite");
-      $display("");
       $display("------------------------------------------------------------------------------------------");
     end    
     else begin      

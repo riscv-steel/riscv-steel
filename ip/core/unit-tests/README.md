@@ -16,7 +16,7 @@ RISC-V Steel Processor Core IP passed ALL unit tests from RISC-V Architectural T
 
 ### Using Verilator
 
-A shell script to verilate and run the simulation can be found at the `verilator/` folder. Verilator version 5.0 or higher is required.
+We provide a shell script to verilate and run the tests. Verilator version 5.0 or higher is required.
 
 ```bash
 chmod +x verilator/run.sh # give permissions to run this script
