@@ -1500,7 +1500,7 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   assign interrupt_address_offset =
-    csr_mcause_code << 2;
+    {{26{1'b0}}, csr_mcause_code, 2'b00};
 
   assign trap_address =
     csr_mtvec[1:0] == 2'b01 && csr_mcause_interrupt_flag ?
