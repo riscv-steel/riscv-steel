@@ -230,12 +230,12 @@ module system_bus #(
       default: begin
         write_response  = 1'b1;
         read_data       = 32'h00000000;
-        read_response   = 2'b1;
+        read_response   = 1'b1;
       end
       RESET: begin
         write_response  = 1'b1;
         read_data       = 32'h00000000;
-        read_response   = 2'b1;
+        read_response   = 1'b1;
       end
       DEVICE0: begin
         write_response  = device0_write_response;
