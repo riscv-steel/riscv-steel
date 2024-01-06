@@ -28,11 +28,11 @@ SOFTWARE.
 
 Project Name:  RISC-V Steel System-on-Chip - System Bus
 Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada 
+Author:        Rafael Calcada
 E-mail:        rafaelcalcada@gmail.com
 
 Top Module:    system_bus
- 
+
 **************************************************************************************************/
 
 module system_bus #(
@@ -46,10 +46,10 @@ module system_bus #(
 
   parameter DEVICE2_START_ADDRESS = 32'hdeadbeef,
   parameter DEVICE2_FINAL_ADDRESS = 32'hdeadbeef,
-  
+
   parameter DEVICE3_START_ADDRESS = 32'hdeadbeef,
   parameter DEVICE3_FINAL_ADDRESS = 32'hdeadbeef
-  
+
   */
 
   )(
@@ -67,7 +67,7 @@ module system_bus #(
   input   wire  [3:0 ]  write_strobe,
   input   wire          write_request,
   output  reg           write_response,
-  
+
   // Device #0
 
   output  wire  [31:0]  device0_rw_address,
@@ -113,7 +113,7 @@ module system_bus #(
   output  wire  [3:0 ]  device3_write_strobe,
   output  wire          device3_write_request,
   input   wire          device3_write_response
-  
+
   */
 
   );
@@ -150,32 +150,32 @@ module system_bus #(
   assign reset_internal = reset | reset_reg;
 
   assign device0_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE0_START_ADDRESS) && 
+    $unsigned(rw_address) >= $unsigned(DEVICE0_START_ADDRESS) &&
     $unsigned(rw_address) <= $unsigned(DEVICE0_FINAL_ADDRESS);
-  
+
   assign device1_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE1_START_ADDRESS) && 
+    $unsigned(rw_address) >= $unsigned(DEVICE1_START_ADDRESS) &&
     $unsigned(rw_address) <= $unsigned(DEVICE1_FINAL_ADDRESS);
 
   /* Uncomment to add new devices
 
   assign device2_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE2_START_ADDRESS) && 
+    $unsigned(rw_address) >= $unsigned(DEVICE2_START_ADDRESS) &&
     $unsigned(rw_address) <= $unsigned(DEVICE2_FINAL_ADDRESS);
-  
+
   assign device3_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE3_START_ADDRESS) && 
+    $unsigned(rw_address) >= $unsigned(DEVICE3_START_ADDRESS) &&
     $unsigned(rw_address) <= $unsigned(DEVICE3_FINAL_ADDRESS);
 
   */
 
-  assign device0_rw_address    = device0_valid_access ? rw_address    : 1'b0;
+  assign device0_rw_address    = device0_valid_access ? rw_address    : 32'b0;
   assign device0_write_data    = device0_valid_access ? write_data    : 32'h0;
   assign device0_write_strobe  = device0_valid_access ? write_strobe  : 4'h0;
   assign device0_read_request  = device0_valid_access ? read_request  : 1'b0;
   assign device0_write_request = device0_valid_access ? write_request : 1'b0;
 
-  assign device1_rw_address    = device1_valid_access ? rw_address    : 1'b0;
+  assign device1_rw_address    = device1_valid_access ? rw_address    : 32'b0;
   assign device1_write_data    = device1_valid_access ? write_data    : 32'h0;
   assign device1_write_strobe  = device1_valid_access ? write_strobe  : 4'h0;
   assign device1_read_request  = device1_valid_access ? read_request  : 1'b0;
@@ -228,24 +228,24 @@ module system_bus #(
   always @* begin
     case (selected_response)
       default: begin
-        write_response  <= 1'b1;
-        read_data       <= 32'h00000000;
-        read_response   <= 2'b1;
+        write_response  = 1'b1;
+        read_data       = 32'h00000000;
+        read_response   = 1'b1;
       end
       RESET: begin
-        write_response  <= 1'b1;
-        read_data       <= 32'h00000000;
-        read_response   <= 2'b1;
+        write_response  = 1'b1;
+        read_data       = 32'h00000000;
+        read_response   = 1'b1;
       end
       DEVICE0: begin
-        write_response  <= device0_write_response;
-        read_data       <= device0_read_data;
-        read_response   <= device0_read_response;
+        write_response  = device0_write_response;
+        read_data       = device0_read_data;
+        read_response   = device0_read_response;
       end
       DEVICE1: begin
-        write_response  <= device1_write_response;
-        read_data       <= device1_read_data;
-        read_response   <= device1_read_response;
+        write_response  = device1_write_response;
+        read_data       = device1_read_data;
+        read_response   = device1_read_response;
       end
 
       /* Uncomment to add new devices
@@ -261,7 +261,7 @@ module system_bus #(
         read_data       <= device3_read_data;
         read_response   <= device3_read_response;
       end
-      
+
       */
 
     endcase

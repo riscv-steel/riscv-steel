@@ -28,21 +28,21 @@ SOFTWARE.
 
 Project Name:  RISC-V Steel Processor Core
 Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada 
+Author:        Rafael Calcada
 E-mail:        rafaelcalcada@gmail.com
 
 Top Module:    rvsteel_core
- 
+
 **************************************************************************************************/
 
 module rvsteel_core #(
-  
+
   parameter     [31:0]  BOOT_ADDRESS = 32'h00000000
 
   ) (
 
   // Global signals
-  
+
   input  wire           clock,
   input  wire           reset,
   input  wire           halt,
@@ -64,7 +64,7 @@ module rvsteel_core #(
   output wire           irq_external_response,
   input  wire           irq_timer,
   output wire           irq_timer_response,
-  input  wire           irq_software,  
+  input  wire           irq_software,
   output wire           irq_software_response,
 
   // Real Time Clock (hardwire to zero if unused)
@@ -153,9 +153,9 @@ module rvsteel_core #(
 
   // States in M-mode
 
-  localparam STATE_RESET          = 4'b0001; 
+  localparam STATE_RESET          = 4'b0001;
   localparam STATE_OPERATING      = 4'b0010;
-  localparam STATE_TRAP_TAKEN     = 4'b0100;    
+  localparam STATE_TRAP_TAKEN     = 4'b0100;
   localparam STATE_TRAP_RETURN    = 4'b1000;
 
   // No operation
@@ -203,22 +203,22 @@ module rvsteel_core #(
   localparam FUNCT3_BGE           = 3'b101;
   localparam FUNCT3_BLTU          = 3'b110;
   localparam FUNCT3_BGEU          = 3'b111;
-  localparam FUNCT3_JALR          = 3'b000;
+  // localparam FUNCT3_JALR          = 3'b000;
   localparam FUNCT3_SB            = 3'b000;
   localparam FUNCT3_SH            = 3'b001;
   localparam FUNCT3_SW            = 3'b010;
-  localparam FUNCT3_LB            = 3'b000;
-  localparam FUNCT3_LH            = 3'b001;
-  localparam FUNCT3_LW            = 3'b010;
-  localparam FUNCT3_LBU           = 3'b100;
-  localparam FUNCT3_LHU           = 3'b101;
-  localparam FUNCT3_CSRRW         = 3'b001;
-  localparam FUNCT3_CSRRS         = 3'b010;
-  localparam FUNCT3_CSRRC         = 3'b011;
-  localparam FUNCT3_CSRRWI        = 3'b101;
-  localparam FUNCT3_CSRRSI        = 3'b110;
-  localparam FUNCT3_CSRRCI        = 3'b111;
-  localparam FUNCT3_FENCE         = 3'b000;
+  // localparam FUNCT3_LB            = 3'b000;
+  // localparam FUNCT3_LH            = 3'b001;
+  // localparam FUNCT3_LW            = 3'b010;
+  // localparam FUNCT3_LBU           = 3'b100;
+  // localparam FUNCT3_LHU           = 3'b101;
+  // localparam FUNCT3_CSRRW         = 3'b001;
+  // localparam FUNCT3_CSRRS         = 3'b010;
+  // localparam FUNCT3_CSRRC         = 3'b011;
+  // localparam FUNCT3_CSRRWI        = 3'b101;
+  // localparam FUNCT3_CSRRSI        = 3'b110;
+  // localparam FUNCT3_CSRRCI        = 3'b111;
+  // localparam FUNCT3_FENCE         = 3'b000;
   localparam FUNCT3_ECALL         = 3'b000;
   localparam FUNCT3_EBREAK        = 3'b000;
   localparam FUNCT3_MRET          = 3'b000;
@@ -241,7 +241,7 @@ module rvsteel_core #(
   localparam FUNCT7_ECALL         = 7'b0000000;
   localparam FUNCT7_EBREAK        = 7'b0000000;
   localparam FUNCT7_MRET          = 7'b0011000;
-  
+
   // RS1, RS2 and RD encodings for SYSTEM instructions
 
   localparam RS1_ECALL            = 5'b00000;
@@ -281,13 +281,13 @@ module rvsteel_core #(
   reg           csr_mcause_interrupt_flag;
   reg   [63:0]  csr_mcycle;
   reg   [31:0]  csr_mepc;
-  wire  [31:0]  csr_mie;  
+  wire  [31:0]  csr_mie;
   reg           csr_mie_meie;
   reg           csr_mie_msie;
-  reg           csr_mie_mtie;  
+  reg           csr_mie_mtie;
   wire  [31:0]  csr_mip;
-  reg           csr_mip_meip;  
-  reg           csr_mip_mtip;  
+  reg           csr_mip_meip;
+  reg           csr_mip_mtip;
   reg           csr_mip_msip;
   reg   [63:0]  csr_minstret;
   reg   [31:0]  csr_mscratch;
@@ -297,13 +297,13 @@ module rvsteel_core #(
   reg   [31:0]  csr_mtvec;
   reg   [31:0]  csr_mtval;
   wire  [2:0 ]  csr_operation;
-  reg   [63:0]  csr_utime;  
-  reg   [31:0]  csr_write_data;    
+  reg   [63:0]  csr_utime;
+  reg   [31:0]  csr_write_data;
   reg   [3:0 ]  current_state;
   wire          ebreak;
   wire          ecall;
-  wire          flush;  
-  wire          illegal_instruction;    
+  wire          flush;
+  wire          illegal_instruction;
   reg   [31:0]  immediate;
   wire  [31:0]  immediate_b_type;
   wire  [31:0]  immediate_csr_type;
@@ -320,16 +320,16 @@ module rvsteel_core #(
   wire  [31:0]  instruction_address;
   wire  [2:0 ]  instruction_funct3;
   wire  [6:0 ]  instruction_funct7;
-  wire  [6:0 ]  instruction_opcode;  
-  wire  [11:0]  instruction_csr_address;  
-  wire  [4:0 ]  instruction_rd_address;  
+  wire  [6:0 ]  instruction_opcode;
+  wire  [11:0]  instruction_csr_address;
+  wire  [4:0 ]  instruction_rd_address;
   wire  [4:0 ]  instruction_rs1_address;
   wire  [4:0 ]  instruction_rs2_address;
   wire  [31:0]  interrupt_address_offset;
   wire          load;
   reg   [7:0 ]  load_byte_data;
   wire  [23:0]  load_byte_upper_bits;
-  wire          load_commit_cycle;  
+  wire          load_commit_cycle;
   reg   [31:0]  load_data;
   reg   [15:0]  load_half_data;
   wire  [15:0]  load_half_upper_bits;
@@ -346,25 +346,25 @@ module rvsteel_core #(
   reg   [31:0]  next_program_counter;
   reg   [3:0 ]  next_state;
   reg   [31:0]  prev_instruction;
-  reg   [31:0]  prev_instruction_address;  
+  reg   [31:0]  prev_instruction_address;
   reg           prev_load_request;
   reg           prev_read_request;
-  reg   [31:0]  prev_rw_address;  
-  reg   [31:0]  prev_write_data;  
-  reg           prev_write_request; 
-  reg   [3:0 ]  prev_write_strobe;  
+  reg   [31:0]  prev_rw_address;
+  reg   [31:0]  prev_write_data;
+  reg           prev_write_request;
+  reg   [3:0 ]  prev_write_strobe;
   reg   [31:0]  program_counter;
-  wire  [31:0]  program_counter_plus_4; 
+  wire  [31:0]  program_counter_plus_4;
   reg   [1:0 ]  program_counter_source;
-  wire  [4:0 ]  rd_addr;
-  wire  [31:0]  rd_data;
+  // wire  [4:0 ]  rd_addr;
+  // wire  [31:0]  rd_data;
   wire          reset_internal;
   reg           reset_reg;
-  wire  [4:0 ]  rs1_addr;
+  // wire  [4:0 ]  rs1_addr;
   wire  [31:0]  rs1_data;
-  wire  [31:0]  rs1_mux;
-  wire  [4:0 ]  rs2_addr;    
-  wire  [31:0]  rs2_mux;  
+  // wire  [31:0]  rs1_mux;
+  // wire  [4:0 ]  rs2_addr;
+  // wire  [31:0]  rs2_mux;
   wire  [31:0]  rs2_data;
   wire  [31:0]  rw_address_internal;
   wire          store;
@@ -372,7 +372,7 @@ module rvsteel_core #(
   wire          store_commit_cycle;
   reg   [31:0]  store_half_data;
   wire          store_pending;
-  wire          store_request;  
+  wire          store_request;
   wire          take_branch;
   wire          take_trap;
   wire  [31:0]  target_address_adder;
@@ -380,10 +380,62 @@ module rvsteel_core #(
   wire  [31:0]  trap_address;
   reg   [31:0]  write_data_internal;
   reg   [3:0 ]  write_strobe_for_byte;
-  reg   [3:0 ]  write_strobe_for_half;  
+  reg   [3:0 ]  write_strobe_for_half;
   reg   [3:0 ]  write_strobe_internal;
-  reg   [2:0 ]  writeback_mux_selector; 
-  reg   [31:0]  writeback_multiplexer_output;  
+  reg   [2:0 ]  writeback_mux_selector;
+  reg   [31:0]  writeback_multiplexer_output;
+  wire          branch_type;
+  wire          jal_type;
+  wire          jalr_type;
+  wire          auipc_type;
+  wire          lui_type;
+  wire          load_type;
+  wire          store_type;
+  wire          system_type;
+  wire          op_type;
+  wire          op_imm_type;
+  wire          misc_mem_type;
+  wire          addi;
+  wire          slti;
+  wire          sltiu;
+  wire          andi;
+  wire          ori;
+  wire          xori;
+  wire          slli;
+  wire          srli;
+  wire          srai;
+  wire          add;
+  wire          sub;
+  wire          slt;
+  wire          sltu;
+  wire          is_and;
+  wire          is_or;
+  wire          is_xor;
+  wire          sll;
+  wire          srl;
+  wire          sra;
+  wire          csrxxx;
+  wire          illegal_store;
+  wire          illegal_load;
+  wire          illegal_jalr;
+  wire          illegal_branch;
+  wire          illegal_op;
+  wire          illegal_op_imm;
+  wire          illegal_system;
+  wire          unknown_type;
+  wire          misaligned_word;
+  wire          misaligned_half;
+  wire          misaligned;
+  wire          is_branch;
+  wire          is_jump;
+  wire          is_equal;
+  wire          is_not_equal;
+  wire          is_less_than_unsigned;
+  wire          is_less_than;
+  wire          is_greater_or_equal_than;
+  wire          is_greater_or_equal_than_unsigned;
+  wire          interrupt_pending;
+  wire          exception_pending;
 
   //-----------------------------------------------------------------------------------------------//
   // Global signals                                                                                //
@@ -399,7 +451,7 @@ module rvsteel_core #(
     (prev_write_request  & !write_response   ) );
 
   always @(posedge clock) begin
-    if (reset_internal) begin      
+    if (reset_internal) begin
       prev_instruction_address  <= BOOT_ADDRESS;
       prev_load_request         <= 1'b0;
       prev_rw_address           <= 32'h00000000;
@@ -408,13 +460,13 @@ module rvsteel_core #(
       prev_write_request        <= 1'b0;
       prev_write_strobe         <= 4'b0000;
     end
-    else if(clock_enable) begin            
+    else if(clock_enable) begin
       prev_instruction_address  <= instruction_address;
       prev_load_request         <= load_request;
       prev_rw_address           <= rw_address;
       prev_read_request         <= read_request;
       prev_write_data           <= write_data;
-      prev_write_request        <= write_request;      
+      prev_write_request        <= write_request;
       prev_write_strobe         <= write_strobe;
     end
   end
@@ -435,7 +487,7 @@ module rvsteel_core #(
       prev_instruction <= NOP_INSTRUCTION;
     else
       prev_instruction <= instruction;
-    
+
   always @* begin : next_program_counter_mux
     case (program_counter_source)
       PC_BOOT: next_program_counter = BOOT_ADDRESS;
@@ -444,10 +496,10 @@ module rvsteel_core #(
       PC_NEXT: next_program_counter = next_address;
     endcase
   end
-    
+
   assign program_counter_plus_4 =
     program_counter + 32'h00000004;
-  
+
   assign target_address_adder =
     target_address_source == 1'b1 ?
     rs1_data + immediate :
@@ -460,21 +512,21 @@ module rvsteel_core #(
    take_branch ?
    branch_target_address :
    program_counter_plus_4;
-    
+
   always @(posedge clock) begin : program_counter_reg_implementation
     if (reset_internal)
       program_counter <= BOOT_ADDRESS;
     else if (clock_enable & !load_pending & !store_pending)
       program_counter <= next_program_counter;
-  end  
-    
+  end
+
   assign instruction =
     flush ?
     NOP_INSTRUCTION :
     (!clock_enable | load_commit_cycle | store_commit_cycle) ?
       prev_instruction :
       read_data;
-  
+
   assign instruction_opcode =
     instruction[6:0];
 
@@ -494,7 +546,7 @@ module rvsteel_core #(
     instruction[11:7];
 
   assign instruction_csr_address =
-    instruction[31:20];   
+    instruction[31:20];
 
   //-----------------------------------------------------------------------------------------------//
   // IO read / write                                                                               //
@@ -513,7 +565,7 @@ module rvsteel_core #(
     (clock_enable ?
       rw_address_internal :
       prev_rw_address);
-  
+
   assign write_request =
     reset_internal ?
     1'b0 :
@@ -552,12 +604,12 @@ module rvsteel_core #(
 
   assign store_request =
     store & ~misaligned_store & ~take_trap & ~store_commit_cycle;
-  
-  assign rw_address_internal = 
+
+  assign rw_address_internal =
     load_request | store_request ?
     {target_address_adder[31:2], 2'b00} :
     instruction_address;
-  
+
   always @* begin
     case(instruction_funct3)
       FUNCT3_SB: begin
@@ -575,13 +627,13 @@ module rvsteel_core #(
       default: begin
         write_strobe_internal = {4{write_request}};
         write_data_internal   = rs2_data;
-      end 
+      end
     endcase
   end
-    
+
   always @* begin
     case(target_address_adder[1:0])
-      2'b00: begin 
+      2'b00: begin
         store_byte_data       = {24'b0, rs2_data[7:0]};
         write_strobe_for_byte = {3'b0, write_request};
       end
@@ -597,9 +649,9 @@ module rvsteel_core #(
         store_byte_data       = {rs2_data[7:0], 24'b0};
         write_strobe_for_byte = {write_request, 3'b0};
       end
-    endcase    
+    endcase
   end
-    
+
   always @* begin
     case(target_address_adder[1])
       1'b0: begin
@@ -612,11 +664,11 @@ module rvsteel_core #(
       end
     endcase
   end
-    
+
   //-----------------------------------------------------------------------------------------------//
   // Instruction decoding                                                                          //
   //-----------------------------------------------------------------------------------------------//
-    
+
   // Instruction type detection
 
   assign branch_type =
@@ -651,7 +703,7 @@ module rvsteel_core #(
 
   assign misc_mem_type =
     instruction_opcode == OPCODE_MISC_MEM;
-  
+
   // Instruction detection
 
   assign addi =
@@ -698,7 +750,7 @@ module rvsteel_core #(
     instruction_funct3 == FUNCT3_ADD &
     instruction_funct7 == FUNCT7_ADD;
 
-  assign sub = 
+  assign sub =
     op_type &
     instruction_funct3 == FUNCT3_SUB &
     instruction_funct7 == FUNCT7_SUB;
@@ -774,7 +826,7 @@ module rvsteel_core #(
 
   // Illegal instruction detection
 
-  assign illegal_store = 
+  assign illegal_store =
     store_type &
     (instruction_funct3[2] == 1'b1 ||
     instruction_funct3[1:0] == 2'b11);
@@ -807,11 +859,11 @@ module rvsteel_core #(
     ~(csrxxx | ecall | ebreak | mret);
 
   assign unknown_type =
-    ~(branch_type | jal_type | jalr_type | auipc_type | lui_type | load_type | store_type 
+    ~(branch_type | jal_type | jalr_type | auipc_type | lui_type | load_type | store_type
     | system_type | op_type | op_imm_type | misc_mem_type);
 
   assign illegal_instruction =
-    unknown_type | illegal_store | illegal_load | illegal_jalr | illegal_branch | illegal_op 
+    unknown_type | illegal_store | illegal_load | illegal_jalr | illegal_branch | illegal_op
     | illegal_op_imm | illegal_system;
 
   // Misaligned address detection
@@ -823,7 +875,7 @@ module rvsteel_core #(
   assign misaligned_half =
     instruction_funct3[1:0] == 2'b01 &
     target_address_adder[0];
-    
+
   assign misaligned =
     misaligned_word | misaligned_half;
 
@@ -866,7 +918,7 @@ module rvsteel_core #(
     lui_type | auipc_type | jalr_type | jal_type | op_type | op_imm_type | load_type | csrxxx;
 
   assign csr_file_write_request =
-    csrxxx;  
+    csrxxx;
 
   assign csr_operation = instruction_funct3;
 
@@ -903,11 +955,11 @@ module rvsteel_core #(
     else
       immediate_type = I_TYPE_IMMEDIATE;
   end
-    
+
   //-----------------------------------------------------------------------------------------------//
   // Immediate generation                                                                          //
   //-----------------------------------------------------------------------------------------------//
-   
+
   assign immediate_sign_extension = {
     20 {instruction[31]}
   };
@@ -948,9 +1000,9 @@ module rvsteel_core #(
     27'b0,
     instruction[19:15]
   };
-  
+
   always @(*) begin : immediate_mux
-    case (immediate_type) 
+    case (immediate_type)
       I_TYPE_IMMEDIATE:
         immediate = immediate_i_type;
       S_TYPE_IMMEDIATE:
@@ -967,17 +1019,17 @@ module rvsteel_core #(
         immediate = immediate_i_type;
     endcase
   end
-    
+
   //-----------------------------------------------------------------------------------------------//
   // Take branch decision                                                                          //
   //-----------------------------------------------------------------------------------------------//
-    
+
   assign is_branch =
     branch_type & !illegal_branch;
 
   assign is_jump =
     jal_type | (jalr_type & !illegal_jalr);
-    
+
   assign is_equal =
     rs1_data == rs2_data;
 
@@ -986,14 +1038,14 @@ module rvsteel_core #(
 
   assign is_less_than_unsigned =
     rs1_data < rs2_data;
-    
+
   assign is_less_than =
     rs1_data[31] ^ rs2_data[31] ?
     rs1_data[31] :
     is_less_than_unsigned;
 
   assign is_greater_or_equal_than =
-    !is_less_than;  
+    !is_less_than;
 
   assign is_greater_or_equal_than_unsigned =
     !is_less_than_unsigned;
@@ -1023,7 +1075,7 @@ module rvsteel_core #(
           1'b0;
       endcase
   end
-  
+
   assign take_branch =
     (is_jump == 1'b1) ?
     1'b1 :
@@ -1050,7 +1102,7 @@ module rvsteel_core #(
     instruction_rs1_address == 5'b00000 ?
     32'h00000000 :
     integer_file[instruction_rs1_address];
-  
+
   assign rs2_data =
     instruction_rs2_address == 5'b00000 ?
     32'h00000000 :
@@ -1067,7 +1119,7 @@ module rvsteel_core #(
     (csr_mie_meie & csr_mip_meip) |
     (csr_mie_mtie & csr_mip_mtip) |
     (csr_mie_msie & csr_mip_msip);
-  
+
   assign exception_pending =
     illegal_instruction |
     misaligned_load |
@@ -1084,7 +1136,7 @@ module rvsteel_core #(
     case (current_state)
       STATE_RESET:
         next_state = STATE_OPERATING;
-      STATE_OPERATING: 
+      STATE_OPERATING:
         if(take_trap)
           next_state = STATE_TRAP_TAKEN;
         else if(mret)
@@ -1099,7 +1151,7 @@ module rvsteel_core #(
         next_state = STATE_OPERATING;
     endcase
   end
-  
+
   always @(posedge clock) begin : m_mode_fsm_current_state_register
     if(reset_internal)
       current_state <= STATE_RESET;
@@ -1125,7 +1177,7 @@ module rvsteel_core #(
   assign irq_external_response =
     (current_state    == STATE_TRAP_TAKEN) &&
     (csr_mcause_code  == 4'b1011);
-  
+
   assign irq_timer_response =
     (current_state    == STATE_TRAP_TAKEN) &&
     (csr_mcause_code  == 4'b0111);
@@ -1159,7 +1211,7 @@ module rvsteel_core #(
   always @* begin : csr_data_out_mux
     case (instruction_csr_address)
       MARCHID:       csr_data_out = 32'h00000018; // RISC-V Steel microarchitecture ID
-      MIMPID:        csr_data_out = 32'h00000006; // Version 6 
+      MIMPID:        csr_data_out = 32'h00000006; // Version 6
       CYCLE:         csr_data_out = csr_mcycle    [31:0 ];
       CYCLEH:        csr_data_out = csr_mcycle    [63:32];
       TIME:          csr_data_out = csr_utime     [31:0 ];
@@ -1203,7 +1255,7 @@ module rvsteel_core #(
     csr_mstatus_mie,    // M-mode Global Interrupt Enable
     3'b000
   };
-  
+
   always @(posedge clock) begin : mstatus_csr_fields_update
     if(reset_internal) begin
       csr_mstatus_mie   <= 1'b0;
@@ -1221,7 +1273,7 @@ module rvsteel_core #(
       else if(current_state == STATE_OPERATING && instruction_csr_address == MSTATUS && csr_file_write_enable) begin
         csr_mstatus_mie   <= csr_write_data[3];
         csr_mstatus_mpie  <= csr_write_data[7];
-      end    
+      end
     end
   end
 
@@ -1245,13 +1297,13 @@ module rvsteel_core #(
       csr_mie_mtie <= 1'b0;
       csr_mie_msie <= 1'b0;
     end
-    else if(clock_enable & instruction_csr_address == MIE && csr_file_write_enable) begin            
+    else if(clock_enable & instruction_csr_address == MIE && csr_file_write_enable) begin
       csr_mie_meie <= csr_write_data[11];
       csr_mie_mtie <= csr_write_data[7];
       csr_mie_msie <= csr_write_data[3];
     end
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // mip : M-mode Interrupt Pending                                                              //
   //---------------------------------------------------------------------------------------------//
@@ -1278,7 +1330,7 @@ module rvsteel_core #(
       csr_mip_msip <= irq_software;
     end
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // mepc : M-mode Exception Program Counter register                                            //
   //---------------------------------------------------------------------------------------------//
@@ -1291,9 +1343,9 @@ module rvsteel_core #(
         csr_mepc <= program_counter;
       else if(current_state == STATE_OPERATING && instruction_csr_address == MEPC && csr_file_write_enable)
         csr_mepc <= {csr_write_data[31:2], 2'b00};
-    end    
+    end
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // mscratch : M-mode Scratch register                                                          //
   //---------------------------------------------------------------------------------------------//
@@ -1304,7 +1356,7 @@ module rvsteel_core #(
     else if(clock_enable & instruction_csr_address == MSCRATCH && csr_file_write_enable)
       csr_mscratch <= csr_write_data;
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // mcycle : M-mode Cycle Counter register                                                      //
   //---------------------------------------------------------------------------------------------//
@@ -1312,16 +1364,16 @@ module rvsteel_core #(
   always @(posedge clock) begin : mcycle_implementation
     if (reset_internal)
       csr_mcycle <= 64'b0;
-    else begin 
+    else begin
       if (clock_enable & instruction_csr_address == MCYCLE && csr_file_write_enable)
         csr_mcycle <= {csr_mcycle[63:32], csr_write_data} + 1;
       else if (clock_enable & instruction_csr_address == MCYCLEH && csr_file_write_enable)
         csr_mcycle <= {csr_write_data, csr_mcycle[31:0]} + 1;
       else
-        csr_mcycle <= csr_mcycle + 1;      
+        csr_mcycle <= csr_mcycle + 1;
     end
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // minstret : M-mode Instruction Retired Counter register                                      //
   //---------------------------------------------------------------------------------------------//
@@ -1329,7 +1381,7 @@ module rvsteel_core #(
   always @(posedge clock) begin : minstret_implementation
     if (reset_internal)
       csr_minstret  <= 64'b0;
-    else if (clock_enable) begin 
+    else if (clock_enable) begin
       if (instruction_csr_address == MINSTRET && csr_file_write_enable) begin
         if (current_state == STATE_OPERATING)
           csr_minstret <= {csr_minstret[63:32], csr_write_data} + 1;
@@ -1347,10 +1399,10 @@ module rvsteel_core #(
           csr_minstret <= csr_minstret + 1;
         else
           csr_minstret <= csr_minstret;
-      end      
+      end
     end
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // utime : Time register (Read-only shadow of mtime)                                           //
   //---------------------------------------------------------------------------------------------//
@@ -1358,18 +1410,18 @@ module rvsteel_core #(
   always @(posedge clock) begin : utime_csr_implementation
     csr_utime <= real_time_clock;
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // mcause : M-mode Trap Cause register                                                         //
   //---------------------------------------------------------------------------------------------//
 
   always @(posedge clock) begin : mcause_implementation
-    if(reset_internal) 
+    if(reset_internal)
       csr_mcause <= 32'h00000000;
     else if (clock_enable) begin
       if(current_state == STATE_TRAP_TAKEN)
         csr_mcause <= {csr_mcause_interrupt_flag, 27'b0, csr_mcause_code};
-      else if(current_state == STATE_OPERATING && instruction_csr_address == MCAUSE && csr_file_write_enable) 
+      else if(current_state == STATE_OPERATING && instruction_csr_address == MCAUSE && csr_file_write_enable)
         csr_mcause <= csr_write_data;
     end
   end
@@ -1379,7 +1431,7 @@ module rvsteel_core #(
       csr_mcause_code           <= 4'b0;
       csr_mcause_interrupt_flag <= 1'b0;
     end
-    if(clock_enable & current_state == STATE_OPERATING) begin 
+    if(clock_enable & current_state == STATE_OPERATING) begin
       if(illegal_instruction) begin
         csr_mcause_code           <= 4'b0010;
         csr_mcause_interrupt_flag <= 1'b0;
@@ -1416,9 +1468,9 @@ module rvsteel_core #(
         csr_mcause_code           <= 4'b0011;
         csr_mcause_interrupt_flag <= 1'b1;
       end
-    end        
+    end
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // mtval : M-mode Trap Value                                                                   //
   //---------------------------------------------------------------------------------------------//
@@ -1427,7 +1479,7 @@ module rvsteel_core #(
     misaligned_load | misaligned_store | misaligned_instruction_address;
 
   always @(posedge clock) begin : mtval_implementation
-    if(reset_internal) 
+    if(reset_internal)
       csr_mtval <= 32'h00000000;
     else if (clock_enable) begin
       if(take_trap) begin
@@ -1438,19 +1490,19 @@ module rvsteel_core #(
         else
           csr_mtval <= 32'h00000000;
       end
-      else if(current_state == STATE_OPERATING && instruction_csr_address == MTVAL && csr_file_write_enable) 
+      else if(current_state == STATE_OPERATING && instruction_csr_address == MTVAL && csr_file_write_enable)
         csr_mtval <= csr_write_data;
     end
   end
-  
+
   //---------------------------------------------------------------------------------------------//
   // mtvec : M-mode Trap Vector Address register                                                 //
   //---------------------------------------------------------------------------------------------//
- 
-  assign interrupt_address_offset =
-    csr_mcause_code << 2;
 
-  assign trap_address = 
+  assign interrupt_address_offset =
+    {{26{1'b0}}, csr_mcause_code, 2'b00};
+
+  assign trap_address =
     csr_mtvec[1:0] == 2'b01 && csr_mcause_interrupt_flag ?
     {csr_mtvec[31:2], 2'b00} + interrupt_address_offset :
     {csr_mtvec[31:2], 2'b00};
@@ -1481,7 +1533,7 @@ module rvsteel_core #(
   //-----------------------------------------------------------------------------------------------//
   // Load data logic                                                                               //
   //-----------------------------------------------------------------------------------------------//
-    
+
   always @* begin : load_size_mux
     case (load_size)
       LOAD_SIZE_BYTE:
@@ -1494,9 +1546,9 @@ module rvsteel_core #(
         load_data = read_data;
     endcase
   end
-    
+
   always @* begin : load_byte_data_mux
-    case (target_address_adder[1:0])    
+    case (target_address_adder[1:0])
       2'b00:
         load_byte_data = read_data[7:0];
       2'b01:
@@ -1507,7 +1559,7 @@ module rvsteel_core #(
         load_byte_data = read_data[31:24];
     endcase
   end
-    
+
   always @* begin : load_half_data_mux
     case (target_address_adder[1])
       1'b0:
@@ -1516,46 +1568,46 @@ module rvsteel_core #(
         load_half_data = read_data[31:16];
     endcase
   end
-    
+
   assign load_byte_upper_bits =
     load_unsigned == 1'b1 ?
     24'b0 :
     {24{load_byte_data[7]}};
-  
+
   assign load_half_upper_bits =
     load_unsigned == 1'b1 ?
     16'b0 :
     {16{load_half_data[15]}};
-    
+
   //-----------------------------------------------------------------------------------------------//
   // Arithmetic and Logic Unit                                                                     //
   //-----------------------------------------------------------------------------------------------//
-  
+
   assign alu_2nd_operand =
     alu_2nd_operand_source ?
     rs2_data :
     immediate;
 
-  assign alu_minus_2nd_operand = 
+  assign alu_minus_2nd_operand =
     - alu_2nd_operand;
 
-  assign alu_adder_2nd_operand_mux = 
+  assign alu_adder_2nd_operand_mux =
     alu_operation_code[3] == 1'b1 ?
-    alu_minus_2nd_operand : 
+    alu_minus_2nd_operand :
     alu_2nd_operand;
 
-  assign alu_sra_result = 
+  assign alu_sra_result =
     $signed(rs1_data) >>> alu_2nd_operand[4:0];
 
-  assign alu_srl_result = 
+  assign alu_srl_result =
     rs1_data >> alu_2nd_operand[4:0];
 
-  assign alu_shift_right_mux = 
+  assign alu_shift_right_mux =
     alu_operation_code[3] == 1'b1 ?
-    alu_sra_result : 
+    alu_sra_result :
     alu_srl_result;
 
-  assign alu_sltu_result = 
+  assign alu_sltu_result =
     rs1_data < alu_2nd_operand;
 
   assign alu_slt_result =
@@ -1571,25 +1623,25 @@ module rvsteel_core #(
       FUNCT3_SRL:
         alu_output =
           alu_shift_right_mux;
-      FUNCT3_OR: 
-        alu_output = 
+      FUNCT3_OR:
+        alu_output =
           rs1_data | alu_2nd_operand;
-      FUNCT3_AND: 
-        alu_output = 
-          rs1_data & alu_2nd_operand;            
-      FUNCT3_XOR: 
-        alu_output = 
+      FUNCT3_AND:
+        alu_output =
+          rs1_data & alu_2nd_operand;
+      FUNCT3_XOR:
+        alu_output =
           rs1_data ^ alu_2nd_operand;
-      FUNCT3_SLT: 
-        alu_output = 
+      FUNCT3_SLT:
+        alu_output =
           {31'b0, alu_slt_result};
-      FUNCT3_SLTU: 
-        alu_output = 
+      FUNCT3_SLTU:
+        alu_output =
           {31'b0, alu_sltu_result};
-      FUNCT3_SLL: 
-        alu_output = 
+      FUNCT3_SLL:
+        alu_output =
           rs1_data << alu_2nd_operand[4:0];
     endcase
   end
-    
+
 endmodule
