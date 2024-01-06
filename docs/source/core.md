@@ -10,7 +10,7 @@ RISC-V Steel Processor Core can run real-time operating systems and bare-metal e
 
 ## Source files
 
-RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in the `riscv-steel/ip/core/` folder.
+RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in the `ip/core/` folder.
 
 ## I/O signals
 

@@ -54,21 +54,35 @@ A list of available serial ports will follow. Select the port your board is conn
 
 Open **AMD Xilinx Vivado** and follow the steps:
 
-1. Click on **Open Hardware Manager** in the **Flow** menu.
+1. Click **Run Tcl Script** in the **Tools** menu.
 
-2. Click on **Auto Connect** in the **Tools** menu.
+2. Search for `create-project-XXX.tcl` and click **Ok**. `XXX` stands for your board name.
 
-3. The hardware box will show the name of your device, either **xc7a35t_0** or **xc7a100t_0**
+    This file is located at `hello-world/XXX/`.
 
-4. Right-click on your device name and next on **Program Device**.
+    Running this script will create a new Vivado project for your FPGA board with the Hello World demo.
+    
+    To save your time, we provide a precompiled bitstream to program the FPGA in the same directory as the script.
+    
+    Generating the bitstream might be a bit slow. If you want to generate it anyway click **Generate Bitstream** in the **Flow** menu.
 
-5. A dialog box asking you to provide the bitstream programming file will open.
+3. Click **Open Hardware Manager** in the **Flow** menu.
 
-6. Search for `hello_world_<board-name>.bit`.
+4. Click **Auto Connect** in the **Tools** menu.
 
-    This file is located at `riscv-steel/hello-world/<board-name>/`.
+5. The hardware box will show the name of your device.
 
-7. Click on **Program** and wait for Vivado to finish programming the FPGA.
+6. Right-click on your device name and next on **Program Device**.
+
+7. A dialog box asking you to provide the bitstream will open.
+
+8. Search for `hello_world_XXX.bit`.
+
+    This file is located at `hello-world/XXX/`.
+
+    In case you generated the bitstream yourself you can find it at `hello-world/XXX/hello-world-XXX/hello-world-XXX.runs/impl_1`.
+
+9. Click on **Program** and wait for Vivado to finish programming the FPGA.
 
 Now go back to PySerial terminal window. You should see the message below:
 
