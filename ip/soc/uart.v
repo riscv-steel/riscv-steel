@@ -28,11 +28,11 @@ SOFTWARE.
 
 Project Name:  RISC-V Steel System-on-Chip - UART
 Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada 
+Author:        Rafael Calcada
 E-mail:        rafaelcalcada@gmail.com
 
 Top Module:    uart
- 
+
 **************************************************************************************************/
 
 /**************************************************************************************************
@@ -40,7 +40,7 @@ Top Module:    uart
   - This UART module works with 8 data bits, 1 stop bit, no parity bit and no flow control signals
   - It only partially implements AXI4 Slave Interface requirements
   - The baud rate can be adjusted to any value as long as the following condition is satisfied:
-    
+
     CLOCK_FREQUENCY / UART_BAUD_RATE > 50        (clock cycles per baud)
 
 **************************************************************************************************/
@@ -75,11 +75,11 @@ module uart #(
 
   output  reg           uart_irq,
   input   wire          uart_irq_response
-    
+
   );
 
   localparam CYCLES_PER_BAUD = CLOCK_FREQUENCY / UART_BAUD_RATE;
-  
+
   reg [31:0] tx_cycle_counter = 0;
   reg [31:0] rx_cycle_counter = 0;
   reg [3:0]  tx_bit_counter;
@@ -96,9 +96,9 @@ module uart #(
     reset_reg <= reset;
 
   assign reset_internal = reset | reset_reg;
-  
+
   assign uart_tx = tx_register[0];
-  
+
   always @(posedge clock) begin
     if (reset_internal) begin
       tx_cycle_counter <= 0;
@@ -125,7 +125,7 @@ module uart #(
       end
     end
   end
-  
+
   always @(posedge clock) begin
     if (reset_internal) begin
       rx_cycle_counter <= 0;
@@ -181,7 +181,7 @@ module uart #(
         end
       end
     end
-    else begin      
+    else begin
       if (rx_cycle_counter < CYCLES_PER_BAUD) begin
         rx_cycle_counter <= rx_cycle_counter + 1;
         rx_register <= rx_register;
@@ -222,5 +222,5 @@ module uart #(
     else
       read_data <= 32'h00000000;
   end
-  
+
 endmodule

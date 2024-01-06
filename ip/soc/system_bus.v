@@ -28,11 +28,11 @@ SOFTWARE.
 
 Project Name:  RISC-V Steel System-on-Chip - System Bus
 Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada 
+Author:        Rafael Calcada
 E-mail:        rafaelcalcada@gmail.com
 
 Top Module:    system_bus
- 
+
 **************************************************************************************************/
 
 module system_bus #(
@@ -46,10 +46,10 @@ module system_bus #(
 
   parameter DEVICE2_START_ADDRESS = 32'hdeadbeef,
   parameter DEVICE2_FINAL_ADDRESS = 32'hdeadbeef,
-  
+
   parameter DEVICE3_START_ADDRESS = 32'hdeadbeef,
   parameter DEVICE3_FINAL_ADDRESS = 32'hdeadbeef
-  
+
   */
 
   )(
@@ -67,7 +67,7 @@ module system_bus #(
   input   wire  [3:0 ]  write_strobe,
   input   wire          write_request,
   output  reg           write_response,
-  
+
   // Device #0
 
   output  wire  [31:0]  device0_rw_address,
@@ -113,7 +113,7 @@ module system_bus #(
   output  wire  [3:0 ]  device3_write_strobe,
   output  wire          device3_write_request,
   input   wire          device3_write_response
-  
+
   */
 
   );
@@ -150,21 +150,21 @@ module system_bus #(
   assign reset_internal = reset | reset_reg;
 
   assign device0_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE0_START_ADDRESS) && 
+    $unsigned(rw_address) >= $unsigned(DEVICE0_START_ADDRESS) &&
     $unsigned(rw_address) <= $unsigned(DEVICE0_FINAL_ADDRESS);
-  
+
   assign device1_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE1_START_ADDRESS) && 
+    $unsigned(rw_address) >= $unsigned(DEVICE1_START_ADDRESS) &&
     $unsigned(rw_address) <= $unsigned(DEVICE1_FINAL_ADDRESS);
 
   /* Uncomment to add new devices
 
   assign device2_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE2_START_ADDRESS) && 
+    $unsigned(rw_address) >= $unsigned(DEVICE2_START_ADDRESS) &&
     $unsigned(rw_address) <= $unsigned(DEVICE2_FINAL_ADDRESS);
-  
+
   assign device3_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE3_START_ADDRESS) && 
+    $unsigned(rw_address) >= $unsigned(DEVICE3_START_ADDRESS) &&
     $unsigned(rw_address) <= $unsigned(DEVICE3_FINAL_ADDRESS);
 
   */
@@ -261,7 +261,7 @@ module system_bus #(
         read_data       <= device3_read_data;
         read_response   <= device3_read_response;
       end
-      
+
       */
 
     endcase

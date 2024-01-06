@@ -28,23 +28,23 @@ SOFTWARE.
 
 Project Name:  RISC-V Steel System-on-Chip - Random Access Memory
 Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada 
+Author:        Rafael Calcada
 E-mail:        rafaelcalcada@gmail.com
 
 Top Module:    ram_memory
- 
+
 **************************************************************************************************/
 
 module ram_memory #(
 
   // Memory size in bytes
   parameter MEMORY_SIZE      = 8192,
-  
+
   // File with program and data
   parameter MEMORY_INIT_FILE = ""
 
   ) (
-  
+
   // Global signals
 
   input   wire          clock,
@@ -66,26 +66,26 @@ module ram_memory #(
   wire                        reset_internal;
   wire [31:0]                 effective_address;
   wire                        invalid_address;
-  
+
   reg                         reset_reg;
   reg [31:0]                  ram [0:(MEMORY_SIZE/4)-1];
-  
+
   always @(posedge clock)
     reset_reg <= reset;
 
   assign reset_internal = reset | reset_reg;
   assign invalid_address = $unsigned(rw_address) >= $unsigned(MEMORY_SIZE);
 
-  integer i;  
+  integer i;
   initial begin
     for (i = 0; i < MEMORY_SIZE/4; i = i + 1) ram[i] = 32'h00000000;
-    if (MEMORY_INIT_FILE != "")      
+    if (MEMORY_INIT_FILE != "")
       $readmemh(MEMORY_INIT_FILE,ram);
   end
 
   assign effective_address =
     $unsigned(rw_address[31:0] >> 2);
-  
+
   always @(posedge clock) begin
     if (reset_internal | invalid_address)
       read_data <= 32'h00000000;
@@ -116,5 +116,5 @@ module ram_memory #(
       write_response <= write_request;
     end
   end
-  
+
 endmodule

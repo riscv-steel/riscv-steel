@@ -28,11 +28,11 @@ SOFTWARE.
 
 Project Name:  RISC-V Steel System-on-Chip
 Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada 
+Author:        Rafael Calcada
 E-mail:        rafaelcalcada@gmail.com
 
 Top Module:    rvsteel_soc
- 
+
 **************************************************************************************************/
 
 module rvsteel_soc #(
@@ -44,7 +44,7 @@ module rvsteel_soc #(
   parameter UART_BAUD_RATE = 9600,
 
   // Memory size in bytes - must be a multiple of 32
-  parameter MEMORY_SIZE = 8192,  
+  parameter MEMORY_SIZE = 8192,
 
   // Text file with program and data (one hex value per line)
   parameter MEMORY_INIT_FILE = "",
@@ -61,7 +61,7 @@ module rvsteel_soc #(
   output  wire  uart_tx
 
   );
-  
+
   wire          irq_external;
   wire          irq_external_response;
 
@@ -75,7 +75,7 @@ module rvsteel_soc #(
   wire  [3:0 ]  write_strobe;
   wire          write_request;
   wire          write_response;
-  
+
   // RAM Memory (Device #0) <=> System Bus
 
   wire  [31:0]  device0_rw_address;
@@ -86,7 +86,7 @@ module rvsteel_soc #(
   wire  [3:0 ]  device0_write_strobe;
   wire          device0_write_request;
   wire          device0_write_response;
-  
+
   // UART (Device #1) <=> System Bus
 
   wire  [31:0]  device1_rw_address;
@@ -133,7 +133,7 @@ module rvsteel_soc #(
     // Global signals
 
     .clock                          (clock                              ),
-    .reset                          (reset                              ),    
+    .reset                          (reset                              ),
     .halt                           (halt                               ),
 
     // IO interface
@@ -161,7 +161,7 @@ module rvsteel_soc #(
     .real_time_clock                (0)  // unused
 
   );
-  
+
   system_bus #(
 
     .DEVICE0_START_ADDRESS          (32'h00000000                       ),
@@ -179,7 +179,7 @@ module rvsteel_soc #(
     */
 
   ) system_bus_instance (
-  
+
     .clock                          (clock                              ),
     .reset                          (reset                              ),
 
@@ -193,7 +193,7 @@ module rvsteel_soc #(
     .write_strobe                   (write_strobe                       ),
     .write_request                  (write_request                      ),
     .write_response                 (write_response                     ),
-    
+
     // RAM Memory (Device #0) <=> System Bus
 
     .device0_rw_address             (device0_rw_address                 ),
@@ -204,7 +204,7 @@ module rvsteel_soc #(
     .device0_write_strobe           (device0_write_strobe               ),
     .device0_write_request          (device0_write_request              ),
     .device0_write_response         (device0_write_response             ),
-    
+
     // UART (Device #1) <=> System Bus
 
     .device1_rw_address             (device1_rw_address                 ),
@@ -243,21 +243,21 @@ module rvsteel_soc #(
     */
 
   );
-  
+
   ram_memory #(
-  
+
     .MEMORY_SIZE                    (MEMORY_SIZE                        ),
     .MEMORY_INIT_FILE               (MEMORY_INIT_FILE                   )
-  
+
   ) ram_instance (
-  
+
     // Global signals
-  
+
     .clock                          (clock                              ),
     .reset                          (reset                              ),
-    
+
     // IO interface
-  
+
     .rw_address                     (device0_rw_address                 ),
     .read_data                      (device0_read_data                  ),
     .read_request                   (device0_read_request               ),
