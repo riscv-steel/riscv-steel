@@ -1,0 +1,9 @@
+`verilator_config
+lint_off -rule UNSIGNED
+lint_off -rule UNUSED -file "../../soc/ram_memory.v"
+
+public_flat -module "ram_memory" -var "ram"
+public_flat_rd -module "rvsteel_sim_verilator" -var "MEMORY_SIZE"
+public_flat_rd -module "rvsteel_sim_verilator" -var "rw_address"
+public_flat_rd -module "rvsteel_sim_verilator" -var "write_request"
+public_flat_rd -module "rvsteel_sim_verilator" -var "write_data"
