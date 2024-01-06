@@ -169,13 +169,13 @@ module system_bus #(
 
   */
 
-  assign device0_rw_address    = device0_valid_access ? rw_address    : 1'b0;
+  assign device0_rw_address    = device0_valid_access ? rw_address    : 32'b0;
   assign device0_write_data    = device0_valid_access ? write_data    : 32'h0;
   assign device0_write_strobe  = device0_valid_access ? write_strobe  : 4'h0;
   assign device0_read_request  = device0_valid_access ? read_request  : 1'b0;
   assign device0_write_request = device0_valid_access ? write_request : 1'b0;
 
-  assign device1_rw_address    = device1_valid_access ? rw_address    : 1'b0;
+  assign device1_rw_address    = device1_valid_access ? rw_address    : 32'b0;
   assign device1_write_data    = device1_valid_access ? write_data    : 32'h0;
   assign device1_write_strobe  = device1_valid_access ? write_strobe  : 4'h0;
   assign device1_read_request  = device1_valid_access ? read_request  : 1'b0;
