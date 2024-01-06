@@ -228,24 +228,24 @@ module system_bus #(
   always @* begin
     case (selected_response)
       default: begin
-        write_response  <= 1'b1;
-        read_data       <= 32'h00000000;
-        read_response   <= 2'b1;
+        write_response  = 1'b1;
+        read_data       = 32'h00000000;
+        read_response   = 2'b1;
       end
       RESET: begin
-        write_response  <= 1'b1;
-        read_data       <= 32'h00000000;
-        read_response   <= 2'b1;
+        write_response  = 1'b1;
+        read_data       = 32'h00000000;
+        read_response   = 2'b1;
       end
       DEVICE0: begin
-        write_response  <= device0_write_response;
-        read_data       <= device0_read_data;
-        read_response   <= device0_read_response;
+        write_response  = device0_write_response;
+        read_data       = device0_read_data;
+        read_response   = device0_read_response;
       end
       DEVICE1: begin
-        write_response  <= device1_write_response;
-        read_data       <= device1_read_data;
-        read_response   <= device1_read_response;
+        write_response  = device1_write_response;
+        read_data       = device1_read_data;
+        read_response   = device1_read_response;
       end
 
       /* Uncomment to add new devices
