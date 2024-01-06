@@ -19,8 +19,8 @@ RISC-V Steel Processor Core IP passed ALL unit tests from RISC-V Architectural T
 We provide a shell script to verilate and run the tests. Verilator version 5.0 or higher is required.
 
 ```bash
-chmod +x verilator/run.sh # give permissions to run this script
-./verilator/run.sh
+chmod +x run_verilator.sh # give permissions to run this script
+./run_verilator.sh
 ```
 
 ### Using AMD Xilinx Vivado
