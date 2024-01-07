@@ -109,8 +109,8 @@ void ram_init_h32(const char *path)
     file.open(path, std::ios::in);
 
     if (!file.is_open()) {
-        std::cout << "Error file opening error: " << path << std::endl;
-        std::exit(EXIT_SUCCESS);
+        std::cout << "Error file opening: " << path << std::endl;
+        std::exit(EXIT_FAILURE);
     }
 
     std::string line;
@@ -139,8 +139,8 @@ void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
     file.open(path, std::ios::out | std::ios::trunc);
 
     if (!file.is_open()) {
-        std::cout << "Error file opening error: " << path << std::endl;
-        std::exit(EXIT_SUCCESS);
+        std::cout << "Error file opening: " << path << std::endl;
+        std::exit(EXIT_FAILURE);
     }
 
     char buff[32];
@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
         // --cycles
         if (args.max_cycles) {
             if (clk_cur_cycles >= args.max_cycles) {
-                std::cout << "Exit: end cycles: " << std::endl;
+                std::cout << "Exit: end cycles" << std::endl;
                 close_trace();
                 std::exit(EXIT_SUCCESS);
             }
@@ -226,7 +226,7 @@ int main(int argc, char *argv[])
 
         // --wr-addr
         if (is_finished(args.wr_addr)) {
-            std::cout << "Exit: wr-addr, cycles: " << clk_cur_cycles << std::endl;
+            std::cout << "Exit: wr-addr" << std::endl;
 
             // The beginning and end of signature are stored at
             uint32_t start_addr = get_signature(2047);
