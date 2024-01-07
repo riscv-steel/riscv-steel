@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 
             std::cout << "Signature size: " << size << std::endl;
 
-            if (args.ram_dump_h32) {
+            if (args.ram_dump_h32 and (size >= 4)) {
                 ram_dump_h32(args.ram_dump_h32, start_addr, size);
             }
 
