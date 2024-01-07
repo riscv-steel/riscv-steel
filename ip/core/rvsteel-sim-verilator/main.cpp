@@ -16,6 +16,7 @@ SPDX-License-Identifier: MIT
 
 
 #include <verilated_vcd_c.h>
+#include <verilated_fst_c.h>
 
 #include "Vrvsteel_sim_verilator.h"
 #include "Vrvsteel_sim_verilator___024root.h"
@@ -24,12 +25,13 @@ SPDX-License-Identifier: MIT
 
 
 using Dut = Vrvsteel_sim_verilator;
-using Trace = VerilatedVcdC;
+using Trace = VerilatedFstC;
 
 
 
-vluint64_t vtime = 0;
-vluint64_t clock_cycles = 10;
+vluint64_t trace_time = 0;
+vluint64_t clk_cur_cycles = 0;
+vluint64_t clk_half_cycles = 2;
 Dut *dut = new Dut;
 Trace *trace = new Trace;
 
@@ -49,41 +51,33 @@ static void open_trace(const char *out_wave_path)
 static void close_trace()
 {
     if (trace->isOpen()) {
-        trace->dump(vtime);
+        trace->dump(trace_time);
         trace->close();
     }
 }
 
 
 
-static bool clk()
+static void clk()
 {
     static vluint64_t interval = 0;
 
-    if (vtime == interval) {
+    if (trace_time >= interval) {
         dut->clock_i ^= 1;
-        interval = vtime + clock_cycles;
-        return true;
+        interval = trace_time + clk_half_cycles;
+        clk_cur_cycles += dut->clock_i & 0x1;
     }
-
-    return true;
 }
 
 
 
-static uint32_t eval(vluint64_t value=1)
+static void eval(vluint64_t cycles_cnt=1)
 {
-    uint32_t num_clk = 0;
-
-    while (value--) {
-        if (clk()) {
-            num_clk++;
-        }
+    while (cycles_cnt--) {
+        clk();
         dut->eval();
-        trace->dump(vtime++);
+        trace->dump(trace_time++);
     }
-
-    return num_clk;
 }
 
 
@@ -149,7 +143,7 @@ void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
         std::exit(EXIT_SUCCESS);
     }
 
-    char buff[256];
+    char buff[32];
 
     // In words
     offset /= 4;
@@ -218,13 +212,13 @@ int main(int argc, char *argv[])
         ram_init_h32(args.ram_init_h32);
     }
 
-    uint32_t cycles = 0;
-
     while (true) {
+        eval();
+
         // --cycles
-        if (args.number_cycles) {
-            if (cycles >= args.number_cycles) {
-                std::cout << "Exit: end cycles: " << cycles << std::endl;
+        if (args.max_cycles) {
+            if (clk_cur_cycles >= args.max_cycles) {
+                std::cout << "Exit: end cycles: " << std::endl;
                 close_trace();
                 std::exit(EXIT_SUCCESS);
             }
@@ -232,7 +226,7 @@ int main(int argc, char *argv[])
 
         // --wr-addr
         if (is_finished(args.wr_addr)) {
-            std::cout << "Exit: wr-addr, cycles: " << cycles << std::endl;
+            std::cout << "Exit: wr-addr, cycles: " << clk_cur_cycles << std::endl;
 
             // The beginning and end of signature are stored at
             uint32_t start_addr = get_signature(2047);
@@ -253,7 +247,5 @@ int main(int argc, char *argv[])
         if (is_host_out(args.host_out)) {
             std::cout << (char)dut->rootp->rvsteel_sim_verilator__DOT__write_data;
         }
-
-        cycles += eval();
     }
 }

@@ -115,8 +115,8 @@ Args parser(int argc, char *argv[])
                 break;
 
             case opts::cmd_cycles:
-                args.number_cycles = get_int_arg(optarg);
-                std::cout << "Max cycles: " << args.number_cycles << std::endl;
+                args.max_cycles = get_int_arg(optarg);
+                std::cout << "Max cycles: " << args.max_cycles << std::endl;
                 break;
 
             case opts::cmd_wr_addr:
