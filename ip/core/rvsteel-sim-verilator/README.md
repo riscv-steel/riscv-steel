@@ -10,7 +10,7 @@ Available commands:
 
   - **--out-wave**
 
-    If specified, saves the trace file in `*.vcd` format. By default, no tracing is performed.
+    If specified, saves the trace file in `*.fst` format. By default, no tracing is performed.
 
   - **--ram-init-h32**
 

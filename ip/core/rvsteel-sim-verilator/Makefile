@@ -16,7 +16,7 @@ endif
 
 
 default:
-	$(VERILATOR) -f vargs.vc -cc --exe --build --trace --Wall --default-language "1364-2001" rvsteel_sim_verilator.v vcfg.vlt main.cpp argparse.cpp
+	$(VERILATOR) -f vargs.vc --trace-fst -cc --exe --build --trace rvsteel_sim_verilator.v vcfg.vlt main.cpp argparse.cpp
 
 
 
