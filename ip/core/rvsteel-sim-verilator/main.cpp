@@ -123,7 +123,7 @@ void ram_init_h32(const char *path)
             uint32_t data = std::stoul(line, nullptr, 16);
             dut->rootp->rvsteel_sim_verilator__DOT__ram_instance__DOT__ram[i] = data;
         } else {
-            break;
+            dut->rootp->rvsteel_sim_verilator__DOT__ram_instance__DOT__ram[i] = 0xdeadbeef;
         }
     }
 
