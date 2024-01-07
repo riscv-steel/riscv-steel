@@ -23,6 +23,17 @@ chmod +x run_verilator.sh # give permissions to run this script
 ./run_verilator.sh
 ```
 
+### Using Verilator and Python
+
+Additional option for unit testing using `rvsteel_sim_verilator` and dump comparison using the `rvsteel_core_unit_tests.py` script
+
+```
+python rvsteel_core_unit_tests.py
+```
+
+> Before running `rvsteel_core_unit_tests.py` make sure you have the `rvsteel_sim_verilator` build
+
+
 ### Using AMD Xilinx Vivado
 
 * Open **AMD Xilinx Vivado**
