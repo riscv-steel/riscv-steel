@@ -87,14 +87,17 @@ def check_file(path: str):
     return True
 
 
-def run_sim(prog: str, sim: str, dump: str, log: str):
-    args = [f'{sim}',
-            f'--ram-init-h32={prog}',
-            f'--ram-dump-h32={dump}',
+def run_sim(sim_path: str, prog_dir: str, prog_name: str, dump_dir: str, wave: bool):
+    args = [f'{sim_path}',
+            f'--ram-init-h32={prog_dir}/{prog_name}',
+            f'--ram-dump-h32={dump_dir}/{prog_name}',
             f'--cycles={500000}',
             f'--wr-addr={0x00001000}']
 
-    with open(log, 'w') as fd:
+    if wave:
+        args.append(f'--out-wave={dump_dir}/{prog_name}.fst')
+
+    with open(f'{dump_dir}/{prog_name}.log', 'w') as fd:
         subprocess.run(args, stdout=fd)
 
 
@@ -119,56 +122,80 @@ def compare_dump(ref: str, dut: str):
 
 
 def main(argv=None):
-    sim_path = '../rvsteel-sim-verilator/obj_dir/rvsteel_sim_verilator'
-    sim_dump_dir = 'dump'
+    if argv is None:
+        argv = sys.argv[1:]
 
-    if not check_file(sim_path):
-        print_status(scolor.NORMAL, f'Please build file: {sim_path}')
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    if not os.path.exists(sim_dump_dir):
-        os.makedirs(sim_dump_dir)
+    parser.add_argument('--sim',
+                        type=str,
+                        default='../rvsteel-sim-verilator/obj_dir/rvsteel_sim_verilator',
+                        help='Path to the simulator')
+
+    parser.add_argument('--dump',
+                        type=str,
+                        default='dump',
+                        help='Dump directory')
+
+    parser.add_argument('--wave',
+                        action='store_true',
+                        help='Enable gen wave *.fst')
+
+    args = parser.parse_args(argv)
+
+    if not check_file(args.sim):
+        print_status(scolor.NORMAL, f'Please build file: {args.sim}')
+        return
+
+    if not os.path.exists(args.dump):
+        os.makedirs(args.dump)
 
     passed = 0
     skipped = 0
     failed = 0
 
     for item in unit_test:
-        prog_name = item[prg_index]
+        prog_path = item[prg_index]
+        ref_path = item[ref_index]
+        is_run = item[run_index]
 
-        if not check_file(prog_name):
+        if not check_file(prog_path):
             continue
 
-        if not item[run_index]:
+        if not is_run:
             skipped += 1
-            print_status(scolor.SKIP, prog_name)
+            print_status(scolor.SKIP, prog_path)
             continue
 
-        sim_dump_path = f'{sim_dump_dir}/{Path(prog_name).stem}.dump.hex'
-        sim_log_path = f'{sim_dump_dir}/{Path(prog_name).stem}.log'
-        run_sim(prog=item[prg_index], sim=sim_path, dump=sim_dump_path, log=sim_log_path)
+        prog_dir = Path(prog_path).parent
+        prog_name = Path(prog_path).name
+        dump_path = f'{args.dump}/{prog_name}'
+        run_sim(sim_path=args.sim,
+                prog_dir=prog_dir,
+                prog_name=prog_name,
+                dump_dir=args.dump,
+                wave=args.wave)
 
-        if not check_file(item[ref_index]):
+        if not check_file(ref_path):
             continue
 
-        if not check_file(sim_dump_path):
+        if not check_file(dump_path):
             continue
 
-        result, line, ref, dut = compare_dump(ref=item[ref_index], dut=sim_dump_path)
+        result, line, ref, dut = compare_dump(ref=ref_path, dut=dump_path)
 
         if not result:
             failed +=1
-            print_status(scolor.FAIL, prog_name)
+            print_status(scolor.FAIL, prog_path)
             print_status(scolor.NORMAL, f'-- Signature at line {line} differs from golden reference.')
             print_status(scolor.NORMAL, f'-- Signature: {hex(dut)}. Golden reference: {hex(ref)}')
         else:
             passed += 1
-            print_status(scolor.PASS, prog_name)
+            print_status(scolor.PASS, prog_path)
 
     print_status(scolor.NORMAL, f'Total: passed {passed}, skipped {skipped}, failed {failed}')
 
 
 if __name__ == "__main__":
     main()
-
-
-
