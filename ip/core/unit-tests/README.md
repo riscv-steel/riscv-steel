@@ -31,6 +31,12 @@ Additional option for unit testing using `rvsteel_sim_verilator` and dump compar
 python rvsteel_core_unit_tests.py
 ```
 
+Available Arguments:
+
+```
+python rvsteel_core_unit_tests.py --help
+```
+
 > Before running `rvsteel_core_unit_tests.py` make sure you have the `rvsteel_sim_verilator` build.
 
 
