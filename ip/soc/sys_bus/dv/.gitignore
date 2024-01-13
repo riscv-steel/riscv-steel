@@ -1,0 +1,54 @@
+
+# Object files
+*.out
+*.o
+*.o.*
+*.ko
+*.obj
+*.elf
+*.d
+
+
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+
+
+
+# Binary files
+*.bin
+*.hex
+*.asm
+*.map
+*.dmp
+*.exe
+*.run
+
+
+# Temp files
+*.*~
+~*
+
+
+
+#Verilator
+**/obj_dir*/*
+*.vcd
+*.fst
+
+
+
+# Files that we don't want to ignore
+!.gitignore
