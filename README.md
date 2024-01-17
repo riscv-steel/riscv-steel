@@ -30,7 +30,7 @@ The [Getting Started Guide](https://riscv-steel.github.io/riscv-steel/getting-st
 
 ## License
 
-RISC-V Steel is distributed under the [MIT License](LICENSE.md).
+RISC-V Steel is distributed under the [MIT License](LICENSE.md). 
 
 ## Need help?
 
