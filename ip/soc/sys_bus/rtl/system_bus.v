@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 
 
-module sys_bus #
+module system_bus #
 (
   parameter NUM_DEVICE  = 'd3
 )
