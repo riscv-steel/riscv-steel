@@ -31,15 +31,15 @@ module soc_top #(
   output  wire  uart_tx
 
   );
-  
+
   // Divides the 100MHz board block by 2
   reg clock_50mhz;
-  initial clock_50mhz = 1'b0;  
+  initial clock_50mhz = 1'b0;
   always @(posedge clock) clock_50mhz <= !clock_50mhz;
-  
+
   // Buttons debouncing
   reg reset_debounced;
-  reg halt_debounced;  
+  reg halt_debounced;
   always @(posedge clock_50mhz) begin
     reset_debounced <= reset;
     halt_debounced <= halt;
@@ -122,11 +122,11 @@ module soc_top #(
 
   );
 
-  sys_bus #
+  system_bus #
   (
       .NUM_DEVICE(NUM_DEVICE)
   )
-  sys_bus_impl
+  system_bus_instance
   (
 
     .clock_i(clock_50mhz),
