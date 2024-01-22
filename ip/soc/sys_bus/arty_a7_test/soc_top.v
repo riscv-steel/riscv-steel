@@ -64,12 +64,12 @@ module soc_top #(
   wire          write_response;
 
   // Device
-  wire    [NUM_DEVICE*32-1:0] device_rw_address       ;
+  wire    [31:0]              device_rw_address       ;
   wire    [NUM_DEVICE*32-1:0] device_read_data        ;
   wire    [NUM_DEVICE-1:0]    device_read_request     ;
   wire    [NUM_DEVICE-1:0]    device_read_response    ;
-  wire    [NUM_DEVICE*32-1:0] device_write_data       ;
-  wire    [NUM_DEVICE*4-1:0]  device_write_strobe     ;
+  wire    [31:0]              device_write_data       ;
+  wire    [3:0 ]              device_write_strobe     ;
   wire    [NUM_DEVICE-1:0]    device_write_request    ;
   wire    [NUM_DEVICE-1:0]    device_write_response   ;
 
@@ -129,32 +129,32 @@ module soc_top #(
   system_bus_instance
   (
 
-    .clock_i(clock_50mhz),
-    .reset_i(reset_debounced),
+    .clock(clock_50mhz),
+    .reset(reset_debounced),
 
     // Host
-    .host_rw_address_i          (rw_address             ),
-    .host_read_data_o           (read_data              ),
-    .host_read_request_i        (read_request           ),
-    .host_read_response_o       (read_response          ),
-    .host_write_data_i          (write_data             ),
-    .host_write_strobe_i        (write_strobe           ),
-    .host_write_request_i       (write_request          ),
-    .host_write_response_o      (write_response         ),
+    .host_rw_address          (rw_address             ),
+    .host_read_data           (read_data              ),
+    .host_read_request        (read_request           ),
+    .host_read_response       (read_response          ),
+    .host_write_data          (write_data             ),
+    .host_write_strobe        (write_strobe           ),
+    .host_write_request       (write_request          ),
+    .host_write_response      (write_response         ),
 
     // Devices
-    .device_rw_address_o        (device_rw_address      ),
-    .device_read_data_i         (device_read_data       ),
-    .device_read_request_o      (device_read_request    ),
-    .device_read_response_i     (device_read_response   ),
-    .device_write_data_o        (device_write_data      ),
-    .device_write_strobe_o      (device_write_strobe    ),
-    .device_write_request_o     (device_write_request   ),
-    .device_write_response_i    (device_write_response  ),
+    .device_rw_address        (device_rw_address      ),
+    .device_read_data         (device_read_data       ),
+    .device_read_request      (device_read_request    ),
+    .device_read_response     (device_read_response   ),
+    .device_write_data        (device_write_data      ),
+    .device_write_strobe      (device_write_strobe    ),
+    .device_write_request     (device_write_request   ),
+    .device_write_response    (device_write_response  ),
 
     // Devices address base and mask
-    .addr_base                  (addr_base              ),
-    .addr_mask                  (addr_mask              )
+    .addr_base                (addr_base              ),
+    .addr_mask                (addr_mask              )
   );
 
   ram_memory #(
@@ -171,14 +171,14 @@ module soc_top #(
 
     // IO interface
 
-    .rw_address     (device_rw_address      [32*D_RAM +: 32]    ),
-    .read_data      (device_read_data       [32*D_RAM +: 32]    ),
-    .read_request   (device_read_request    [D_RAM]             ),
-    .read_response  (device_read_response   [D_RAM]             ),
-    .write_data     (device_write_data      [32*D_RAM +: 32]    ),
-    .write_strobe   (device_write_strobe    [4*D_RAM +: 4]      ),
-    .write_request  (device_write_request   [D_RAM]             ),
-    .write_response (device_write_response  [D_RAM]             )
+    .rw_address     (device_rw_address                        ),
+    .read_data      (device_read_data       [32*D_RAM +: 32]  ),
+    .read_request   (device_read_request    [D_RAM]           ),
+    .read_response  (device_read_response   [D_RAM]           ),
+    .write_data     (device_write_data                        ),
+    .write_strobe   (device_write_strobe                      ),
+    .write_request  (device_write_request   [D_RAM]           ),
+    .write_response (device_write_response  [D_RAM]           )
 
   );
 
@@ -196,11 +196,11 @@ module soc_top #(
 
     // IO interface
 
-    .rw_address     (device_rw_address      [32*D_UART +: 32]    ),
+    .rw_address     (device_rw_address                           ),
     .read_data      (device_read_data       [32*D_UART +: 32]    ),
     .read_request   (device_read_request    [D_UART]             ),
     .read_response  (device_read_response   [D_UART]             ),
-    .write_data     (device_write_data      [32*D_UART +: 8]     ),
+    .write_data     (device_write_data      [0 +: 8]             ),
     .write_request  (device_write_request   [D_UART]             ),
     .write_response (device_write_response  [D_UART]             ),
 
