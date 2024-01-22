@@ -1,6 +1,6 @@
 # System bus
 
-The `rtl/sys_bus.v` module allows you to connect a different number of slave devices to one host.
+The `rtl/system_bus.v` module allows you to connect a different number of slave devices to one host.
 
 ### Instantiation template
 
@@ -15,38 +15,38 @@ localparam NUM_DEVICE   = 'd1;
 localparam D_RAM        = 'd0;
 
 // Host
-wire    [31:0]  rw_address      ;
-wire    [31:0]  read_data       ;
-wire            read_request    ;
-wire            read_response   ;
-wire    [31:0]  write_data      ;
-wire    [3:0 ]  write_strobe    ;
-wire            write_request   ;
-wire            write_response  ;
+wire  [31:0]  rw_address      ;
+wire  [31:0]  read_data       ;
+wire          read_request    ;
+wire          read_response   ;
+wire  [31:0]  write_data      ;
+wire  [3:0 ]  write_strobe    ;
+wire          write_request   ;
+wire          write_response  ;
 
 // Device
-wire    [NUM_DEVICE*32-1:0] device_rw_address       ;
-wire    [NUM_DEVICE*32-1:0] device_read_data        ;
-wire    [NUM_DEVICE-1:0]    device_read_request     ;
-wire    [NUM_DEVICE-1:0]    device_read_response    ;
-wire    [NUM_DEVICE*32-1:0] device_write_data       ;
-wire    [NUM_DEVICE*4-1:0]  device_write_strobe     ;
-wire    [NUM_DEVICE-1:0]    device_write_request    ;
-wire    [NUM_DEVICE-1:0]    device_write_response   ;
+wire  [31:0]              device_rw_address     ;
+wire  [NUM_DEVICE*32-1:0] device_read_data      ;
+wire  [NUM_DEVICE-1:0]    device_read_request   ;
+wire  [NUM_DEVICE-1:0]    device_read_response  ;
+wire  [31:0]              device_write_data     ;
+wire  [3:0]               device_write_strobe   ;
+wire  [NUM_DEVICE-1:0]    device_write_request  ;
+wire  [NUM_DEVICE-1:0]    device_write_response ;
 
 // Base and mask
-wire    [NUM_DEVICE*32-1:0] addr_base               ;
-wire    [NUM_DEVICE*32-1:0] addr_mask               ;
+wire  [NUM_DEVICE*32-1:0] addr_base             ;
+wire  [NUM_DEVICE*32-1:0] addr_mask             ;
 
 // 8192 KB
 assign addr_base[32*D_RAM +: 32]    =  32'h0000_0000;
 assign addr_mask[32*D_RAM +: 32]    = ~32'h7F_FFFF;
 
-sys_bus #
+system_bus #
 (
     .NUM_DEVICE(NUM_DEVICE)
 )
-sys_bus_impl
+system_bus_instance
 (
     .clock_i(clock_i),
     .reset_i(reset_i),
@@ -78,15 +78,15 @@ sys_bus_impl
 
 ram ram_instance
 (
-    ...
-    .rw_address     (device_rw_address      [32*D_RAM +: 32]    ),
-    .read_data      (device_read_data       [32*D_RAM +: 32]    ),
-    .read_request   (device_read_request    [D_RAM]             ),
-    .read_response  (device_read_response   [D_RAM]             ),
-    .write_data     (device_write_data      [32*D_RAM +: 32]    ),
-    .write_strobe   (device_write_strobe    [4*D_RAM +: 4]      ),
-    .write_request  (device_write_request   [D_RAM]             ),
-    .write_response (device_write_response  [D_RAM]             )
+  ...
+  .rw_address     (device_rw_address                        ),
+  .read_data      (device_read_data       [32*D_RAM +: 32]  ),
+  .read_request   (device_read_request    [D_RAM]           ),
+  .read_response  (device_read_response   [D_RAM]           ),
+  .write_data     (device_write_data                        ),
+  .write_strobe   (device_write_strobe                      ),
+  .write_request  (device_write_request   [D_RAM]           ),
+  .write_response (device_write_response  [D_RAM]           )
 );
 
 ```
