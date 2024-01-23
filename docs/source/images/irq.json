@@ -1,0 +1,7 @@
+{signal: [
+  {name: 'clock', wave: 'P........'},
+  {name: 'irq_*', wave: '01.....0.'},
+  {name: 'irq_*_response', wave: '0.....10.'}
+],
+config: { hscale: 2 }
+}

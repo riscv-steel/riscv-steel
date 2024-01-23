@@ -1,0 +1,63 @@
+site_name: RISC-V Steel Docs
+site_author: Rafael Calcada
+site_description: RISC-V Steel is a free and open collection of RISC-V IP that is simple, robust and easy to use.
+repo_url: https://github.com/riscv-steel/riscv-steel
+edit_uri: edit/main/docs/source/
+markdown_extensions:
+    - abbr
+    - attr_list
+    - md_in_html
+    - tables
+    - footnotes
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
+    - pymdownx.tabbed:
+        alternate_style: true 
+    - pymdownx.highlight:
+        anchor_linenums: true
+        line_spans: __span
+        pygments_lang_class: true
+    - pymdownx.highlight
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - def_list
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
+        options:
+          custom_icons:
+            - overrides/.icons
+theme:
+    name: material
+    logo: images/rvsteel-logo-white-small.svg
+    favicon: images/rvsteel-logo-favicon.svg
+    highlightjs: true
+    features:
+        - navigation.top
+        - navigation.tabs
+        - toc.integrate
+        - navigation.instant
+        - navigation.instant.progress
+        - content.code.copy
+        - content.code.select
+extra:
+    analytics:
+        provider: google
+        property: G-6380GKCWC3
+extra_css: [extra.css]
+plugins:
+    - search
+docs_dir: source/
+remote_branch: docs
+copyright: Copyright &copy; 2020-present Rafael Calcada
+nav:
+    - Homepage: 'index.md'
+    - Getting Started: 'getting-started.md'    
+    - Processor Core IP: 'core.md'
+    - System-on-Chip IP: 'soc.md'
+    - Software Guide: 'software-guide.md'
+    - RISC-V Steel API: 'api.md'
+    - License: 'license.md'
