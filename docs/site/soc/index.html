@@ -1,0 +1,996 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="RISC-V Steel is a free and open collection of RISC-V IP that is simple, robust and easy to use.">
+      
+      
+        <meta name="author" content="Rafael Calcada">
+      
+      
+      
+        <link rel="prev" href="../core/">
+      
+      
+        <link rel="next" href="../software-guide/">
+      
+      
+      <link rel="icon" href="../images/rvsteel-logo-favicon.svg">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+    
+    
+      
+        <title>System-on-Chip IP - RISC-V Steel Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-6380GKCWC3"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-6380GKCWC3",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-6380GKCWC3",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#risc-v-steel-system-on-chip-ip-reference-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="RISC-V Steel Docs" class="md-header__button md-logo" aria-label="RISC-V Steel Docs" data-md-component="logo">
+      
+  <img src="../images/rvsteel-logo-white-small.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RISC-V Steel Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              System-on-Chip IP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/riscv-steel/riscv-steel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Homepage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../getting-started/" class="md-tabs__link">
+        
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../core/" class="md-tabs__link">
+        
+  
+    
+  
+  Processor Core IP
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  System-on-Chip IP
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../software-guide/" class="md-tabs__link">
+        
+  
+    
+  
+  Software Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../api/" class="md-tabs__link">
+        
+  
+    
+  
+  RISC-V Steel API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../license/" class="md-tabs__link">
+        
+  
+    
+  
+  License
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="RISC-V Steel Docs" class="md-nav__button md-logo" aria-label="RISC-V Steel Docs" data-md-component="logo">
+      
+  <img src="../images/rvsteel-logo-white-small.svg" alt="logo">
+
+    </a>
+    RISC-V Steel Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/riscv-steel/riscv-steel" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Homepage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Processor Core IP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    System-on-Chip IP
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    System-on-Chip IP
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io-signals" class="md-nav__link">
+    <span class="md-ellipsis">
+      I/O signals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Map
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instantiation-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instantiation template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-new-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to add new devices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#risc-v-steel-processor-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      RISC-V Steel Processor Core
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ram-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      RAM memory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart" class="md-nav__link">
+    <span class="md-ellipsis">
+      UART
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#system-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Bus
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../software-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RISC-V Steel API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="risc-v-steel-system-on-chip-ip-reference-guide">RISC-V Steel System-on-Chip IP </br><small>Reference Guide</small></h1>
+<h2 id="introduction">Introduction</h2>
+<p>RISC-V Steel SoC IP is a system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an <a href="../software-guide/#soc-ip-api-reference">API for software development</a> that makes it easier for hardware engineers to develop and deploy RISC-V embedded applications.</p>
+<p>In this Reference Guide you find information on the SoC IP hardware design. See the <a href="../software-guide/">Software Guide</a> for instructions on how to write, compile and run software for the SoC IP.</p>
+<h2 id="design-overview">Design overview</h2>
+<p><strong id="figure-1">Figure 1</strong> - RISC-V Steel SoC IP design overview</p>
+<p><img alt="Image title" src="../images/rvsteel-soc.svg" /></p>
+<h2 id="source-files">Source files</h2>
+<p><strong>Table 1</strong> - RISC-V Steel SoC IP source files</p>
+<table>
+<thead>
+<tr>
+<th>Module name</th>
+<th>File</th>
+<th>Location</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>rvsteel_soc</strong></td>
+<td><code>rvsteel_soc.v</code></td>
+<td><code>ip/soc/</code></td>
+<td>Top module of RISC-V Steel SoC IP</td>
+</tr>
+<tr>
+<td><strong>rvsteel_core</strong></td>
+<td><code>rvsteel_core.v</code></td>
+<td><code>ip/core/</code></td>
+<td>RISC-V Steel Processor Core</td>
+</tr>
+<tr>
+<td><strong>ram_memory</strong></td>
+<td><code>ram_memory.v</code></td>
+<td><code>ip/soc</code></td>
+<td>RAM memory</td>
+</tr>
+<tr>
+<td><strong>uart</strong></td>
+<td><code>uart.v</code></td>
+<td><code>ip/soc</code></td>
+<td>UART</td>
+</tr>
+<tr>
+<td><strong>system_bus</strong></td>
+<td><code>system_bus.v</code></td>
+<td><code>ip/soc</code></td>
+<td>System Bus</td>
+</tr>
+</tbody>
+</table>
+<h2 id="io-signals">I/O signals</h2>
+<p><strong>Table 2</strong> - RISC-V Steel SoC IP top module input and output signals</p>
+<table>
+<thead>
+<tr>
+<th>Pin name</th>
+<th>Direction</th>
+<th>Size</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>clock</strong></td>
+<td>Input</td>
+<td>1 bit</td>
+<td>Clock input.</td>
+</tr>
+<tr>
+<td><strong>reset</strong></td>
+<td>Input</td>
+<td>1 bit</td>
+<td>Reset (active-high).</td>
+</tr>
+<tr>
+<td><strong>halt</strong></td>
+<td>Input</td>
+<td>1 bit</td>
+<td>Halts the processor core (active-high).</td>
+</tr>
+<tr>
+<td><strong>uart_rx</strong></td>
+<td>Input</td>
+<td>1 bit</td>
+<td>UART receiver pin. Must be connected to the transmitter (<code>TX</code>) pin of another UART device.</td>
+</tr>
+<tr>
+<td><strong>uart_tx</strong></td>
+<td>Output</td>
+<td>1 bit</td>
+<td>UART transmitter pin. Must be connected to the receiver (<code>RX</code>) pin of another UART device.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="memory-map">Memory Map</h2>
+<p>In RISC-V systems, all devices share the processor address space and are mapped to an exclusive region in it (<em>Memory Mapped I/O</em>). </p>
+<p>The memory region assigned to each device of RISC-V Steel SoC IP is listed in the table below.</p>
+<p><strong id="table-4">Table 4</strong> - Memory Map of RISC-V Steel SoC IP</p>
+<table>
+<thead>
+<tr>
+<th>Start address</th>
+<th>Final address</th>
+<th>Mapped device</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0x00000000</code></td>
+<td><code>0x(MEMORY_SIZE-1)</code></td>
+<td>RAM memory</td>
+</tr>
+<tr>
+<td><code>0x(MEMORY_SIZE)</code></td>
+<td><code>0x7fffffff</code></td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>0x80000000</code></td>
+<td><code>0x80000004</code></td>
+<td>UART</td>
+</tr>
+<tr>
+<td><code>0x80000005</code></td>
+<td><code>0xffffffff</code></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration">Configuration</h2>
+<p><strong>Table 3</strong> - Configuration parameters of RISC-V Steel SoC IP</p>
+<table>
+<thead>
+<tr>
+<th>Parameter name</th>
+<th>Default value</th>
+<th>Value type and description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>BOOT_ADDRESS</code></strong></td>
+<td><code>32'h00000000</code></td>
+<td>32-bit hexadecimal value. Memory address of the first instruction to be fetched and executed.</td>
+</tr>
+<tr>
+<td><strong><code>CLOCK_FREQUENCY</code></strong></td>
+<td><code>50000000</code></td>
+<td>Integer. Frequency (in hertz) of the <strong>clock</strong> input signal.</td>
+</tr>
+<tr>
+<td><strong><code>UART_BAUD_RATE</code></strong></td>
+<td><code>9600</code></td>
+<td>Integer. UART baud rate (in bauds per second).</td>
+</tr>
+<tr>
+<td><strong><code>MEMORY_SIZE</code></strong></td>
+<td><code>8192</code></td>
+<td>Integer. RAM memory size (in bytes).</td>
+</tr>
+<tr>
+<td><strong><code>MEMORY_INIT_FILE</code></strong></td>
+<td><code>(empty string)</code></td>
+<td>String. Path to a memory initialization file.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="instantiation-template">Instantiation template</h2>
+<p>An instantiation template for RISC-V Steel SoC IP top module is provided below.</p>
+<div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">rvsteel_soc</span><span class="w"> </span><span class="p">#(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="c1">// Configuration parameters. For more information read the &#39;Configuration&#39;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="c1">// section of RISC-V Steel SoC IP Reference Guide</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="p">.</span><span class="n">BOOT_ADDRESS</span><span class="w">             </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Default value: 32&#39;h00000000</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="p">.</span><span class="n">CLOCK_FREQUENCY</span><span class="w">          </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Default value: 50000000</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="p">.</span><span class="n">UART_BAUD_RATE</span><span class="w">           </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Default value: 9600</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="p">.</span><span class="n">MEMORY_SIZE</span><span class="w">              </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Default value: 8192</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="p">.</span><span class="n">MEMORY_INIT_FILE</span><span class="w">         </span><span class="p">())</span><span class="w">  </span><span class="c1">// Default value: Empty string (uninitialized)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="n">rvsteel_soc_instance</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="c1">// I/O signals. For more information read the &#39;I/O signals&#39;</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="c1">// section of RISC-V Steel SoC IP Reference Guide</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="p">.</span><span class="n">clock</span><span class="w">                    </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Connect this pin to a clock source</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">  </span><span class="p">.</span><span class="n">reset</span><span class="w">                    </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Connect this pin to a switch/button or hardwire it to 1&#39;b0.</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">  </span><span class="p">.</span><span class="n">halt</span><span class="w">                     </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Connect this pin to a switch/button or hardwire it to 1&#39;b0.</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">  </span><span class="p">.</span><span class="n">uart_rx</span><span class="w">                  </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Connect this pin to the TX pin of another UART device</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">  </span><span class="p">.</span><span class="n">uart_tx</span><span class="w">                  </span><span class="p">()</span><span class="w">   </span><span class="c1">// Connect this pin to the RX pin of another UART device</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="p">);</span>
+</span></code></pre></div>
+<h2 id="how-to-add-new-devices">How to add new devices</h2>
+<p>You can integrate a new device into the SoC IP design by making simple changes to its top module. The following lines of <code>rvsteel_soc.v</code> contain the parameters you need to change:</p>
+<div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w">  </span><span class="c1">// System bus configuration</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="n">NUM_DEVICES</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="n">D0_RAM</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="n">D1_UART</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="kt">wire</span><span class="w">  </span><span class="p">[</span><span class="n">NUM_DEVICES</span><span class="o">*</span><span class="mi">32</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">device_start_address</span><span class="p">;</span><span class="w">     </span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="kt">wire</span><span class="w">  </span><span class="p">[</span><span class="n">NUM_DEVICES</span><span class="o">*</span><span class="mi">32</span><span class="o">-</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">device_region_size</span><span class="p">;</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">device_start_address</span><span class="w"> </span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D0_RAM</span><span class="w">  </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">32&#39;h0000_0000</span><span class="p">;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">device_region_size</span><span class="w">   </span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D0_RAM</span><span class="w">  </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">8192</span><span class="p">;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">device_start_address</span><span class="w"> </span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D1_UART</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">32&#39;h8000_0000</span><span class="p">;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">device_region_size</span><span class="w">   </span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D1_UART</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span>
+</span></code></pre></div>
+<p>The <code>NUM_DEVICES</code> parameter holds the total number of devices in the system. Each device is assigned an index (<code>D0_RAM</code> and <code>D1_UART</code>). To accomodate your new device you need to increase <code>NUM_DEVICES</code> and assign it the next index, <code>2</code>, like this:</p>
+<div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="n">NUM_DEVICES</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="n">D0_RAM</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="n">D1_UART</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="k">localparam</span><span class="w"> </span><span class="n">D2_NEW_DEVICE</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="c1">// your new device</span>
+</span></code></pre></div>
+<p>Next you have to assign your device a region in the processor's address space. You can assign it to any free region (see <a href="#memory-map">Memory Map</a>). The region cannot overlap the address space of other devices and its size must be a power of 2. In the example below, the new device <code>D2_NEW_DEVICE</code> is assigned a 32KB region starting at <code>0x00008000</code>:</p>
+<div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">device_start_address</span><span class="w"> </span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D2_NEW_DEVICE</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">32&#39;h0000_8000</span><span class="p">;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">device_region_size</span><span class="w">   </span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D2_NEW_DEVICE</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">32768</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Finally, you have to instantiate the new device in the <code>rvsteel_soc</code> module and connect it to the system bus interface. The Processor Core IP will issue read and write requests to your device as described in the <a href="../core/#io-operations">I/O Operations</a> section of its <a href="../core/">Reference Guide</a>. A template for instantiating and connecting the new device to the system bus is provided below:</p>
+<div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w">  </span><span class="cm">/* Instantiate the new device in the rvsteel_soc.v module like this: */</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="n">new_device</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="n">new_device_instance</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="cm">/* I/O interface of the new device */</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_rw_address</span><span class="w">      </span><span class="p">(</span><span class="n">device_rw_address</span><span class="w">                        </span><span class="p">),</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_read_data</span><span class="w">       </span><span class="p">(</span><span class="n">device_read_data</span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D2_NEW_DEVICE</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w"> </span><span class="p">),</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_read_request</span><span class="w">    </span><span class="p">(</span><span class="n">device_read_request</span><span class="p">[</span><span class="n">D2_NEW_DEVICE</span><span class="p">]</span><span class="w">       </span><span class="p">),</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_read_response</span><span class="w">   </span><span class="p">(</span><span class="n">device_read_response</span><span class="p">[</span><span class="n">D2_NEW_DEVICE</span><span class="p">]</span><span class="w">      </span><span class="p">),</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_write_data</span><span class="w">      </span><span class="p">(</span><span class="n">device_write_data</span><span class="w">                        </span><span class="p">),</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_write_strobe</span><span class="w">    </span><span class="p">(</span><span class="n">device_write_strobe</span><span class="w">                      </span><span class="p">),</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_write_request</span><span class="w">   </span><span class="p">(</span><span class="n">device_write_request</span><span class="p">[</span><span class="n">D2_NEW_DEVICE</span><span class="p">]</span><span class="w">      </span><span class="p">),</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_write_response</span><span class="w">  </span><span class="p">(</span><span class="n">device_write_response</span><span class="p">[</span><span class="n">D2_NEW_DEVICE</span><span class="p">]</span><span class="w">     </span><span class="p">)</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">  </span><span class="p">);</span>
+</span></code></pre></div>
+<h2 id="components">Components</h2>
+<h3 id="risc-v-steel-processor-core">RISC-V Steel Processor Core</h3>
+<p>RISC-V Steel Processor Core is the processing unit of RISC-V Steel SoC IP. Its design is quite large so it has its own <a href="../core/">Reference Guide</a>. Please check it out for more information.</p>
+<h3 id="ram-memory">RAM memory</h3>
+<p>RISC-V Steel SoC IP has a RAM memory tightly coupled to the processor core, with read/write latency of a single clock cycle. The memory size can be changed by adjusting the <code>MEMORY_SIZE</code> parameter (see <a href="#configuration">Configuration</a>). </p>
+<h3 id="uart">UART</h3>
+<p>RISC-V Steel SoC IP has an UART module with configurable baud rate. The module works with 8 data bits, 1 stop bit, no parity bits and no flow control signals (most UARTs work the same way).</p>
+<h3 id="system-bus">System Bus</h3>
+<p>The system bus module interconnects RISC-V Steel Processor Core (manager device) to the UART and the RAM memory (subordinate devices) as shown in <a href="#figure-1">Figure 1</a>. The module multiplexes the signals from the processor's I/O interface to the appropriate subordinate device according to the address the processor requests.</p>
+<p></br>
+</br></p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2020-present Rafael Calcada
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs", "toc.integrate", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      
+    
+  </body>
+</html>
