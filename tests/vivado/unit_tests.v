@@ -35,7 +35,7 @@ E-mail:        rafaelcalcada@gmail.com
 
 `timescale 1ns / 1ps
 
-module rvsteel_core_unit_tests();
+module unit_tests();
 
   reg clock;
   reg reset;
