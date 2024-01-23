@@ -1,5 +1,4 @@
 --Wall
 --default-language 1364-2001
 -I.
--I../../soc
--I../../core
+-I../../ip

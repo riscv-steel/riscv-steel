@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 
 
-module rvsteel_sim_verilator #
+module unit_tests #
 (
     // Memory size in bytes
     parameter MEMORY_SIZE   = 2097152          ,
