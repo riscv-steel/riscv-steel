@@ -69,14 +69,14 @@ module rvsteel_soc #(
   localparam D0_RAM         = 0;
   localparam D1_UART        = 1;
 
-  wire  [NUM_DEVICES*32-1:0] device_base_address;     
-  wire  [NUM_DEVICES*32-1:0] device_mask_address;
+  wire  [NUM_DEVICES*32-1:0] device_start_address;     
+  wire  [NUM_DEVICES*32-1:0] device_region_size;
 
-  assign device_base_address[32*D0_RAM  +: 32]  = 32'h0000_0000;
-  assign device_mask_address[32*D0_RAM  +: 32]  = 32'hFFFF_E000;
+  assign device_start_address [32*D0_RAM  +: 32]  = 32'h0000_0000;
+  assign device_region_size   [32*D0_RAM  +: 32]  = 8192;
 
-  assign device_base_address[32*D1_UART +: 32]  = 32'h8000_0000;
-  assign device_mask_address[32*D1_UART +: 32]  = 32'hFFFF_FFF8;
+  assign device_start_address [32*D1_UART +: 32]  = 32'h8000_0000;
+  assign device_region_size   [32*D1_UART +: 32]  = 8;
 
   // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
@@ -173,8 +173,8 @@ module rvsteel_soc #(
 
     // Base addresses and masks of the managed devices
 
-    .device_base_address            (device_base_address                ),
-    .device_mask_address            (device_mask_address                )
+    .device_start_address          (device_start_address                ),
+    .device_region_size            (device_region_size                  )
 
   );
 

@@ -69,13 +69,14 @@ module system_bus #(
 
   // Base addresses and masks of the managed devices
 
-  input   wire  [NUM_DEVICES*32-1:0]  device_base_address   ,
-  input   wire  [NUM_DEVICES*32-1:0]  device_mask_address
+  input   wire  [NUM_DEVICES*32-1:0]  device_start_address  ,
+  input   wire  [NUM_DEVICES*32-1:0]  device_region_size
 
   );
 
   integer i;
 
+  reg [NUM_DEVICES*32-1:0]      device_mask_address;
   reg [NUM_DEVICES-1:0]         device_sel;
   reg [NUM_DEVICES-1:0]         device_sel_save;
   reg                           device_valid_access;
@@ -92,7 +93,8 @@ module system_bus #(
 
   always @(*) begin
     for (i = 0; i < NUM_DEVICES; i = i + 1) begin
-      if ((manager_rw_address & device_mask_address[i*32 +:32]) == device_base_address[i*32 +:32])
+      device_mask_address[i*32 +:32] = ~(device_region_size[i*32 +:32] - 1);
+      if ((manager_rw_address & device_mask_address[i*32 +:32]) == device_start_address[i*32 +:32])
         device_sel[i] = 1'b1;
       else
         device_sel[i] = 1'b0;
