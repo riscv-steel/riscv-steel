@@ -110,8 +110,8 @@ module system_bus #(
 
   always @(*) begin
     manager_read_data           = 32'b0;
-    manager_read_response       = 1'b0;
-    manager_write_response      = 1'b0;
+    manager_read_response       = 1'b1;
+    manager_write_response      = 1'b1;
     for (i = 0; i < NUM_DEVICES; i = i + 1) begin
       if (device_sel_save[i]) begin
         manager_read_data       = device_read_data[i*32 +: 32];
