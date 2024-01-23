@@ -93,21 +93,64 @@ rvsteel_soc #(
 );
 ```
 
-## Adding devices
+## How to add new devices
 
-A new device can be added to the SoC IP by modifying the system bus module (`system_bus.v`) and the top module (`rvsteel_soc.v`). All modifications that need to be made were left as comments in the source code of these files.
-
-The parts that need to be uncommented follow the template:
+You can integrate a new device into the SoC IP design by making simple changes to its top module. The following lines of `rvsteel_soc.v` contain the parameters you need to change:
 
 ``` systemverilog
-  /* Uncomment to add new devices
+  // System bus configuration
 
-  ... code for adding the new device ...
+  localparam NUM_DEVICES    = 2;
+  localparam D0_RAM         = 0;
+  localparam D1_UART        = 1;
 
-  */
+  wire  [NUM_DEVICES*32-1:0] device_start_address;     
+  wire  [NUM_DEVICES*32-1:0] device_region_size;
+
+  assign device_start_address [32*D0_RAM  +: 32]  = 32'h0000_0000;
+  assign device_region_size   [32*D0_RAM  +: 32]  = 8192;
+
+  assign device_start_address [32*D1_UART +: 32]  = 32'h8000_0000;
+  assign device_region_size   [32*D1_UART +: 32]  = 8;
 ```
 
-The new device will be assigned the memory region you define in the `DEVICEx_START_ADDRESS` and `DEVICEx_FINAL_ADDRESS` parameters. You can assign the device to any free region in the address space (see [Memory Map](#memory-map)).
+The `NUM_DEVICES` parameter holds the total number of devices in the system. Each device is assigned an index (`D0_RAM` and `D1_UART`). To accomodate your new device you need to increase `NUM_DEVICES` and assign it the next index, `2`, like this:
+
+``` systemverilog
+  localparam NUM_DEVICES    = 3;
+  localparam D0_RAM         = 0;
+  localparam D1_UART        = 1;
+  localparam D2_NEW_DEVICE  = 2; // your new device
+```
+
+Next you have to assign your device a region in the processor's address space. You can assign it to any free region (see [Memory Map](#memory-map)). The region cannot overlap the address space of other devices and its size must be a power of 2. In the example below, the new device `D2_NEW_DEVICE` is assigned a 32KB region starting at `0x00008000`:
+
+``` systemverilog
+  assign device_start_address [32*D2_NEW_DEVICE +: 32]  = 32'h0000_8000;
+  assign device_region_size   [32*D2_NEW_DEVICE +: 32]  = 32768;
+```
+
+Finally, you have to instantiate the new device in the `rvsteel_soc` module and connect it to the system bus interface. The Processor Core IP will issue read and write requests to your device as described in the [I/O Operations](core.md#io-operations) section of its [Reference Guide](core.md). A template for instantiating and connecting the new device to the system bus is provided below:
+
+``` systemverilog
+  /* Instantiate the new device in the rvsteel_soc.v module like this: */
+
+  new_device
+  new_device_instance (
+
+    /* I/O interface of the new device */
+
+    .new_device_rw_address      (device_rw_address                        ),
+    .new_device_read_data       (device_read_data[32*D2_NEW_DEVICE +: 32] ),
+    .new_device_read_request    (device_read_request[D2_NEW_DEVICE]       ),
+    .new_device_read_response   (device_read_response[D2_NEW_DEVICE]      ),
+    .new_device_write_data      (device_write_data                        ),
+    .new_device_write_strobe    (device_write_strobe                      ),
+    .new_device_write_request   (device_write_request[D2_NEW_DEVICE]      ),
+    .new_device_write_response  (device_write_response[D2_NEW_DEVICE]     )
+
+  );
+```
 
 ## Components
 
