@@ -51,6 +51,7 @@ extra_css: [extra.css]
 plugins:
     - search
 docs_dir: source/
+remote_branch: docs
 copyright: Copyright &copy; 2020-present Rafael Calcada
 nav:
     - Homepage: 'index.md'
