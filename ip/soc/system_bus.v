@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2020-present Rafael Calcada
+Copyright (c) 2024 Alexander Markov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,9 @@ SOFTWARE.
 
 /**************************************************************************************************
 
-Project Name:  RISC-V Steel System-on-Chip - System Bus
+Project Name:  RISC-V Steel System-on-Chip
 Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada
-E-mail:        rafaelcalcada@gmail.com
+Author:        Alexander Markov - github.com/AlexxMarkov
 
 Top Module:    system_bus
 
@@ -37,234 +36,89 @@ Top Module:    system_bus
 
 module system_bus #(
 
-  parameter DEVICE0_START_ADDRESS = 32'h00000000,
-  parameter DEVICE0_FINAL_ADDRESS = 32'h7fffffff,
-  parameter DEVICE1_START_ADDRESS = 32'h80000000,
-  parameter DEVICE1_FINAL_ADDRESS = 32'hffffffff
-
-  /* Uncomment to add new devices
-
-  parameter DEVICE2_START_ADDRESS = 32'hdeadbeef,
-  parameter DEVICE2_FINAL_ADDRESS = 32'hdeadbeef,
-
-  parameter DEVICE3_START_ADDRESS = 32'hdeadbeef,
-  parameter DEVICE3_FINAL_ADDRESS = 32'hdeadbeef
-
-  */
+  parameter NUM_DEVICES               = 1
 
   )(
 
-  input   wire       clock,
-  input   wire       reset,
+  // Global signals
 
-  // Interface with the Manager Device
+  input   wire                        clock                 ,
+  input   wire                        reset                 ,
 
-  input   wire  [31:0]  rw_address,
-  output  reg   [31:0]  read_data,
-  input   wire          read_request,
-  output  reg           read_response,
-  input   wire  [31:0]  write_data,
-  input   wire  [3:0 ]  write_strobe,
-  input   wire          write_request,
-  output  reg           write_response,
+  // Interface with the manager device (Processor Core IP)
 
-  // Device #0
+  input   wire  [31:0]                manager_rw_address    ,
+  output  reg   [31:0]                manager_read_data     ,
+  input   wire                        manager_read_request  ,
+  output  reg                         manager_read_response ,
+  input   wire  [31:0]                manager_write_data    ,
+  input   wire  [3:0 ]                manager_write_strobe  ,
+  input   wire                        manager_write_request ,
+  output  reg                         manager_write_response,
 
-  output  wire  [31:0]  device0_rw_address,
-  input   wire  [31:0]  device0_read_data,
-  output  wire          device0_read_request,
-  input   wire          device0_read_response,
-  output  wire  [31:0]  device0_write_data,
-  output  wire  [3:0 ]  device0_write_strobe,
-  output  wire          device0_write_request,
-  input   wire          device0_write_response,
+  // Interface with the managed devices
 
-  // Device #1
+  output  wire  [31:0]                device_rw_address     ,
+  input   wire  [NUM_DEVICES*32-1:0]  device_read_data      ,
+  output  wire  [NUM_DEVICES-1:0]     device_read_request   ,
+  input   wire  [NUM_DEVICES-1:0]     device_read_response  ,
+  output  wire  [31:0]                device_write_data     ,
+  output  wire  [3:0 ]                device_write_strobe   ,
+  output  wire  [NUM_DEVICES-1:0]     device_write_request  ,
+  input   wire  [NUM_DEVICES-1:0]     device_write_response ,
 
-  output  wire  [31:0]  device1_rw_address,
-  input   wire  [31:0]  device1_read_data,
-  output  wire          device1_read_request,
-  input   wire          device1_read_response,
-  output  wire  [31:0]  device1_write_data,
-  output  wire  [3:0 ]  device1_write_strobe,
-  output  wire          device1_write_request,
-  input   wire          device1_write_response
+  // Base addresses and masks of the managed devices
 
-  /* Uncomment to add new devices
-
-  // Device #2
-
-  output  wire  [31:0]  device2_rw_address,
-  input   wire  [31:0]  device2_read_data,
-  output  wire          device2_read_request,
-  input   wire          device2_read_response,
-  output  wire  [31:0]  device2_write_data,
-  output  wire  [3:0 ]  device2_write_strobe,
-  output  wire          device2_write_request,
-  input   wire          device2_write_response,
-
-  // Device #3
-
-  output  wire  [31:0]  device3_rw_address,
-  input   wire  [31:0]  device3_read_data,
-  output  wire          device3_read_request,
-  input   wire          device3_read_response,
-  output  wire  [31:0]  device3_write_data,
-  output  wire  [3:0 ]  device3_write_strobe,
-  output  wire          device3_write_request,
-  input   wire          device3_write_response
-
-  */
+  input   wire  [NUM_DEVICES*32-1:0]  device_base_address   ,
+  input   wire  [NUM_DEVICES*32-1:0]  device_mask_address
 
   );
 
-  wire          reset_internal;
+  integer i;
 
-  localparam    RESET       = 7;
-  localparam    DEVICE0     = 0;
-  localparam    DEVICE1     = 1;
+  reg [NUM_DEVICES-1:0]         device_sel;
+  reg [NUM_DEVICES-1:0]         device_sel_save;
+  reg                           device_valid_access;
 
-  /* Uncomment to add new devices
+  // Manager request
 
-  localparam    DEVICE2     = 2;
-  localparam    DEVICE3     = 3;
+  assign device_rw_address      = manager_rw_address;
+  assign device_read_request    = device_sel & {NUM_DEVICES{manager_read_request}};
+  assign device_write_data      = manager_write_data;
+  assign device_write_strobe    = manager_write_strobe;
+  assign device_write_request   = device_sel & {NUM_DEVICES{manager_write_request}};
 
-  */
+  // Device response selection
 
-  wire          device0_valid_access;
-  wire          device1_valid_access;
-
-  /* Uncomment to add new devices
-
-  wire          device2_valid_access;
-  wire          device3_valid_access;
-
-  */
-
-  reg           reset_reg;
-  reg [2:0]     selected_response;
-
-  always @(posedge clock)
-    reset_reg <= reset;
-
-  assign reset_internal = reset | reset_reg;
-
-  assign device0_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE0_START_ADDRESS) &&
-    $unsigned(rw_address) <= $unsigned(DEVICE0_FINAL_ADDRESS);
-
-  assign device1_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE1_START_ADDRESS) &&
-    $unsigned(rw_address) <= $unsigned(DEVICE1_FINAL_ADDRESS);
-
-  /* Uncomment to add new devices
-
-  assign device2_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE2_START_ADDRESS) &&
-    $unsigned(rw_address) <= $unsigned(DEVICE2_FINAL_ADDRESS);
-
-  assign device3_valid_access =
-    $unsigned(rw_address) >= $unsigned(DEVICE3_START_ADDRESS) &&
-    $unsigned(rw_address) <= $unsigned(DEVICE3_FINAL_ADDRESS);
-
-  */
-
-  assign device0_rw_address    = device0_valid_access ? rw_address    : 32'b0;
-  assign device0_write_data    = device0_valid_access ? write_data    : 32'h0;
-  assign device0_write_strobe  = device0_valid_access ? write_strobe  : 4'h0;
-  assign device0_read_request  = device0_valid_access ? read_request  : 1'b0;
-  assign device0_write_request = device0_valid_access ? write_request : 1'b0;
-
-  assign device1_rw_address    = device1_valid_access ? rw_address    : 32'b0;
-  assign device1_write_data    = device1_valid_access ? write_data    : 32'h0;
-  assign device1_write_strobe  = device1_valid_access ? write_strobe  : 4'h0;
-  assign device1_read_request  = device1_valid_access ? read_request  : 1'b0;
-  assign device1_write_request = device1_valid_access ? write_request : 1'b0;
-
-  /* Uncomment to add new devices
-
-  assign device2_rw_address    = device2_valid_access ? rw_address    : 1'b0;
-  assign device2_write_data    = device2_valid_access ? write_data    : 32'h0;
-  assign device2_write_strobe  = device2_valid_access ? write_strobe  : 4'h0;
-  assign device2_read_request  = device2_valid_access ? read_request  : 1'b0;
-  assign device2_write_request = device2_valid_access ? write_request : 1'b0;
-
-  assign device3_rw_address    = device3_valid_access ? rw_address    : 1'b0;
-  assign device3_write_data    = device3_valid_access ? write_data    : 32'h0;
-  assign device3_write_strobe  = device3_valid_access ? write_strobe  : 4'h0;
-  assign device3_read_request  = device3_valid_access ? read_request  : 1'b0;
-  assign device3_write_request = device3_valid_access ? write_request : 1'b0;
-
-  */
-
-  always @(posedge clock) begin
-    if (reset_internal) begin
-      selected_response <= RESET;
-    end
-    else if (device0_valid_access) begin
-      selected_response <= DEVICE0;
-    end
-    else if (device1_valid_access) begin
-      selected_response <= DEVICE1;
-    end
-
-    /* Uncomment to add new devices
-
-    else if (device2_valid_access) begin
-      selected_response <= DEVICE2;
-    end
-
-    else if (device3_valid_access) begin
-      selected_response <= DEVICE3;
-    end
-
-    */
-
-    else begin
-      selected_response <= RESET;
+  always @(*) begin
+    for (i = 0; i < NUM_DEVICES; i = i + 1) begin
+      if ((manager_rw_address & device_mask_address[i*32 +:32]) == device_base_address[i*32 +:32])
+        device_sel[i] = 1'b1;
+      else
+        device_sel[i] = 1'b0;
     end
   end
 
-  always @* begin
-    case (selected_response)
-      default: begin
-        write_response  = 1'b1;
-        read_data       = 32'h00000000;
-        read_response   = 1'b1;
-      end
-      RESET: begin
-        write_response  = 1'b1;
-        read_data       = 32'h00000000;
-        read_response   = 1'b1;
-      end
-      DEVICE0: begin
-        write_response  = device0_write_response;
-        read_data       = device0_read_data;
-        read_response   = device0_read_response;
-      end
-      DEVICE1: begin
-        write_response  = device1_write_response;
-        read_data       = device1_read_data;
-        read_response   = device1_read_response;
-      end
+  always @(posedge clock) begin
+    if (reset)
+      device_sel_save <= {NUM_DEVICES{1'b0}};
+    else if ((manager_read_request || manager_write_request) && (|device_sel))
+      device_sel_save <= device_sel;
+    else
+      device_sel_save <= {NUM_DEVICES{1'b0}};    
+  end
 
-      /* Uncomment to add new devices
-
-      DEVICE2: begin
-        write_response  <= device2_write_response;
-        read_data       <= device2_read_data;
-        read_response   <= device2_read_response;
+  always @(*) begin
+    manager_read_data           = 32'b0;
+    manager_read_response       = 1'b0;
+    manager_write_response      = 1'b0;
+    for (i = 0; i < NUM_DEVICES; i = i + 1) begin
+      if (device_sel_save[i]) begin
+        manager_read_data       = device_read_data[i*32 +: 32];
+        manager_read_response   = device_read_response[i];
+        manager_write_response  = device_write_response[i];
       end
-
-      DEVICE3: begin
-        write_response  <= device3_write_response;
-        read_data       <= device3_read_data;
-        read_response   <= device3_read_response;
-      end
-
-      */
-
-    endcase
+    end
   end
 
 endmodule
