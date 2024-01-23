@@ -196,6 +196,11 @@ def main(argv=None):
 
     print_status(scolor.NORMAL, f'Total: passed {passed}, skipped {skipped}, failed {failed}')
 
+    if passed == len(unit_test):
+      print("------------------------------------------------------------------------------------------")
+      print("RISC-V Steel Processor Core IP passed ALL unit tests from RISC-V Architectural Test")
+      print("------------------------------------------------------------------------------------------")
+
 
 if __name__ == "__main__":
     main()
