@@ -4,7 +4,7 @@ This directory contains tests to verify that instructions implemented by the Pro
 
 The tests consist of Verilog simulations that run unit test programs from the [RISC-V Architecture Test](https://github.com/riscv-non-isa/riscv-arch-test/) repository. Each unit test program tests an instruction and generates a signature after its execution, which is compared to a golden reference. The signature only matches the golden reference if the instruction implements its function correctly.
 
-The tests can be run with **Verilator** or **AMD Xilinx Vivado**. A different Verilog simulation file is provided for each tool. All unit tests are run in sequence by the simulation. At the end of a successful run the following message is printed:
+The tests can be run with **Verilator** and **AMD Xilinx Vivado**. At the end of a successful run the following message is printed:
 
 ```
 ------------------------------------------------------------------------------------------
@@ -16,35 +16,25 @@ RISC-V Steel Processor Core IP passed ALL unit tests from RISC-V Architectural T
 
 ### Using Verilator
 
-We provide a shell script to verilate and run the tests. Verilator version 5.0 or higher is required.
+To run the unit tests using Verilator do:
 
 ```bash
-chmod +x run_verilator.sh # give permissions to run this script
-./run_verilator.sh
+cd verilator
+make # verilates the unit tests
+python unit_tests.py # run and show results
 ```
 
-### Using Verilator and Python
+Verilator version 5.0 or higher is required. For the available options run:
 
-Additional option for unit testing using `rvsteel_sim_verilator` and dump comparison using the `rvsteel_core_unit_tests.py` script.
-
+```bash
+python unit_tests.py --help
 ```
-python rvsteel_core_unit_tests.py
-```
-
-Available Arguments:
-
-```
-python rvsteel_core_unit_tests.py --help
-```
-
-> Before running `rvsteel_core_unit_tests.py` make sure you have the `rvsteel_sim_verilator` build.
-
 
 ### Using AMD Xilinx Vivado
 
 * Open **AMD Xilinx Vivado**
 * Click on **Run Tcl script...** in the **Tools** menu
-* Select the file `create-test-project.tcl` and click **Ok**
+* Select the file `vivado/create-test-project.tcl` and click **Ok**
 
     A Vivado project to run the unit tests will be created.
 
