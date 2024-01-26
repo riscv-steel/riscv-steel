@@ -581,12 +581,12 @@
 
 <h1 id="risc-v-steel-api">RISC-V Steel API</h1>
 <p>RISC-V Steel API is a set of function calls to configure and control RISC-V Steel SoC IP, making it easier to develop applications for it.</p>
-<p>To start using the API in your application you must include the <code>rvsteel_api.h</code> header in your source code:</p>
-<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;rvsteel_api.h&quot;</span>
+<p>To start using the API in your application you must include the <code>rvsteel-api.h</code> header in your source code:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;rvsteel-api.h&quot;</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">// ... your code ...</span>
 </span></code></pre></div>
-<p>This header file is saved in the <code>sw/api/</code> folder along with its source code, <code>rvsteel_api.c</code>. The API is compiled and linked to your project by default if you use the template project (located in <code>sw/dev-template/</code>).</p>
+<p>This header file is saved in the <code>software-dev/rvsteel-api/</code> folder along with its source code, <code>rvsteel-api.c</code>. The API is compiled and linked to your project by default if you use the template project (located in <code>software-dev/template-project/</code>).</p>
 <p>The following sections contain detailed information about the available API calls.</p>
 <h2 id="uart-communication">UART communication</h2>
 <p class="api-call"><code class="language-c highlight"><span class="kt">void</span><span class="w"> </span><span class="nf">uart_send_char</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">);</span></code></p>

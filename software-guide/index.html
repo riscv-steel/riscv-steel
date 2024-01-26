@@ -630,7 +630,7 @@
 <h2 id="building-a-new-application">Building a new application</h2>
 <h4>1. Make a copy of the software development template project.</h4>
 
-<p>The template project is all you need to start and is located at <code>sw/dev-template/</code>.</p>
+<p>The template project is all you need to start and is located at <code>software-dev/template-project/</code>.</p>
 <h4>2. Edit the Makefile.</h4>
 
 <p>The template project comes with a Makefile to help you automate the tasks of compiling the software and generating a memory initialization file.</p>
@@ -643,7 +643,7 @@
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a># Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>MEMORY_SIZE       ?= 8192
 </span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a># Path to RISC-V Steel API
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>RVSTEEL_API_DIR   ?= ../api
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>RVSTEEL_API_DIR   ?= ../rvsteel-api
 </span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a># The full path to RISC-V GNU Toolchain binaries in this machine + RISC-V binaries prefix
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
 </span></code></pre></div>
@@ -673,7 +673,7 @@
 <h4>1. Specify the path to the memory initialization file</h4>
 
 <p>The SoC IP has a parameter called <code>MEMORY_INIT_FILE</code> that can be set when instantiating its top module. If you specify this parameter the RAM memory will be initialized with the contents of the memory file that you provided. </p>
-<p>In the example below (that you can find at <code>demos/arty-a7/hello-world-arty-a7.v</code>) an instance of the SoC IP for the <a href="https://digilent.com/reference/programmable-logic/arty-a7/reference-manual">Digilent Arty-A7 FPGA board</a> is configured to load a Hello World program:</p>
+<p>In the example below (that you can find at <code>hello-world/arty-a7/hello-world-arty-a7.v</code>) an instance of the SoC IP for the <a href="https://digilent.com/reference/programmable-logic/arty-a7/reference-manual">Digilent Arty-A7 FPGA board</a> is configured to load a Hello World program:</p>
 <div class="language-verilog highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">rvsteel_soc</span><span class="w">                  </span><span class="p">#(</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="p">.</span><span class="n">CLOCK_FREQUENCY</span><span class="w">          </span><span class="p">(</span><span class="mh">50000000</span><span class="w">           </span><span class="p">),</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="p">.</span><span class="n">UART_BAUD_RATE</span><span class="w">           </span><span class="p">(</span><span class="mh">9600</span><span class="w">               </span><span class="p">),</span>
