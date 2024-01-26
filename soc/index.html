@@ -677,7 +677,7 @@
 
 <h1 id="risc-v-steel-system-on-chip-ip-reference-guide">RISC-V Steel System-on-Chip IP </br><small>Reference Guide</small></h1>
 <h2 id="introduction">Introduction</h2>
-<p>RISC-V Steel SoC IP is a system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an <a href="../software-guide/#soc-ip-api-reference">API for software development</a> that makes it easier for hardware engineers to develop and deploy RISC-V embedded applications.</p>
+<p>RISC-V Steel SoC IP is a system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an <a href="../api/">API for software development</a> that makes it easier for hardware engineers to develop and deploy RISC-V embedded applications.</p>
 <p>In this Reference Guide you find information on the SoC IP hardware design. See the <a href="../software-guide/">Software Guide</a> for instructions on how to write, compile and run software for the SoC IP.</p>
 <h2 id="design-overview">Design overview</h2>
 <p><strong id="figure-1">Figure 1</strong> - RISC-V Steel SoC IP design overview</p>
@@ -688,40 +688,34 @@
 <thead>
 <tr>
 <th>Module name</th>
-<th>File</th>
-<th>Location</th>
+<th>Source file</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>rvsteel_soc</strong></td>
-<td><code>rvsteel_soc.v</code></td>
-<td><code>ip/soc/</code></td>
+<td><code>hw/soc/rvsteel_soc.v</code></td>
 <td>Top module of RISC-V Steel SoC IP</td>
 </tr>
 <tr>
 <td><strong>rvsteel_core</strong></td>
-<td><code>rvsteel_core.v</code></td>
-<td><code>ip/core/</code></td>
+<td><code>hw/core/rvsteel_core.v</code></td>
 <td>RISC-V Steel Processor Core</td>
 </tr>
 <tr>
-<td><strong>ram_memory</strong></td>
-<td><code>ram_memory.v</code></td>
-<td><code>ip/soc</code></td>
+<td><strong>rvsteel_ram</strong></td>
+<td><code>hw/ram/rvsteel_ram.v</code></td>
 <td>RAM memory</td>
 </tr>
 <tr>
-<td><strong>uart</strong></td>
-<td><code>uart.v</code></td>
-<td><code>ip/soc</code></td>
+<td><strong>rvsteel_uart</strong></td>
+<td><code>hw/uart/rvsteel_uart.v</code></td>
 <td>UART</td>
 </tr>
 <tr>
-<td><strong>system_bus</strong></td>
-<td><code>system_bus.v</code></td>
-<td><code>ip/soc</code></td>
+<td><strong>rvsteel_bus</strong></td>
+<td><code>hw/bus/rvsteel_bus.v</code></td>
 <td>System Bus</td>
 </tr>
 </tbody>
