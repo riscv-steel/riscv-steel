@@ -1,4 +1,5 @@
-# RISC-V Steel Processor Core IP </br><small>Reference Guide</small>
+# RISC-V Steel Processor Core { class="main-section-title" }
+<h2 class="main-section-subtitle">Documentation</h2>
 
 ## Introduction
 
@@ -10,7 +11,7 @@ RISC-V Steel Processor Core can run real-time operating systems and bare-metal e
 
 ## Source files
 
-RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in the `ip/core/` folder.
+RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in the `ip/` folder.
 
 ## I/O signals
 
@@ -110,7 +111,7 @@ The two sections below explain how read and write operations are requested by th
 
 ### Read operation
 
-The processor core drives the I/O interface signals as follows when making a read request:
+The processor core drives the I/O interface signals as follows on a read request:
 
 - the address is placed in the **rw_address** bus.
 
@@ -135,7 +136,7 @@ The timing diagram below contains examples of valid read operations:
 
 ### Write operation
 
-The processor core drives the I/O interface signals as follows when making a write request:
+The processor core drives the I/O interface signals as follows on a write request:
 
 - the address is placed in the **rw_address** bus.
 
@@ -162,7 +163,7 @@ The timing diagram below contains examples of valid write operations:
   <figcaption><strong>Figure 2</strong> - Write operation timing diagram</figcaption>
 </figure>
 
-## Interrupts
+## Interrupt handling
 
 There are three interrupt types in the RISC-V architecture: external, timer, and software. RISC-V Steel Processor Core provides dedicated signals (**irq_external**, **irq_timer** and **irq_software**) to request each of these interrupt types.
 

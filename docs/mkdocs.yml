@@ -1,4 +1,4 @@
-site_name: RISC-V Steel Docs
+site_name: RISC-V Steel
 site_author: Rafael Calcada
 site_description: RISC-V Steel is a free and open collection of RISC-V IP that is simple, robust and easy to use.
 repo_url: https://github.com/riscv-steel/riscv-steel
@@ -33,12 +33,12 @@ markdown_extensions:
 theme:
     name: material
     logo: images/rvsteel-logo-white-small.svg
+    palette:
+        primary: black
     favicon: images/rvsteel-logo-favicon.svg
     highlightjs: true
     features:
-        - navigation.top
-        - navigation.tabs
-        - toc.integrate
+        - navigation.expand
         - navigation.instant
         - navigation.instant.progress
         - content.code.copy
@@ -55,9 +55,11 @@ remote_branch: docs
 copyright: Copyright (c) RISC-V Steel contributors
 nav:
     - Homepage: 'index.md'
-    - Getting Started: 'getting-started.md'    
-    - Processor Core IP: 'core.md'
-    - System-on-Chip IP: 'soc.md'
-    - Software Guide: 'software-guide.md'
-    - RISC-V Steel API: 'api.md'
+    - Get Started!: 'get-started.md'
+    - Processor Core:
+      - Documentation: 'core.md'
+    - System-on-Chip:
+      - Documentation: 'soc.md'
+      - Software Guide: 'software-guide.md'
+      - Software API: 'api.md'
     - License: 'license.md'

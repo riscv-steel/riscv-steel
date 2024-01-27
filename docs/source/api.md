@@ -1,20 +1,21 @@
-# RISC-V Steel API
+# RISC-V Steel System-on-Chip { class="main-section-title" }
+<h2 class="main-section-subtitle">Software API</h2>
 
-RISC-V Steel API is a set of function calls to configure and control RISC-V Steel SoC IP, making it easier to develop applications for it.
+## Introduction
 
-To start using the API in your application you must include the `rvsteel-api.h` header in your source code:
+The Software API of RISC-V Steel System-on-Chip IP provides function calls to configure and control the devices in the system, making it easy to write application for it.
+
+To use it in your application you must include the `rvsteel-api.h` header in the source code of your application:
 
 ```c
 #include "rvsteel-api.h"
-
-// ... your code ...
 ```
 
-This header file is saved in the `software-dev/rvsteel-api/` folder along with its source code, `rvsteel-api.c`. The API is compiled and linked to your project by default if you use the template project (located in `software-dev/template-project/`).
-
-The following sections contain detailed information about the available API calls.
+The sections below contain documentation for the available API calls.
 
 ## UART communication
+---
+#### uart_send_char { class="api-hidden" }
 
 `#!c void uart_send_char(const char c);`
 { class="api-call" }
@@ -31,6 +32,8 @@ uart_send_char('\n');
 ```
 </div>
 
+#### uart_send_string { class="api-hidden" }
+
 `#!c void uart_send_string(const char *str);`
 { class="api-call" }
 
@@ -45,6 +48,8 @@ This is a blocking call, that is, the execution of the program is halted until t
 uart_send_string("Hello World!");
 ```
 </div>
+
+#### uart_read_last_char { class="api-hidden" }
 
 `#!c volatile char uart_read_last_char();`
 { class="api-call" }
@@ -65,6 +70,8 @@ if (uart_read_last_char() == '\n')
 </div>
 
 ## Interrupt handling
+---
+#### irq_enable_all { class="api-hidden" }
 
 `#!c void irq_enable_all();`
 { class="api-call" }
@@ -79,6 +86,8 @@ irq_enable_all();
 ```
 </div>
 
+#### irq_disable_all { class="api-hidden" }
+
 `#!c void irq_disable_all();`
 { class="api-call" }
 
@@ -91,6 +100,8 @@ Disable external, timer and software interrupts by clearing the global interrupt
 irq_disable_all();
 ```
 </div>
+
+#### irq_set_interrupt_handler { class="api-hidden" }
 
 `#!c void irq_set_interrupt_handler(void (*interrupt_handler)());`
 { class="api-call" }
@@ -121,6 +132,9 @@ int main()
 </div>
 
 ## Miscellaneous
+---
+
+#### busy_wait { class="api-hidden" }
 
 `#!c void busy_wait();`
 { class="api-call" }

@@ -16,7 +16,7 @@ RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and U
 
 - [Documentation](https://riscv-steel.github.io/riscv-steel/soc/)
 - [Software Guide](https://riscv-steel.github.io/riscv-steel/software-guide/)
-- [Demo Project](https://riscv-steel.github.io/riscv-steel/getting-started/) (for Digilent Arty and Cmod boards)
+- [Demo Project](https://riscv-steel.github.io/riscv-steel/get-started/) (for Digilent Arty and Cmod boards)
 
 ## License
 
