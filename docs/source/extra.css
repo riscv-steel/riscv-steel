@@ -84,13 +84,13 @@ body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul
   background-color: transparent;
 }
 
-/*.md-search__input {
+.md-search__input {
   background: #ffffff1a;
   height: 100%;
   width: 100%;
   z-index: 2;
   border-radius: .1em;
-}*/
+}
 
 .home-title {
   height: 60px;
@@ -100,9 +100,16 @@ body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul
 .home-title h1 {
   display: inline-block;
   vertical-align: middle;
+  margin-top: 0px !important;
   margin: 0px !important;
   line-height: 1.1em !important;
   color: #222222 !important;
+}
+
+.md-content__inner:before {
+  content: "";
+  display: block;
+  height: 0px;
 }
 
 #risc-v-steelfree-and-open-risc-v-ip {
@@ -110,6 +117,10 @@ body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul
 }
 
 #available-ip {
+  margin-bottom: -0.6em;
+}
+
+#what-is-risc-v-steel {
   margin-bottom: -0.6em;
 }
 
@@ -129,5 +140,21 @@ body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul
 
 .api-doc {
   font-size: 1em;
-  margin-left: 1em;
+  margin-left: 2em;
+}
+
+.main-section-title {
+  margin: 0px !important;
+}
+
+.main-section-subtitle {
+  margin-top: 0px !important;
+}
+
+.api-hidden {
+  visibility: hidden;
+  height: 0px;
+  font-size: 0px !important;
+  line-height: 0px !important;
+  margin: 0px !important;
 }

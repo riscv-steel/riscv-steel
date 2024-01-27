@@ -1,10 +1,11 @@
-# RISC-V Steel System-on-Chip IP </br><small>Reference Guide</small>
+# RISC-V Steel System-on-Chip { class="main-section-title" }
+<h2 class="main-section-subtitle">Documentation</h2>
 
 ## Introduction
 
-RISC-V Steel SoC IP is a system-on-chip design with RISC-V Steel Processor Core, RAM memory and UART module. It comes with an [API for software development](software-guide.md#soc-ip-api-reference) that makes it easier for hardware engineers to develop and deploy RISC-V embedded applications.
+RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and UART modules to its design. It comes with a [Software API](api.md) that makes it easy to develop new RISC-V applications.
 
-In this Reference Guide you find information on the SoC IP hardware design. See the [Software Guide](software-guide.md) for instructions on how to write, compile and run software for the SoC IP.
+This page contains information about the SoC IP hardware design. Check out the [Software Guide](software-guide.md) for instructions on how to write, compile and run software for the SoC IP.
 
 ## Design overview
 
@@ -16,13 +17,13 @@ In this Reference Guide you find information on the SoC IP hardware design. See 
 
 **Table 1** - RISC-V Steel SoC IP source files
 
-| Module name      | File                 | Location                |  Description                    |
-| ---------------- | -------------------- | ----------------------- |------------------------------ |
-| **rvsteel_soc**  | `rvsteel_soc.v`      | `ip/soc/` | Top module of RISC-V Steel SoC IP |
-| **rvsteel_core** | `rvsteel_core.v`     | `ip/core/` | RISC-V Steel Processor Core              |
-| **ram_memory**   | `ram_memory.v`       | `ip/soc` | RAM memory                     |
-| **uart**         | `uart.v`             | `ip/soc` | UART                           |
-| **system_bus**   | `system_bus.v`       | `ip/soc` | System Bus                     |
+| Module name      | Source file          | Description                       |
+| ---------------- | -------------------- | --------------------------------- |
+| **rvsteel_soc**  | `ip/rvsteel_soc.v`   | Top module of RISC-V Steel SoC IP |
+| **rvsteel_core** | `ip/rvsteel_core.v`  | RISC-V Steel Processor Core       |
+| **ram_memory**   | `ip/ram_memory.v`    | RAM memory                        |
+| **uart**         | `ip/uart.v`          | UART                              |
+| **system_bus**   | `ip/system_bus.v`    | System Bus                        |
 
 ## I/O signals
 
@@ -151,24 +152,6 @@ Finally, you have to instantiate the new device in the `rvsteel_soc` module and 
 
   );
 ```
-
-## Components
-
-### RISC-V Steel Processor Core
-
-RISC-V Steel Processor Core is the processing unit of RISC-V Steel SoC IP. Its design is quite large so it has its own [Reference Guide](core.md). Please check it out for more information.
-
-### RAM memory
-
-RISC-V Steel SoC IP has a RAM memory tightly coupled to the processor core, with read/write latency of a single clock cycle. The memory size can be changed by adjusting the `MEMORY_SIZE` parameter (see [Configuration](#configuration)). 
-
-### UART
-
-RISC-V Steel SoC IP has an UART module with configurable baud rate. The module works with 8 data bits, 1 stop bit, no parity bits and no flow control signals (most UARTs work the same way).
-
-### System Bus
-
-The system bus module interconnects RISC-V Steel Processor Core (manager device) to the UART and the RAM memory (subordinate devices) as shown in [Figure 1](#figure-1). The module multiplexes the signals from the processor's I/O interface to the appropriate subordinate device according to the address the processor requests.
 
 </br>
 </br>
