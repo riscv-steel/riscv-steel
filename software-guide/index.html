@@ -24,11 +24,14 @@
     
     
       
-        <title>Software Guide - RISC-V Steel Docs</title>
+        <title>Software Guide - RISC-V Steel</title>
       
     
     
       <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -69,7 +72,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -78,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#software-guide" class="md-skip">
+        <a href="#risc-v-steel-system-on-chip" class="md-skip">
           Skip to content
         </a>
       
@@ -90,9 +98,11 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="RISC-V Steel Docs" class="md-header__button md-logo" aria-label="RISC-V Steel Docs" data-md-component="logo">
+    <a href=".." title="RISC-V Steel" class="md-header__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
       
   <img src="../images/rvsteel-logo-white-small.svg" alt="logo">
 
@@ -105,7 +115,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            RISC-V Steel Docs
+            RISC-V Steel
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -118,8 +128,8 @@
       </div>
     </div>
     
+      
     
-      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -182,136 +192,6 @@
       
         
           
-            
-<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
-        
-  
-    
-  
-  Homepage
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../getting-started/" class="md-tabs__link">
-        
-  
-    
-  
-  Getting Started
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../core/" class="md-tabs__link">
-        
-  
-    
-  
-  Processor Core IP
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../soc/" class="md-tabs__link">
-        
-  
-    
-  
-  System-on-Chip IP
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-    
-  
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
-        
-  
-    
-  
-  Software Guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../api/" class="md-tabs__link">
-        
-  
-    
-  
-  RISC-V Steel API
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../license/" class="md-tabs__link">
-        
-  
-    
-  
-  License
-
-      </a>
-    </li>
-  
-
-      
-    </ul>
-  </div>
-</nav>
-          
         
       
       <main class="md-main" data-md-component="main">
@@ -325,19 +205,15 @@
                     
 
 
-  
 
-
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="RISC-V Steel Docs" class="md-nav__button md-logo" aria-label="RISC-V Steel Docs" data-md-component="logo">
+    <a href=".." title="RISC-V Steel" class="md-nav__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
       
   <img src="../images/rvsteel-logo-white-small.svg" alt="logo">
 
     </a>
-    RISC-V Steel Docs
+    RISC-V Steel
   </label>
   
     <div class="md-nav__source">
@@ -381,11 +257,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/" class="md-nav__link">
+      <a href="../get-started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Getting Started
+    Get Started!
   </span>
   
 
@@ -396,6 +272,45 @@
     
       
       
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Processor Core
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Processor Core
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
   
   
   
@@ -405,7 +320,7 @@
         
   
   <span class="md-ellipsis">
-    Processor Core IP
+    Documentation
   </span>
   
 
@@ -413,9 +328,56 @@
     </li>
   
 
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
     
       
       
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    System-on-Chip
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            System-on-Chip
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
   
   
   
@@ -425,7 +387,7 @@
         
   
   <span class="md-ellipsis">
-    System-on-Chip IP
+    Documentation
   </span>
   
 
@@ -433,9 +395,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
     
@@ -487,36 +450,54 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
+  <a href="#first-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Introduction
+      First steps
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#make-a-copy-of-the-template-project" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      Make a copy of the template project
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#building-a-new-application" class="md-nav__link">
+  <a href="#configure-your-project" class="md-nav__link">
     <span class="md-ellipsis">
-      Building a new application
+      Configure your project
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-the-application" class="md-nav__link">
+  <a href="#write-your-application" class="md-nav__link">
     <span class="md-ellipsis">
-      Running the application
+      Write your application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-and-generate-the-memory-init-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compile and generate the memory init file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run the application
     </span>
   </a>
   
@@ -529,9 +510,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -541,11 +523,19 @@
         
   
   <span class="md-ellipsis">
-    RISC-V Steel API
+    Software API
   </span>
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -577,6 +567,86 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      First steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#make-a-copy-of-the-template-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Make a copy of the template project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-your-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure your project
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-your-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Write your application
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-and-generate-the-memory-init-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compile and generate the memory init file
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run the application
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
@@ -588,11 +658,11 @@
   
 
 
-<h1 id="software-guide">Software Guide</h1>
-<h2 id="introduction">Introduction</h2>
-<p>In this guide you find instruction on how to write, compile and run software applications for RISC-V Steel SoC IP.</p>
-<h2 id="prerequisites">Prerequisites</h2>
-<p>To compile, assemble and link programs for the RISC-V architecture you need the <a href="https://github.com/riscv/riscv-gnu-toolchain">RISC-V GNU Toolchain</a>. Follow the steps below to install and configure it for use with RISC-V Steel:</p>
+<h1 class="main-section-title" id="risc-v-steel-system-on-chip">RISC-V Steel System-on-Chip</h1>
+<h2 class="main-section-subtitle">Software Guide</h2>
+
+<h2 id="first-steps">First steps</h2>
+<p>To compile, assemble and link programs for RISC-V machines you need the <a href="https://github.com/riscv/riscv-gnu-toolchain">RISC-V GNU Toolchain</a>. The steps below show how to install and configure the toolchain for use with RISC-V Steel.</p>
 <h4>1. Get the source files</h4>
 
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone https://github.com/riscv/riscv-gnu-toolchain
@@ -621,78 +691,78 @@
 </div>
 <h4>3. Configure it for RISC-V Steel</h4>
 
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>./configure --with-arch=rv32i --with-abi=ilp32 --prefix=/opt/riscv
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cd riscv-gnu-toolchain
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>./configure --with-arch=rv32i --with-abi=ilp32 --prefix=/opt/riscv
 </span></code></pre></div>
 <h4>4. Compile and install</h4>
 
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>make -j $(nproc)
 </span></code></pre></div>
-<h2 id="building-a-new-application">Building a new application</h2>
-<h4>1. Make a copy of the software development template project.</h4>
-
-<p>The template project is all you need to start and is located at <code>software-dev/template-project/</code>.</p>
-<h4>2. Edit the Makefile.</h4>
-
-<p>The template project comes with a Makefile to help you automate the tasks of compiling the software and generating a memory initialization file.</p>
-<p>The beginning of the Makefile (reproduced below) contain the four variables you need to set to configure the project:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># Configure your project by setting the variables below
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a># -------------------------------------------------------------------------------------------------
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a># Name of the program to be created
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>PROGRAM_NAME      ?= main
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a># Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>MEMORY_SIZE       ?= 8192
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a># Path to RISC-V Steel API
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>RVSTEEL_API_DIR   ?= ../rvsteel-api
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a># The full path to RISC-V GNU Toolchain binaries in this machine + RISC-V binaries prefix
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
-</span></code></pre></div>
-<h4>3. Write your application.</h4>
-
+<h2 id="make-a-copy-of-the-template-project">Make a copy of the template project</h2>
+<p>Once you have installed the RISC-V GNU Toolchain you can start a new application. The easiest way to start is making a copy of the template project (located at <code>software-dev/template-project/</code>). The template project comes with a Makefile to help you automate the tasks of compiling the software and generating a memory initialization file for the SoC IP.</p>
+<h2 id="configure-your-project">Configure your project</h2>
+<p>You configure the template project by editing the Makefile in it. The Makefile starts with the definition of the four variables you need to set for your project. The expected value for these variables are described in the table below.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PROGRAM_NAME</code></td>
+<td>The name of the ELF executable to be generated. Ex: <em>myapp</em>.</td>
+</tr>
+<tr>
+<td><code>MEMORY_SIZE</code></td>
+<td>The size you set for the RAM memory of the SoC IP (the same value you provided </br>for the <code>MEMORY_SIZE</code> parameter when instantiating the <code>rvsteel_soc</code> module).</td>
+</tr>
+<tr>
+<td><code>RVSTEEL_API_DIR</code></td>
+<td>Path to the directory containing the source files of the <a href="../api/">Software API</a>.</td>
+</tr>
+<tr>
+<td><code>RISCV_PREFIX</code></td>
+<td>Path to the RISC-V GNU Toolchain binaries in your machine + RISC-V binaries prefix.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="write-your-application">Write your application</h2>
 <p>The template project comes with a <code>main.c</code> file containing a Hello World example. You can edit this file, rename it or delete it.</p>
 <p>You can add as many source files to the project as you want. The Makefile was written so that all <code>*.c</code> source files you add to the project get automatically compiled when you run <code>make</code>.</p>
-<p>To make it easier to develop your application, RISC-V Steel API provides function calls to configure and control the SoC IP. <a href="#rvsteel-api-reference">Check it out</a> for more information.</p>
-<h4>4. Build your application.</h4>
-
-<p>Run <code>make</code> from the project root folder to build your application and generate a memory initialization file. A successfull build output is similar to this:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Building RISC-V Steel API: ok.
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Making my_app.o: ok.
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Making srcfile1.o: ok.
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Making srcfile2.o: ok.
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Linking my_app.elf: ok.
+<p>The SoC IP has an API with functions you can call in your software to configure and control the devices in it. The <a href="../api/">Software API</a> page contains the documentation for the available API calls.</p>
+<h2 id="compile-and-generate-the-memory-init-file">Compile and generate the memory init file</h2>
+<p>Run <code>make</code> to build your application and generate the memory initialization file. A successfull build output is similar to this:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Generated files:
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>-- ELF executable   : build/my_app.elf
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>-- Disassembly      : build/my_app.objdump
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>-- Memory init file : build/my_app.hex
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>The memory size is set to 8192 bytes.
+</span></code></pre></div>
+<p>The <code>.hex</code> file can now be used to initialize RISC-V Steel SoC IP memory and run the application.</p>
+<h2 id="run-the-application">Run the application</h2>
+<p>When you synthesize the SoC IP for your FPGA, the data to be loaded into the SoC IP memory gets embedded in the FPGA bitstream. Every time you power on your FPGA the memory gets initialized and your program runs immediately afterwards.</p>
+<p>You define the initial content of the SoC IP memory through the <code>MEMORY_INIT_FILE</code> parameter. This parameter expects a string with the path to the memory initialization file you generated in the steps above.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// This example shows an instantiation of the SoC IP top module </span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">// configured to load the contents of a file named `hello-world.hex`</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">// The initial contents of the SoC IP memory gets embedded in the</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">// FPGA bitstream when the module is synthesized</span>
 </span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Generated files:
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>-- ELF executable   : build/my_app.elf
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>-- Disassembly      : build/my_app.objdump
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>-- Memory init file : build/my_app.hex
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>The memory size is set to 8192 bytes.
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">rvsteel_soc</span><span class="w">                  </span><span class="p">#(</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="p">.</span><span class="n">CLOCK_FREQUENCY</span><span class="w">          </span><span class="p">(</span><span class="mh">50000000</span><span class="w">           </span><span class="p">),</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="p">.</span><span class="n">UART_BAUD_RATE</span><span class="w">           </span><span class="p">(</span><span class="mh">9600</span><span class="w">               </span><span class="p">),</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="p">.</span><span class="n">MEMORY_SIZE</span><span class="w">              </span><span class="p">(</span><span class="mh">8192</span><span class="w">               </span><span class="p">),</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="p">.</span><span class="n">MEMORY_INIT_FILE</span><span class="w">         </span><span class="p">(</span><span class="s">&quot;hello-world.hex&quot;</span><span class="w">  </span><span class="p">),</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="p">.</span><span class="n">BOOT_ADDRESS</span><span class="w">             </span><span class="p">(</span><span class="mh">32&#39;h00000000</span><span class="w">       </span><span class="p">))</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">rvsteel_soc_instance</span><span class="w">          </span><span class="p">(</span><span class="w"> </span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="p">.</span><span class="n">clock</span><span class="w">                    </span><span class="p">(</span><span class="n">clock_50mhz</span><span class="w">        </span><span class="p">),</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="p">.</span><span class="n">reset</span><span class="w">                    </span><span class="p">(</span><span class="n">reset</span><span class="w">              </span><span class="p">),</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span><span class="p">.</span><span class="n">uart_rx</span><span class="w">                  </span><span class="p">(</span><span class="n">uart_rx</span><span class="w">            </span><span class="p">),</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="p">.</span><span class="n">uart_tx</span><span class="w">                  </span><span class="p">(</span><span class="n">uart_tx</span><span class="w">            </span><span class="p">));</span>
 </span></code></pre></div>
-<p>The generated <code>.hex</code> file can now be used to initialize RISC-V Steel SoC IP memory and run the application.</p>
-<h2 id="running-the-application">Running the application</h2>
-<h4>1. Specify the path to the memory initialization file</h4>
-
-<p>The SoC IP has a parameter called <code>MEMORY_INIT_FILE</code> that can be set when instantiating its top module. If you specify this parameter the RAM memory will be initialized with the contents of the memory file that you provided. </p>
-<p>In the example below (that you can find at <code>hello-world/arty-a7/hello-world-arty-a7.v</code>) an instance of the SoC IP for the <a href="https://digilent.com/reference/programmable-logic/arty-a7/reference-manual">Digilent Arty-A7 FPGA board</a> is configured to load a Hello World program:</p>
-<div class="language-verilog highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">rvsteel_soc</span><span class="w">                  </span><span class="p">#(</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="p">.</span><span class="n">CLOCK_FREQUENCY</span><span class="w">          </span><span class="p">(</span><span class="mh">50000000</span><span class="w">           </span><span class="p">),</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="p">.</span><span class="n">UART_BAUD_RATE</span><span class="w">           </span><span class="p">(</span><span class="mh">9600</span><span class="w">               </span><span class="p">),</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="p">.</span><span class="n">MEMORY_SIZE</span><span class="w">              </span><span class="p">(</span><span class="mh">8192</span><span class="w">               </span><span class="p">),</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="p">.</span><span class="n">MEMORY_INIT_FILE</span><span class="w">         </span><span class="p">(</span><span class="s">&quot;hello-world.hex&quot;</span><span class="w">  </span><span class="p">),</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="p">.</span><span class="n">BOOT_ADDRESS</span><span class="w">             </span><span class="p">(</span><span class="mh">32&#39;h00000000</span><span class="w">       </span><span class="p">))</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">rvsteel_soc_instance</span><span class="w">          </span><span class="p">(</span><span class="w"> </span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="p">.</span><span class="n">clock</span><span class="w">                    </span><span class="p">(</span><span class="n">clock_50mhz</span><span class="w">        </span><span class="p">),</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="p">.</span><span class="n">reset</span><span class="w">                    </span><span class="p">(</span><span class="n">reset</span><span class="w">              </span><span class="p">),</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="p">.</span><span class="n">uart_rx</span><span class="w">                  </span><span class="p">(</span><span class="n">uart_rx</span><span class="w">            </span><span class="p">),</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="p">.</span><span class="n">uart_tx</span><span class="w">                  </span><span class="p">(</span><span class="n">uart_tx</span><span class="w">            </span><span class="p">));</span>
-</span></code></pre></div>
-<h4>2. Set the boot address (if needed)</h4>
-
-<p>If you did not use the template project for making your application then you'll need to set the <code>BOOT_ADDRESS</code> parameter to point to the entry symbol of your application.</p>
-<p>The <code>BOOT_ADDRESS</code> parameter does not need to be set if you generated the memory init file with the template project Makefile. In this case, a small boot code is automatically added to your application and the linker script in the template project places this boot code at <code>0x00000000</code> (which is the default boot address).</p>
-<h4>3. Update the bitstream of your FPGA</h4>
-
-<p>After configuring the parameters of your instance of the SoC IP, generate a new bitstream and upload it to your FPGA. The application will start running automatically when you power up the board.</p>
 <p></br>
 </br></p>
 
@@ -716,12 +786,6 @@
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
-        
-          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-  Back to top
-</button>
         
       </main>
       
@@ -755,7 +819,7 @@
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs", "toc.integrate", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>

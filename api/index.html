@@ -24,11 +24,14 @@
     
     
       
-        <title>RISC-V Steel API - RISC-V Steel Docs</title>
+        <title>Software API - RISC-V Steel</title>
       
     
     
       <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -69,7 +72,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -78,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#risc-v-steel-api" class="md-skip">
+        <a href="#risc-v-steel-system-on-chip" class="md-skip">
           Skip to content
         </a>
       
@@ -90,9 +98,11 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="RISC-V Steel Docs" class="md-header__button md-logo" aria-label="RISC-V Steel Docs" data-md-component="logo">
+    <a href=".." title="RISC-V Steel" class="md-header__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
       
   <img src="../images/rvsteel-logo-white-small.svg" alt="logo">
 
@@ -105,21 +115,21 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            RISC-V Steel Docs
+            RISC-V Steel
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              RISC-V Steel API
+              Software API
             
           </span>
         </div>
       </div>
     </div>
     
+      
     
-      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -182,136 +192,6 @@
       
         
           
-            
-<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
-  <div class="md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
-        
-  
-    
-  
-  Homepage
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../getting-started/" class="md-tabs__link">
-        
-  
-    
-  
-  Getting Started
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../core/" class="md-tabs__link">
-        
-  
-    
-  
-  Processor Core IP
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../soc/" class="md-tabs__link">
-        
-  
-    
-  
-  System-on-Chip IP
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../software-guide/" class="md-tabs__link">
-        
-  
-    
-  
-  Software Guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-    
-  
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
-        
-  
-    
-  
-  RISC-V Steel API
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../license/" class="md-tabs__link">
-        
-  
-    
-  
-  License
-
-      </a>
-    </li>
-  
-
-      
-    </ul>
-  </div>
-</nav>
-          
         
       
       <main class="md-main" data-md-component="main">
@@ -325,19 +205,15 @@
                     
 
 
-  
 
-
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="RISC-V Steel Docs" class="md-nav__button md-logo" aria-label="RISC-V Steel Docs" data-md-component="logo">
+    <a href=".." title="RISC-V Steel" class="md-nav__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
       
   <img src="../images/rvsteel-logo-white-small.svg" alt="logo">
 
     </a>
-    RISC-V Steel Docs
+    RISC-V Steel
   </label>
   
     <div class="md-nav__source">
@@ -381,11 +257,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/" class="md-nav__link">
+      <a href="../get-started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Getting Started
+    Get Started!
   </span>
   
 
@@ -396,6 +272,45 @@
     
       
       
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Processor Core
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Processor Core
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
   
   
   
@@ -405,7 +320,7 @@
         
   
   <span class="md-ellipsis">
-    Processor Core IP
+    Documentation
   </span>
   
 
@@ -413,9 +328,56 @@
     </li>
   
 
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
     
       
       
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    System-on-Chip
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            System-on-Chip
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
   
   
   
@@ -425,7 +387,7 @@
         
   
   <span class="md-ellipsis">
-    System-on-Chip IP
+    Documentation
   </span>
   
 
@@ -433,9 +395,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -453,9 +416,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
     
@@ -474,7 +438,7 @@
           
   
   <span class="md-ellipsis">
-    RISC-V Steel API
+    Software API
   </span>
   
 
@@ -485,7 +449,7 @@
         
   
   <span class="md-ellipsis">
-    RISC-V Steel API
+    Software API
   </span>
   
 
@@ -507,11 +471,53 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#uart-communication" class="md-nav__link">
     <span class="md-ellipsis">
       UART communication
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="UART communication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uart_send_char" class="md-nav__link">
+    <span class="md-ellipsis">
+      uart_send_char
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart_send_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      uart_send_string
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart_read_last_char" class="md-nav__link">
+    <span class="md-ellipsis">
+      uart_read_last_char
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -522,6 +528,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Interrupt handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#irq_enable_all" class="md-nav__link">
+    <span class="md-ellipsis">
+      irq_enable_all
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#irq_disable_all" class="md-nav__link">
+    <span class="md-ellipsis">
+      irq_disable_all
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#irq_set_interrupt_handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      irq_set_interrupt_handler
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -531,11 +570,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Miscellaneous">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#busy_wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      busy_wait
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -568,6 +630,149 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uart-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      UART communication
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UART communication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uart_send_char" class="md-nav__link">
+    <span class="md-ellipsis">
+      uart_send_char
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart_send_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      uart_send_string
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart_read_last_char" class="md-nav__link">
+    <span class="md-ellipsis">
+      uart_read_last_char
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interrupt-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interrupt handling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interrupt handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#irq_enable_all" class="md-nav__link">
+    <span class="md-ellipsis">
+      irq_enable_all
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#irq_disable_all" class="md-nav__link">
+    <span class="md-ellipsis">
+      irq_disable_all
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#irq_set_interrupt_handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      irq_set_interrupt_handler
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#miscellaneous" class="md-nav__link">
+    <span class="md-ellipsis">
+      Miscellaneous
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Miscellaneous">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#busy_wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      busy_wait
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
@@ -579,16 +784,18 @@
   
 
 
-<h1 id="risc-v-steel-api">RISC-V Steel API</h1>
-<p>RISC-V Steel API is a set of function calls to configure and control RISC-V Steel SoC IP, making it easier to develop applications for it.</p>
-<p>To start using the API in your application you must include the <code>rvsteel-api.h</code> header in your source code:</p>
+<h1 class="main-section-title" id="risc-v-steel-system-on-chip">RISC-V Steel System-on-Chip</h1>
+<h2 class="main-section-subtitle">Software API</h2>
+
+<h2 id="introduction">Introduction</h2>
+<p>The Software API of RISC-V Steel System-on-Chip IP provides function calls to configure and control the devices in the system, making it easy to write application for it.</p>
+<p>To use it in your application you must include the <code>rvsteel-api.h</code> header in the source code of your application:</p>
 <div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;rvsteel-api.h&quot;</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">// ... your code ...</span>
 </span></code></pre></div>
-<p>This header file is saved in the <code>software-dev/rvsteel-api/</code> folder along with its source code, <code>rvsteel-api.c</code>. The API is compiled and linked to your project by default if you use the template project (located in <code>software-dev/template-project/</code>).</p>
-<p>The following sections contain detailed information about the available API calls.</p>
+<p>The sections below contain documentation for the available API calls.</p>
 <h2 id="uart-communication">UART communication</h2>
+<hr />
+<h4 class="api-hidden" id="uart_send_char">uart_send_char</h4>
 <p class="api-call"><code class="language-c highlight"><span class="kt">void</span><span class="w"> </span><span class="nf">uart_send_char</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="p">);</span></code></p>
 <div class="api-doc">
 <p>Send character <strong>c</strong> over the UART.</p>
@@ -598,6 +805,7 @@
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">uart_send_char</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">);</span>
 </span></code></pre></div>
 </div>
+<h4 class="api-hidden" id="uart_send_string">uart_send_string</h4>
 <p class="api-call"><code class="language-c highlight"><span class="kt">void</span><span class="w"> </span><span class="nf">uart_send_string</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str</span><span class="p">);</span></code></p>
 <div class="api-doc">
 <p>Send the null-terminated C-string <strong>str</strong> over the UART.</p>
@@ -607,6 +815,7 @@
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">uart_send_string</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span>
 </span></code></pre></div>
 </div>
+<h4 class="api-hidden" id="uart_read_last_char">uart_read_last_char</h4>
 <p class="api-call"><code class="language-c highlight"><span class="k">volatile</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="nf">uart_read_last_char</span><span class="p">();</span></code></p>
 <div class="api-doc">
 <p>Return the last character received by the UART. The null character <code>'\0'</code> is returned if no character was received since power up.</p>
@@ -620,6 +829,8 @@
 </span></code></pre></div>
 </div>
 <h2 id="interrupt-handling">Interrupt handling</h2>
+<hr />
+<h4 class="api-hidden" id="irq_enable_all">irq_enable_all</h4>
 <p class="api-call"><code class="language-c highlight"><span class="kt">void</span><span class="w"> </span><span class="nf">irq_enable_all</span><span class="p">();</span></code></p>
 <div class="api-doc">
 <p>Enable external, timer and software interrupts by setting the global interrupt-enable bit in the <strong>mstatus</strong> CSR and the corresponding interrupt-enable bits in the <strong>mie</strong> CSR.</p>
@@ -628,6 +839,7 @@
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">irq_enable_all</span><span class="p">();</span>
 </span></code></pre></div>
 </div>
+<h4 class="api-hidden" id="irq_disable_all">irq_disable_all</h4>
 <p class="api-call"><code class="language-c highlight"><span class="kt">void</span><span class="w"> </span><span class="nf">irq_disable_all</span><span class="p">();</span></code></p>
 <div class="api-doc">
 <p>Disable external, timer and software interrupts by clearing the global interrupt-enable bit in the <strong>mstatus</strong> CSR and the corresponding interrupt-enable bits in the <strong>mie</strong> CSR.</p>
@@ -636,6 +848,7 @@
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">irq_disable_all</span><span class="p">();</span>
 </span></code></pre></div>
 </div>
+<h4 class="api-hidden" id="irq_set_interrupt_handler">irq_set_interrupt_handler</h4>
 <p class="api-call"><code class="language-c highlight"><span class="kt">void</span><span class="w"> </span><span class="nf">irq_set_interrupt_handler</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">interrupt_handler</span><span class="p">)());</span></code></p>
 <div class="api-doc">
 <p>Set the interrupt handler, a routine called everytime an interrupt is accepted.</p>
@@ -659,6 +872,8 @@
 </span></code></pre></div>
 </div>
 <h2 id="miscellaneous">Miscellaneous</h2>
+<hr />
+<h4 class="api-hidden" id="busy_wait">busy_wait</h4>
 <p class="api-call"><code class="language-c highlight"><span class="kt">void</span><span class="w"> </span><span class="nf">busy_wait</span><span class="p">();</span></code></p>
 <div class="api-doc">
 <p>Enter into an infinite loop that can only be stopped by an interrupt request.</p>
@@ -705,12 +920,6 @@
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
-          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-  Back to top
-</button>
-        
       </main>
       
         <footer class="md-footer">
@@ -743,7 +952,7 @@
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.tabs", "toc.integrate", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
