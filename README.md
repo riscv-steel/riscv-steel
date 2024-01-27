@@ -3,28 +3,23 @@
 
 **RISC-V Steel** is a free and open collection of RISC-V IP that is simple, robust and easy to use. It features a 32-bit RISC-V processor core, a configurable system-on-chip design and a suite of software and hardware tools aimed to speed up building RISC-V embedded applications.
 
-- [Get Started!](https://riscv-steel.github.io/riscv-steel/getting-started/)
-- [Documentation](https://riscv-steel.github.io/riscv-steel/)
+* [Documentation](https://riscv-steel.github.io/riscv-steel/)
 
+## Available IP
 
-## Available RISC-V IP
+#### Processor Core
 
-#### System-on-Chip IP
-
-A system-on-chip design with RISC-V Steel Processor Core, memory and UART module.
-
-- [Reference](https://riscv-steel.github.io/riscv-steel/soc/)
-- [Software Guide](https://riscv-steel.github.io/riscv-steel/software-guide/)
-
-#### Processor Core IP
-
-A 32-bit processor core design implementing the RV32I ISA, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
+RISC-V Steel Processor Core implements the RV32I ISA, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
 
 - [Reference](https://riscv-steel.github.io/riscv-steel/core/)
 
-## Getting Started
+#### System-on-Chip
 
-The [Getting Started Guide](https://riscv-steel.github.io/riscv-steel/getting-started/) shows you how to synthesize the [Hello World](https://github.com/riscv-steel/riscv-steel/tree/main/hello-world) demo for some popular FPGA boards. The demo is an instance of RISC-V Steel SoC IP that sends a Hello World message to a host computer via UART protocol. Its goal is to introduce you to the SoC design so that you can expand it and run your own software.
+RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and UART modules to its design. It features a toolchain for software development and demo projects.
+
+- [Reference](https://riscv-steel.github.io/riscv-steel/soc/)
+- [Software Guide](https://riscv-steel.github.io/riscv-steel/software-guide/)
+- [Demo Project](https://riscv-steel.github.io/riscv-steel/getting-started/) (for Digilent Arty and Cmod FPGA boards)
 
 ## License
 
