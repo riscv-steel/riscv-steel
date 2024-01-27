@@ -1,49 +1,10 @@
-/**************************************************************************************************
+// ----------------------------------------------------------------------------
+// Copyright (c) 2020-2024 RISC-V Steel contributors
+//
+// This work is licensed under the MIT License, see LICENSE file for details.
+// SPDX-License-Identifier: MIT
+// ----------------------------------------------------------------------------
 
-MIT License
-
-Copyright (c) 2020-present Rafael Calcada
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-**************************************************************************************************/
-
-/**************************************************************************************************
-
-Project Name:  RISC-V Steel System-on-Chip - UART
-Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada
-E-mail:        rafaelcalcada@gmail.com
-
-Top Module:    uart
-
-**************************************************************************************************/
-
-/**************************************************************************************************
-
-  - This UART module works with 8 data bits, 1 stop bit, no parity bit and no flow control signals
-  - It only partially implements AXI4 Slave Interface requirements
-  - The baud rate can be adjusted to any value as long as the following condition is satisfied:
-
-    CLOCK_FREQUENCY / UART_BAUD_RATE > 50        (clock cycles per baud)
-
-**************************************************************************************************/
 module uart #(
 
   parameter CLOCK_FREQUENCY = 50000000,

@@ -52,7 +52,7 @@ plugins:
     - search
 docs_dir: source/
 remote_branch: docs
-copyright: Copyright &copy; 2020-present Rafael Calcada
+copyright: Copyright (c) RISC-V Steel contributors
 nav:
     - Homepage: 'index.md'
     - Getting Started: 'getting-started.md'    
