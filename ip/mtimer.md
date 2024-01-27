@@ -15,15 +15,18 @@ MTIMER IP has a 64-bit count register `MTIME` and a 64-bit comparison register `
 
 The machine timer interrupt becomes pending whenever `MTIME` contains a value greater than or equal to `MTIMECMP`. The interrupt can be cleared by updating `MTIME` or `MTIMECMP`.
 
+`output irq` is set high whenever `MTIME >= MTIMECMP`. The `irq_response` input is not used, left for future implementations.
+
+
 ## Registers
 
 | Name                       | Offset | Bits  | Description            |
 |:---------------------------|:-------|------ |:-----------------------|
-| [`CR`](#CR)                | 0x0    |    32 | Control register       |
-| [`MTIMEL`](#MTIMEL)        | 0x4    |    32 | Timer value Low        |
-| [`MTIMEH`](#MTIMEH)        | 0x8    |    32 | Timer value High       |
-| [`MTIMECMPL`](#MTIMECMPL)  | 0xC    |    32 | Timer compare Low      |
-| [`MTIMECMPH`](#MTIMECMPH)  | 0x10   |    32 | Timer compare High     |
+| [`CR`](#cr)                | 0x0    |    32 | Control register       |
+| [`MTIMEL`](#mtimel)        | 0x4    |    32 | Timer value Low        |
+| [`MTIMEH`](#mtimeh)        | 0x8    |    32 | Timer value High       |
+| [`MTIMECMPL`](#mtimecmpl)  | 0xC    |    32 | Timer compare Low      |
+| [`MTIMECMPH`](#mtimecmph)  | 0x10   |    32 | Timer compare High     |
 
 
 ### MTIMER control register (MTIMER_CR)
@@ -57,6 +60,6 @@ The machine timer interrupt becomes pending whenever `MTIME` contains a value gr
 
 ### MTIMER compare register (MTIMER_MTIMECMPH)
 
-- Address offset: `0xC`
+- Address offset: `0x10`
 - Reset value: `0x0`
 - Bits 31:0 `MTIMECMPH`: Timer compare High
