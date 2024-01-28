@@ -5,30 +5,39 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __RVSTEEL_SOC_IP_API__
-#define __RVSTEEL_SOC_IP_API__
+#ifndef __RVSTEEL_API__
+#define __RVSTEEL_API__
 
-/// Send a single character over the UART
-void uart_send_char(const char c);
+#include "rvsteel-gcc.h"
+#include "rvsteel-csr.h"
 
-/// Send a C-string over the UART
-void uart_send_string(const char *str);
+#define __NOP()                             __ASM_VOLATILE ("nop")
 
-/// Return the last character received over the UART
-volatile char uart_read_last_char();
+#define __ECALL()                           __ASM_VOLATILE ("ecall")
 
-/// Enable external, timer and software interrupts
-void irq_enable_all();
+#define __EBREAK()                           __ASM_VOLATILE ("ebreak")
 
-/// Disable external, timer and software interrupts
-void irq_disable_all();
 
-/// Sets the function to be called on interrupts
-void irq_set_interrupt_handler(void (*interrupt_handler)());
+#define SET_FLAG(REG, FLAG)                 ( (REG) |= (FLAG) )
 
-/// Enter into an infinite loop that can only be stopped by an interrupt
-/// request. Make sure interrupts are enabled before calling this method.
-/// You can enable all types of interrupt by calling irq_enable_all().
-void busy_wait();
+#define CLEAR_FLAG(REG, FLAG)               ( (REG) &= ~(FLAG) )
 
-#endif
+#define INVERT_FLAG(REG, FLAG)              ( (REG) ^= (FLAG) )
+
+#define READ_FLAG(REG, FLAG)                ( (REG) & (FLAG) )
+
+
+#define SET_BIT(REG, BIT)                   ( (REG) |= (1 << (BIT)) )
+
+#define CLEAR_BIT(REG, BIT)                 ( (REG) &= ~ (1 << (BIT)) )
+
+#define INVERT_BIT(REG, BIT)                ( (REG) ^= (1 << (BIT)) )
+
+#define READ_BIT(REG, BIT)                  ( ( (REG) >> BIT) & 1)
+
+
+#define MODIFY_REG(REG, CLEARMASK, SETMASK) ( (REG) = (REG & (~(CLEARMASK))) | (SETMASK) )
+
+#define NUMBER_OF(a)                        ( sizeof a / sizeof a[0] )
+
+#endif // __RVSTEEL_API__
