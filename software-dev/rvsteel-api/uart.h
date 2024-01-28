@@ -19,14 +19,37 @@ typedef struct
 } UART_TypeDef;
 
 
-__STATIC_INLINE uint8_t read(UART_TypeDef *UARTx)
+__STATIC_INLINE uint8_t uart_read(UART_TypeDef *UARTx)
 {
   return UARTx->RX;
 }
 
-__STATIC_INLINE void write(UART_TypeDef *UARTx, uint8_t data)
+__STATIC_INLINE void uart_write(UART_TypeDef *UARTx, uint8_t data)
 {
   UARTx->TX = data;
+}
+
+__STATIC_INLINE int uart_write_busy(UART_TypeDef *UARTx)
+{
+  return UARTx->TX != 1;
+}
+
+__STATIC_INLINE void uart_send_char(UART_TypeDef *UARTx, const char c)
+{
+  while ((UARTx->TX != 1)) {
+    __NOP();
+  }
+
+  UARTx->TX = c;
+}
+
+__STATIC_INLINE void uart_send_string(UART_TypeDef *UARTx, const char *str)
+{
+  while (*(str) != '\0')
+  {
+    uart_send_char(UARTx, *(str));
+    str++;
+  }
 }
 
 #endif // __UART__
