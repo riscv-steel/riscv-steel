@@ -48,8 +48,8 @@ COMPILER_OPTIONS  ?=  -march=rv32izicsr -mabi=ilp32 -nostartfiles -nostdlib \
 # Basic checks: test whether the API and the required binaries are available
 # --------------------------------------------------------------------------------------------
 
-ifeq (,$(wildcard $(RVSTEEL_API_DIR)/rvsteel-api.h))
-  $(error Could not find RISC-V Steel API files in '$(RVSTEEL_API_DIR)'. Please fix the \
+ifeq (,$(wildcard $(RVSTEEL_API_DIR)/rvsteel-soc.h))
+  $(error Could not find RISC-V Steel SOC files in '$(RVSTEEL_API_DIR)'. Please fix the \
           RVSTEEL_API_DIR variable in the Makefile)
 endif
 
@@ -80,10 +80,10 @@ endif
 # Targets
 # --------------------------------------------------------------------------------------------
 
-all: mkdir-build rvsteel-api $(OBJ_FILES)
+all: mkdir-build rvsteel-soc $(OBJ_FILES)
 	@echo -n "Linking ${ELF_NAME}"
 	@$(RISCV_GCC) -T ${LINKER_SCRIPT} ${COMPILER_OPTIONS} \
-                   $(OBJ_FILES) build/obj/rvsteel-api.o -o build/${ELF_NAME}
+                   $(OBJ_FILES) build/obj/rvsteel-soc.o -o build/${ELF_NAME}
 	@echo ": ok."
 	@${RISCV_OBJDUMP} -D build/${ELF_NAME} > build/${OBJDUMP_NAME}
 	@${RISCV_OBJCOPY} build/${ELF_NAME} -O binary build/__temp1__.bin --pad-to=$(MEMORY_SIZE) --gap-fill=0x00
@@ -101,10 +101,10 @@ mkdir-build:
 	@mkdir -p build/
 	@mkdir -p build/obj/
 
-rvsteel-api: $(RVSTEEL_API_DIR)/rvsteel-api.c
-	@echo -n "Building RISC-V Steel API"
+rvsteel-soc: $(RVSTEEL_API_DIR)/rvsteel-soc.c
+	@echo -n "Building RISC-V Steel SOC"
 	@$(RISCV_GCC) -I ${RVSTEEL_API_DIR} ${COMPILER_OPTIONS} \
-                -D MEMORY_SIZE=\"$(MEMORY_SIZE)\" -c -o build/obj/rvsteel-api.o $(RVSTEEL_API_DIR)/rvsteel-api.c
+                -D MEMORY_SIZE=\"$(MEMORY_SIZE)\" -c -o build/obj/rvsteel-soc.o $(RVSTEEL_API_DIR)/rvsteel-soc.c
 	@echo ": ok."
 
 build/obj/%.o: %.c
