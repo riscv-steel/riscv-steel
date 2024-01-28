@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __RVSTEEL_SOC_
-#define __RVSTEEL_SOC_
+#ifndef __RVSTEEL_SOC__
+#define __RVSTEEL_SOC__
 
 #include "mtimer.h"
 #include "uart.h"
@@ -25,4 +25,4 @@
 /// Sets the function to be called on interrupts
 void irq_set_interrupt_handler(void (*interrupt_handler)());
 
-#endif // __RVSTEEL_SOC_
+#endif // __RVSTEEL_SOC__
