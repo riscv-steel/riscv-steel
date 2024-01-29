@@ -11,7 +11,7 @@ RISC-V Steel Processor Core can run real-time operating systems and bare-metal e
 
 ## Source files
 
-RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in the `ip/` folder.
+RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in the `hardware/core/` folder.
 
 ## I/O signals
 
@@ -130,7 +130,7 @@ The response to the read request from the external device must observe these rul
 The timing diagram below contains examples of valid read operations:
 
 <figure markdown>
-  ![](images/read-timing.svg)
+  ![](images/read_timing.svg)
   <figcaption><strong>Figure 1</strong> - Read operation timing diagram</figcaption>
 </figure>
 
@@ -159,7 +159,7 @@ The response to the write request from the external device must observe these ru
 The timing diagram below contains examples of valid write operations:
 
 <figure markdown>
-  ![](images/write-timing.svg)
+  ![](images/write_timing.svg)
   <figcaption><strong>Figure 2</strong> - Write operation timing diagram</figcaption>
 </figure>
 

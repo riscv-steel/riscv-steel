@@ -32,10 +32,10 @@ markdown_extensions:
             - overrides/.icons
 theme:
     name: material
-    logo: images/rvsteel-logo-white-small.svg
+    logo: images/rvsteel_logo_white_small.svg
     palette:
         primary: black
-    favicon: images/rvsteel-logo-favicon.svg
+    favicon: images/rvsteel_logo_favicon.svg
     highlightjs: true
     features:
         - navigation.expand
@@ -55,11 +55,11 @@ remote_branch: docs
 copyright: Copyright (c) RISC-V Steel contributors
 nav:
     - Homepage: 'index.md'
-    - Get Started!: 'get-started.md'
+    - Get Started!: 'get_started.md'
     - Processor Core:
       - Documentation: 'core.md'
     - System-on-Chip:
       - Documentation: 'soc.md'
-      - Software Guide: 'software-guide.md'
+      - Software Guide: 'software_guide.md'
       - Software API: 'api.md'
     - License: 'license.md'
