@@ -21,18 +21,18 @@
 
 
 // Machine Status Registers bits
-#define MSTATUS_MIE_BIT_OFFSET      3U
-#define MSTATUS_MPIE_BIT_OFFSET     7&
+#define MSTATUS_MIE_OFFSET          3U
+#define MSTATUS_MPIE_OFFSET         7U
 
-#define MSTATUS_MIE_BIT_MASK        (1U << MSTATUS_MIE_BIT_OFFSET)
-#define MSTATUS_MPIE_BIT_MASK       (1U << MSTATUS_MPIE_BIT_OFFSET)
+#define MSTATUS_MIE_MASK            (1U << MSTATUS_MIE_OFFSET)
+#define MSTATUS_MPIE_MASK           (1U << MSTATUS_MPIE_OFFSET)
 
 // Machine Trap-Vector Base-Address Register bits
-#define MTVEC_MODE_BIT_OFFSET       0U
-#define MTVEC_BASE_BIT_OFFSET       2U
+#define MTVEC_MODE_OFFSET           0U
+#define MTVEC_BASE_OFFSET           2U
 
-#define MTVEC_MODE_BIT_MASK         (0x3 << MTVEC_MODE_BIT_OFFSET)
-#define MTVEC_BASE_BIT_MASK         (0x3FFFFFFF << MTVEC_BASE_BIT_OFFSET)
+#define MTVEC_MODE_MASK             (0x3 << MTVEC_MODE_OFFSET)
+#define MTVEC_BASE_MASK             (0x3FFFFFFF << MTVEC_BASE_OFFSET)
 
 // Machine Interrupt bit offset (mip and mie register)
 #define MIP_MIE_OFFSET_MSI          3U  // Machine software interrupt
@@ -87,11 +87,11 @@
 
 
 // Machine Cause Register (mcause)
-#define MCAUSE_INTER_BIT_OFFSET                     (__riscv_xlen-1)
-#define MCAUSE_INTER_BIT_MASK                       (1U << MCAUSE_INTERRUPT_BIT_OFFSET)
+#define MCAUSE_INTER_OFFSET                         (__riscv_xlen-1)
+#define MCAUSE_INTER_MASK                           (1U << MCAUSE_INTER_OFFSET)
 
-#define MCAUSE_EXCP_CODE_BIT_OFFSET                 0U
-#define MCAUSE_EXCP_CODE_BIT_MASK                   (0x7FFFFFFFU)
+#define MCAUSE_EXCP_CODE_OFFSET                     0U
+#define MCAUSE_EXCP_CODE_MASK                       (0x7FFFFFFFU)
 
 #define MCAUSE_EXCP_INSTRUCTION_ADDRESS_MISALIGNED  0U  // Instruction address misaligned
 #define MCAUSE_EXCP_INSTRUCTION_ACCESS_FAULT        1U  // Instruction access fault
@@ -760,14 +760,14 @@ __STATIC_INLINE xlen_t csr_read_write_mtval(xlen_t new_value)
 /// Global IRQ enable
 __STATIC_INLINE void global_enable_irq()
 {
-  csr_set_bits_imm_mstatus(MSTATUS_MIE_BIT_MASK);
+  csr_set_bits_imm_mstatus(MSTATUS_MIE_MASK);
 }
 
 
 /// Gloabl IRQ disable
 __STATIC_INLINE void global_disable_irq()
 {
-  csr_clr_bits_imm_mstatus(MSTATUS_MIE_BIT_MASK);
+  csr_clr_bits_imm_mstatus(MSTATUS_MIE_MASK);
 }
 
 
