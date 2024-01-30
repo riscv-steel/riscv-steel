@@ -9,7 +9,7 @@
 #define __UART__
 
 #include <stdint.h>
-#include "rvsteel-api.h"
+#include "rvsteel_api.h"
 
 // Machine Timer Registers
 typedef struct
@@ -17,7 +17,6 @@ typedef struct
   __IO uint32_t TX;
   __IO uint32_t RX;
 } UART_TypeDef;
-
 
 __STATIC_INLINE uint8_t uart_read(UART_TypeDef *UARTx)
 {
@@ -36,7 +35,8 @@ __STATIC_INLINE int uart_write_busy(UART_TypeDef *UARTx)
 
 __STATIC_INLINE void uart_send_char(UART_TypeDef *UARTx, const char c)
 {
-  while ((UARTx->TX != 1)) {
+  while ((UARTx->TX != 1))
+  {
     __NOP();
   }
 

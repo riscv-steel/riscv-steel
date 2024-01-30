@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "rvsteel_api.h": "c",
+    "rvsteel-soc.h": "c",
+    "mtimer.h": "c"
+  }
+}
