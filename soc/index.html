@@ -16,10 +16,10 @@
         <link rel="prev" href="../core/">
       
       
-        <link rel="next" href="../software-guide/">
+        <link rel="next" href="../software_guide/">
       
       
-      <link rel="icon" href="../images/rvsteel-logo-favicon.svg">
+      <link rel="icon" href="../images/rvsteel_logo_favicon.svg">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
     
@@ -104,7 +104,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="RISC-V Steel" class="md-header__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
       
-  <img src="../images/rvsteel-logo-white-small.svg" alt="logo">
+  <img src="../images/rvsteel_logo_white_small.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -210,7 +210,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="RISC-V Steel" class="md-nav__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
       
-  <img src="../images/rvsteel-logo-white-small.svg" alt="logo">
+  <img src="../images/rvsteel_logo_white_small.svg" alt="logo">
 
     </a>
     RISC-V Steel
@@ -257,7 +257,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../get-started/" class="md-nav__link">
+      <a href="../get_started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -516,7 +516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../software-guide/" class="md-nav__link">
+      <a href="../software_guide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -699,10 +699,10 @@
 
 <h2 id="introduction">Introduction</h2>
 <p>RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and UART modules to its design. It comes with a <a href="../api/">Software API</a> that makes it easy to develop new RISC-V applications.</p>
-<p>This page contains information about the SoC IP hardware design. Check out the <a href="../software-guide/">Software Guide</a> for instructions on how to write, compile and run software for the SoC IP.</p>
+<p>This page contains information about the SoC IP hardware design. Check out the <a href="../software_guide/">Software Guide</a> for instructions on how to write, compile and run software for the SoC IP.</p>
 <h2 id="design-overview">Design overview</h2>
 <p><strong id="figure-1">Figure 1</strong> - RISC-V Steel SoC IP design overview</p>
-<p><img alt="Image title" src="../images/rvsteel-soc.svg" /></p>
+<p><img alt="Image title" src="../images/rvsteel_soc.svg" /></p>
 <h2 id="source-files">Source files</h2>
 <p><strong>Table 1</strong> - RISC-V Steel SoC IP source files</p>
 <table>
@@ -716,27 +716,27 @@
 <tbody>
 <tr>
 <td><strong>rvsteel_soc</strong></td>
-<td><code>ip/rvsteel_soc.v</code></td>
+<td><code>hardware//soc/rvsteel_soc.v</code></td>
 <td>Top module of RISC-V Steel SoC IP</td>
 </tr>
 <tr>
 <td><strong>rvsteel_core</strong></td>
-<td><code>ip/rvsteel_core.v</code></td>
+<td><code>hardware/core/rvsteel_core.v</code></td>
 <td>RISC-V Steel Processor Core</td>
 </tr>
 <tr>
-<td><strong>ram_memory</strong></td>
-<td><code>ip/ram_memory.v</code></td>
+<td><strong>rvsteel_ram</strong></td>
+<td><code>hardware/ram/rvsteel_ram.v</code></td>
 <td>RAM memory</td>
 </tr>
 <tr>
-<td><strong>uart</strong></td>
-<td><code>ip/uart.v</code></td>
+<td><strong>rvsteel_uart</strong></td>
+<td><code>hardware/uart/rvsteel_uart.v</code></td>
 <td>UART</td>
 </tr>
 <tr>
-<td><strong>system_bus</strong></td>
-<td><code>ip/system_bus.v</code></td>
+<td><strong>rvsteel_bus</strong></td>
+<td><code>hardware/bus/rvsteel_bus.v</code></td>
 <td>System Bus</td>
 </tr>
 </tbody>
@@ -863,7 +863,7 @@
 <div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">rvsteel_soc</span><span class="w"> </span><span class="p">#(</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="c1">// Configuration parameters. For more information read the &#39;Configuration&#39;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="c1">// section of RISC-V Steel SoC IP Reference Guide</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="c1">// section of RISC-V Steel System-on-Chip Documentation</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="p">.</span><span class="n">BOOT_ADDRESS</span><span class="w">             </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Default value: 32&#39;h00000000</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="p">.</span><span class="n">CLOCK_FREQUENCY</span><span class="w">          </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Default value: 50000000</span>
@@ -874,7 +874,7 @@
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="n">rvsteel_soc_instance</span><span class="w"> </span><span class="p">(</span>
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="c1">// I/O signals. For more information read the &#39;I/O signals&#39;</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="c1">// section of RISC-V Steel SoC IP Reference Guide</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="c1">// section of RISC-V Steel System-on-Chip Documentation</span>
 </span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="p">.</span><span class="n">clock</span><span class="w">                    </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Connect this pin to a clock source</span>
 </span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">  </span><span class="p">.</span><span class="n">reset</span><span class="w">                    </span><span class="p">(),</span><span class="w">  </span><span class="c1">// Connect this pin to a switch/button or hardwire it to 1&#39;b0.</span>
@@ -911,13 +911,13 @@
 <div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">device_start_address</span><span class="w"> </span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D2_NEW_DEVICE</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">32&#39;h0000_8000</span><span class="p">;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">device_region_size</span><span class="w">   </span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D2_NEW_DEVICE</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">32768</span><span class="p">;</span>
 </span></code></pre></div>
-<p>Finally, you have to instantiate the new device in the <code>rvsteel_soc</code> module and connect it to the system bus interface. The Processor Core IP will issue read and write requests to your device as described in the <a href="../core/#io-operations">I/O Operations</a> section of its <a href="../core/">Reference Guide</a>. A template for instantiating and connecting the new device to the system bus is provided below:</p>
-<div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w">  </span><span class="cm">/* Instantiate the new device in the rvsteel_soc.v module like this: */</span>
+<p>Finally, you have to instantiate the new device in the <code>rvsteel_soc</code> module and connect it to the system bus interface. The Processor Core IP will issue read and write requests to your device as described in the <a href="../core/#io-operations">I/O Operations</a> section of its <a href="../core/">Documentation</a>. A template for instantiating and connecting the new device to the system bus is provided below:</p>
+<div class="language-systemverilog highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w">  </span><span class="c1">// Instantiate the new device in the rvsteel_soc.v module like this:</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="n">new_device</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="n">new_device_instance</span><span class="w"> </span><span class="p">(</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="cm">/* I/O interface of the new device */</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="c1">// I/O interface of the new device</span>
 </span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_rw_address</span><span class="w">      </span><span class="p">(</span><span class="n">device_rw_address</span><span class="w">                        </span><span class="p">),</span>
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p">.</span><span class="n">new_device_read_data</span><span class="w">       </span><span class="p">(</span><span class="n">device_read_data</span><span class="p">[</span><span class="mi">32</span><span class="o">*</span><span class="n">D2_NEW_DEVICE</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="mi">32</span><span class="p">]</span><span class="w"> </span><span class="p">),</span>
