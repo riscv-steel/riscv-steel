@@ -1,6 +1,6 @@
-harware/core/tests/vivado/test_project
+hardware/core/tests/vivado/test_project
 hardware/core/tests/verilator/dump
-tests/core/verilator/obj_dir
-demo/arty_a7/hello_world_arty_a7_35t
-demo/arty_a7/hello_world_arty_a7_100t
-demo/cmod_a7/hello_world_cmod_a7
+hardware/core/tests/verilator/obj_dir
+demos/boards/arty_a7/hello_world_arty_a7_35t
+demos/boards/arty_a7/hello_world_arty_a7_100t
+demos/boards/cmod_a7/hello_world_cmod_a7
