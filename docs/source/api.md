@@ -3,15 +3,15 @@
 
 ## Introduction
 
-The Software API of RISC-V Steel System-on-Chip IP provides function calls to configure and control the devices in the system, making it easy to write application for it.
+The Software API of RISC-V Steel System-on-Chip IP provides function calls to configure and control the devices in the system, making it easy to write applications for it.
 
-To use it in your application you must include the `rvsteel-api.h` header in the source code of your application:
+To use it you need to include the `rvsteel_api.h` header in the source code of your application:
 
 ```c
 #include "rvsteel-api.h"
 ```
 
-The sections below contain documentation for the available API calls.
+The sections below contain documentation of the available API calls.
 
 ## UART communication
 ---

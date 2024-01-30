@@ -84,13 +84,13 @@ body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul
   background-color: transparent;
 }
 
-.md-search__input {
+/*.md-search__input {
   background: #ffffff1a;
   height: 100%;
   width: 100%;
   z-index: 2;
   border-radius: .1em;
-}
+}*/
 
 .home-title {
   height: 60px;

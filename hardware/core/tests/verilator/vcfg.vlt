@@ -1,0 +1,9 @@
+`verilator_config
+lint_off -rule UNSIGNED
+lint_off -rule UNUSED -file "../../../../hardware/ram/rvsteel_ram.v"
+
+public_flat -module "rvsteel_ram" -var "ram"
+public_flat_rd -module "unit_tests" -var "MEMORY_SIZE"
+public_flat_rd -module "unit_tests" -var "rw_address"
+public_flat_rd -module "unit_tests" -var "write_request"
+public_flat_rd -module "unit_tests" -var "write_data"
