@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include "rvsteel_api.h"
+#include "rvsteel_soc.h"
 
 // A minimal Hello World program
 int main()

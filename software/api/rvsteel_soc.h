@@ -8,19 +8,19 @@
 #ifndef __RVSTEEL_SOC__
 #define __RVSTEEL_SOC__
 
-#include "mtimer.h"
-#include "uart.h"
+#include "rvsteel_mtimer.h"
+#include "rvsteel_uart.h"
 
 // Bus adder base
-#define MAIN_BASE_ADDR      0x00000000U
+#define MAIN_BASE_ADDR 0x00000000U
 
 // Peripheral map in main bus
-#define MTIMER0_BASE        (MAIN_BASE_ADDR +   0x10000000U)
-#define UART0_BASE          (MAIN_BASE_ADDR +   0x80000000U)
+#define MTIMER0_BASE (MAIN_BASE_ADDR + 0x10000000U)
+#define UART0_BASE (MAIN_BASE_ADDR + 0x80000000U)
 
 // Peripheral declaration
-#define MTIMER0             ((MTIMER_TypeDef*)  MTIMER0_BASE)
-#define UART0               ((UART_TypeDef*)    UART0_BASE)
+#define MTIMER0 ((MTIMER_TypeDef *)MTIMER0_BASE)
+#define UART0 ((UART_TypeDef *)UART0_BASE)
 
 /// Sets the function to be called on interrupts
 void irq_set_interrupt_handler(void (*interrupt_handler)());
