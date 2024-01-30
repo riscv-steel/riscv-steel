@@ -13,7 +13,7 @@ PROGRAM_NAME      ?= hello_world
 # Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
 MEMORY_SIZE       ?= 8192
 # Path to RISC-V Steel API
-RVSTEEL_API_DIR   ?= ../../software/api
+RVSTEEL_API_DIR   ?= ../../../../software/api
 # The full path to RISC-V GNU Toolchain binaries in this machine + RISC-V binaries prefix
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
 

@@ -64,9 +64,9 @@ Open **AMD Xilinx Vivado** and follow the steps:
 
 1. Click **Run Tcl Script** in the **Tools** menu.
 
-2. Select `create_project_???.tcl` and click **Ok**. The `???` stands for your board name.
+2. Select `hello_world_???.tcl` and click **Ok**. The `???` stands for your board name.
 
-    This file is located at `demo/???/` and it creates the demo project for your board in Vivado.
+    This file is located at `demos/boards/???/` and it creates the demo project for your board in Vivado.
 
 3. Click on **Generate Bitstream** in the **Flow** menu.
 
@@ -78,7 +78,7 @@ Open **AMD Xilinx Vivado** and follow the steps:
 
 7. Search for `hello_world_???.bit`. Again, the `???` stands for your board name.
 
-    This file is located at `demo/???/hello_world_???/hello_world_???.runs/impl_1/`.
+    This file is located at `demos/boards/???/hello_world_???/hello_world_???.runs/impl_1/`.
 
 8. Click on **Program** and wait for Vivado to finish programming the FPGA.
 
