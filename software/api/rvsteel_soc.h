@@ -11,16 +11,16 @@
 #include "rvsteel_mtimer.h"
 #include "rvsteel_uart.h"
 
-// Bus adder base
+// Base address
 #define MAIN_BASE_ADDR 0x00000000U
 
-// Peripheral map in main bus
+// Map devices
 #define MTIMER0_BASE (MAIN_BASE_ADDR + 0x10000000U)
 #define UART0_BASE (MAIN_BASE_ADDR + 0x80000000U)
 
-// Peripheral declaration
-#define MTIMER0 ((MTIMER_TypeDef *)MTIMER0_BASE)
-#define UART0 ((UART_TypeDef *)UART0_BASE)
+// List devices
+#define MTIMER0 ((MTimerDevice *)MTIMER0_BASE)
+#define UART0 ((UartDevice *)UART0_BASE)
 
 /// Sets the function to be called on interrupts
 void irq_set_interrupt_handler(void (*interrupt_handler)());

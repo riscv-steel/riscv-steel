@@ -11,7 +11,6 @@
 #include <stdint.h>
 #include "rvsteel_api.h"
 
-// Machine Timer Registers
 typedef struct
 {
   __IO uint32_t CR;
@@ -19,7 +18,7 @@ typedef struct
   __IO uint32_t MTIMEH;
   __IO uint32_t MTIMECMPL;
   __IO uint32_t MTIMECMPH;
-} MTIMER_TypeDef;
+} MTimerDevice;
 
 // CR
 // MTIMER Enable
@@ -27,36 +26,36 @@ typedef struct
 #define MTIMER_CR_EN_MASK (0x1U << MTIMER_CR_EN_OFFSET)
 #define MTIMER_CR_EN (MTIMER_CR_EN_MASK)
 
-__STATIC_INLINE void mtimer_enable(MTIMER_TypeDef *MTIMERx)
+__STATIC_INLINE void mtimer_enable(MTimerDevice *MTIMERx)
 {
   SET_FLAG(MTIMERx->CR, MTIMER_CR_EN);
 }
 
-__STATIC_INLINE void mtimer_disable(MTIMER_TypeDef *MTIMERx)
+__STATIC_INLINE void mtimer_disable(MTimerDevice *MTIMERx)
 {
   CLEAR_FLAG(MTIMERx->CR, MTIMER_CR_EN);
 }
 
-__STATIC_INLINE void mtimer_set_counter(MTIMER_TypeDef *MTIMERx, uint64_t val)
+__STATIC_INLINE void mtimer_set_counter(MTimerDevice *MTIMERx, uint64_t val)
 {
   MTIMERx->MTIMEL = val & 0xFFFFFFFF;
   MTIMERx->MTIMEH = val >> 32;
 }
 
-__STATIC_INLINE uint64_t mtimer_get_counter(MTIMER_TypeDef *MTIMERx)
+__STATIC_INLINE uint64_t mtimer_get_counter(MTimerDevice *MTIMERx)
 {
   uint32_t cnt_l = MTIMERx->MTIMEL;
   uint64_t cnt_h = MTIMERx->MTIMEH;
   return (cnt_h << 31) | cnt_l;
 }
 
-__STATIC_INLINE void mtimer_clear_counter(MTIMER_TypeDef *MTIMERx)
+__STATIC_INLINE void mtimer_clear_counter(MTimerDevice *MTIMERx)
 {
   MTIMERx->MTIMEL = 0;
   MTIMERx->MTIMEH = 0;
 }
 
-__STATIC_INLINE void mtimer_set_compare(MTIMER_TypeDef *MTIMERx, uint64_t val)
+__STATIC_INLINE void mtimer_set_compare(MTimerDevice *MTIMERx, uint64_t val)
 {
   MTIMERx->MTIMECMPL = val & 0xFFFFFFFF;
   MTIMERx->MTIMECMPH = val >> 32;
