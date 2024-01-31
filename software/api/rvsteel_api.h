@@ -19,15 +19,13 @@
 
 #define SET_FLAG(REG, FLAG) ((REG) |= (FLAG))
 
-#define CLEAR_FLAG(REG, FLAG) ((REG) &= ~(FLAG))
+#define CLR_FLAG(REG, FLAG) ((REG) &= ~(FLAG))
 
 #define INVERT_FLAG(REG, FLAG) ((REG) ^= (FLAG))
 
-#define READ_FLAG(REG, FLAG) ((REG) & (FLAG))
-
 #define SET_BIT(REG, BIT) ((REG) |= (1 << (BIT)))
 
-#define CLEAR_BIT(REG, BIT) ((REG) &= ~(1 << (BIT)))
+#define CLR_BIT(REG, BIT) ((REG) &= ~(1 << (BIT)))
 
 #define INVERT_BIT(REG, BIT) ((REG) ^= (1 << (BIT)))
 

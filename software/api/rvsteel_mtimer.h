@@ -33,7 +33,7 @@ static inline void mtimer_enable(MTimerDevice *MTIMERx)
 
 static inline void mtimer_disable(MTimerDevice *MTIMERx)
 {
-  CLEAR_FLAG(MTIMERx->CR, MTIMER_CR_EN);
+  CLR_FLAG(MTIMERx->CR, MTIMER_CR_EN);
 }
 
 static inline void mtimer_set_counter(MTimerDevice *MTIMERx, uint64_t val)
