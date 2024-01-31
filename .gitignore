@@ -1,7 +1,0 @@
-hardware/core/tests/vivado/test_project
-hardware/core/tests/verilator/dump
-hardware/core/tests/verilator/obj_dir
-demos/boards/arty_a7/hello_world_arty_a7_35t
-demos/boards/arty_a7/hello_world_arty_a7_100t
-demos/boards/cmod_a7/hello_world_cmod_a7
-software/template_project/build
