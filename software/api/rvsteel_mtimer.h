@@ -13,11 +13,11 @@
 
 typedef struct
 {
-  __IO uint32_t CR;
-  __IO uint32_t MTIMEL;
-  __IO uint32_t MTIMEH;
-  __IO uint32_t MTIMECMPL;
-  __IO uint32_t MTIMECMPH;
+  volatile uint32_t CR;
+  volatile uint32_t MTIMEL;
+  volatile uint32_t MTIMEH;
+  volatile uint32_t MTIMECMPL;
+  volatile uint32_t MTIMECMPH;
 } MTimerDevice;
 
 // CR
@@ -26,36 +26,36 @@ typedef struct
 #define MTIMER_CR_EN_MASK (0x1U << MTIMER_CR_EN_OFFSET)
 #define MTIMER_CR_EN (MTIMER_CR_EN_MASK)
 
-__STATIC_INLINE void mtimer_enable(MTimerDevice *MTIMERx)
+static inline void mtimer_enable(MTimerDevice *MTIMERx)
 {
   SET_FLAG(MTIMERx->CR, MTIMER_CR_EN);
 }
 
-__STATIC_INLINE void mtimer_disable(MTimerDevice *MTIMERx)
+static inline void mtimer_disable(MTimerDevice *MTIMERx)
 {
   CLEAR_FLAG(MTIMERx->CR, MTIMER_CR_EN);
 }
 
-__STATIC_INLINE void mtimer_set_counter(MTimerDevice *MTIMERx, uint64_t val)
+static inline void mtimer_set_counter(MTimerDevice *MTIMERx, uint64_t val)
 {
   MTIMERx->MTIMEL = val & 0xFFFFFFFF;
   MTIMERx->MTIMEH = val >> 32;
 }
 
-__STATIC_INLINE uint64_t mtimer_get_counter(MTimerDevice *MTIMERx)
+static inline uint64_t mtimer_get_counter(MTimerDevice *MTIMERx)
 {
   uint32_t cnt_l = MTIMERx->MTIMEL;
   uint64_t cnt_h = MTIMERx->MTIMEH;
   return (cnt_h << 31) | cnt_l;
 }
 
-__STATIC_INLINE void mtimer_clear_counter(MTimerDevice *MTIMERx)
+static inline void mtimer_clear_counter(MTimerDevice *MTIMERx)
 {
   MTIMERx->MTIMEL = 0;
   MTIMERx->MTIMEH = 0;
 }
 
-__STATIC_INLINE void mtimer_set_compare(MTimerDevice *MTIMERx, uint64_t val)
+static inline void mtimer_set_compare(MTimerDevice *MTIMERx, uint64_t val)
 {
   MTIMERx->MTIMECMPL = val & 0xFFFFFFFF;
   MTIMERx->MTIMECMPH = val >> 32;

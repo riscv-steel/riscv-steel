@@ -119,7 +119,7 @@ typedef uint32_t csr32_t;
 //                       : GotoLabels)
 
 /// Read machine ISA register misa
-__STATIC_INLINE xlen_t csr_read_misa()
+static inline xlen_t csr_read_misa()
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, misa"
@@ -128,7 +128,7 @@ __STATIC_INLINE xlen_t csr_read_misa()
 }
 
 /// Write machine ISA register misa
-__STATIC_INLINE void csr_write_misa(xlen_t value)
+static inline void csr_write_misa(xlen_t value)
 {
   __ASM_VOLATILE("csrw misa, %0"
                  :
@@ -136,7 +136,7 @@ __STATIC_INLINE void csr_write_misa(xlen_t value)
 }
 
 /// Read and write machine ISA register misa
-__STATIC_INLINE xlen_t csr_read_write_misa(xlen_t new_value)
+static inline xlen_t csr_read_write_misa(xlen_t new_value)
 {
   xlen_t prev_value;
   __ASM_VOLATILE("csrrw %0, misa, %1"
@@ -146,7 +146,7 @@ __STATIC_INLINE xlen_t csr_read_write_misa(xlen_t new_value)
 }
 
 /// Read machine vendor ID register mvendorid
-__STATIC_INLINE csr32_t csr_read_mvendorid(void)
+static inline csr32_t csr_read_mvendorid(void)
 {
   csr32_t value;
   __ASM_VOLATILE("csrr %0, mvendorid"
@@ -155,7 +155,7 @@ __STATIC_INLINE csr32_t csr_read_mvendorid(void)
 }
 
 /// Read machine architecture ID register marchid
-__STATIC_INLINE xlen_t csr_read_marchid(void)
+static inline xlen_t csr_read_marchid(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, marchid"
@@ -164,7 +164,7 @@ __STATIC_INLINE xlen_t csr_read_marchid(void)
 }
 
 /// Read machine implementation ID register mimpid
-__STATIC_INLINE xlen_t csr_read_mimpid(void)
+static inline xlen_t csr_read_mimpid(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mimpid"
@@ -173,7 +173,7 @@ __STATIC_INLINE xlen_t csr_read_mimpid(void)
 }
 
 /// Read hart ID register mhartid
-__STATIC_INLINE xlen_t csr_read_mhartid(void)
+static inline xlen_t csr_read_mhartid(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mhartid"
@@ -182,7 +182,7 @@ __STATIC_INLINE xlen_t csr_read_mhartid(void)
 }
 
 /// Read machine status registers
-__STATIC_INLINE xlen_t csr_read_mstatus(void)
+static inline xlen_t csr_read_mstatus(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mstatus"
@@ -191,7 +191,7 @@ __STATIC_INLINE xlen_t csr_read_mstatus(void)
 }
 
 /// Write machine status registers
-__STATIC_INLINE void csr_write_mstatus(xlen_t value)
+static inline void csr_write_mstatus(xlen_t value)
 {
   __ASM_VOLATILE("csrw mstatus, %0"
                  :
@@ -199,7 +199,7 @@ __STATIC_INLINE void csr_write_mstatus(xlen_t value)
 }
 
 /// Read and write machine status registers
-__STATIC_INLINE xlen_t csr_read_write_mstatus(xlen_t new_value)
+static inline xlen_t csr_read_write_mstatus(xlen_t new_value)
 {
   xlen_t prev_value;
   __ASM_VOLATILE("csrrw %0, mstatus, %1"
@@ -209,7 +209,7 @@ __STATIC_INLINE xlen_t csr_read_write_mstatus(xlen_t new_value)
 }
 
 /// Set bits machine status registers
-__STATIC_INLINE void csr_set_bits_mstatus(xlen_t mask)
+static inline void csr_set_bits_mstatus(xlen_t mask)
 {
   __ASM_VOLATILE("csrrs zero, mstatus, %0"
                  :
@@ -217,7 +217,7 @@ __STATIC_INLINE void csr_set_bits_mstatus(xlen_t mask)
 }
 
 /// Clear bits machine status registers
-__STATIC_INLINE void csr_clr_bits_mstatus(xlen_t mask)
+static inline void csr_clr_bits_mstatus(xlen_t mask)
 {
   __ASM_VOLATILE("csrrc zero, mstatus, %0"
                  :
@@ -225,7 +225,7 @@ __STATIC_INLINE void csr_clr_bits_mstatus(xlen_t mask)
 }
 
 /// Read and set bits machine status registers
-__STATIC_INLINE xlen_t csr_read_set_bits_mstatus(xlen_t mask)
+static inline xlen_t csr_read_set_bits_mstatus(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrs %0, mstatus, %1"
@@ -235,7 +235,7 @@ __STATIC_INLINE xlen_t csr_read_set_bits_mstatus(xlen_t mask)
 }
 
 /// Read and clear bits machine status registers
-__STATIC_INLINE xlen_t csr_read_clr_bits_mstatus(xlen_t mask)
+static inline xlen_t csr_read_clr_bits_mstatus(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrc %0, mstatus, %1"
@@ -245,7 +245,7 @@ __STATIC_INLINE xlen_t csr_read_clr_bits_mstatus(xlen_t mask)
 }
 
 /// Write immediate machine status registers (only up to 5 bits)
-__STATIC_INLINE void csr_write_imm_mstatus(xlen_t value)
+static inline void csr_write_imm_mstatus(xlen_t value)
 {
   __ASM_VOLATILE("csrrwi zero, mstatus, %0"
                  :
@@ -253,7 +253,7 @@ __STATIC_INLINE void csr_write_imm_mstatus(xlen_t value)
 }
 
 /// Set bits machine status registers (only up to 5 bits)
-__STATIC_INLINE void csr_set_bits_imm_mstatus(xlen_t mask)
+static inline void csr_set_bits_imm_mstatus(xlen_t mask)
 {
   __ASM_VOLATILE("csrrsi zero, mstatus, %0"
                  :
@@ -261,7 +261,7 @@ __STATIC_INLINE void csr_set_bits_imm_mstatus(xlen_t mask)
 }
 
 /// Clear bits machine status registers (only up to 5 bits)
-__STATIC_INLINE void csr_clr_bits_imm_mstatus(xlen_t mask)
+static inline void csr_clr_bits_imm_mstatus(xlen_t mask)
 {
   __ASM_VOLATILE("csrrci zero, mstatus, %0"
                  :
@@ -269,7 +269,7 @@ __STATIC_INLINE void csr_clr_bits_imm_mstatus(xlen_t mask)
 }
 
 /// Read machine trap-vector base-address register
-__STATIC_INLINE xlen_t csr_read_mtvec(void)
+static inline xlen_t csr_read_mtvec(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mtvec"
@@ -278,7 +278,7 @@ __STATIC_INLINE xlen_t csr_read_mtvec(void)
 }
 
 /// Write machine trap-vector base-address register
-__STATIC_INLINE void csr_write_mtvec(xlen_t value)
+static inline void csr_write_mtvec(xlen_t value)
 {
   __ASM_VOLATILE("csrw mtvec, %0"
                  :
@@ -286,7 +286,7 @@ __STATIC_INLINE void csr_write_mtvec(xlen_t value)
 }
 
 /// Read and write machine trap-vector base-address register
-__STATIC_INLINE xlen_t csr_read_write_mtvec(xlen_t new_value)
+static inline xlen_t csr_read_write_mtvec(xlen_t new_value)
 {
   xlen_t prev_value;
   __ASM_VOLATILE("csrrw %0, mtvec, %1"
@@ -296,7 +296,7 @@ __STATIC_INLINE xlen_t csr_read_write_mtvec(xlen_t new_value)
 }
 
 /// Set bits machine trap-vector base-address register
-__STATIC_INLINE void csr_set_bits_mtvec(xlen_t mask)
+static inline void csr_set_bits_mtvec(xlen_t mask)
 {
   __ASM_VOLATILE("csrrs zero, mtvec, %0"
                  :
@@ -304,7 +304,7 @@ __STATIC_INLINE void csr_set_bits_mtvec(xlen_t mask)
 }
 
 /// Clear bits machine trap-vector base-address register
-__STATIC_INLINE void csr_clr_bits_mtvec(xlen_t mask)
+static inline void csr_clr_bits_mtvec(xlen_t mask)
 {
   __ASM_VOLATILE("csrrc zero, mtvec, %0"
                  :
@@ -312,7 +312,7 @@ __STATIC_INLINE void csr_clr_bits_mtvec(xlen_t mask)
 }
 
 /// Read and set bits machine trap-vector base-address register
-__STATIC_INLINE xlen_t csr_read_set_bits_mtvec(xlen_t mask)
+static inline xlen_t csr_read_set_bits_mtvec(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrs %0, mtvec, %1"
@@ -322,7 +322,7 @@ __STATIC_INLINE xlen_t csr_read_set_bits_mtvec(xlen_t mask)
 }
 
 /// Read and clear bits machine trap-vector base-address register
-__STATIC_INLINE xlen_t csr_read_clr_bits_mtvec(xlen_t mask)
+static inline xlen_t csr_read_clr_bits_mtvec(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrc %0, mtvec, %1"
@@ -332,7 +332,7 @@ __STATIC_INLINE xlen_t csr_read_clr_bits_mtvec(xlen_t mask)
 }
 
 /// Write immediate machine trap-vector base-address register (only up to 5 bits)
-__STATIC_INLINE void csr_write_imm_mtvec(xlen_t value)
+static inline void csr_write_imm_mtvec(xlen_t value)
 {
   __ASM_VOLATILE("csrrwi zero, mtvec, %0"
                  :
@@ -340,7 +340,7 @@ __STATIC_INLINE void csr_write_imm_mtvec(xlen_t value)
 }
 
 /// Set bits machine trap-vector base-address register (only up to 5 bits)
-__STATIC_INLINE void csr_set_bits_imm_mtvec(xlen_t mask)
+static inline void csr_set_bits_imm_mtvec(xlen_t mask)
 {
   __ASM_VOLATILE("csrrsi zero, mtvec, %0"
                  :
@@ -348,7 +348,7 @@ __STATIC_INLINE void csr_set_bits_imm_mtvec(xlen_t mask)
 }
 
 /// Clear bits machine trap-vector base-address register (only up to 5 bits)
-__STATIC_INLINE void csr_clr_bits_imm_mtvec(xlen_t mask)
+static inline void csr_clr_bits_imm_mtvec(xlen_t mask)
 {
   __ASM_VOLATILE("csrrci zero, mtvec, %0"
                  :
@@ -356,7 +356,7 @@ __STATIC_INLINE void csr_clr_bits_imm_mtvec(xlen_t mask)
 }
 
 /// Read machine interrupt registers mip
-__STATIC_INLINE xlen_t csr_read_mip(void)
+static inline xlen_t csr_read_mip(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mip"
@@ -366,7 +366,7 @@ __STATIC_INLINE xlen_t csr_read_mip(void)
 }
 
 /// Write machine interrupt registers mip
-__STATIC_INLINE void csr_write_mip(xlen_t value)
+static inline void csr_write_mip(xlen_t value)
 {
   __ASM_VOLATILE("csrw mip, %0"
                  :
@@ -374,7 +374,7 @@ __STATIC_INLINE void csr_write_mip(xlen_t value)
 }
 
 /// Read and write machine interrupt registers mip
-__STATIC_INLINE xlen_t csr_read_write_mip(xlen_t new_value)
+static inline xlen_t csr_read_write_mip(xlen_t new_value)
 {
   xlen_t prev_value;
   __ASM_VOLATILE("csrrw %0, mip, %1"
@@ -384,7 +384,7 @@ __STATIC_INLINE xlen_t csr_read_write_mip(xlen_t new_value)
 }
 
 /// Set bits machine interrupt registers mip
-__STATIC_INLINE void csr_set_bits_mip(xlen_t mask)
+static inline void csr_set_bits_mip(xlen_t mask)
 {
   __ASM_VOLATILE("csrrs zero, mip, %0"
                  :
@@ -392,7 +392,7 @@ __STATIC_INLINE void csr_set_bits_mip(xlen_t mask)
 }
 
 /// Clear bits machine interrupt registers mip
-__STATIC_INLINE void csr_clr_bits_mip(xlen_t mask)
+static inline void csr_clr_bits_mip(xlen_t mask)
 {
   __ASM_VOLATILE("csrrc zero, mip, %0"
                  :
@@ -400,7 +400,7 @@ __STATIC_INLINE void csr_clr_bits_mip(xlen_t mask)
 }
 
 /// Read and set bits machine interrupt registers mip
-__STATIC_INLINE xlen_t csr_read_set_bits_mip(xlen_t mask)
+static inline xlen_t csr_read_set_bits_mip(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrs %0, mip, %1"
@@ -410,7 +410,7 @@ __STATIC_INLINE xlen_t csr_read_set_bits_mip(xlen_t mask)
 }
 
 /// Read and clear bits machine interrupt registers mip
-__STATIC_INLINE xlen_t csr_read_clr_bits_mip(xlen_t mask)
+static inline xlen_t csr_read_clr_bits_mip(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrc %0, mip, %1"
@@ -420,7 +420,7 @@ __STATIC_INLINE xlen_t csr_read_clr_bits_mip(xlen_t mask)
 }
 
 /// Write immediate machine interrupt registers mip (only up to 5 bits)
-__STATIC_INLINE void csr_write_imm_mip(xlen_t value)
+static inline void csr_write_imm_mip(xlen_t value)
 {
   __ASM_VOLATILE("csrrwi zero, mip, %0"
                  :
@@ -428,7 +428,7 @@ __STATIC_INLINE void csr_write_imm_mip(xlen_t value)
 }
 
 /// Set bits machine interrupt registers mip (only up to 5 bits)
-__STATIC_INLINE void csr_set_bits_imm_mip(xlen_t mask)
+static inline void csr_set_bits_imm_mip(xlen_t mask)
 {
   __ASM_VOLATILE("csrrsi zero, mip, %0"
                  :
@@ -436,7 +436,7 @@ __STATIC_INLINE void csr_set_bits_imm_mip(xlen_t mask)
 }
 
 /// Clear bits machine interrupt registers mip (only up to 5 bits)
-__STATIC_INLINE void csr_clr_bits_imm_mip(xlen_t mask)
+static inline void csr_clr_bits_imm_mip(xlen_t mask)
 {
   __ASM_VOLATILE("csrrci zero, mip, %0"
                  :
@@ -444,7 +444,7 @@ __STATIC_INLINE void csr_clr_bits_imm_mip(xlen_t mask)
 }
 
 /// Read machine interrupt registers mie
-__STATIC_INLINE xlen_t csr_read_mie(void)
+static inline xlen_t csr_read_mie(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mie"
@@ -454,7 +454,7 @@ __STATIC_INLINE xlen_t csr_read_mie(void)
 }
 
 /// Write machine interrupt registers mie
-__STATIC_INLINE void csr_write_mie(xlen_t value)
+static inline void csr_write_mie(xlen_t value)
 {
   __ASM_VOLATILE("csrw mie, %0"
                  :
@@ -462,7 +462,7 @@ __STATIC_INLINE void csr_write_mie(xlen_t value)
 }
 
 /// Read and write machine interrupt registers mie
-__STATIC_INLINE xlen_t csr_read_write_mie(xlen_t new_value)
+static inline xlen_t csr_read_write_mie(xlen_t new_value)
 {
   xlen_t prev_value;
   __ASM_VOLATILE("csrrw %0, mie, %1"
@@ -472,7 +472,7 @@ __STATIC_INLINE xlen_t csr_read_write_mie(xlen_t new_value)
 }
 
 /// Set bits machine interrupt registers mie
-__STATIC_INLINE void csr_set_bits_mie(xlen_t mask)
+static inline void csr_set_bits_mie(xlen_t mask)
 {
   __ASM_VOLATILE("csrrs zero, mie, %0"
                  :
@@ -480,7 +480,7 @@ __STATIC_INLINE void csr_set_bits_mie(xlen_t mask)
 }
 
 /// Clear bits machine interrupt registers mie
-__STATIC_INLINE void csr_clr_bits_mie(xlen_t mask)
+static inline void csr_clr_bits_mie(xlen_t mask)
 {
   __ASM_VOLATILE("csrrc zero, mie, %0"
                  :
@@ -488,7 +488,7 @@ __STATIC_INLINE void csr_clr_bits_mie(xlen_t mask)
 }
 
 /// Read and set bits machine interrupt registers mie
-__STATIC_INLINE xlen_t csr_read_set_bits_mie(xlen_t mask)
+static inline xlen_t csr_read_set_bits_mie(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrs %0, mie, %1"
@@ -498,7 +498,7 @@ __STATIC_INLINE xlen_t csr_read_set_bits_mie(xlen_t mask)
 }
 
 /// Read and clear bits machine interrupt registers mie
-__STATIC_INLINE xlen_t csr_read_clr_bits_mie(xlen_t mask)
+static inline xlen_t csr_read_clr_bits_mie(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrc %0, mie, %1"
@@ -508,7 +508,7 @@ __STATIC_INLINE xlen_t csr_read_clr_bits_mie(xlen_t mask)
 }
 
 /// Write immediate machine interrupt registers mie (only up to 5 bits)
-__STATIC_INLINE void csr_write_imm_mie(xlen_t value)
+static inline void csr_write_imm_mie(xlen_t value)
 {
   __ASM_VOLATILE("csrrwi zero, mie, %0"
                  :
@@ -516,7 +516,7 @@ __STATIC_INLINE void csr_write_imm_mie(xlen_t value)
 }
 
 /// Set bits machine interrupt registers mie (only up to 5 bits)
-__STATIC_INLINE void csr_set_bits_imm_mie(xlen_t mask)
+static inline void csr_set_bits_imm_mie(xlen_t mask)
 {
   __ASM_VOLATILE("csrrsi zero, mie, %0"
                  :
@@ -524,7 +524,7 @@ __STATIC_INLINE void csr_set_bits_imm_mie(xlen_t mask)
 }
 
 /// Clear bits machine interrupt registers mie (only up to 5 bits)
-__STATIC_INLINE void csr_clr_bits_imm_mie(xlen_t mask)
+static inline void csr_clr_bits_imm_mie(xlen_t mask)
 {
   __ASM_VOLATILE("csrrci zero, mie, %0"
                  :
@@ -532,7 +532,7 @@ __STATIC_INLINE void csr_clr_bits_imm_mie(xlen_t mask)
 }
 
 /// Read machine exception program counter
-__STATIC_INLINE xlen_t csr_read_mepc(void)
+static inline xlen_t csr_read_mepc(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mepc"
@@ -542,7 +542,7 @@ __STATIC_INLINE xlen_t csr_read_mepc(void)
 }
 
 /// Write machine exception program counter
-__STATIC_INLINE void csr_write_mepc(xlen_t value)
+static inline void csr_write_mepc(xlen_t value)
 {
   __ASM_VOLATILE("csrw mepc, %0"
                  :
@@ -550,7 +550,7 @@ __STATIC_INLINE void csr_write_mepc(xlen_t value)
 }
 
 /// Read and write machine exception program counter
-__STATIC_INLINE xlen_t csr_read_write_mepc(xlen_t new_value)
+static inline xlen_t csr_read_write_mepc(xlen_t new_value)
 {
   xlen_t prev_value;
   __ASM_VOLATILE("csrrw %0, mepc, %1"
@@ -560,7 +560,7 @@ __STATIC_INLINE xlen_t csr_read_write_mepc(xlen_t new_value)
 }
 
 /// Read machine cause register
-__STATIC_INLINE xlen_t csr_read_mcause(void)
+static inline xlen_t csr_read_mcause(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mcause"
@@ -569,7 +569,7 @@ __STATIC_INLINE xlen_t csr_read_mcause(void)
 }
 
 /// Write machine cause register
-__STATIC_INLINE void csr_write_mcause(xlen_t value)
+static inline void csr_write_mcause(xlen_t value)
 {
   __ASM_VOLATILE("csrw mcause, %0"
                  :
@@ -577,7 +577,7 @@ __STATIC_INLINE void csr_write_mcause(xlen_t value)
 }
 
 /// Read and write machine cause register
-__STATIC_INLINE xlen_t csr_read_write_mcause(xlen_t new_value)
+static inline xlen_t csr_read_write_mcause(xlen_t new_value)
 {
   xlen_t prev_value;
   __ASM_VOLATILE("csrrw %0, mcause, %1"
@@ -587,7 +587,7 @@ __STATIC_INLINE xlen_t csr_read_write_mcause(xlen_t new_value)
 }
 
 /// Set bits machine cause register
-__STATIC_INLINE void csr_set_bits_mcause(xlen_t mask)
+static inline void csr_set_bits_mcause(xlen_t mask)
 {
   __ASM_VOLATILE("csrrs zero, mcause, %0"
                  :
@@ -595,7 +595,7 @@ __STATIC_INLINE void csr_set_bits_mcause(xlen_t mask)
 }
 
 /// Clear bits machine cause register
-__STATIC_INLINE void csr_clr_bits_mcause(xlen_t mask)
+static inline void csr_clr_bits_mcause(xlen_t mask)
 {
   __ASM_VOLATILE("csrrc zero, mcause, %0"
                  :
@@ -603,7 +603,7 @@ __STATIC_INLINE void csr_clr_bits_mcause(xlen_t mask)
 }
 
 /// Read and set bits machine cause register
-__STATIC_INLINE xlen_t csr_read_set_bits_mcause(xlen_t mask)
+static inline xlen_t csr_read_set_bits_mcause(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrs %0, mcause, %1"
@@ -613,7 +613,7 @@ __STATIC_INLINE xlen_t csr_read_set_bits_mcause(xlen_t mask)
 }
 
 /// Read and clear bits machine cause register
-__STATIC_INLINE xlen_t csr_read_clr_bits_mcause(xlen_t mask)
+static inline xlen_t csr_read_clr_bits_mcause(xlen_t mask)
 {
   xlen_t value;
   __ASM_VOLATILE("csrrc %0, mcause, %1"
@@ -623,7 +623,7 @@ __STATIC_INLINE xlen_t csr_read_clr_bits_mcause(xlen_t mask)
 }
 
 /// Write immediate machine cause register (only up to 5 bits)
-__STATIC_INLINE void csr_write_imm_mcause(xlen_t value)
+static inline void csr_write_imm_mcause(xlen_t value)
 {
   __ASM_VOLATILE("csrrwi zero, mcause, %0"
                  :
@@ -631,7 +631,7 @@ __STATIC_INLINE void csr_write_imm_mcause(xlen_t value)
 }
 
 /// Set bits machine cause register (only up to 5 bits)
-__STATIC_INLINE void csr_set_bits_imm_mcause(xlen_t mask)
+static inline void csr_set_bits_imm_mcause(xlen_t mask)
 {
   __ASM_VOLATILE("csrrsi zero, mcause, %0"
                  :
@@ -639,7 +639,7 @@ __STATIC_INLINE void csr_set_bits_imm_mcause(xlen_t mask)
 }
 
 /// Clear bits machine cause register (only up to 5 bits)
-__STATIC_INLINE void csr_clr_bits_imm_mcause(xlen_t mask)
+static inline void csr_clr_bits_imm_mcause(xlen_t mask)
 {
   __ASM_VOLATILE("csrrci zero, mcause, %0"
                  :
@@ -647,7 +647,7 @@ __STATIC_INLINE void csr_clr_bits_imm_mcause(xlen_t mask)
 }
 
 /// Read machine trap value register
-__STATIC_INLINE xlen_t csr_read_mtval(void)
+static inline xlen_t csr_read_mtval(void)
 {
   xlen_t value;
   __ASM_VOLATILE("csrr %0, mtval"
@@ -656,7 +656,7 @@ __STATIC_INLINE xlen_t csr_read_mtval(void)
 }
 
 /// Write machine trap value register
-__STATIC_INLINE void csr_write_mtval(xlen_t value)
+static inline void csr_write_mtval(xlen_t value)
 {
   __ASM_VOLATILE("csrw mtval, %0"
                  : /* output: none */
@@ -665,7 +665,7 @@ __STATIC_INLINE void csr_write_mtval(xlen_t value)
 }
 
 /// Read and write trap value register
-__STATIC_INLINE xlen_t csr_read_write_mtval(xlen_t new_value)
+static inline xlen_t csr_read_write_mtval(xlen_t new_value)
 {
   xlen_t prev_value;
   __ASM_VOLATILE("csrrw %0, mtval, %1"
@@ -675,37 +675,37 @@ __STATIC_INLINE xlen_t csr_read_write_mtval(xlen_t new_value)
 }
 
 /// Global IRQ enable
-__STATIC_INLINE void global_enable_irq()
+static inline void global_enable_irq()
 {
   csr_set_bits_imm_mstatus(MSTATUS_MIE_MASK);
 }
 
 /// Gloabl IRQ disable
-__STATIC_INLINE void global_disable_irq()
+static inline void global_disable_irq()
 {
   csr_clr_bits_imm_mstatus(MSTATUS_MIE_MASK);
 }
 
 /// Machine Interrupt-Enable
-__STATIC_INLINE void enable_irq(xlen_t offset_irq)
+static inline void enable_irq(xlen_t offset_irq)
 {
   csr_set_bits_mie(offset_irq);
 }
 
 /// Machine Interrupt-Disable
-__STATIC_INLINE void disable_irq(xlen_t offset_irq)
+static inline void disable_irq(xlen_t offset_irq)
 {
   csr_clr_bits_mie(offset_irq);
 }
 
 /// Machine trap-vector mode enable
-__STATIC_INLINE void enable_vector_mod_irq()
+static inline void enable_vector_mod_irq()
 {
   csr_set_bits_imm_mtvec(1U);
 }
 
 /// Machine trap-vector mode disable
-__STATIC_INLINE void disable_vector_mod_irq()
+static inline void disable_vector_mod_irq()
 {
   csr_clr_bits_imm_mtvec(1U);
 }

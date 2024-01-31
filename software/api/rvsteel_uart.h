@@ -13,26 +13,26 @@
 
 typedef struct
 {
-  __IO uint32_t TX;
-  __IO uint32_t RX;
+  volatile uint32_t TX;
+  volatile uint32_t RX;
 } UartDevice;
 
-__STATIC_INLINE uint8_t uart_read(UartDevice *UARTx)
+static inline uint8_t uart_read(UartDevice *UARTx)
 {
   return UARTx->RX;
 }
 
-__STATIC_INLINE void uart_write(UartDevice *UARTx, uint8_t data)
+static inline void uart_write(UartDevice *UARTx, uint8_t data)
 {
   UARTx->TX = data;
 }
 
-__STATIC_INLINE int uart_write_busy(UartDevice *UARTx)
+static inline int uart_write_busy(UartDevice *UARTx)
 {
   return UARTx->TX != 1;
 }
 
-__STATIC_INLINE void uart_send_char(UartDevice *UARTx, const char c)
+static inline void uart_send_char(UartDevice *UARTx, const char c)
 {
   while ((UARTx->TX != 1))
   {
@@ -42,7 +42,7 @@ __STATIC_INLINE void uart_send_char(UartDevice *UARTx, const char c)
   UARTx->TX = c;
 }
 
-__STATIC_INLINE void uart_send_string(UartDevice *UARTx, const char *str)
+static inline void uart_send_string(UartDevice *UARTx, const char *str)
 {
   while (*(str) != '\0')
   {

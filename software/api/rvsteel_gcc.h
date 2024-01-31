@@ -16,26 +16,6 @@
 #define __ASM_VOLATILE __asm volatile
 #endif
 
-#ifndef __I
-#define __I volatile
-#endif
-
-#ifndef __O
-#define __O volatile
-#endif
-
-#ifndef __IO
-#define __IO volatile
-#endif
-
-#ifndef __INLINE
-#define __INLINE inline
-#endif
-
-#ifndef __STATIC_INLINE
-#define __STATIC_INLINE static inline
-#endif
-
 #ifndef __STATIC_FORCEINLINE
 #define __STATIC_FORCEINLINE __attribute__((always_inline)) static inline
 #endif
