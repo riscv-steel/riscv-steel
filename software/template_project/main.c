@@ -5,12 +5,11 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include "rvsteel_soc.h"
+#include "rvsteel_api.h"
 
 // A minimal Hello World program
 int main()
 {
-  uart_send_string(UART0, "Hello World!");
-  while (1)
-    ;
+  uart_send_string("Hello World!");
+  busy_wait();
 }
