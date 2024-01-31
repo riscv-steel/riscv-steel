@@ -8,7 +8,7 @@ The Software API of RISC-V Steel System-on-Chip IP provides function calls to co
 To use it you need to include the `rvsteel_api.h` header in the source code of your application:
 
 ```c
-#include "rvsteel-api.h"
+#include "rvsteel_api.h"
 ```
 
 The sections below contain documentation of the available API calls.
