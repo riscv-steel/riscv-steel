@@ -22,7 +22,4 @@
 #define MTIMER0 ((MTimerDevice *)MTIMER0_BASE)
 #define UART0 ((UartDevice *)UART0_BASE)
 
-/// Sets the function to be called on interrupts
-void irq_set_interrupt_handler(void (*interrupt_handler)());
-
 #endif // __RVSTEEL_SOC__

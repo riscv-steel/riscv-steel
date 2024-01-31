@@ -9,7 +9,7 @@
 #define __MTIMER__
 
 #include <stdint.h>
-#include "rvsteel_api.h"
+#include "rvsteel_def.h"
 
 typedef struct
 {

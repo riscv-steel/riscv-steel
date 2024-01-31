@@ -9,7 +9,7 @@
 #define __UART__
 
 #include <stdint.h>
-#include "rvsteel_api.h"
+#include "rvsteel_def.h"
 
 typedef struct
 {
