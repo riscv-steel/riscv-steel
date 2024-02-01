@@ -12,7 +12,7 @@
 PROGRAM_NAME      ?= hello_world
 # Memory size (must be set to the same value of the MEMORY_SIZE parameter of rvsteel_soc module)
 MEMORY_SIZE       ?= 8192
-# Path to RISC-V Steel API
+# Path to RISC-V Steel System-on-Chip API
 RVSTEEL_API_DIR   ?= ../../../../software/api
 # The full path to RISC-V GNU Toolchain binaries in this machine + RISC-V binaries prefix
 RISCV_PREFIX      ?= /opt/riscv/bin/riscv32-unknown-elf-
@@ -60,12 +60,6 @@ ifeq (,$(wildcard $(RVSTEEL_API_DIR)/rvsteel_api.h))
           RVSTEEL_API_DIR variable in the Makefile)
 endif
 
-# Octal dump (od) is needed for hexdump generation
-ifeq (, $(shell which od))
-  $(error Could not find 'od' (octal dump) executable. It can be installed on Ubuntu    	\
-          by running 'sudo apt-get install coreutils')
-endif
-
 # Test whether it can find GCC binary
 ifeq (, $(shell which ${RISCV_GCC}))
   $(error Could not find RISC-V GCC binary at '${RISCV_GCC}'. Please change RISCV_PREFIX  \
@@ -88,36 +82,25 @@ endif
 # --------------------------------------------------------------------------------------------
 
 all: mkdir_build rvsteel_api $(OBJ_FILES)
-	@echo -n "Linking ${ELF_NAME}"
 	@$(RISCV_GCC) -T ${LINKER_SCRIPT} ${COMPILER_OPTIONS} \
                    $(OBJ_FILES) build/obj/rvsteel_api.o -o build/${ELF_NAME}
-	@echo ": ok."
 	@${RISCV_OBJDUMP} -D build/${ELF_NAME} > build/${OBJDUMP_NAME}
-	@${RISCV_OBJCOPY} build/${ELF_NAME} -O binary build/__temp1__.bin --pad-to=$(MEMORY_SIZE) --gap-fill=0x00
-	@od -t x4 -v -An -w4 build/__temp1__.bin > build/__temp2__.hex
-	@cut -c2- build/__temp2__.hex > build/${HEXDUMP_NAME}
-	@rm -rf build/__temp1__.bin build/__temp2__.hex build/obj
-	@echo "\nGenerated files:"
+	@${RISCV_OBJCOPY} build/${ELF_NAME} -O verilog --verilog-data-width=4 build/${HEXDUMP_NAME}
+	@echo "\nBuild successful.\n\nGenerated files:"
 	@echo "-- ELF executable   : build/${ELF_NAME}"
 	@echo "-- Disassembly      : build/${OBJDUMP_NAME}"
 	@echo "-- Memory init file : build/${HEXDUMP_NAME}"
 	@echo "\nThe memory size is set to $(MEMORY_SIZE) bytes.\n"
 
 mkdir_build:
-	@echo ""
-	@mkdir -p build/
 	@mkdir -p build/obj/
 
 rvsteel_api: $(RVSTEEL_API_DIR)/rvsteel_api.c
-	@echo -n "Building RISC-V Steel API"
 	@$(RISCV_GCC) -I ${RVSTEEL_API_DIR} ${COMPILER_OPTIONS} \
                 -D MEMORY_SIZE=\"$(MEMORY_SIZE)\" -c -o build/obj/rvsteel_api.o $(RVSTEEL_API_DIR)/rvsteel_api.c
-	@echo ": ok."
 
 build/obj/%.o: %.c
-	@echo -n "Making $(notdir $@)"
 	@$(RISCV_GCC) -I ${RVSTEEL_API_DIR} ${COMPILER_OPTIONS} -c -o $@ $<
-	@echo ": ok."
 
 clean:
 	@rm -rf build/
