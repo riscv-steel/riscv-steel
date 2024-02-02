@@ -97,7 +97,7 @@ void ram_init_h32(const char *path)
   }
 
   std::string line;
-  unsigned int load_address = 0x00000000;
+  size_t load_address = 0x00000000;
   // In words
   size_t ram_size = dut->rootp->unit_tests__DOT__MEMORY_SIZE / 4;
 
@@ -120,6 +120,13 @@ void ram_init_h32(const char *path)
       else
       {
         uint32_t data = std::stoul(token_str, nullptr, 16);
+
+        if (load_address > ram_size)
+        {
+          std::cout << "Out of range load address ram: 0x" << std::hex << load_address << std::endl;
+          std::exit(EXIT_FAILURE);
+        }
+
         dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[load_address] = data;
         token = strtok(NULL, " \n");
         load_address++;
