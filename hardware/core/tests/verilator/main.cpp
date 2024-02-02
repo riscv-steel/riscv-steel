@@ -11,6 +11,7 @@ SPDX-License-Identifier: MIT
 #include <iostream>
 #include <fstream>
 #include <signal.h>
+#include <string.h>
 
 #include <verilated_vcd_c.h>
 #include <verilated_fst_c.h>
@@ -97,20 +98,33 @@ void ram_init_h32(const char *path)
   }
 
   std::string line;
-
+  unsigned int load_address = 0x00000000;
   // In words
   size_t ram_size = dut->rootp->unit_tests__DOT__MEMORY_SIZE / 4;
 
+  // First initialize the RAM
   for (int i = 0; i < ram_size; i++)
+    dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = 0xdeadbeef;
+
+  // Then load the memory init file
+  while (std::getline(file, line))
   {
-    if (std::getline(file, line))
+    char *token = strtok((char *)line.c_str(), " \n");
+    while (token != NULL)
     {
-      uint32_t data = std::stoul(line, nullptr, 16);
-      dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = data;
-    }
-    else
-    {
-      dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = 0xdeadbeef;
+      std::string token_str = std::string(token);
+      if (token_str[0] == '@') // update load address
+      {
+        load_address = std::stoul(token_str.substr(1), nullptr, 16);
+        token = strtok(NULL, " \n");
+      }
+      else
+      {
+        uint32_t data = std::stoul(token_str, nullptr, 16);
+        dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[load_address] = data;
+        token = strtok(NULL, " \n");
+        load_address++;
+      }
     }
   }
 
