@@ -14,7 +14,7 @@
 const char *help_str =
     "Use: app_name.run [options]\n"
     "Options:\n"
-    "--out-wave=<name>      Output file *.vcd (defaul: none - off)\n\n"
+    "--out-wave=<name>      Output file *.fst (defaul: none - off)\n\n"
     "--ram-init-h32=<name>  Input init ram file in h32 format (defaul: none - off)\n"
     "                       Example: --ram-init-h32=my_program.hex\n\n"
 
