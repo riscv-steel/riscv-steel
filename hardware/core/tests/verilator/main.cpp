@@ -1,10 +1,9 @@
-/*
-Project Name:  RISC-V Steel System-on-Chip - Core simulation in Verilator
-Project Repo:  github.com/riscv-steel/riscv-steel
-
-Copyright (C) Alexander Markov - github.com/AlexxMarkov
-SPDX-License-Identifier: MIT
-*/
+// ----------------------------------------------------------------------------
+// Copyright (c) 2020-2024 RISC-V Steel contributors
+//
+// This work is licensed under the MIT License, see LICENSE file for details.
+// SPDX-License-Identifier: MIT
+// ----------------------------------------------------------------------------
 
 #include <stdlib.h>
 
