@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
       uint32_t stop_addr = get_signature(2046);
       uint32_t size = stop_addr - start_addr;
 
-      std::cout << "Signature size: " << size << std::endl;
+      std::cout << "Signature size: " << std::dec << size << std::endl;
 
       if (args.ram_dump_h32 and (size >= 4))
       {
