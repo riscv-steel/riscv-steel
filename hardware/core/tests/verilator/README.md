@@ -33,6 +33,10 @@ Available commands:
 
     Any entries to this address will print the messages as terminal output. The default address is 0x00000000, which means no messages.
 
+  - **--quiet**
+
+    Disable all messages.
+
 
 > Documentation for installing `Verilator` can be found here: [Installation](https://veripool.org/guide/latest/install.html)
 
