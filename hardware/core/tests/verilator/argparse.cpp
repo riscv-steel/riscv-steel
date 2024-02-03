@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <getopt.h>
+#include <string.h>
 
 const char *help_str =
     "Use: app_name.run [options]\n"
@@ -51,6 +52,7 @@ enum opts
   cmd_wr_addr,
   cmd_dump_h32,
   cmd_host_out,
+  cmd_quiet
 };
 
 static constexpr option long_opts[] =
@@ -63,6 +65,7 @@ static constexpr option long_opts[] =
         //        { "ecall",          no_argument,        NULL, opts::cmd_ecall               },
         {"wr-addr", required_argument, NULL, opts::cmd_wr_addr},
         {"host-out", required_argument, NULL, opts::cmd_host_out},
+        {"quiet", no_argument, NULL, opts::cmd_quiet},
         {NULL, no_argument, NULL, 0}};
 
 static size_t get_int_arg(const char *arg)
@@ -76,6 +79,13 @@ Args parser(int argc, char *argv[])
   Args args;
   int opt;
 
+  // Check first if --quiet was used. If so, disable output printing
+  for (int i = 0; i < argc; i++)
+    if (strcmp(argv[i], "--quiet") == 0)
+    {
+      args.sim_verbosity = QUIET;
+    }
+
   while ((opt = getopt_long(argc, argv, "", long_opts, NULL)) != -1)
   {
     switch (opt)
@@ -86,32 +96,41 @@ Args parser(int argc, char *argv[])
 
     case opts::cmd_out_wave:
       args.out_wave_path = optarg;
-      std::cout << "Wave out: " << optarg << std::endl;
+      if (args.sim_verbosity != QUIET)
+        std::cout << "Wave out: " << optarg << std::endl;
       break;
 
     case opts::cmd_ram_init_h32:
       args.ram_init_h32 = optarg;
-      std::cout << "Input init ram file: " << optarg << std::endl;
+      if (args.sim_verbosity != QUIET)
+        std::cout << "Input init ram file: " << optarg << std::endl;
       break;
 
     case opts::cmd_ram_dump_h32:
       args.ram_dump_h32 = optarg;
-      std::cout << "Output dump ram file: " << optarg << std::endl;
+      if (args.sim_verbosity != QUIET)
+        std::cout << "Output dump ram file: " << optarg << std::endl;
       break;
 
     case opts::cmd_cycles:
       args.max_cycles = get_int_arg(optarg);
-      std::cout << "Max cycles: " << args.max_cycles << std::endl;
+      if (args.sim_verbosity != QUIET)
+        std::cout << "Max cycles: " << args.max_cycles << std::endl;
       break;
 
     case opts::cmd_wr_addr:
       args.wr_addr = get_int_arg(optarg);
-      std::cout << "Write address: 0x" << std::hex << args.wr_addr << std::endl;
+      if (args.sim_verbosity != QUIET)
+        std::cout << "Write address: 0x" << std::hex << args.wr_addr << std::endl;
       break;
 
     case opts::cmd_host_out:
       args.host_out = get_int_arg(optarg);
-      std::cout << "Host out: 0x" << std::hex << args.host_out << std::endl;
+      if (args.sim_verbosity != QUIET)
+        std::cout << "Host out: 0x" << std::hex << args.host_out << std::endl;
+      break;
+
+    case opts::cmd_quiet:
       break;
 
     default:
