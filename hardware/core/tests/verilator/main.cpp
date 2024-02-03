@@ -27,6 +27,7 @@ vluint64_t clk_cur_cycles = 0;
 vluint64_t clk_half_cycles = 2;
 Dut *dut = new Dut;
 Trace *trace = new Trace;
+Args args;
 
 static void open_trace(const char *out_wave_path)
 {
@@ -80,7 +81,8 @@ void exit_app(int sig)
 {
   (void)sig;
   close_trace();
-  std::cout << "Exit." << std::endl;
+  if (args.sim_verbosity != QUIET)
+    std::cout << "Exit." << std::endl;
   std::exit(EXIT_SUCCESS);
 }
 
@@ -134,7 +136,8 @@ void ram_init_h32(const char *path)
     }
   }
 
-  std::cout << "Ok init ram h32" << std::endl;
+  if (args.sim_verbosity != QUIET)
+    std::cout << "Ok init ram h32" << std::endl;
   file.close();
 }
 
@@ -162,7 +165,8 @@ void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
     file << buff << '\n';
   }
 
-  std::cout << "Ok dump ram h32" << std::endl;
+  if (args.sim_verbosity != QUIET)
+    std::cout << "Ok dump ram h32" << std::endl;
   file.close();
 }
 
@@ -200,7 +204,7 @@ int main(int argc, char *argv[])
   signal(SIGINT, exit_app);
   signal(SIGKILL, exit_app);
 
-  Args args = parser(argc, argv);
+  args = parser(argc, argv);
 
   if (args.out_wave_path)
   {
@@ -223,7 +227,8 @@ int main(int argc, char *argv[])
     {
       if (clk_cur_cycles >= args.max_cycles)
       {
-        std::cout << "Exit: end cycles" << std::endl;
+        if (args.sim_verbosity != QUIET)
+          std::cout << "Exit: end cycles" << std::endl;
         close_trace();
         std::exit(EXIT_SUCCESS);
       }
@@ -232,14 +237,16 @@ int main(int argc, char *argv[])
     // --wr-addr
     if (is_finished(args.wr_addr))
     {
-      std::cout << "Exit: wr-addr" << std::endl;
+      if (args.sim_verbosity != QUIET)
+        std::cout << "Exit: wr-addr" << std::endl;
 
       // The beginning and end of signature are stored at
       uint32_t start_addr = get_signature(2047);
       uint32_t stop_addr = get_signature(2046);
       uint32_t size = stop_addr - start_addr;
 
-      std::cout << "Signature size: " << std::dec << size << std::endl;
+      if (args.sim_verbosity != QUIET)
+        std::cout << "Signature size: " << std::dec << size << std::endl;
 
       if (args.ram_dump_h32 and (size >= 4))
       {
