@@ -34,10 +34,13 @@ const char *help_str =
     "                       Example: --host-out=0x00000000\n"
     "Note:                  Must not be 0x0\n\n"
 
+    "--quiet                Use --quiet to disable messages (defaul: messages enable)\n"
+    "                       Example: --quiet\n"
+
     "\n\n"
     "Example:\n"
     "unit_tests --ram-init-h32=add-01.hex --ram-dump-h32=add-01-dump.hex"
-    "unit_tests --out-wave=wave.vcd --ram-init-h32=add-01.hex --ram-dump-h32=add-01-dump.hex"
+    "unit_tests --out-wave=wave.fst --ram-init-h32=add-01.hex --ram-dump-h32=add-01-dump.hex"
     "unit_tests --ram-init-h32=main.hex --host-out=0x4";
 
 enum opts
