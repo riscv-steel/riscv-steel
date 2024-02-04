@@ -11,6 +11,7 @@
 #include <fstream>
 #include <signal.h>
 #include <string.h>
+#include "log.h"
 
 #include <verilated_vcd_c.h>
 #include <verilated_fst_c.h>
@@ -81,8 +82,7 @@ void exit_app(int sig)
 {
   (void)sig;
   close_trace();
-  if (args.sim_verbosity != QUIET)
-    std::cout << "Exit." << std::endl;
+  Log::info("Exit.");
   std::exit(EXIT_SUCCESS);
 }
 
@@ -94,7 +94,7 @@ void ram_init_h32(const char *path)
 
   if (!file.is_open())
   {
-    std::cout << "Error file opening: " << path << std::endl;
+    Log::error("Error file opening: %s", path);
     std::exit(EXIT_FAILURE);
   }
 
@@ -125,7 +125,7 @@ void ram_init_h32(const char *path)
 
         if (load_address > ram_size)
         {
-          std::cout << "Out of range load address ram: 0x" << std::hex << load_address << std::endl;
+          Log::error("Out of range load address ram: 0x%x", load_address);
           std::exit(EXIT_FAILURE);
         }
 
@@ -136,8 +136,7 @@ void ram_init_h32(const char *path)
     }
   }
 
-  if (args.sim_verbosity != QUIET)
-    std::cout << "Ok init ram h32" << std::endl;
+  Log::info("Ok init ram h32");
   file.close();
 }
 
@@ -148,7 +147,7 @@ void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
 
   if (!file.is_open())
   {
-    std::cout << "Error file opening: " << path << std::endl;
+    Log::error("Error file opening: %s", path);
     std::exit(EXIT_FAILURE);
   }
 
@@ -165,8 +164,7 @@ void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
     file << buff << '\n';
   }
 
-  if (args.sim_verbosity != QUIET)
-    std::cout << "Ok dump ram h32" << std::endl;
+  Log::info("Ok dump ram h32");
   file.close();
 }
 
@@ -227,8 +225,7 @@ int main(int argc, char *argv[])
     {
       if (clk_cur_cycles >= args.max_cycles)
       {
-        if (args.sim_verbosity != QUIET)
-          std::cout << "Exit: end cycles" << std::endl;
+        Log::info("Exit: end cycles");
         close_trace();
         std::exit(EXIT_SUCCESS);
       }
@@ -237,16 +234,14 @@ int main(int argc, char *argv[])
     // --wr-addr
     if (is_finished(args.wr_addr))
     {
-      if (args.sim_verbosity != QUIET)
-        std::cout << "Exit: wr-addr" << std::endl;
+      Log::info("Exit: wr-addr");
 
       // The beginning and end of signature are stored at
       uint32_t start_addr = get_signature(2047);
       uint32_t stop_addr = get_signature(2046);
       uint32_t size = stop_addr - start_addr;
 
-      if (args.sim_verbosity != QUIET)
-        std::cout << "Signature size: " << std::dec << size << std::endl;
+      Log::info("Signature size: %u", size);
 
       if (args.ram_dump_h32 and (size >= 4))
       {

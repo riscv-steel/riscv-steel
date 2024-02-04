@@ -12,6 +12,8 @@
 #include <getopt.h>
 #include <string.h>
 
+#include "log.h"
+
 const char *help_str =
     "Use: app_name.run [options]\n"
     "Options:\n"
@@ -82,13 +84,6 @@ Args parser(int argc, char *argv[])
   Args args;
   int opt;
 
-  // Check first if --quiet was used. If so, disable output printing
-  for (int i = 0; i < argc; i++)
-    if (strcmp(argv[i], "--quiet") == 0)
-    {
-      args.sim_verbosity = QUIET;
-    }
-
   while ((opt = getopt_long(argc, argv, "", long_opts, NULL)) != -1)
   {
     switch (opt)
@@ -99,45 +94,40 @@ Args parser(int argc, char *argv[])
 
     case opts::cmd_out_wave:
       args.out_wave_path = optarg;
-      if (args.sim_verbosity != QUIET)
-        std::cout << "Wave out: " << optarg << std::endl;
+      Log::info("Wave out: %s", optarg);
       break;
 
     case opts::cmd_ram_init_h32:
       args.ram_init_h32 = optarg;
-      if (args.sim_verbosity != QUIET)
-        std::cout << "Input init ram file: " << optarg << std::endl;
+      Log::info("Input init ram file: %s", optarg);
       break;
 
     case opts::cmd_ram_dump_h32:
       args.ram_dump_h32 = optarg;
-      if (args.sim_verbosity != QUIET)
-        std::cout << "Output dump ram file: " << optarg << std::endl;
+      Log::info("Output dump ram file: %s", optarg);
       break;
 
     case opts::cmd_cycles:
       args.max_cycles = get_int_arg(optarg);
-      if (args.sim_verbosity != QUIET)
-        std::cout << "Max cycles: " << args.max_cycles << std::endl;
+      Log::info("Max cycles: %u", args.max_cycles);
       break;
 
     case opts::cmd_wr_addr:
       args.wr_addr = get_int_arg(optarg);
-      if (args.sim_verbosity != QUIET)
-        std::cout << "Write address: 0x" << std::hex << args.wr_addr << std::endl;
+      Log::info("Write address: 0x%x", args.wr_addr);
       break;
 
     case opts::cmd_host_out:
       args.host_out = get_int_arg(optarg);
-      if (args.sim_verbosity != QUIET)
-        std::cout << "Host out: 0x" << std::hex << args.host_out << std::endl;
+      Log::info("Host out: 0x%x", args.host_out);
       break;
 
     case opts::cmd_quiet:
+      Log::set_level(Log::QUIET);
       break;
 
     default:
-      std::cout << "Please call for help: --help\n\n";
+      Log::info("Please call for help: --help\n");
       std::exit(EXIT_SUCCESS);
     }
   }
