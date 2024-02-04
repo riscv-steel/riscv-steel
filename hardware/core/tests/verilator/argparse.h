@@ -25,7 +25,6 @@ struct Args
   uint32_t max_cycles{500000};
   uint32_t wr_addr{0x00001000};
   uint32_t host_out{0x00000000};
-  verbosity sim_verbosity{VERBOSE};
 };
 
 Args parser(int argc, char *argv[]);
