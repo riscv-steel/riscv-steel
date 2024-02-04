@@ -26,18 +26,25 @@ const char *help_str =
     "\n\n"
 
     "The end of the program is:\n"
-    "--cycles=<num>         Exit after processor cycles complete (defaul: 500000)\n"
+    "--cycles=<num>         Exit after processor cycles complete (default: 500000)\n"
     "                       Example: --cycles=10000\n\n"
     //    "--ecall            Exit if there is an instruction ecall\n"
-    "--wr-addr=<addr>       Exit if there is an entry at the specified address (defaul: 0x00001000)\n"
+    "--wr-addr=<addr>       Exit if there is an entry at the specified address (default: 0x00001000)\n"
     "                       Example: --wr-addr=0x00001000)\n\n"
 
-    "--host-out=<addr>      Message output detection address (defaul: 0x00000000 - off)\n"
+    "--host-out=<addr>      Message output detection address (default: 0x00000000 - off)\n"
     "                       Example: --host-out=0x00000000\n"
     "Note:                  Must not be 0x0\n\n"
 
-    "--quiet                Use --quiet to disable messages (defaul: messages enable)\n"
-    "                       Example: --quiet\n"
+    "--quiet                Use --quiet to disable messages (default: messages enable)\n"
+    "                       Example: --quiet (equivalent: --log-level=DEBUG)\n"
+
+    "--log-out              Output file log (default: none)\n"
+    "                       Example: --log-out=my_log.txt\n"
+
+    "--log-level            Log level (default: DEBUG)\n"
+    "                       Example: --log-level=DEBUG\n"
+    "Note:                  Available: DEBUG, INFO, WARNING, ERROR, CRITICAL, QUIET\n\n"
 
     "\n\n"
     "Example:\n"
@@ -57,7 +64,9 @@ enum opts
   cmd_wr_addr,
   cmd_dump_h32,
   cmd_host_out,
-  cmd_quiet
+  cmd_quiet,
+  cmd_log_out,
+  cmd_log_level,
 };
 
 static constexpr option long_opts[] =
@@ -71,6 +80,8 @@ static constexpr option long_opts[] =
         {"wr-addr", required_argument, NULL, opts::cmd_wr_addr},
         {"host-out", required_argument, NULL, opts::cmd_host_out},
         {"quiet", no_argument, NULL, opts::cmd_quiet},
+        {"log-out", required_argument, NULL, opts::cmd_log_out},
+        {"log-level", required_argument, NULL, opts::cmd_log_level},
         {NULL, no_argument, NULL, 0}};
 
 static size_t get_int_arg(const char *arg)
@@ -124,6 +135,14 @@ Args parser(int argc, char *argv[])
 
     case opts::cmd_quiet:
       Log::set_level(Log::QUIET);
+      break;
+
+    case opts::cmd_log_out:
+      Log::set_out(optarg);
+      break;
+
+    case opts::cmd_log_level:
+      Log::set_level(optarg);
       break;
 
     default:

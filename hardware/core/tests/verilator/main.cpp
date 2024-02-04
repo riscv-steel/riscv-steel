@@ -202,6 +202,8 @@ int main(int argc, char *argv[])
   signal(SIGINT, exit_app);
   signal(SIGKILL, exit_app);
 
+  // Default log level
+  Log::set_level(Log::DEBUG);
   args = parser(argc, argv);
 
   if (args.out_wave_path)
