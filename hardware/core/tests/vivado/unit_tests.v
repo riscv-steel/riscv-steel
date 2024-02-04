@@ -1,37 +1,9 @@
-/**************************************************************************************************
-
-MIT License
-
-Copyright (c) RISC-V Steel Project
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-**************************************************************************************************/
-
-/**************************************************************************************************
-
-Project Name:  RISC-V Steel 32-bit Processor Core - Unit tests from the RISC-V Architectural Suite
-Project Repo:  github.com/riscv-steel/riscv-steel
-Author:        Rafael Calcada 
-E-mail:        rafaelcalcada@gmail.com
-
-**************************************************************************************************/
+// ----------------------------------------------------------------------------
+// Copyright (c) 2020-2024 RISC-V Steel contributors
+//
+// This work is licensed under the MIT License, see LICENSE file for details.
+// SPDX-License-Identifier: MIT
+// ----------------------------------------------------------------------------
 
 `timescale 1ns / 1ps
 
@@ -116,7 +88,7 @@ module unit_tests();
   
   always #10 clock = !clock;
   
-  reg [159:0] unit_test_programs_array [0:44] = {
+  reg [167:0] unit_test_programs_array [0:53] = {
     "add-01.hex",
     "addi-01.hex",
     "and-01.hex",
@@ -139,11 +111,20 @@ module unit_tests();
     "lhu-align-01.hex",
     "lui-01.hex",
     "lw-align-01.hex",
+    "misalign-beq-01.hex",
+    "misalign-bge-01.hex",
+    "misalign-bgeu-01.hex",
+    "misalign-blt-01.hex",
+    "misalign-bltu-01.hex",
+    "misalign-bne-01.hex",
+    "misalign-jal-01.hex",
     "misalign-lh-01.hex",
     "misalign-lhu-01.hex",
     "misalign-lw-01.hex",
     "misalign-sh-01.hex",
     "misalign-sw-01.hex",
+    "misalign1-jalr-01.hex",
+    "misalign2-jalr-01.hex",
     "or-01.hex",
     "ori-01.hex",
     "sb-align-01.hex",
@@ -164,7 +145,7 @@ module unit_tests();
     "xori-01.hex"
   };
   
-  reg [511:0] golden_reference_array [0:44] = {
+  reg [519:0] golden_reference_array [0:53] = {
     "add-01.reference.hex",
     "addi-01.reference.hex",
     "and-01.reference.hex",
@@ -187,11 +168,20 @@ module unit_tests();
     "lhu-align-01.reference.hex",
     "lui-01.reference.hex",
     "lw-align-01.reference.hex",
+    "misalign-beq-01.reference.hex",
+    "misalign-bge-01.reference.hex",
+    "misalign-bgeu-01.reference.hex",
+    "misalign-blt-01.reference.hex",
+    "misalign-bltu-01.reference.hex",
+    "misalign-bne-01.reference.hex",
+    "misalign-jal-01.reference.hex",
     "misalign-lh-01.reference.hex",
     "misalign-lhu-01.reference.hex",
     "misalign-lw-01.reference.hex",
     "misalign-sh-01.reference.hex",
     "misalign-sw-01.reference.hex",
+    "misalign1-jalr-01.reference.hex",
+    "misalign2-jalr-01.reference.hex",
     "or-01.reference.hex",
     "ori-01.reference.hex",
     "sb-align-01.reference.hex",
@@ -212,9 +202,24 @@ module unit_tests();
     "xori-01.reference.hex"
   };
   
+  // The tests below are expected to fail because 
+  // RISC-V Steel Processor IP does not support
+  // misaligned branch/jump instructions 
+  reg [167:0] expected_to_fail [0:7] = {
+    "misalign-beq-01.hex",
+    "misalign-bge-01.hex",
+    "misalign-bgeu-01.hex",
+    "misalign-blt-01.hex",
+    "misalign-bltu-01.hex",
+    "misalign-bne-01.hex",
+    "misalign-jal-01.hex",
+    "misalign2-jalr-01.hex"
+  };
+  
   integer     i, j, k, m, n, t, u, z;
   integer     failing_tests_counter;
   integer     current_test_failed_flag;
+  integer     expected_to_fail_flag;
   reg [31:0]  current_golden_reference [0:2047];
  
   always begin
@@ -255,15 +260,17 @@ module unit_tests();
     k = 0;
     m = 0;
     n = 0;
+    t = 0;
     z = 0;    
     current_test_failed_flag = 0;
+    expected_to_fail_flag = 0;
     failing_tests_counter = 0;
     clock   = 1'b0;
     reset   = 1'b0;
       
     $display("Running unit test programs from RISC-V Architectural Test Suite.");
     
-    for(k = 0; k < 45; k=k+1) begin
+    for(k = 0; k < 54; k=k+1) begin
     
       // Reset     
       reset = 1'b1;
@@ -298,12 +305,23 @@ module unit_tests();
           current_test_failed_flag = 0;
           for(m = dut1.ram[2047][24:2]; m < n; m=m+1) begin
             if (dut1.ram[m] !== current_golden_reference[z]) begin
-              $display("TEST FAILED: %s", unit_test_programs_array[k]);
-              $display("Signature at line %d differs from golden reference.", z+1);
-              $display("Signature: %h. Golden reference: %h", dut1.ram[m], current_golden_reference[z]);
-              failing_tests_counter = failing_tests_counter+1;
-              current_test_failed_flag = 1;
-              $stop();
+              // Is this test expected to fail?
+              expected_to_fail_flag = 0;
+              for (t = 0; t < 9; t=t+1) begin
+                if (unit_test_programs_array[k] == expected_to_fail[t]) begin
+                  expected_to_fail_flag = 1;
+                  t = 9;
+                end
+              end
+              // In case it is not, print failure message
+              if (expected_to_fail_flag == 0) begin
+                $display("TEST FAILED: %s", unit_test_programs_array[k]);
+                $display("Signature at line %d differs from golden reference.", z+1);
+                $display("Signature: %h. Golden reference: %h", dut1.ram[m], current_golden_reference[z]);
+                failing_tests_counter = failing_tests_counter+1;
+                current_test_failed_flag = 1;
+                $stop();
+              end
             end            
             z=z+1;
           end

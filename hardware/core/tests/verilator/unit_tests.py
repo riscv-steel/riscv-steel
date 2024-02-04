@@ -40,11 +40,20 @@ unit_test = [
     ["../unit_tests/programs/lhu-align-01.hex",       "../unit_tests/references/lhu-align-01.reference.hex",        True,   ],
     ["../unit_tests/programs/lui-01.hex",             "../unit_tests/references/lui-01.reference.hex",              True,   ],
     ["../unit_tests/programs/lw-align-01.hex",        "../unit_tests/references/lw-align-01.reference.hex",         True,   ],
+    ["../unit_tests/programs/misalign-beq-01.hex",    "../unit_tests/references/misalign-beq-01.reference.hex",     True,   ],
+    ["../unit_tests/programs/misalign-bge-01.hex",    "../unit_tests/references/misalign-bge-01.reference.hex",     True,   ],
+    ["../unit_tests/programs/misalign-bgeu-01.hex",   "../unit_tests/references/misalign-bgeu-01.reference.hex",    True,   ],
+    ["../unit_tests/programs/misalign-blt-01.hex",    "../unit_tests/references/misalign-blt-01.reference.hex",     True,   ],
+    ["../unit_tests/programs/misalign-bltu-01.hex",   "../unit_tests/references/misalign-bltu-01.reference.hex",    True,   ],
+    ["../unit_tests/programs/misalign-bne-01.hex",    "../unit_tests/references/misalign-bne-01.reference.hex",     True,   ],
+    ["../unit_tests/programs/misalign-jal-01.hex",    "../unit_tests/references/misalign-jal-01.reference.hex",     True,   ],
     ["../unit_tests/programs/misalign-lh-01.hex",     "../unit_tests/references/misalign-lh-01.reference.hex",      True,   ],
     ["../unit_tests/programs/misalign-lhu-01.hex",    "../unit_tests/references/misalign-lhu-01.reference.hex",     True,   ],
     ["../unit_tests/programs/misalign-lw-01.hex",     "../unit_tests/references/misalign-lw-01.reference.hex",      True,   ],
     ["../unit_tests/programs/misalign-sh-01.hex",     "../unit_tests/references/misalign-sh-01.reference.hex",      True,   ],
     ["../unit_tests/programs/misalign-sw-01.hex",     "../unit_tests/references/misalign-sw-01.reference.hex",      True,   ],
+    ["../unit_tests/programs/misalign1-jalr-01.hex",  "../unit_tests/references/misalign1-jalr-01.reference.hex",   True,   ],
+    ["../unit_tests/programs/misalign2-jalr-01.hex",  "../unit_tests/references/misalign2-jalr-01.reference.hex",   True,   ],
     ["../unit_tests/programs/or-01.hex",              "../unit_tests/references/or-01.reference.hex",               True,   ],
     ["../unit_tests/programs/ori-01.hex",             "../unit_tests/references/ori-01.reference.hex",              True,   ],
     ["../unit_tests/programs/sb-align-01.hex",        "../unit_tests/references/sb-align-01.reference.hex",         True,   ],
@@ -65,6 +74,16 @@ unit_test = [
     ["../unit_tests/programs/xori-01.hex",            "../unit_tests/references/xori-01.reference.hex",             True,   ],
 ]
 
+expected_to_fail = [
+    "../unit_tests/programs/misalign-beq-01.hex"    ,
+    "../unit_tests/programs/misalign-bge-01.hex"    ,
+    "../unit_tests/programs/misalign-bgeu-01.hex"   ,
+    "../unit_tests/programs/misalign-blt-01.hex"    ,
+    "../unit_tests/programs/misalign-bltu-01.hex"   ,
+    "../unit_tests/programs/misalign-bne-01.hex"    ,
+    "../unit_tests/programs/misalign-jal-01.hex"    ,
+    "../unit_tests/programs/misalign2-jalr-01.hex"
+]
 
 def print_status(clr: scolor, text: str):
     if clr == scolor.NORMAL:
@@ -185,7 +204,7 @@ def main(argv=None):
 
         result, line, ref, dut = compare_dump(ref=ref_path, dut=dump_path)
 
-        if not result:
+        if not result and prog_path not in expected_to_fail:
             failed +=1
             print_status(scolor.FAIL, prog_path)
             print_status(scolor.NORMAL, f'-- Signature at line {line} differs from golden reference.')
