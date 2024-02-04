@@ -20,10 +20,11 @@ class Log
       WARNING,
       ERROR,
       CRITICAL,
-      QUIET
+      QUIET,
+      END
     };
 
-    const char *level_name(Level level) {
+    static const char *level_name(Level level) {
       switch(level) {
       case DEBUG: return "DEBUG";
       case INFO: return "INFO";
@@ -44,7 +45,20 @@ class Log
       get_instance().level = level;
     }
 
-    static void set_fileout(const std::string& filename)
+    static void set_level(const char * level)
+    {
+      for (int i = 0; i < Level::END; i++)
+      {
+        const char *name = level_name((Level)i);
+
+        if (strcmp(level, name) == 0)
+        {
+          get_instance().set_level((Level)i);
+        }
+      }
+    }
+
+    static void set_out(const std::string& filename)
     {
       Log &log = get_instance();
       log.fileout.open(filename, std::ios::out | std::ios::trunc);
