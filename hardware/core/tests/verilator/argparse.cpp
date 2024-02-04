@@ -37,7 +37,7 @@ const char *help_str =
     "Note:                  Must not be 0x0\n\n"
 
     "--quiet                Use --quiet to disable messages (default: messages enable)\n"
-    "                       Example: --quiet (equivalent: --log-level=DEBUG)\n"
+    "                       Example: --quiet (equivalent: --log-level=QUIET)\n"
 
     "--log-out              Output file log (default: none)\n"
     "                       Example: --log-out=my_log.txt\n"

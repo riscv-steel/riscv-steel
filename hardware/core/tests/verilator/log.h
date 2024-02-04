@@ -31,6 +31,7 @@ class Log
       case WARNING: return "WARNING";
       case ERROR: return "ERROR";
       case CRITICAL: return "CRITICAL";
+      case QUIET: return "QUIET";
       default: return "UNKNOWN";
       }
     }
