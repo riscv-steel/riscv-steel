@@ -11,12 +11,6 @@
 #include <cstdint>
 #include <cstddef>
 
-enum verbosity
-{
-  QUIET,
-  VERBOSE
-};
-
 struct Args
 {
   char *out_wave_path{nullptr};

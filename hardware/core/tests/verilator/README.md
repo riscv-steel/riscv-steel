@@ -28,7 +28,6 @@ Available commands:
 
     When a record is found at this address, execution ends. The default address is 0x00001000.
 
-
   - **--host-out**
 
     Any entries to this address will print the messages as terminal output. The default address is 0x00000000, which means no messages.
@@ -36,6 +35,14 @@ Available commands:
   - **--quiet**
 
     Disable all messages.
+
+  - **--log-out**
+
+    Output file log, not specified by default.
+
+  - **--log-level**
+
+    Log level available: `DEBUG, INFO, WARNING, ERROR, CRITICAL, QUIET`. Default log level `DEBUG`.
 
 
 > Documentation for installing `Verilator` can be found here: [Installation](https://veripool.org/guide/latest/install.html)
