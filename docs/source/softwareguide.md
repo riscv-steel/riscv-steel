@@ -3,7 +3,7 @@
 
 ## First steps
 
-To compile, assemble and link programs for RISC-V machines you need the [RISC-V GNU Toolchain](https://github.com/riscv/riscv-gnu-toolchain). The steps below show how to install and configure the toolchain for use with RISC-V Steel.
+To compile, assemble and link programs for RISC-V machines you need the [RISC-V GNU Toolchain](https://github.com/riscv/riscv-gnu-toolchain). You can install and configure the toolchain for use with RISC-V Steel by following the steps below:
 
 <h4>1. Get the source files</h4>
 
@@ -95,7 +95,7 @@ When you synthesize the SoC IP for your FPGA, the data to be loaded into the SoC
 You define the initial content of the SoC IP memory through the `MEMORY_INIT_FILE` parameter. This parameter expects a string with the path to the memory initialization file you generated in the steps above.
 
 ```verilog
-// This example shows an instantiation of the SoC IP top module 
+// This example shows an instantiation of the SoC IP top module
 // configured to load the contents of a file named `hello_world.hex`
 
 // The initial contents of the SoC IP memory gets embedded in the
@@ -107,7 +107,7 @@ rvsteel_soc                  #(
     .MEMORY_SIZE              (8192               ),
     .MEMORY_INIT_FILE         ("hello_world.hex"  ),
     .BOOT_ADDRESS             (32'h00000000       ))
-rvsteel_soc_instance          ( 
+rvsteel_soc_instance          (
     .clock                    (clock_50mhz        ),
     .reset                    (reset              ),
     .uart_rx                  (uart_rx            ),

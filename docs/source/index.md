@@ -9,7 +9,7 @@
 
 **RISC-V Steel** is a free and open collection of RISC-V IP that is simple, robust and easy to use. It features a 32-bit RISC-V processor core, a configurable system-on-chip design and a suite of software and hardware tools aimed to speed up building RISC-V embedded applications.
 
-[**:octicons-arrow-right-24: Get started!**](get_started.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:material-git: GitHub](https://github.com/riscv-steel/riscv-steel/)
+[**:octicons-arrow-right-24: Get started!**](getstarted.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:material-git: GitHub](https://github.com/riscv-steel/riscv-steel/)
 
 ### Available IP
 
@@ -25,6 +25,6 @@ RISC-V Steel Processor Core implements the RV32I ISA, the Zicsr extension and th
 
 RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and UART modules to its design. It features a toolchain for software development and demo projects.
 
-[:octicons-arrow-right-24: Documentation](soc.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:octicons-arrow-right-24: Software Guide](software_guide.md)
+[:octicons-arrow-right-24: Documentation](soc.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:octicons-arrow-right-24: Software Guide](softwareguide.md)
 
 </br></br>

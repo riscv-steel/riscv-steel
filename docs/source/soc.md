@@ -5,7 +5,7 @@
 
 RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and UART modules to its design. It comes with a [Software API](api.md) that makes it easy to develop new RISC-V applications.
 
-This page contains information about the SoC IP hardware design. Check out the [Software Guide](software_guide.md) for instructions on how to write, compile and run software for the SoC IP.
+This page contains information about the SoC IP hardware design. Check out the [Software Guide](softwareguide.md) for instructions on how to write, compile and run software for the SoC IP.
 
 ## Design overview
 
@@ -39,7 +39,7 @@ This page contains information about the SoC IP hardware design. Check out the [
 
 ## Memory Map
 
-In RISC-V systems, all devices share the processor address space and are mapped to an exclusive region in it (*Memory Mapped I/O*). 
+In RISC-V systems, all devices share the processor address space and are mapped to an exclusive region in it (*Memory Mapped I/O*).
 
 The memory region assigned to each device of RISC-V Steel SoC IP is listed in the table below.
 
@@ -105,7 +105,7 @@ You can integrate a new device into the SoC IP design by making simple changes t
   localparam D0_RAM         = 0;
   localparam D1_UART        = 1;
 
-  wire  [NUM_DEVICES*32-1:0] device_start_address;     
+  wire  [NUM_DEVICES*32-1:0] device_start_address;
   wire  [NUM_DEVICES*32-1:0] device_region_size;
 
   assign device_start_address [32*D0_RAM  +: 32]  = 32'h0000_0000;

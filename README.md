@@ -15,8 +15,8 @@ RISC-V Steel Processor Core implements the RV32I ISA, the Zicsr extension and th
 RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and UART modules to its design. It features a toolchain for software development and demo projects.
 
 - [Documentation](https://riscv-steel.github.io/riscv-steel/soc/)
-- [Software Guide](https://riscv-steel.github.io/riscv-steel/software_guide/)
-- [Demo Project](https://riscv-steel.github.io/riscv-steel/get_started/) (for Digilent Arty and Cmod boards)
+- [Software Guide](https://riscv-steel.github.io/riscv-steel/softwareguide/)
+- [Demo Project](https://riscv-steel.github.io/riscv-steel/getstarted/) (for Digilent Arty and Cmod boards)
 
 ## License
 
