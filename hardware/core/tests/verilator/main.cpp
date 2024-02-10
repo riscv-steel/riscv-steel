@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
     // --host-out
     if (is_host_out(args.host_out))
     {
-      std::cout << (char)dut->rootp->unit_tests__DOT__write_data;
+      Log::host_out((char)dut->rootp->unit_tests__DOT__write_data);
     }
   }
 }
