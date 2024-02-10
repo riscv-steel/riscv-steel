@@ -39,7 +39,7 @@ module rvsteel_soc #(
   localparam D0_RAM         = 0;
   localparam D1_UART        = 1;
 
-  wire  [NUM_DEVICES*32-1:0] device_start_address;     
+  wire  [NUM_DEVICES*32-1:0] device_start_address;
   wire  [NUM_DEVICES*32-1:0] device_region_size;
 
   assign device_start_address [32*D0_RAM  +: 32]  = 32'h0000_0000;
@@ -98,9 +98,14 @@ module rvsteel_soc #(
     .irq_external                   (irq_external                       ),
     .irq_external_response          (irq_external_response              ),
     .irq_timer                      (0), // unused
-    .irq_timer_response             (),  // unused
     .irq_software                   (0), // unused
+    .irq_fast                       (0), // unused
+
+    // verilator lint_off PINCONNECTEMPTY
+    .irq_timer_response             (),  // unused
     .irq_software_response          (),  // unused
+    .irq_fast_response              (),  // unused
+    // verilator lint_on PINCONNECTEMPTY
 
     // Real Time Clock (hardwire to zero if unused)
 
