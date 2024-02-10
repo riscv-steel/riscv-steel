@@ -11,14 +11,14 @@
 #include <fstream>
 #include <signal.h>
 #include <string.h>
-#include "log.h"
 
-#include <verilated_vcd_c.h>
 #include <verilated_fst_c.h>
 
 #include "Vunit_tests.h"
 #include "Vunit_tests___024root.h"
 #include "argparse.h"
+#include "log.h"
+#include "ram_init.h"
 
 using Dut = Vunit_tests;
 using Trace = VerilatedFstC;
@@ -84,60 +84,6 @@ void exit_app(int sig)
   close_trace();
   Log::info("Exit.");
   std::exit(EXIT_SUCCESS);
-}
-
-void ram_init_h32(const char *path)
-{
-  std::ifstream file;
-
-  file.open(path, std::ios::in);
-
-  if (!file.is_open())
-  {
-    Log::error("Error file opening: %s", path);
-    std::exit(EXIT_FAILURE);
-  }
-
-  std::string line;
-  size_t load_address = 0x00000000;
-  // In words
-  size_t ram_size = dut->rootp->unit_tests__DOT__MEMORY_SIZE / 4;
-
-  // First initialize the RAM
-  for (int i = 0; i < ram_size; i++)
-    dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = 0xdeadbeef;
-
-  // Then load the memory init file
-  while (std::getline(file, line))
-  {
-    char *token = strtok((char *)line.c_str(), " \n");
-    while (token != NULL)
-    {
-      std::string token_str = std::string(token);
-      if (token_str[0] == '@') // update load address
-      {
-        load_address = std::stoul(token_str.substr(1), nullptr, 16);
-        token = strtok(NULL, " \n");
-      }
-      else
-      {
-        uint32_t data = std::stoul(token_str, nullptr, 16);
-
-        if (load_address > ram_size)
-        {
-          Log::error("Out of range load address ram: 0x%x", load_address);
-          std::exit(EXIT_FAILURE);
-        }
-
-        dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[load_address] = data;
-        token = strtok(NULL, " \n");
-        load_address++;
-      }
-    }
-  }
-
-  Log::info("Ok init ram h32");
-  file.close();
 }
 
 void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
@@ -213,9 +159,24 @@ int main(int argc, char *argv[])
 
   dut_reset();
 
-  if (args.ram_init_h32)
+  if (args.ram_init_path)
   {
-    ram_init_h32(args.ram_init_h32);
+    uint32_t ram_size = dut->rootp->unit_tests__DOT__MEMORY_SIZE;
+
+    switch (args.ram_init_variants)
+    {
+      case RamInitVariants::H32:
+          ram_init_h32(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
+          dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
+        });
+        break;
+
+      case RamInitVariants::BIN:
+          ram_init_bin(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
+          dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
+        });
+        break;
+    }
   }
 
   while (true)
