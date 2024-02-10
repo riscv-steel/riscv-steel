@@ -87,4 +87,10 @@ module rvsteel_ram #(
     end
   end
 
+  // Avoid warnings about intentionally unused pins/wires
+  wire unused_ok =
+    &{1'b0,
+    effective_address[31:11],
+    1'b0};
+
 endmodule

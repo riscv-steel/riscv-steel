@@ -65,17 +65,36 @@ module rvsteel_soc #(
   wire  [NUM_DEVICES-1:0]     device_write_request    ;
   wire  [NUM_DEVICES-1:0]     device_write_response   ;
 
+  // Real-time clock (unused)
+
+  wire  [63:0] real_time_clock;
+
+  assign real_time_clock = 64'b0;
+
   // Interrupt signals
 
-  wire          irq_uart;
-  wire          irq_uart_response;
-  wire  [15:0]  irq_fast_vector;
-  wire  [15:0]  irq_fast_response_vector;
+  wire  [15:0] irq_fast;
+  wire         irq_external;
+  wire         irq_timer;
+  wire         irq_software;
 
-  // Fast interrupt vector configuration
+  wire  [15:0] irq_fast_response;
+  wire         irq_external_response;
+  wire         irq_timer_response;
+  wire         irq_software_response;
 
-  assign irq_fast_vector = {15'b0, irq_uart};
-  assign irq_uart_response = irq_fast_response_vector[0];
+  wire         irq_uart;
+  wire         irq_uart_response;
+
+  // Interrupt signals map
+
+  assign irq_fast               = {15'b0, irq_uart}; // Give UART interrupts the highest priority
+  assign irq_uart_response      = irq_fast_response[0];
+
+  assign irq_external           = 1'b0; // unused
+  assign irq_timer              = 1'b0; // unused
+  assign irq_software           = 1'b0; // unused
+
 
   rvsteel_core #(
 
@@ -100,23 +119,23 @@ module rvsteel_soc #(
     .write_request                  (manager_write_request              ),
     .write_response                 (manager_write_response             ),
 
-    // Interrupt request signals (hardwire to zero if unused)
+    // Interrupt request signals
 
-    .irq_fast                       (irq_fast_vector                    ),
-    .irq_external                   (0), // unused
-    .irq_timer                      (0), // unused
-    .irq_software                   (0), // unused
+    .irq_fast                       (irq_fast                           ),
+    .irq_external                   (irq_external                       ),
+    .irq_timer                      (irq_timer                          ),
+    .irq_software                   (irq_software                       ),
 
-    // Interrupt response signals (leave unconnected if unused)
+    // Interrupt response signals
 
-    .irq_fast_response              (irq_fast_response_vector           ),
-    .irq_external_response          (),  // unused
-    .irq_timer_response             (),  // unused
-    .irq_software_response          (),  // unused
+    .irq_fast_response              (irq_fast_response                  ),
+    .irq_external_response          (irq_external_response              ),
+    .irq_timer_response             (irq_timer_response                 ),
+    .irq_software_response          (irq_software_response              ),
 
-    // Real Time Clock (hardwire to zero if unused)
+    // Real Time Clock
 
-    .real_time_clock                (0)  // unused
+    .real_time_clock                (real_time_clock                    )
 
   );
 
@@ -218,5 +237,17 @@ module rvsteel_soc #(
     .uart_irq_response              (irq_uart_response                  )
 
   );
+
+  // Avoid warnings about intentionally unused pins/wires
+  wire unused_ok =
+    &{1'b0,
+    irq_external,
+    irq_software,
+    irq_timer,
+    irq_external_response,
+    irq_software_response,
+    irq_timer_response,
+    irq_fast_response[15:1],
+    1'b0};
 
 endmodule

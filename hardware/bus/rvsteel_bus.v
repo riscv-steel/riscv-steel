@@ -50,7 +50,6 @@ module rvsteel_bus #(
   reg [NUM_DEVICES*32-1:0]      device_mask_address;
   reg [NUM_DEVICES-1:0]         device_sel;
   reg [NUM_DEVICES-1:0]         device_sel_save;
-  reg                           device_valid_access;
 
   // Manager request
 
@@ -78,7 +77,7 @@ module rvsteel_bus #(
     else if ((manager_read_request || manager_write_request) && (|device_sel))
       device_sel_save <= device_sel;
     else
-      device_sel_save <= {NUM_DEVICES{1'b0}};    
+      device_sel_save <= {NUM_DEVICES{1'b0}};
   end
 
   always @(*) begin
