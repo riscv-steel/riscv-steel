@@ -17,9 +17,9 @@ endif
 
 
 default:
-	$(VERILATOR) -f vargs.vc --trace-fst -cc --exe --build --trace unit_tests.v vcfg.vlt main.cpp argparse.cpp -o unit_tests
+	$(VERILATOR) -f vargs.vc --trace-fst -cc --exe --build --trace unit_tests.v vcfg.vlt main.cpp argparse.cpp ram_init.cpp -o unit_tests
 
 
 
 clean:
-	-rm -rf obj_dir *.log *.dmp *.vpd core
+	-rm -rf obj_dir *.log *.dmp *.vpd core dump
