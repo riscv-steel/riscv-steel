@@ -28,11 +28,6 @@ module rvsteel_soc #(
 
   );
 
-  // Interrupts
-
-  wire          irq_external;
-  wire          irq_external_response;
-
   // System bus configuration
 
   localparam NUM_DEVICES    = 2;
@@ -70,6 +65,18 @@ module rvsteel_soc #(
   wire  [NUM_DEVICES-1:0]     device_write_request    ;
   wire  [NUM_DEVICES-1:0]     device_write_response   ;
 
+  // Interrupt signals
+
+  wire          irq_uart;
+  wire          irq_uart_response;
+  wire  [15:0]  irq_fast_vector;
+  wire  [15:0]  irq_fast_response_vector;
+
+  // Fast interrupt vector configuration
+
+  assign irq_fast_vector = {15'b0, irq_uart};
+  assign irq_uart_response = irq_fast_response_vector[0];
+
   rvsteel_core #(
 
     .BOOT_ADDRESS                   (BOOT_ADDRESS                       )
@@ -93,19 +100,19 @@ module rvsteel_soc #(
     .write_request                  (manager_write_request              ),
     .write_response                 (manager_write_response             ),
 
-    // Interrupt signals (hardwire inputs to zero if unused)
+    // Interrupt request signals (hardwire to zero if unused)
 
-    .irq_external                   (irq_external                       ),
-    .irq_external_response          (irq_external_response              ),
+    .irq_fast                       (irq_fast_vector                    ),
+    .irq_external                   (0), // unused
     .irq_timer                      (0), // unused
     .irq_software                   (0), // unused
-    .irq_fast                       (0), // unused
 
-    // verilator lint_off PINCONNECTEMPTY
+    // Interrupt response signals (leave unconnected if unused)
+
+    .irq_fast_response              (irq_fast_response_vector           ),
+    .irq_external_response          (),  // unused
     .irq_timer_response             (),  // unused
     .irq_software_response          (),  // unused
-    .irq_fast_response              (),  // unused
-    // verilator lint_on PINCONNECTEMPTY
 
     // Real Time Clock (hardwire to zero if unused)
 
@@ -207,8 +214,8 @@ module rvsteel_soc #(
 
     // Interrupt signaling
 
-    .uart_irq                       (irq_external                       ),
-    .uart_irq_response              (irq_external_response              )
+    .uart_irq                       (irq_uart                           ),
+    .uart_irq_response              (irq_uart_response                  )
 
   );
 
