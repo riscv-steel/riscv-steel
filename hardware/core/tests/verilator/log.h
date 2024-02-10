@@ -100,6 +100,14 @@ class Log
       get_instance().message(CRITICAL, format, Fargs...);
     }
 
+    static void host_out(const char c)
+    {
+      if (get_instance().level < QUIET)
+      {
+        *get_instance().log_stream << c;
+      }
+    }
+
   private:
     char buffer[BUFFER_SIZE];
     Level level{DEBUG};
