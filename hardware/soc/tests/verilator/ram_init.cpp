@@ -101,21 +101,10 @@ void ram_init_bin(const char *path, uint32_t words, DutRamWrite write)
       break;
     }
 
-    if (count == 4)
+    for (size_t i = count; i != 0; i--)
     {
-      data  = (buffer[3] & 0xff) << 24;
-      data |= (buffer[2] & 0xff) << 16;
-      data |= (buffer[1] & 0xff) << 8;
-      data |= (buffer[0] & 0xff);
-    }
-    else
-    {
-      uint32_t mod = count % 4;
-      for (size_t i = mod; i != 0; i--)
-      {
-          data |= (buffer[i-1] & 0xff);
-          data <<= 8;
-      }
+        data <<= 8;
+        data |= (buffer[i-1] & 0xff);
     }
 
     if (load_address > words)
