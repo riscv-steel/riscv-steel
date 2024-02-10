@@ -97,6 +97,31 @@ static void exit_app(int sig)
   std::exit(EXIT_SUCCESS);
 }
 
+static void ram_init(const char *path, RamInitVariants variants)
+{
+  if (not path)
+  {
+    return;
+  }
+
+  uint32_t ram_size = dut->rootp->soc_sim__DOT__rvsteel_soc_instance__DOT__MEMORY_SIZE;
+
+  switch (args.ram_init_variants)
+  {
+    case RamInitVariants::H32:
+      ram_init_h32(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
+      dut->rootp->soc_sim__DOT__rvsteel_soc_instance__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
+    });
+    break;
+
+    case RamInitVariants::BIN:
+      ram_init_bin(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
+      dut->rootp->soc_sim__DOT__rvsteel_soc_instance__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
+    });
+    break;
+  }
+}
+
 static bool is_host_out(uint32_t addr)
 {
   static bool is_pos_edg = false;
@@ -128,25 +153,7 @@ int main(int argc, char *argv[])
 
   reset_dut();
 
-  if (args.ram_init_path)
-  {
-    uint32_t ram_size = dut->rootp->soc_sim__DOT__rvsteel_soc_instance__DOT__MEMORY_SIZE;
-
-    switch (args.ram_init_variants)
-    {
-      case RamInitVariants::H32:
-          ram_init_h32(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
-          dut->rootp->soc_sim__DOT__rvsteel_soc_instance__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
-        });
-        break;
-
-      case RamInitVariants::BIN:
-          ram_init_bin(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
-          dut->rootp->soc_sim__DOT__rvsteel_soc_instance__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
-        });
-        break;
-    }
-  }
+  ram_init(args.ram_init_path, args.ram_init_variants);
 
   while (true)
   {

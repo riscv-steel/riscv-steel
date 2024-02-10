@@ -86,6 +86,31 @@ void exit_app(int sig)
   std::exit(EXIT_SUCCESS);
 }
 
+static void ram_init(const char *path, RamInitVariants variants)
+{
+  if (not path)
+  {
+    return;
+  }
+
+  uint32_t ram_size = dut->rootp->unit_tests__DOT__MEMORY_SIZE;
+
+  switch (variants)
+  {
+    case RamInitVariants::H32:
+        ram_init_h32(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
+        dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
+      });
+      break;
+
+    case RamInitVariants::BIN:
+        ram_init_bin(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
+        dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
+      });
+      break;
+  }
+}
+
 void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
 {
   std::ofstream file;
@@ -159,25 +184,7 @@ int main(int argc, char *argv[])
 
   dut_reset();
 
-  if (args.ram_init_path)
-  {
-    uint32_t ram_size = dut->rootp->unit_tests__DOT__MEMORY_SIZE;
-
-    switch (args.ram_init_variants)
-    {
-      case RamInitVariants::H32:
-          ram_init_h32(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
-          dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
-        });
-        break;
-
-      case RamInitVariants::BIN:
-          ram_init_bin(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
-          dut->rootp->unit_tests__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
-        });
-        break;
-    }
-  }
+  ram_init(args.ram_init_path, args.ram_init_variants);
 
   while (true)
   {
