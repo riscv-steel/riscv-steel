@@ -1,5 +1,5 @@
 # RISC-V Steel System-on-Chip { class="main-section-title" }
-<h2 class="main-section-subtitle">Software API</h2>
+<h2 class="main-section-subtitle">Software API Reference</h2>
 
 ## Introduction
 
@@ -11,7 +11,7 @@ To use it you need to include the `rvsteel_api.h` header in the source code of y
 #include "rvsteel_api.h"
 ```
 
-The sections below contain documentation of the available API calls.
+The documentation of the available API calls is presented in the following sections.
 
 ## UART communication
 ---

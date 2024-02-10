@@ -94,7 +94,7 @@ If you've reached this point, congratulations! You have a working instance of th
 
 - **Run your own software**
 
-    The [SoC IP Software Guide](software_guide.md) contains instructions on how to write, compile, and run software applications for the SoC IP.
+    The [SoC IP Software Guide](softwareguide.md) contains instructions on how to write, compile, and run software applications for the SoC IP.
 
 - **Expand the design**
 

@@ -13,7 +13,7 @@ markdown_extensions:
     - pymdownx.details
     - pymdownx.superfences
     - pymdownx.tabbed:
-        alternate_style: true 
+        alternate_style: true
     - pymdownx.highlight:
         anchor_linenums: true
         line_spans: __span
@@ -33,11 +33,11 @@ markdown_extensions:
 theme:
     name: material
     logo: images/rvsteel_logo_white_small.svg
-    palette:
-        primary: black
     favicon: images/rvsteel_logo_favicon.svg
     highlightjs: true
     features:
+        - toc.integrate
+        - navigation.tabs
         - navigation.expand
         - navigation.instant
         - navigation.instant.progress
@@ -55,11 +55,8 @@ remote_branch: docs
 copyright: Copyright (c) RISC-V Steel contributors
 nav:
     - Homepage: 'index.md'
-    - Get Started!: 'get_started.md'
-    - Processor Core:
-      - Documentation: 'core.md'
-    - System-on-Chip:
-      - Documentation: 'soc.md'
-      - Software Guide: 'software_guide.md'
-      - Software API: 'api.md'
-    - License: 'license.md'
+    - Get Started!: 'getstarted.md'
+    - Processor Core: 'core.md'
+    - System-on-Chip: 'soc.md'
+    - Software Guide: 'softwareguide.md'
+    - API Reference: 'api.md'
