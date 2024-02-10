@@ -1514,12 +1514,12 @@ module rvsteel_core #(
         csr_mcause_code           <= 5'b1011;
         csr_mcause_interrupt_flag <= 1'b1;
       end
-      else if(csr_mstatus_mie & csr_mie_mtie & csr_mip_mtip) begin
-        csr_mcause_code           <= 5'b0111;
-        csr_mcause_interrupt_flag <= 1'b1;
-      end
       else if(csr_mstatus_mie & csr_mie_msie & csr_mip_msip) begin
         csr_mcause_code           <= 5'b0011;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mtie & csr_mip_mtip) begin
+        csr_mcause_code           <= 5'b0111;
         csr_mcause_interrupt_flag <= 1'b1;
       end
     end
