@@ -36,6 +36,8 @@ module rvsteel_core #(
   output wire           irq_timer_response,
   input  wire           irq_software,
   output wire           irq_software_response,
+  input  wire   [15:0]  irq_fast,
+  output wire   [15:0]  irq_fast_response,
 
   // Real Time Clock (hardwire to zero if unused)
 
@@ -247,15 +249,17 @@ module rvsteel_core #(
   wire          csr_file_write_enable;
   wire          csr_file_write_request;
   reg   [31:0]  csr_mcause;
-  reg   [3:0 ]  csr_mcause_code;
+  reg   [4:0 ]  csr_mcause_code;
   reg           csr_mcause_interrupt_flag;
   reg   [63:0]  csr_mcycle;
   reg   [31:0]  csr_mepc;
   wire  [31:0]  csr_mie;
+  reg   [15:0]  csr_mie_mfie;
   reg           csr_mie_meie;
   reg           csr_mie_msie;
   reg           csr_mie_mtie;
   wire  [31:0]  csr_mip;
+  reg   [15:0]  csr_mip_mfip;
   reg           csr_mip_meip;
   reg           csr_mip_mtip;
   reg           csr_mip_msip;
@@ -1088,7 +1092,8 @@ module rvsteel_core #(
   assign interrupt_pending =
     (csr_mie_meie & csr_mip_meip) |
     (csr_mie_mtie & csr_mip_mtip) |
-    (csr_mie_msie & csr_mip_msip);
+    (csr_mie_msie & csr_mip_msip) |
+    (|(csr_mie_mfie & csr_mip_mfip));
 
   assign exception_pending =
     illegal_instruction |
@@ -1146,15 +1151,24 @@ module rvsteel_core #(
 
   assign irq_external_response =
     (current_state    == STATE_TRAP_TAKEN) &&
-    (csr_mcause_code  == 4'b1011);
+    (csr_mcause_code  == 5'b1011);
 
   assign irq_timer_response =
     (current_state    == STATE_TRAP_TAKEN) &&
-    (csr_mcause_code  == 4'b0111);
+    (csr_mcause_code  == 5'b0111);
 
   assign irq_software_response =
     (current_state    == STATE_TRAP_TAKEN) &&
-    (csr_mcause_code  == 4'b0011);
+    (csr_mcause_code  == 5'b0011);
+
+  generate
+    genvar ifast;
+    for (ifast = 0; ifast < 16; ifast = ifast + 1) begin
+        assign irq_fast_response[ifast] =
+        (current_state    == STATE_TRAP_TAKEN) &&
+        (csr_mcause_code  == ifast+16);
+    end
+  endgenerate
 
   //---------------------------------------------------------------------------------------------//
   // Control and Status Registers implementation                                                 //
@@ -1252,7 +1266,8 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   assign csr_mie = {
-    20'b0,
+    csr_mie_mfie,   // M-mode Designated for platform use (irq fast)
+    4'b0,
     csr_mie_meie,   // M-mode External Interrupt Enable
     3'b0,
     csr_mie_mtie,   // M-mode Timer Interrupt Enable
@@ -1263,11 +1278,13 @@ module rvsteel_core #(
 
   always @(posedge clock) begin : mie_csr_fields_implementation
     if(reset_internal) begin
+      csr_mie_mfie <= 16'b0;
       csr_mie_meie <= 1'b0;
       csr_mie_mtie <= 1'b0;
       csr_mie_msie <= 1'b0;
     end
     else if(clock_enable & instruction_csr_address == MIE && csr_file_write_enable) begin
+      csr_mie_mfie <= csr_write_data[31:16];
       csr_mie_meie <= csr_write_data[11];
       csr_mie_mtie <= csr_write_data[7];
       csr_mie_msie <= csr_write_data[3];
@@ -1279,7 +1296,8 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   assign csr_mip = {
-    20'b0,
+    csr_mip_mfip,
+    4'b0,
     csr_mip_meip,
     3'b0,
     csr_mip_mtip,
@@ -1290,11 +1308,13 @@ module rvsteel_core #(
 
   always @(posedge clock) begin : mip_csr_fields_implementation
     if(reset_internal) begin
+      csr_mip_mfip <= 16'b0;
       csr_mip_meip <= 1'b0;
       csr_mip_mtip <= 1'b0;
       csr_mip_msip <= 1'b0;
     end
     else begin
+      csr_mip_mfip <= irq_fast;
       csr_mip_meip <= irq_external;
       csr_mip_mtip <= irq_timer;
       csr_mip_msip <= irq_software;
@@ -1390,7 +1410,7 @@ module rvsteel_core #(
       csr_mcause <= 32'h00000000;
     else if (clock_enable) begin
       if(current_state == STATE_TRAP_TAKEN)
-        csr_mcause <= {csr_mcause_interrupt_flag, 27'b0, csr_mcause_code};
+        csr_mcause <= {csr_mcause_interrupt_flag, 26'b0, csr_mcause_code};
       else if(current_state == STATE_OPERATING && instruction_csr_address == MCAUSE && csr_file_write_enable)
         csr_mcause <= csr_write_data;
     end
@@ -1398,44 +1418,108 @@ module rvsteel_core #(
 
   always @(posedge clock) begin : trap_cause_implementation
     if(reset_internal) begin
-      csr_mcause_code           <= 4'b0;
+      csr_mcause_code           <= 5'b0;
       csr_mcause_interrupt_flag <= 1'b0;
     end
     if(clock_enable & current_state == STATE_OPERATING) begin
       if(illegal_instruction) begin
-        csr_mcause_code           <= 4'b0010;
+        csr_mcause_code           <= 5'b0010;
         csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(misaligned_instruction_address) begin
-        csr_mcause_code           <= 4'b0000;
+        csr_mcause_code           <= 5'b0000;
         csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(ecall) begin
-        csr_mcause_code           <= 4'b1011;
+        csr_mcause_code           <= 5'b1011;
         csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(ebreak) begin
-        csr_mcause_code           <= 4'b0011;
+        csr_mcause_code           <= 5'b0011;
         csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(misaligned_store) begin
-        csr_mcause_code           <= 4'b0110;
+        csr_mcause_code           <= 5'b0110;
         csr_mcause_interrupt_flag <= 1'b0;
       end
       else if(misaligned_load) begin
-        csr_mcause_code           <= 4'b0100;
+        csr_mcause_code           <= 5'b0100;
         csr_mcause_interrupt_flag <= 1'b0;
       end
+      else if(csr_mstatus_mie & csr_mie_mfie[0] & csr_mip_mfip[0]) begin
+        csr_mcause_code           <= 5'd16;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[1] & csr_mip_mfip[1]) begin
+        csr_mcause_code           <= 5'd17;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[2] & csr_mip_mfip[2]) begin
+        csr_mcause_code           <= 5'd18;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[3] & csr_mip_mfip[3]) begin
+        csr_mcause_code           <= 5'd19;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[4] & csr_mip_mfip[4]) begin
+        csr_mcause_code           <= 5'd20;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[5] & csr_mip_mfip[5]) begin
+        csr_mcause_code           <= 5'd21;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[6] & csr_mip_mfip[6]) begin
+        csr_mcause_code           <= 5'd22;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[7] & csr_mip_mfip[7]) begin
+        csr_mcause_code           <= 5'd23;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[8] & csr_mip_mfip[8]) begin
+        csr_mcause_code           <= 5'd24;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[9] & csr_mip_mfip[9]) begin
+        csr_mcause_code           <= 5'd25;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[10] & csr_mip_mfip[10]) begin
+        csr_mcause_code           <= 5'd26;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[11] & csr_mip_mfip[11]) begin
+        csr_mcause_code           <= 5'd27;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[12] & csr_mip_mfip[12]) begin
+        csr_mcause_code           <= 5'd28;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[13] & csr_mip_mfip[13]) begin
+        csr_mcause_code           <= 5'd29;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[14] & csr_mip_mfip[14]) begin
+        csr_mcause_code           <= 5'd30;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
+      else if(csr_mstatus_mie & csr_mie_mfie[15] & csr_mip_mfip[15]) begin
+        csr_mcause_code           <= 5'd31;
+        csr_mcause_interrupt_flag <= 1'b1;
+      end
       else if(csr_mstatus_mie & csr_mie_meie & csr_mip_meip) begin
-        csr_mcause_code           <= 4'b1011;
+        csr_mcause_code           <= 5'b1011;
         csr_mcause_interrupt_flag <= 1'b1;
       end
       else if(csr_mstatus_mie & csr_mie_mtie & csr_mip_mtip) begin
-        csr_mcause_code           <= 4'b0111;
+        csr_mcause_code           <= 5'b0111;
         csr_mcause_interrupt_flag <= 1'b1;
       end
       else if(csr_mstatus_mie & csr_mie_msie & csr_mip_msip) begin
-        csr_mcause_code           <= 4'b0011;
+        csr_mcause_code           <= 5'b0011;
         csr_mcause_interrupt_flag <= 1'b1;
       end
     end
@@ -1470,7 +1554,7 @@ module rvsteel_core #(
   //---------------------------------------------------------------------------------------------//
 
   assign interrupt_address_offset =
-    {{26{1'b0}}, csr_mcause_code, 2'b00};
+    {{25{1'b0}}, csr_mcause_code, 2'b00};
 
   assign trap_address =
     csr_mtvec[1:0] == 2'b01 && csr_mcause_interrupt_flag ?
