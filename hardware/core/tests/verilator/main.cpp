@@ -70,7 +70,7 @@ static void eval(vluint64_t cycles_cnt = 1)
   }
 }
 
-static void dut_reset()
+static void reset_dut()
 {
   dut->reset_i = 1;
   eval(100);
@@ -111,7 +111,7 @@ static void ram_init(const char *path, RamInitVariants variants)
   }
 }
 
-void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
+static void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
 {
   std::ofstream file;
   file.open(path, std::ios::out | std::ios::trunc);
@@ -139,7 +139,7 @@ void ram_dump_h32(const char *path, uint32_t offset, uint32_t size)
   file.close();
 }
 
-bool is_finished(uint32_t addr)
+static bool is_finished(uint32_t addr)
 {
   // After each clock cycle it tests whether the test program finished its execution
   // This event is signaled by writing 1 to the address 0x00001000
@@ -148,7 +148,7 @@ bool is_finished(uint32_t addr)
          dut->rootp->unit_tests__DOT__write_data == 0x00000001;
 }
 
-bool is_host_out(uint32_t addr)
+static bool is_host_out(uint32_t addr)
 {
   static bool is_pos_edg = false;
 
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
     open_trace(args.out_wave_path);
   }
 
-  dut_reset();
+  reset_dut();
 
   ram_init(args.ram_init_path, args.ram_init_variants);
 
