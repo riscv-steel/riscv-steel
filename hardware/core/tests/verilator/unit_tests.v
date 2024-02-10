@@ -59,11 +59,13 @@ dut0
     .irq_external           (1'b0),
     .irq_timer              (1'b0),
     .irq_software           (1'b0),
+    .irq_fast               (16'b0),
 
     // verilator lint_off PINCONNECTEMPTY
     .irq_external_response  (),
     .irq_timer_response     (),
     .irq_software_response  (),
+    .irq_fast_response      (),
     // verilator lint_on PINCONNECTEMPTY
 
     // Real Time Clock (hardwire to zero if unused)
