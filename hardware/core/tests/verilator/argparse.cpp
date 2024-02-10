@@ -20,6 +20,8 @@ const char *help_str =
     "--out-wave=<name>      Output file *.fst (defaul: none - off)\n\n"
     "--ram-init-h32=<name>  Input init ram file in h32 format (defaul: none - off)\n"
     "                       Example: --ram-init-h32=my_program.hex\n\n"
+    "--ram-init-bin=<name>  Input init ram file in bin format (defaul: none)\n"
+    "                       Example: --ram-init-bin=my_program.bin\n\n"
 
     "--ram-dump-h32=<name>  Output dump ram file in h32 format (defaul: none - off)\n"
     "Note:                  If the file is not specified then the dump are not created.\n\n"
@@ -58,6 +60,7 @@ enum opts
 
   cmd_out_wave,
   cmd_ram_init_h32,
+  cmd_ram_init_bin,
   cmd_ram_dump_h32,
   cmd_cycles,
   //    cmd_ecall,
@@ -74,6 +77,7 @@ static constexpr option long_opts[] =
         {"help", no_argument, NULL, opts::cmd_help},
         {"out-wave", required_argument, NULL, opts::cmd_out_wave},
         {"ram-init-h32", required_argument, NULL, opts::cmd_ram_init_h32},
+        {"ram-init-bin", required_argument, NULL, opts::cmd_ram_init_bin},
         {"ram-dump-h32", required_argument, NULL, opts::cmd_ram_dump_h32},
         {"cycles", required_argument, NULL, opts::cmd_cycles},
         //        { "ecall",          no_argument,        NULL, opts::cmd_ecall               },
@@ -109,8 +113,15 @@ Args parser(int argc, char *argv[])
       break;
 
     case opts::cmd_ram_init_h32:
-      args.ram_init_h32 = optarg;
-      Log::info("Input init ram file: %s", optarg);
+      args.ram_init_path = optarg;
+      args.ram_init_variants = RamInitVariants::H32;
+      Log::info("Input init ram h32 file: %s", optarg);
+      break;
+
+    case opts::cmd_ram_init_bin:
+      args.ram_init_path = optarg;
+      args.ram_init_variants = RamInitVariants::BIN;
+      Log::info("Input init ram bin file: %s", optarg);
       break;
 
     case opts::cmd_ram_dump_h32:
