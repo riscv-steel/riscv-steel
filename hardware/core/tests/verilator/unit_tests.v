@@ -5,43 +5,36 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-module unit_tests #
-(
+module unit_tests #(
+
     // Memory size in bytes
-    parameter MEMORY_SIZE   = 2097152          ,
+    parameter MEMORY_SIZE   = 2097152     ,
     parameter BOOT_ADDRESS  = 32'h00000000
-)
-(
-    input   clock_i ,
-    input   reset_i ,
-    input   halt_i
-);
 
+  )(
+    input   clock ,
+    input   reset ,
+    input   halt
+  );
 
+  wire   [31:0]  rw_address;
+  wire   [31:0]  read_data;
+  wire           read_request;
+  wire           read_response;
+  wire   [31:0]  write_data;
+  wire   [3:0 ]  write_strobe;
+  wire           write_request;
+  wire           write_response;
 
+  rvsteel_core #(
+    .BOOT_ADDRESS(BOOT_ADDRESS)
+  ) rvsteel_core_instance (
 
-wire   [31:0]  rw_address;
-wire   [31:0]  read_data;
-wire           read_request;
-wire           read_response;
-wire   [31:0]  write_data;
-wire   [3:0 ]  write_strobe;
-wire           write_request;
-wire           write_response;
-
-
-
-rvsteel_core #
-(
-    .BOOT_ADDRESS           (BOOT_ADDRESS   )
-)
-dut0
-(
     // Global signals
 
-    .clock                  (clock_i        ),
-    .reset                  (reset_i        ),
-    .halt                   (halt_i         ),
+    .clock                  (clock          ),
+    .reset                  (reset          ),
+    .halt                   (halt           ),
 
     // IO interface
 
@@ -71,22 +64,16 @@ dut0
     // Real Time Clock (hardwire to zero if unused)
 
     .real_time_clock        (64'b0)
-);
+  );
 
-
-
-rvsteel_ram #
-(
-    .MEMORY_SIZE            (MEMORY_SIZE    )
-    // .MEMORY_INIT_FILE       ("../unit-tests/programs/add-01.hex")
-)
-rvsteel_ram_instance
-(
+  rvsteel_ram #(
+    .MEMORY_SIZE(MEMORY_SIZE)
+  ) rvsteel_ram_instance (
 
     // Global signals
 
-    .clock                  (clock_i        ),
-    .reset                  (reset_i        ),
+    .clock                  (clock          ),
+    .reset                  (reset          ),
 
     // IO interface
 
@@ -98,8 +85,6 @@ rvsteel_ram_instance
     .write_strobe           (write_strobe   ),
     .write_request          (write_request  ),
     .write_response         (write_response )
-);
-
-
+  );
 
 endmodule

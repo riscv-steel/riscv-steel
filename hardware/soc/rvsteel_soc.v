@@ -18,7 +18,7 @@ module rvsteel_soc #(
   // Address of the first instruction to fetch from memory
   parameter BOOT_ADDRESS = 32'h00000000
 
-  )(
+  ) (
 
   input   wire  clock,
   input   wire  reset,
