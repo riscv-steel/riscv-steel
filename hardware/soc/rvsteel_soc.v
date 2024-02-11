@@ -30,18 +30,22 @@ module rvsteel_soc #(
 
   // System bus configuration
 
-  localparam NUM_DEVICES    = 2;
+  localparam NUM_DEVICES    = 3;
   localparam D0_RAM         = 0;
   localparam D1_UART        = 1;
+  localparam D2_MTIMER      = 2;
 
   wire  [NUM_DEVICES*32-1:0] device_start_address;
   wire  [NUM_DEVICES*32-1:0] device_region_size;
 
-  assign device_start_address [32*D0_RAM  +: 32]  = 32'h0000_0000;
-  assign device_region_size   [32*D0_RAM  +: 32]  = 8192;
+  assign device_start_address [32*D0_RAM      +: 32]  = 32'h0000_0000;
+  assign device_region_size   [32*D0_RAM      +: 32]  = 8192;
 
-  assign device_start_address [32*D1_UART +: 32]  = 32'h8000_0000;
-  assign device_region_size   [32*D1_UART +: 32]  = 8;
+  assign device_start_address [32*D1_UART     +: 32]  = 32'h8000_0000;
+  assign device_region_size   [32*D1_UART     +: 32]  = 8;
+
+  assign device_start_address [32*D2_MTIMER   +: 32]  = 32'h8001_0000;
+  assign device_region_size   [32*D2_MTIMER   +: 32]  = 16;
 
   // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
@@ -92,7 +96,6 @@ module rvsteel_soc #(
   assign irq_uart_response      = irq_fast_response[0];
 
   assign irq_external           = 1'b0; // unused
-  assign irq_timer              = 1'b0; // unused
   assign irq_software           = 1'b0; // unused
 
 
@@ -238,15 +241,38 @@ module rvsteel_soc #(
 
   );
 
+  rvsteel_mtimer rvsteel_mtimer_instance (
+
+  // Global signals
+
+  .clock                            (clock                                  ),
+  .reset                            (reset                                  ),
+
+  // IO interface
+
+  .rw_address                       (device_rw_address                      ),
+  .read_data                        (device_read_data[32*D2_MTIMER +: 32]   ),
+  .read_request                     (device_read_request[D2_MTIMER]         ),
+  .read_response                    (device_read_response[D2_MTIMER]        ),
+  .write_data                       (device_write_data                      ),
+  .write_strobe                     (device_write_strobe                    ),
+  .write_request                    (device_write_request[D2_MTIMER]        ),
+  .write_response                   (device_write_response[D2_MTIMER]       ),
+
+  // Interrupt signaling
+
+  .irq                              (irq_timer                              ),
+  .irq_response                     (irq_timer_response                     )
+
+  );
+
   // Avoid warnings about intentionally unused pins/wires
   wire unused_ok =
     &{1'b0,
     irq_external,
     irq_software,
-    irq_timer,
     irq_external_response,
     irq_software_response,
-    irq_timer_response,
     irq_fast_response[15:1],
     1'b0};
 
