@@ -54,9 +54,9 @@ static void clk()
 
   if (trace_time >= interval)
   {
-    dut->clock_i ^= 1;
+    dut->clock ^= 1;
     interval = trace_time + clk_half_cycles;
-    clk_cur_cycles += dut->clock_i & 0x1;
+    clk_cur_cycles += dut->clock & 0x1;
   }
 }
 
@@ -72,10 +72,10 @@ static void eval(vluint64_t cycles_cnt = 1)
 
 static void reset_dut()
 {
-  dut->reset_i = 1;
+  dut->reset = 1;
   eval(100);
-  dut->reset_i = 0;
-  dut->halt_i = 0;
+  dut->reset = 0;
+  dut->halt = 0;
 }
 
 void exit_app(int sig)

@@ -5,18 +5,17 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-module soc_sim #
-(
+module soc_sim #(
 
-) (
+  ) (
 
-  input   wire clock,
-  input   wire reset,
-  input   wire halt,
-  input   wire uart_rx,
-  output  wire uart_tx
+    input   wire clock,
+    input   wire reset,
+    input   wire halt,
+    input   wire uart_rx,
+    output  wire uart_tx
 
-);
+  );
 
   rvsteel_soc #(
 
