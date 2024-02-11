@@ -1,5 +1,5 @@
 <div class="home-title" markdown>
-![](images/rvsteel_logo_black.svg){ align=left width=60 }
+![](images/rvsteel_logo_circle.svg){ align=left width=60 }
 # <strong>RISC-V Steel</strong></br><small>Free and open RISC-V IP</small>
 </div>
 
