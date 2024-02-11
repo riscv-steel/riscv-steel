@@ -20,7 +20,7 @@ RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and U
 
 ## License
 
-RISC-V Steel is distributed under the [MIT License](LICENSE.md).
+RISC-V Steel is distributed under the [MIT License](LICENSE).
 
 ## Need help?
 
