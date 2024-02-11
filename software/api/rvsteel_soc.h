@@ -15,11 +15,15 @@
 #define MAIN_BASE_ADDR 0x00000000U
 
 // Map devices
-#define MTIMER0_BASE (MAIN_BASE_ADDR + 0x10000000U)
 #define UART0_BASE (MAIN_BASE_ADDR + 0x80000000U)
+#define MTIMER0_BASE (MAIN_BASE_ADDR + 0x80010000U)
 
 // List devices
 #define MTIMER0 ((MTimerDevice *)MTIMER0_BASE)
 #define UART0 ((UartDevice *)UART0_BASE)
+
+// Machine Interrupt mask
+#define IRQ_MTIMER0_MASK MIP_MIE_MASK_MTI
+#define IRQ_UART0_MASK MIP_MIE_MASK_F0I
 
 #endif // __RVSTEEL_SOC__
