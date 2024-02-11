@@ -1,10 +1,4 @@
 `verilator_config
-lint_off -rule UNSIGNED
-lint_off -rule PINMISSING
-lint_off -rule PINCONNECTEMPTY
-lint_off -rule EOFNEWLINE
-lint_off -rule UNUSEDSIGNAL
-lint_off -rule UNUSED -file "../../../../hardware/ram/rvsteel_ram.v"
 
 public_flat -module "rvsteel_soc.rvsteel_ram" -var "ram"
 public_flat_rd -module "rvsteel_soc" -var "CLOCK_FREQUENCY"
