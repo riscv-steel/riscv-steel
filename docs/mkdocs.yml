@@ -32,8 +32,8 @@ markdown_extensions:
             - overrides/.icons
 theme:
     name: material
-    logo: images/rvsteel_logo_white_small.svg
-    favicon: images/rvsteel_logo_favicon.svg
+    logo: images/rvsteel_logo_white.svg
+    favicon: images/rvsteel_logo_circle.svg
     highlightjs: true
     features:
         - toc.integrate
