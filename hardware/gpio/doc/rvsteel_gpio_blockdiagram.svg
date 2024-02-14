@@ -174,7 +174,7 @@
        id="text16176"><tspan
          id="tspan22325"
          x="70.298065"
-         y="115.74873">gpio_en[i]</tspan></text>
+         y="115.74873">gpio_oe[i]</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
