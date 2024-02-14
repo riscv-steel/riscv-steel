@@ -100,17 +100,17 @@ async def test_enable(dut):
     await Timer(1, units='us')
 
     await write_request(dut, add=REG_OE, value=0x0)
-    assert 0x0 == dut.gpio_en.value
+    assert 0x0 == dut.gpio_oe.value
 
     await Timer(CLK_PERIOD_NS*3, units='ns')
 
     await write_request(dut, add=REG_OE, value=0x1)
-    assert 0x1 == dut.gpio_en.value
+    assert 0x1 == dut.gpio_oe.value
 
     await Timer(CLK_PERIOD_NS*3, units='ns')
 
     await write_request(dut, add=REG_OE, value=0x3)
-    assert 0x3 == dut.gpio_en.value
+    assert 0x3 == dut.gpio_oe.value
 
     await Timer(CLK_PERIOD_NS*3, units='ns')
 

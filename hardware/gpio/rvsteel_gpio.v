@@ -30,7 +30,7 @@ module rvsteel_gpio #(
   // I/O signals
 
   input   wire  [GPIO_WIDTH-1:0]  gpio_input    ,
-  output  wire  [GPIO_WIDTH-1:0]  gpio_en       ,
+  output  wire  [GPIO_WIDTH-1:0]  gpio_oe       ,
   output  wire  [GPIO_WIDTH-1:0]  gpio_output
 
 );
@@ -60,7 +60,7 @@ module rvsteel_gpio #(
   reg set_update;
 
 
-  assign gpio_en = oe;
+  assign gpio_oe = oe;
   assign gpio_output = out;
 
 
