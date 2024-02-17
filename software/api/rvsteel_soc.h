@@ -30,4 +30,8 @@
 #define IRQ_MTIMER0_MASK MIP_MIE_MASK_MTI
 #define IRQ_UART0_MASK MIP_MIE_MASK_F0I
 
+// Machine Interrupt Vectors
+#define IRQ_MTIMER0_VECTOR irq_m_timer
+#define IRQ_UART0_VECTOR irq_fast_0
+
 #endif // __RVSTEEL_SOC__
