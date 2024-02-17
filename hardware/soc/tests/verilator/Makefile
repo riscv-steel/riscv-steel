@@ -5,31 +5,38 @@
 # SPDX-License-Identifier: MIT
 # ----------------------------------------------------------------------------
 
-ifeq ($(VERILATOR_ROOT),)
-VERILATOR = verilator
-else
-export VERILATOR_ROOT
-VERILATOR = $(VERILATOR_ROOT)/bin/verilator
-endif
+VERILATOR       ?= verilator
 
-RVSTEEL_ROOT   ?=../../../../
-FIRMWARE       ?= $(RVSTEEL_ROOT)/demos/examples/hello_world/software/build/hello_world.hex
+# USER_CPPFLAGS   += -CFLAGS ""
 
-VERILATOR_OPTS ?= -f vargs.vc --trace-fst -cc --exe --build --trace \
-                  soc_sim.v vcfg.vlt main.cpp argparse.cpp \
-                  ram_init.cpp \
-                  -o soc_sim
+VERILATOR_FLAGS += -cc --exe --build
+VERILATOR_FLAGS += -Wall
+VERILATOR_FLAGS += --trace-fst
+VERILATOR_FLAGS += --default-language 1364-2001
+
+VERILATOR_INPUT  = -f vargs.vc
+VERILATOR_INPUT += soc_sim.v
+VERILATOR_INPUT += vcfg.vlt
+VERILATOR_INPUT += main.cpp
+VERILATOR_INPUT += argparse.cpp
+VERILATOR_INPUT += ram_init.cpp
+VERILATOR_INPUT += -o soc_sim
+
+RVSTEEL_ROOT    ?=../../../../
+FIRMWARE        ?= $(RVSTEEL_ROOT)/demos/examples/hello_world/software/build/hello_world.hex
 
 RUN_CMD= \
   @obj_dir/soc_sim --log-level=DEBUG --log-out=dump/soc_sim.log \
   --ram-init-h32=$(FIRMWARE) --out-wave=dump/wave.fst --freq-ns=20
 
 default:
-	$(VERILATOR) $(VERILATOR_OPTS)
+	@echo "BUILD"
+	@$(VERILATOR)  $(VERILATOR_FLAGS) $(VERILATOR_INPUT) $(USER_CPPFLAGS)
 
 run:
+	@echo "RUN"
 	@mkdir -p dump
 	@$(RUN_CMD)
 
 clean:
-	-rm -rf obj_dir *.log *.dump *.vpd core dump
+	-rm -rf obj_dir *.log *.dump *.vpd core dump *.vcd *.fst
