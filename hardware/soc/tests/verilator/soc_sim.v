@@ -7,14 +7,19 @@
 
 module soc_sim #(
 
+    // Number of available I/O ports
+    parameter GPIO_WIDTH = 2
+
   ) (
 
-    input   wire clock,
-    input   wire reset,
-    input   wire halt,
-    input   wire uart_rx,
-    output  wire uart_tx
-
+    input   wire                    clock       ,
+    input   wire                    reset       ,
+    input   wire                    halt        ,
+    input   wire                    uart_rx     ,
+    output  wire                    uart_tx     ,
+    input   wire  [GPIO_WIDTH-1:0]  gpio_input  ,
+    output  wire  [GPIO_WIDTH-1:0]  gpio_oe     ,
+    output  wire  [GPIO_WIDTH-1:0]  gpio_output
   );
 
   rvsteel_soc #(
@@ -23,7 +28,8 @@ module soc_sim #(
     .UART_BAUD_RATE           (9600               ),
     .MEMORY_SIZE              (32768              ),
     .MEMORY_INIT_FILE         (""                 ),
-    .BOOT_ADDRESS             (32'h00000000       )
+    .BOOT_ADDRESS             (32'h00000000       ),
+    .GPIO_WIDTH               (GPIO_WIDTH         )
 
   ) rvsteel_soc_instance (
 
@@ -31,8 +37,10 @@ module soc_sim #(
     .reset                    (reset              ),
     .halt                     (halt               ),
     .uart_rx                  (uart_rx            ),
-    .uart_tx                  (uart_tx            )
-
+    .uart_tx                  (uart_tx            ),
+    .gpio_input               (gpio_input         ),
+    .gpio_oe                  (gpio_oe            ),
+    .gpio_output              (gpio_output        )
   );
 
 endmodule

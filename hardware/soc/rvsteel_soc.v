@@ -16,24 +16,30 @@ module rvsteel_soc #(
   // Text file with program and data (one hex value per line)
   parameter MEMORY_INIT_FILE = ""       ,
   // Address of the first instruction to fetch from memory
-  parameter BOOT_ADDRESS = 32'h00000000
+  parameter BOOT_ADDRESS = 32'h00000000 ,
+  // Number of available I/O ports
+  parameter GPIO_WIDTH = 2
 
   ) (
 
-  input   wire  clock,
-  input   wire  reset,
-  input   wire  halt,
-  input   wire  uart_rx,
-  output  wire  uart_tx
+  input   wire                    clock       ,
+  input   wire                    reset       ,
+  input   wire                    halt        ,
+  input   wire                    uart_rx     ,
+  output  wire                    uart_tx     ,
+  input   wire  [GPIO_WIDTH-1:0]  gpio_input  ,
+  output  wire  [GPIO_WIDTH-1:0]  gpio_oe     ,
+  output  wire  [GPIO_WIDTH-1:0]  gpio_output
 
   );
 
   // System bus configuration
 
-  localparam NUM_DEVICES    = 3;
+  localparam NUM_DEVICES    = 4;
   localparam D0_RAM         = 0;
   localparam D1_UART        = 1;
   localparam D2_MTIMER      = 2;
+  localparam D3_GPIO        = 3;
 
   wire  [NUM_DEVICES*32-1:0] device_start_address;
   wire  [NUM_DEVICES*32-1:0] device_region_size;
@@ -46,6 +52,9 @@ module rvsteel_soc #(
 
   assign device_start_address [32*D2_MTIMER   +: 32]  = 32'h8001_0000;
   assign device_region_size   [32*D2_MTIMER   +: 32]  = 16;
+
+  assign device_start_address [32*D3_GPIO     +: 32]  = 32'h8002_0000;
+  assign device_region_size   [32*D3_GPIO     +: 32]  = 16;
 
   // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
@@ -263,6 +272,34 @@ module rvsteel_soc #(
 
   .irq                              (irq_timer                              ),
   .irq_response                     (irq_timer_response                     )
+
+  );
+
+  rvsteel_gpio #(
+    .GPIO_WIDTH                     (GPIO_WIDTH                             )
+  ) rvsteel_gpio_instance (
+
+    // Global signals
+
+    .clock                          (clock                                  ),
+    .reset                          (reset                                  ),
+
+    // IO interface
+
+    .rw_address                     (device_rw_address                      ),
+    .read_data                      (device_read_data[32*D3_GPIO +: 32]     ),
+    .read_request                   (device_read_request[D3_GPIO]           ),
+    .read_response                  (device_read_response[D3_GPIO]          ),
+    .write_data                     (device_write_data                      ),
+    .write_strobe                   (device_write_strobe                    ),
+    .write_request                  (device_write_request[D3_GPIO]          ),
+    .write_response                 (device_write_response[D3_GPIO]         ),
+
+    // I/O signals
+
+    .gpio_input                     (gpio_input                             ),
+    .gpio_oe                        (gpio_oe                                ),
+    .gpio_output                    (gpio_output                            )
 
   );
 
