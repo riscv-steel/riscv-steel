@@ -1,5 +1,3 @@
-# CMake Template
-
 ## Building and Compilation
 
 For `debug` build:
