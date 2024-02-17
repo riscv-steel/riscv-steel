@@ -19,12 +19,12 @@
 // Map devices
 #define UART0_BASE (MAIN_BASE_ADDR + 0x80000000U)
 #define MTIMER0_BASE (MAIN_BASE_ADDR + 0x80010000U)
-#define GPIO_BASE (MAIN_BASE_ADDR + 0x80020000U)
+#define GPIO0_BASE (MAIN_BASE_ADDR + 0x80020000U)
 
 // List devices
 #define UART0 ((UartDevice *)UART0_BASE)
 #define MTIMER0 ((MTimerDevice *)MTIMER0_BASE)
-#define GPIO0 ((GpioDevice *)UART0_BASE)
+#define GPIO0 ((GpioDevice *)GPIO0_BASE)
 
 // Machine Interrupt mask
 #define IRQ_MTIMER0_MASK MIP_MIE_MASK_MTI
