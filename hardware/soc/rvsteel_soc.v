@@ -252,31 +252,33 @@ module rvsteel_soc #(
 
   rvsteel_mtimer rvsteel_mtimer_instance (
 
-  // Global signals
+    // Global signals
 
-  .clock                            (clock                                  ),
-  .reset                            (reset                                  ),
+    .clock                          (clock                                  ),
+    .reset                          (reset                                  ),
 
-  // IO interface
+    // IO interface
 
-  .rw_address                       (device_rw_address                      ),
-  .read_data                        (device_read_data[32*D2_MTIMER +: 32]   ),
-  .read_request                     (device_read_request[D2_MTIMER]         ),
-  .read_response                    (device_read_response[D2_MTIMER]        ),
-  .write_data                       (device_write_data                      ),
-  .write_strobe                     (device_write_strobe                    ),
-  .write_request                    (device_write_request[D2_MTIMER]        ),
-  .write_response                   (device_write_response[D2_MTIMER]       ),
+    .rw_address                     (device_rw_address                      ),
+    .read_data                      (device_read_data[32*D2_MTIMER +: 32]   ),
+    .read_request                   (device_read_request[D2_MTIMER]         ),
+    .read_response                  (device_read_response[D2_MTIMER]        ),
+    .write_data                     (device_write_data                      ),
+    .write_strobe                   (device_write_strobe                    ),
+    .write_request                  (device_write_request[D2_MTIMER]        ),
+    .write_response                 (device_write_response[D2_MTIMER]       ),
 
-  // Interrupt signaling
+    // Interrupt signaling
 
-  .irq                              (irq_timer                              ),
-  .irq_response                     (irq_timer_response                     )
+    .irq                            (irq_timer                              ),
+    .irq_response                   (irq_timer_response                     )
 
   );
 
   rvsteel_gpio #(
+
     .GPIO_WIDTH                     (GPIO_WIDTH                             )
+
   ) rvsteel_gpio_instance (
 
     // Global signals
