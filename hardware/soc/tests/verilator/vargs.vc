@@ -6,3 +6,4 @@
 -I../../../../hardware/mtimer
 -I../../../../hardware/core
 -I../../../../hardware/soc
+-I../../../../hardware/gpio
