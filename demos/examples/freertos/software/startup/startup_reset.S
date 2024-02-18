@@ -22,14 +22,14 @@ reset_handler:
 .section ".trap_vectors"
 mtvec_handler:
   .option norvc
-  j trap_handler      // 0  - Trap
+  j freertos_risc_v_exception_handler // 0  - Trap
   j .                 // 1  - Reserved / Supervisor software interrupt
   j .                 // 2  - Reserved
   j irq_m_software    // 3  - Machine software interrupt
   j .                 // 4  - Reserved
   j .                 // 5  - Reserved / Supervisor timer interrupt
   j .                 // 6  - Reserved
-  j irq_m_timer       // 7  - Machine timer interrupt
+  j freertos_risc_v_mtimer_interrupt_handler // 7  - Machine timer interrupt
   j .                 // 8  - Reserved
   j .                 // 9  - Reserved / Supervisor external interrupt
   j .                 // 10 - Reserved
