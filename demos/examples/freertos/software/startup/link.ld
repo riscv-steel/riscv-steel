@@ -2,13 +2,13 @@ OUTPUT_ARCH("riscv")
 ENTRY(reset_handler)
 
 
-__STACK_SIZE = 1024;
+__STACK_SIZE = 1K;
 __HEAP_SIZE  = 0;
 
 
 MEMORY
 {
-  RAM (wx)  : ORIGIN = 0x00000000, LENGTH = 16K
+  RAM (wx)  : ORIGIN = 0x00000000, LENGTH = 32K
 }
 
 
@@ -98,6 +98,7 @@ PROVIDE( __trap_vectors             = ADDR(.trap_vectors));
 
 PROVIDE( __stack_limit              = ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE);
 PROVIDE( __stack_top                = ORIGIN(RAM) + LENGTH(RAM));
+PROVIDE( __freertos_irq_stack_top   = __stack_top);
 
 
 PROVIDE( __data_source_start        = LOADADDR(.data));
