@@ -28,6 +28,10 @@ set(CMAKE_C_FLAGS       "-O2")
 set(LINKER_SCRIPT       ${CMAKE_SOURCE_DIR}/startup/link.ld)
 
 
+# Set definitions
+add_compile_definitions(CPU_FREQUENCY=${CPU_FREQUENCY})
+
+
 # Cross-Compiling for a Microcontroller
 set(CMAKE_SYSTEM_NAME Generic)
 # Tell CMake not to try to link executables during its checks
@@ -45,7 +49,7 @@ if(NOT DEFINED TOOLCHAIN_PREFIX)
 endif()
 
 
-set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}as     )
+set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}gcc    )
 set(CMAKE_C_COMPILER   ${TOOLCHAIN_PREFIX}gcc    )
 set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}g++    )
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}objcopy)
@@ -64,6 +68,10 @@ if(NOT PATH_CMAKE_C_COMPILER)
 else()
   message(STATUS "PATH CMAKE_C_COMPILER: " ${PATH_CMAKE_C_COMPILER})
 endif()
+
+
+# Set the name of the project
+project(${APP_NAME} LANGUAGES C CXX ASM)
 
 
 set(ARCH_FLAGS
@@ -113,6 +121,9 @@ add_link_options(
 )
 
 
+include(cmake/freertos.cmake)
+
+
 set(SOURCES
   ${CMAKE_SOURCE_DIR}/startup/startup_reset.S
   ${CMAKE_SOURCE_DIR}/startup/startup_init.c
@@ -127,6 +138,7 @@ set(HEADERS
   ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_soc.h
   ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_uart.h
   ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_mtimer.h
+  ${CMAKE_SOURCE_DIR}/include/FreeRTOSConfig.h
 )
 
 
@@ -135,13 +147,14 @@ set_source_files_properties(${CMAKE_SOURCE_DIR}/startup/startup_reset.S PROPERTI
 
 include_directories(
   ${RVSTEEL_API}
+  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_BINARY_DIR}/_deps/freertos_kernel-src/portable/GCC/RISC-V
 )
 
 
-# Set the name of the project
-project(${APP_NAME} LANGUAGES C CXX)
 add_executable(${APP_NAME}.elf ${SOURCES} ${HEADERS})
 
+target_link_libraries(${APP_NAME}.elf freertos_kernel freertos_config)
 
 # Set dependency on linker script
 set_target_properties(${APP_NAME}.elf PROPERTIES
@@ -164,6 +177,5 @@ set_property(TARGET ${APP_NAME}.elf
   ${APP_NAME}.map
 )
 
-# Set definitions
-add_compile_definitions(CPU_FREQUENCY=${CPU_FREQUENCY})
+
 
