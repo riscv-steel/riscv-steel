@@ -142,13 +142,9 @@ set(HEADERS
 )
 
 
-set_source_files_properties(${CMAKE_SOURCE_DIR}/startup/startup_reset.S PROPERTIES LANGUAGE C)
-
-
 include_directories(
   ${RVSTEEL_API}
   ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_BINARY_DIR}/_deps/freertos_kernel-src/portable/GCC/RISC-V
 )
 
 
@@ -176,6 +172,3 @@ set_property(TARGET ${APP_NAME}.elf
   ${APP_NAME}.objdump
   ${APP_NAME}.map
 )
-
-
-
