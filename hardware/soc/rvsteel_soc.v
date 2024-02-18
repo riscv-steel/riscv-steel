@@ -45,16 +45,16 @@ module rvsteel_soc #(
   wire  [NUM_DEVICES*32-1:0] device_region_size;
 
   assign device_start_address [32*D0_RAM      +: 32]  = 32'h0000_0000;
-  assign device_region_size   [32*D0_RAM      +: 32]  = 8192;
+  assign device_region_size   [32*D0_RAM      +: 32]  = MEMORY_SIZE;
 
   assign device_start_address [32*D1_UART     +: 32]  = 32'h8000_0000;
   assign device_region_size   [32*D1_UART     +: 32]  = 8;
 
   assign device_start_address [32*D2_MTIMER   +: 32]  = 32'h8001_0000;
-  assign device_region_size   [32*D2_MTIMER   +: 32]  = 16;
+  assign device_region_size   [32*D2_MTIMER   +: 32]  = 32;
 
   assign device_start_address [32*D3_GPIO     +: 32]  = 32'h8002_0000;
-  assign device_region_size   [32*D3_GPIO     +: 32]  = 16;
+  assign device_region_size   [32*D3_GPIO     +: 32]  = 32;
 
   // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
