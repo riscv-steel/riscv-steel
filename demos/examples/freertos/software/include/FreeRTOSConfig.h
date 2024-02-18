@@ -51,7 +51,7 @@
  * The default value is set to 20MHz and matches the QEMU demo settings.  Your
  * application will certainly need a different value so set this correctly.
  * This is very often, but not always, equal to the main system clock frequency. */
-#define configCPU_CLOCK_HZ    ( ( unsigned long ) 20000000 )
+#define configCPU_CLOCK_HZ    ( ( unsigned long ) CPU_FREQUENCY )
 
 /* configSYSTICK_CLOCK_HZ is an optional parameter for ARM Cortex-M ports only.
  *
@@ -75,7 +75,7 @@
 
 /* configTICK_RATE_HZ sets frequency of the tick interrupt in Hz, normally
  * calculated from the configCPU_CLOCK_HZ value. */
-#define configTICK_RATE_HZ                         100
+#define configTICK_RATE_HZ                         1000
 
 /* Set configUSE_PREEMPTION to 1 to use pre-emptive scheduling.  Set
  * configUSE_PREEMPTION to 0 to use co-operative scheduling.
@@ -87,7 +87,7 @@
  * configUSE_TIME_SLICING to 0 to prevent the scheduler switching between Ready
  * state tasks just because there was a tick interrupt.  See
  * https://freertos.org/single-core-amp-smp-rtos-scheduling.html. */
-#define configUSE_TIME_SLICING                     0
+#define configUSE_TIME_SLICING                     1
 
 /* Set configUSE_PORT_OPTIMISED_TASK_SELECTION to 1 to select the next task to
  * run using an algorithm optimised to the instruction set of the target hardware -
@@ -132,59 +132,59 @@
  *
  * Defining configTICK_TYPE_WIDTH_IN_BITS as TICK_TYPE_WIDTH_64_BITS causes
  * TickType_t to be defined (typedef'ed) as an unsigned 64-bit type. */
-#define configTICK_TYPE_WIDTH_IN_BITS              TICK_TYPE_WIDTH_64_BITS
+#define configTICK_TYPE_WIDTH_IN_BITS              TICK_TYPE_WIDTH_32_BITS
 
 /* Set configIDLE_SHOULD_YIELD to 1 to have the Idle task yield to an
  * application task if there is an Idle priority (priority 0) application task that
  * can run.  Set to 0 to have the Idle task use all of its timeslice.  Default to 1
  * if left undefined. */
-#define configIDLE_SHOULD_YIELD                    1
+#define configIDLE_SHOULD_YIELD                    0
 
 /* Each task has an array of task notifications.
  * configTASK_NOTIFICATION_ARRAY_ENTRIES sets the number of indexes in the array.
  * See https://www.freertos.org/RTOS-task-notifications.html  Defaults to 1 if
  * left undefined. */
-#define configTASK_NOTIFICATION_ARRAY_ENTRIES      1
+#define configTASK_NOTIFICATION_ARRAY_ENTRIES      3
 
 /* configQUEUE_REGISTRY_SIZE sets the maximum number of queues and semaphores
  * that can be referenced from the queue registry.  Only required when using a
  * kernel aware debugger.  Defaults to 0 if left undefined. */
-#define configQUEUE_REGISTRY_SIZE                  0
+#define configQUEUE_REGISTRY_SIZE                  8
 
 /* Set configENABLE_BACKWARD_COMPATIBILITY to 1 to map function names and
  * datatypes from old version of FreeRTOS to their latest equivalent.  Defaults to
  * 1 if left undefined. */
-#define configENABLE_BACKWARD_COMPATIBILITY        0
+//#define configENABLE_BACKWARD_COMPATIBILITY        0
 
 /* Each task has its own array of pointers that can be used as thread local
  * storage.  configNUM_THREAD_LOCAL_STORAGE_POINTERS set the number of indexes in
  * the array.  See https://www.freertos.org/thread-local-storage-pointers.html
  * Defaults to 0 if left undefined. */
-#define configNUM_THREAD_LOCAL_STORAGE_POINTERS    0
+//#define configNUM_THREAD_LOCAL_STORAGE_POINTERS    0
 
 /* When configUSE_MINI_LIST_ITEM is set to 0, MiniListItem_t and ListItem_t are
  * both the same. When configUSE_MINI_LIST_ITEM is set to 1, MiniListItem_t contains
  * 3 fewer fields than ListItem_t which saves some RAM at the cost of violating
  * strict aliasing rules which some compilers depend on for optimization. Defaults
  * to 1 if left undefined. */
-#define configUSE_MINI_LIST_ITEM                   1
+//#define configUSE_MINI_LIST_ITEM                   1
 
 /* Sets the type used by the parameter to xTaskCreate() that specifies the stack
  * size of the task being created.  The same type is used to return information
  * about stack usage in various other API calls.  Defaults to size_t if left
  * undefined. */
-#define configSTACK_DEPTH_TYPE                     size_t
+//#define configSTACK_DEPTH_TYPE                     size_t
 
 /* configMESSAGE_BUFFER_LENGTH_TYPE sets the type used to store the length of
  * each message written to a FreeRTOS message buffer (the length is also written to
  * the message buffer.  Defaults to size_t if left undefined - but that may waste
  * space if messages never go above a length that could be held in a uint8_t. */
-#define configMESSAGE_BUFFER_LENGTH_TYPE           size_t
+//#define configMESSAGE_BUFFER_LENGTH_TYPE           size_t
 
 /* If configHEAP_CLEAR_MEMORY_ON_FREE is set to 1, then blocks of memory allocated
  * using pvPortMalloc() will be cleared (i.e. set to zero) when freed using
  * vPortFree(). Defaults to 0 if left undefined. */
-#define configHEAP_CLEAR_MEMORY_ON_FREE            1
+//#define configHEAP_CLEAR_MEMORY_ON_FREE            1
 
 /* vTaskList and vTaskGetRunTimeStats APIs take a buffer as a parameter and assume
  * that the length of the buffer is configSTATS_BUFFER_MAX_LENGTH. Defaults to
@@ -192,7 +192,7 @@
  * New applications are recommended to use vTaskListTasks and
  * vTaskGetRunTimeStatistics APIs instead and supply the length of the buffer
  * explicitly to avoid memory corruption. */
-#define configSTATS_BUFFER_MAX_LENGTH              0xFFFF
+//#define configSTATS_BUFFER_MAX_LENGTH              0xFFFF
 
 /* Set configUSE_NEWLIB_REENTRANT to 1 to have a newlib reent structure
  * allocated for each task.  Set to 0 to not support newlib reent structures.
@@ -204,7 +204,7 @@
  * system-wide implementations of the necessary stubs. Note that (at the time of
  * writing) the current newlib design implements a system-wide malloc() that must
  * be provided with locks. */
-#define configUSE_NEWLIB_REENTRANT                 0
+//#define configUSE_NEWLIB_REENTRANT                 0
 
 /******************************************************************************/
 /* Software timer related definitions. ****************************************/
@@ -215,7 +215,7 @@
  * FreeRTOS/source/timers.c source file must be included in the build if
  * configUSE_TIMERS is set to 1.  Default to 0 if left undefined.  See
  * https://www.freertos.org/RTOS-software-timer.html. */
-#define configUSE_TIMERS                1
+#define configUSE_TIMERS                0
 
 /* configTIMER_TASK_PRIORITY sets the priority used by the timer task.  Only
  * used if configUSE_TIMERS is set to 1.  The timer task is a standard FreeRTOS
@@ -234,7 +234,7 @@
  * items the queue can hold) used to send commands to the timer task.  See
  * https://www.freertos.org/RTOS-software-timer-service-daemon-task.html  Only used
  * if configUSE_TIMERS is set to 1. */
-#define configTIMER_QUEUE_LENGTH        10
+#define configTIMER_QUEUE_LENGTH        4
 
 /******************************************************************************/
 /* Memory allocation related definitions. *************************************/
@@ -252,13 +252,13 @@
  * memory in the build.  Set to 0 to exclude the ability to create dynamically
  * allocated objects from the build.  Defaults to 1 if left undefined.  See
  * https://www.freertos.org/Static_Vs_Dynamic_Memory_Allocation.html. */
-#define configSUPPORT_DYNAMIC_ALLOCATION             1
+#define configSUPPORT_DYNAMIC_ALLOCATION             0
 
 /* Sets the total size of the FreeRTOS heap, in bytes, when heap_1.c, heap_2.c
  * or heap_4.c are included in the build.  This value is defaulted to 4096 bytes but
  * it must be tailored to each application.  Note the heap will appear in the .bss
  * section.  See https://www.freertos.org/a00111.html. */
-#define configTOTAL_HEAP_SIZE                        4096
+#define configTOTAL_HEAP_SIZE                        0
 
 /* Set configAPPLICATION_ALLOCATED_HEAP to 1 to have the application allocate
  * the array used as the FreeRTOS heap.  Set to 0 to have the linker allocate the
@@ -287,7 +287,7 @@
  * priority (0).  Not supported by all FreeRTOS ports.  See
  * https://www.freertos.org/RTOS-Cortex-M3-M4.html for information specific to ARM
  * Cortex-M devices. */
-#define configKERNEL_INTERRUPT_PRIORITY          0
+//#define configKERNEL_INTERRUPT_PRIORITY          0
 
 /* configMAX_SYSCALL_INTERRUPT_PRIORITY sets the interrupt priority above which
  * FreeRTOS API calls must not be made.  Interrupts above this priority are never
@@ -295,11 +295,11 @@
  * highest interrupt priority (0).  Not supported by all FreeRTOS ports.
  * See https://www.freertos.org/RTOS-Cortex-M3-M4.html for information specific to
  * ARM Cortex-M devices. */
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY     0
+//#define configMAX_SYSCALL_INTERRUPT_PRIORITY     0
 
 /* Another name for configMAX_SYSCALL_INTERRUPT_PRIORITY - the name used depends
  * on the FreeRTOS port. */
-#define configMAX_API_CALL_INTERRUPT_PRIORITY    0
+//#define configMAX_API_CALL_INTERRUPT_PRIORITY    0
 
 /******************************************************************************/
 /* Hook and callback function related definitions. ****************************/
@@ -333,7 +333,7 @@
  * the stack overflow callback when configCHECK_FOR_STACK_OVERFLOW is set to 1.
  * See https://www.freertos.org/Stacks-and-stack-overflow-checking.html  Defaults
  * to 0 if left undefined. */
-#define configCHECK_FOR_STACK_OVERFLOW        2
+#define configCHECK_FOR_STACK_OVERFLOW        0
 
 /******************************************************************************/
 /* Run time and task stats gathering related definitions. *********************/
@@ -371,7 +371,7 @@
 /* configMAX_CO_ROUTINE_PRIORITIES defines the number of priorities available
  * to the application co-routines. Any number of co-routines can share the same
  * priority. Defaults to 0 if left undefined. */
-#define configMAX_CO_ROUTINE_PRIORITIES    1
+#define configMAX_CO_ROUTINE_PRIORITIES    0
 
 /******************************************************************************/
 /* Debugging assistance. ******************************************************/
@@ -385,151 +385,13 @@
  * number of the failing assert (for example, "vAssertCalled( __FILE__, __LINE__ )"
  * or it can simple disable interrupts and sit in a loop to halt all execution
  * on the failing line for viewing in a debugger. */
-#define configASSERT( x )         \
-    if( ( x ) == 0 )              \
-    {                             \
-        taskDISABLE_INTERRUPTS(); \
-        for( ; ; )                \
-        ;                         \
+#define configASSERT( x )           \
+    if( ( x ) == 0 )                \
+    {                               \
+        taskDISABLE_INTERRUPTS();   \
+        __asm volatile( "ebreak" ); \
+        for( ; ; );                 \
     }
-
-/******************************************************************************/
-/* FreeRTOS MPU specific definitions. *****************************************/
-/******************************************************************************/
-
-/* If configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS is set to 1 then
- * the application writer can provide functions that execute in privileged mode.
- * See: https://www.freertos.org/a00110.html#configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS
- * Defaults to 0 if left undefined.  Only used by the FreeRTOS Cortex-M MPU ports,
- * not the standard ARMv7-M Cortex-M port. */
-#define configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS    0
-
-/* Set configTOTAL_MPU_REGIONS to the number of MPU regions implemented on your
- * target hardware.  Normally 8 or 16.  Only used by the FreeRTOS Cortex-M MPU
- * ports, not the standard ARMv7-M Cortex-M port.  Defaults to 8 if left
- * undefined. */
-#define configTOTAL_MPU_REGIONS                                   8
-
-/* configTEX_S_C_B_FLASH allows application writers to override the default
- * values for the for TEX, Shareable (S), Cacheable (C) and Bufferable (B) bits for
- * the MPU region covering Flash.  Defaults to 0x07UL (which means TEX=000, S=1,
- * C=1, B=1) if left undefined.  Only used by the FreeRTOS Cortex-M MPU ports, not
- * the standard ARMv7-M Cortex-M port. */
-#define configTEX_S_C_B_FLASH                                     0x07UL
-
-/* configTEX_S_C_B_SRAM allows application writers to override the default
- * values for the for TEX, Shareable (S), Cacheable (C) and Bufferable (B) bits for
- * the MPU region covering RAM. Defaults to 0x07UL (which means TEX=000, S=1, C=1,
- * B=1) if left undefined.  Only used by the FreeRTOS Cortex-M MPU ports, not
- * the standard ARMv7-M Cortex-M port. */
-#define configTEX_S_C_B_SRAM                                      0x07UL
-
-/* Set configENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY to 0 to prevent any privilege
- * escalations originating from outside of the kernel code itself.  Set to 1 to
- * allow application tasks to raise privilege.  Defaults to 1 if left undefined.
- * Only used by the FreeRTOS Cortex-M MPU ports, not the standard ARMv7-M Cortex-M
- * port. */
-#define configENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY               1
-
-/* Set configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS to 1 to allow unprivileged
- * tasks enter critical sections (effectively mask interrupts).  Set to 0 to
- * prevent unprivileged tasks entering critical sections.  Defaults to 1 if left
- * undefined.  Only used by the FreeRTOS Cortex-M MPU ports, not the standard
- * ARMv7-M Cortex-M port. */
-#define configALLOW_UNPRIVILEGED_CRITICAL_SECTIONS                0
-
-/* FreeRTOS Kernel version 10.6.0 introduced a new v2 MPU wrapper, namely
- * mpu_wrappers_v2.c. Set configUSE_MPU_WRAPPERS_V1 to 0 to use the new v2 MPU
- * wrapper. Set configUSE_MPU_WRAPPERS_V1 to 1 to use the old v1 MPU wrapper
- * (mpu_wrappers.c). Defaults to 0 if left undefined. */
-#define configUSE_MPU_WRAPPERS_V1                                 0
-
-/* When using the v2 MPU wrapper, set configPROTECTED_KERNEL_OBJECT_POOL_SIZE to
- * the total number of kernel objects, which includes tasks, queues, semaphores,
- * mutexes, event groups, timers, stream buffers and message buffers, in your
- * application. The application will not be able to have more than
- * configPROTECTED_KERNEL_OBJECT_POOL_SIZE kernel objects at any point of
- * time. */
-#define configPROTECTED_KERNEL_OBJECT_POOL_SIZE                   10
-
-/* When using the v2 MPU wrapper, set configSYSTEM_CALL_STACK_SIZE to the size
- * of the system call stack in words. Each task has a statically allocated
- * memory buffer of this size which is used as the stack to execute system
- * calls. For example, if configSYSTEM_CALL_STACK_SIZE is defined as 128 and
- * there are 10 tasks in the application, the total amount of memory used for
- * system call stacks is 128 * 10 = 1280 words. */
-#define configSYSTEM_CALL_STACK_SIZE                              128
-
-/* When using the v2 MPU wrapper, set configENABLE_ACCESS_CONTROL_LIST to 1 to
- * enable Access Control List (ACL) feature. When ACL is enabled, an
- * unprivileged task by default does not have access to any kernel object other
- * than itself. The application writer needs to explicitly grant the
- * unprivileged task access to the kernel objects it needs using the APIs
- * provided for the same. Defaults to 0 if left undefined. */
-#define configENABLE_ACCESS_CONTROL_LIST                          1
-
-/******************************************************************************/
-/* SMP( Symmetric MultiProcessing ) Specific Configuration definitions. *******/
-/******************************************************************************/
-
-/* Set configNUMBER_OF_CORES to the number of available processor cores. Defaults
- * to 1 if left undefined. */
-
-/*
- #define configNUMBER_OF_CORES                     [Num of available cores]
- */
-
-/* When using SMP (i.e. configNUMBER_OF_CORES is greater than one), set
- * configRUN_MULTIPLE_PRIORITIES to 0 to allow multiple tasks to run
- * simultaneously only if they do not have equal priority, thereby maintaining
- * the paradigm of a lower priority task never running if a higher priority task
- * is able to run. If configRUN_MULTIPLE_PRIORITIES is set to 1, multiple tasks
- * with different priorities may run simultaneously - so a higher and lower
- * priority task may run on different cores at the same time. */
-#define configRUN_MULTIPLE_PRIORITIES             0
-
-/* When using SMP (i.e. configNUMBER_OF_CORES is greater than one), set
- * configUSE_CORE_AFFINITY to 1 to enable core affinity feature. When core
- * affinity feature is enabled, the vTaskCoreAffinitySet and vTaskCoreAffinityGet
- * APIs can be used to set and retrieve which cores a task can run on. If
- * configUSE_CORE_AFFINITY is set to 0 then the FreeRTOS scheduler is free to
- * run any task on any available core. */
-#define configUSE_CORE_AFFINITY                   0
-
-/* When using SMP (i.e. configNUMBER_OF_CORES is greater than one), if
- * configUSE_TASK_PREEMPTION_DISABLE is set to 1, individual tasks can be set to
- * either pre-emptive or co-operative mode using the vTaskPreemptionDisable and
- * vTaskPreemptionEnable APIs. */
-#define configUSE_TASK_PREEMPTION_DISABLE         0
-
-/* When using SMP (i.e. configNUMBER_OF_CORES is greater than one), set
- * configUSE_PASSIVE_IDLE_HOOK to 1 to allow the application writer to use
- * the passive idle task hook to add background functionality without the overhead
- * of a separate task. Defaults to 0 if left undefined. */
-#define configUSE_PASSIVE_IDLE_HOOK               0
-
-/* When using SMP (i.e. configNUMBER_OF_CORES is greater than one),
- * configTIMER_SERVICE_TASK_CORE_AFFINITY allows the application writer to set
- * the core affinity of the RTOS Daemon/Timer Service task. Defaults to
- * tskNO_AFFINITY if left undefined. */
-#define configTIMER_SERVICE_TASK_CORE_AFFINITY    tskNO_AFFINITY
-
-
-/******************************************************************************/
-/* ARMv8-M secure side port related definitions. ******************************/
-/******************************************************************************/
-
-/* secureconfigMAX_SECURE_CONTEXTS define the maximum number of tasks that can
- *  call into the secure side of an ARMv8-M chip.  Not used by any other ports. */
-#define secureconfigMAX_SECURE_CONTEXTS        5
-
-/* Defines the kernel provided implementation of
- * vApplicationGetIdleTaskMemory() and vApplicationGetTimerTaskMemory()
- * to provide the memory that is used by the Idle task and Timer task respectively.
- * The application can provide it's own implementation of
- * vApplicationGetIdleTaskMemory() and vApplicationGetTimerTaskMemory() by
- * setting configKERNEL_PROVIDED_STATIC_MEMORY to 0 or leaving it undefined. */
-#define configKERNEL_PROVIDED_STATIC_MEMORY    1
 
 /******************************************************************************/
 /* Definitions that include or exclude functionality. *************************/
@@ -549,20 +411,24 @@
  * functions even when the constant is 1. */
 #define INCLUDE_vTaskPrioritySet               1
 #define INCLUDE_uxTaskPriorityGet              1
-#define INCLUDE_vTaskDelete                    1
+#define INCLUDE_vTaskDelete                    0
 #define INCLUDE_vTaskSuspend                   1
-#define INCLUDE_xResumeFromISR                 1
+#define INCLUDE_xResumeFromISR                 0
 #define INCLUDE_vTaskDelayUntil                1
 #define INCLUDE_vTaskDelay                     1
-#define INCLUDE_xTaskGetSchedulerState         1
+#define INCLUDE_xTaskGetSchedulerState         0
 #define INCLUDE_xTaskGetCurrentTaskHandle      1
 #define INCLUDE_uxTaskGetStackHighWaterMark    0
 #define INCLUDE_xTaskGetIdleTaskHandle         0
-#define INCLUDE_eTaskGetState                  0
-#define INCLUDE_xEventGroupSetBitFromISR       1
+#define INCLUDE_eTaskGetState                  1
+#define INCLUDE_xEventGroupSetBitFromISR       0
 #define INCLUDE_xTimerPendFunctionCall         0
-#define INCLUDE_xTaskAbortDelay                0
-#define INCLUDE_xTaskGetHandle                 0
-#define INCLUDE_xTaskResumeFromISR             1
+#define INCLUDE_xTaskAbortDelay                1
+#define INCLUDE_xTaskGetHandle                 1
+#define INCLUDE_xTaskResumeFromISR             0
+
+/* See https://www.freertos.org/Using-FreeRTOS-on-RISC-V.html */
+#define configMTIME_BASE_ADDRESS               ( 0x80010004U )
+#define configMTIMECMP_BASE_ADDRESS            ( 0x8001000CU )
 
 #endif /* FREERTOS_CONFIG_H */
