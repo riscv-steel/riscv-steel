@@ -2,7 +2,7 @@ OUTPUT_ARCH("riscv")
 ENTRY(reset_handler)
 
 
-__STACK_SIZE = 1024;
+__STACK_SIZE = 1K;
 __HEAP_SIZE  = 0;
 
 
