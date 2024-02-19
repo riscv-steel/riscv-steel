@@ -10,6 +10,8 @@ cmake_minimum_required(VERSION 3.15)
 
 set(APP_NAME            "template_cmake")
 set(CPU_FREQUENCY       50000000UL)
+set(RVSTEEL_ROOT        "../../")
+set(RVSTEEL_API         ${RVSTEEL_ROOT}/software/api)
 
 set(APP_ARCH            rv32izicsr)
 set(APP_ABI             ilp32)
@@ -24,6 +26,10 @@ set(CMAKE_C_STANDARD    11)
 set(CMAKE_C_FLAGS       "-O2")
 
 set(LINKER_SCRIPT       ${CMAKE_SOURCE_DIR}/startup/link.ld)
+
+
+# Set definitions
+add_compile_definitions(CPU_FREQUENCY=${CPU_FREQUENCY})
 
 
 # Cross-Compiling for a Microcontroller
@@ -43,7 +49,7 @@ if(NOT DEFINED TOOLCHAIN_PREFIX)
 endif()
 
 
-set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}as     )
+set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}gcc     )
 set(CMAKE_C_COMPILER   ${TOOLCHAIN_PREFIX}gcc    )
 set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}g++    )
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}objcopy)
@@ -62,6 +68,10 @@ if(NOT PATH_CMAKE_C_COMPILER)
 else()
   message(STATUS "PATH CMAKE_C_COMPILER: " ${PATH_CMAKE_C_COMPILER})
 endif()
+
+
+# Set the name of the project
+project(${APP_NAME} LANGUAGES C CXX ASM)
 
 
 set(ARCH_FLAGS
@@ -119,25 +129,20 @@ set(SOURCES
 
 
 set(HEADERS
-  ${CMAKE_SOURCE_DIR}/../api/rvsteel_gcc.h
-  ${CMAKE_SOURCE_DIR}/../api/rvsteel_def.h
-  ${CMAKE_SOURCE_DIR}/../api/rvsteel_csr.h
-  ${CMAKE_SOURCE_DIR}/../api/rvsteel_soc.h
-  ${CMAKE_SOURCE_DIR}/../api/rvsteel_uart.h
-  ${CMAKE_SOURCE_DIR}/../api/rvsteel_mtimer.h
+  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_gcc.h
+  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_def.h
+  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_csr.h
+  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_soc.h
+  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_uart.h
+  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_mtimer.h
 )
-
-
-set_source_files_properties(startup/startup_reset.S PROPERTIES LANGUAGE C)
 
 
 include_directories(
-  ${CMAKE_SOURCE_DIR}/../api
+  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}
 )
 
 
-# Set the name of the project
-project(${APP_NAME} LANGUAGES C CXX)
 add_executable(${APP_NAME}.elf ${SOURCES} ${HEADERS})
 
 
@@ -161,7 +166,3 @@ set_property(TARGET ${APP_NAME}.elf
   ${APP_NAME}.objdump
   ${APP_NAME}.map
 )
-
-# Set definitions
-add_compile_definitions(CPU_FREQUENCY=${CPU_FREQUENCY})
-
