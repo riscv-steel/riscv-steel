@@ -18,28 +18,35 @@ module rvsteel_soc #(
   // Address of the first instruction to fetch from memory
   parameter BOOT_ADDRESS = 32'h00000000 ,
   // Number of available I/O ports
-  parameter GPIO_WIDTH = 2
+  parameter GPIO_WIDTH = 2              ,
+  // Number of CS (Chip Select) pins for the SPI controller
+  parameter NUM_CS_LINES = 1
 
   ) (
 
-  input   wire                    clock       ,
-  input   wire                    reset       ,
-  input   wire                    halt        ,
-  input   wire                    uart_rx     ,
-  output  wire                    uart_tx     ,
-  input   wire  [GPIO_WIDTH-1:0]  gpio_input  ,
-  output  wire  [GPIO_WIDTH-1:0]  gpio_oe     ,
-  output  wire  [GPIO_WIDTH-1:0]  gpio_output
+  input   wire                      clock       ,
+  input   wire                      reset       ,
+  input   wire                      halt        ,
+  input   wire                      uart_rx     ,
+  output  wire                      uart_tx     ,
+  input   wire  [GPIO_WIDTH-1:0]    gpio_input  ,
+  output  wire  [GPIO_WIDTH-1:0]    gpio_oe     ,
+  output  wire  [GPIO_WIDTH-1:0]    gpio_output ,
+  output  wire                      sclk        ,
+  output  wire                      pico        ,
+  input   wire                      poci        ,
+  output  wire  [NUM_CS_LINES-1:0]  cs
 
   );
 
   // System bus configuration
 
-  localparam NUM_DEVICES    = 4;
+  localparam NUM_DEVICES    = 5;
   localparam D0_RAM         = 0;
   localparam D1_UART        = 1;
   localparam D2_MTIMER      = 2;
   localparam D3_GPIO        = 3;
+  localparam D4_SPI         = 4;
 
   wire  [NUM_DEVICES*32-1:0] device_start_address;
   wire  [NUM_DEVICES*32-1:0] device_region_size;
@@ -55,6 +62,9 @@ module rvsteel_soc #(
 
   assign device_start_address [32*D3_GPIO     +: 32]  = 32'h8002_0000;
   assign device_region_size   [32*D3_GPIO     +: 32]  = 32;
+
+  assign device_start_address [32*D4_SPI      +: 32]  = 32'h8003_0000;
+  assign device_region_size   [32*D4_SPI      +: 32]  = 32;
 
   // RISC-V Steel 32-bit Processor (Manager Device) <=> System Bus
 
@@ -250,7 +260,8 @@ module rvsteel_soc #(
 
   );
 
-  rvsteel_mtimer rvsteel_mtimer_instance (
+  rvsteel_mtimer
+  rvsteel_mtimer_instance (
 
     // Global signals
 
@@ -302,6 +313,37 @@ module rvsteel_soc #(
     .gpio_input                     (gpio_input                             ),
     .gpio_oe                        (gpio_oe                                ),
     .gpio_output                    (gpio_output                            )
+
+  );
+
+  rvsteel_spi #(
+
+    .NUM_CS_LINES                   (NUM_CS_LINES                       )
+
+  ) rvsteel_spi_instance (
+
+    // Global signals
+
+    .clock                          (clock                              ),
+    .reset                          (reset                              ),
+
+    // IO interface
+
+    .rw_address                     (device_rw_address                  ),
+    .read_data                      (device_read_data[32*D4_SPI +: 32]  ),
+    .read_request                   (device_read_request[D4_SPI]        ),
+    .read_response                  (device_read_response[D4_SPI]       ),
+    .write_data                     (device_write_data                  ),
+    .write_strobe                   (device_write_strobe                ),
+    .write_request                  (device_write_request[D4_SPI]       ),
+    .write_response                 (device_write_response[D4_SPI]      ),
+
+    // SPI signals
+
+    .sclk                           (sclk                               ),
+    .pico                           (pico                               ),
+    .poci                           (poci                               ),
+    .cs                             (cs                                 )
 
   );
 
