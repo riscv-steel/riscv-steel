@@ -270,7 +270,7 @@ module rvsteel_soc #(
 
     // IO interface
 
-    .rw_address                     (device_rw_address                      ),
+    .rw_address                     (device_rw_address[4:0]                 ),
     .read_data                      (device_read_data[32*D2_MTIMER +: 32]   ),
     .read_request                   (device_read_request[D2_MTIMER]         ),
     .read_response                  (device_read_response[D2_MTIMER]        ),
@@ -281,8 +281,7 @@ module rvsteel_soc #(
 
     // Interrupt signaling
 
-    .irq                            (irq_timer                              ),
-    .irq_response                   (irq_timer_response                     )
+    .irq                            (irq_timer                              )
 
   );
 
@@ -299,11 +298,11 @@ module rvsteel_soc #(
 
     // IO interface
 
-    .rw_address                     (device_rw_address                      ),
+    .rw_address                     (device_rw_address[4:0]                 ),
     .read_data                      (device_read_data[32*D3_GPIO +: 32]     ),
     .read_request                   (device_read_request[D3_GPIO]           ),
     .read_response                  (device_read_response[D3_GPIO]          ),
-    .write_data                     (device_write_data                      ),
+    .write_data                     (device_write_data[1:0]                 ),
     .write_strobe                   (device_write_strobe                    ),
     .write_request                  (device_write_request[D3_GPIO]          ),
     .write_response                 (device_write_response[D3_GPIO]         ),
@@ -354,6 +353,7 @@ module rvsteel_soc #(
     irq_software,
     irq_external_response,
     irq_software_response,
+    irq_timer_response,
     irq_fast_response[15:1],
     1'b0};
 

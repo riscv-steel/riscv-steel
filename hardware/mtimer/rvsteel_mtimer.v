@@ -14,7 +14,7 @@ module rvsteel_mtimer (
 
   // IO interface
 
-  input   wire  [31:0]  rw_address    ,
+  input   wire  [4:0 ]  rw_address    ,
   output  reg   [31:0]  read_data     ,
   input   wire          read_request  ,
   output  reg           read_response ,
@@ -29,8 +29,8 @@ module rvsteel_mtimer (
   // Side timer irq
   // Interrupt signaling
 
-  output  reg           irq           ,
-  input   wire          irq_response
+  output  reg           irq
+  //input   wire          irq_response
 
 );
 
@@ -78,15 +78,6 @@ module rvsteel_mtimer (
 
   wire [REG_ADDR_WIDTH-1:0] address;
   assign address = rw_address[2 +:REG_ADDR_WIDTH];
-
-  wire [32-REG_ADDR_WIDTH-1:0] address_unused;
-  assign address_unused = {rw_address[31:REG_ADDR_WIDTH+2], rw_address[1:0]};
-
-
-  // Exclude unused
-  wire irq_response_unused;
-  assign irq_response_unused = irq_response;
-
 
   // Control register
   always @(posedge clock) begin
