@@ -18,11 +18,11 @@ module rvsteel_gpio #(
 
   // IO interface
 
-  input   wire  [31:0]            rw_address    ,
+  input   wire  [4:0 ]            rw_address    ,
   output  reg   [31:0]            read_data     ,
   input   wire                    read_request  ,
   output  reg                     read_response ,
-  input   wire  [31:0]            write_data    ,
+  input   wire  [1:0 ]            write_data    ,
   input   wire  [3:0 ]            write_strobe  ,
   input   wire                    write_request ,
   output  reg                     write_response,
@@ -147,12 +147,5 @@ module rvsteel_gpio #(
         endcase
     end
   end
-
-  // Avoid warnings about intentionally unused pins/wires
-  wire unused_ok =
-    &{1'b0,
-    write_data,
-    rw_address,
-    1'b0};
 
 endmodule
