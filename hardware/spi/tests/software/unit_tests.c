@@ -123,7 +123,7 @@ void print_readout_value(const uint8_t rdata)
 // Unit tests for the SPI Controller
 int main()
 {
-  uart_send_string("SPI Controller Software Unit Tests #2\n\n");
+  uart_send_string("SPI Controller Software Unit Tests\n\n");
 
   // Test #1
   // Check the default values of CPOL and CPHA (0 and 0, respectively)
