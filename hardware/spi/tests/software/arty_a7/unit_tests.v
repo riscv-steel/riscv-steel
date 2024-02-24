@@ -39,7 +39,7 @@ module unit_tests (
 
     .CLOCK_FREQUENCY          (50000000           ),
     .UART_BAUD_RATE           (9600               ),
-    .MEMORY_SIZE              (8192               ),
+    .MEMORY_SIZE              (16384              ),
     .MEMORY_INIT_FILE         ("unit_tests.hex"   ),
     .BOOT_ADDRESS             (32'h00000000       ),
     .NUM_CS_LINES             (2                  )
