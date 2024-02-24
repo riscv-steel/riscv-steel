@@ -977,6 +977,11 @@ module unit_tests();
       $display("[ERROR] Read data is not what it is expected to be.");
     end
 
+    if (error_count === 0)
+      $display("Passed all SPI Controller Software Unit Tests.");
+    else
+      $display("[ERROR] SPI Controller failed one or more unit tests.");
+
     $finish();
 
   end
