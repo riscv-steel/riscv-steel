@@ -18,7 +18,7 @@ module unit_tests();
 
   // IO interface
 
-  reg   [31:0]              rw_address      ;
+  reg   [4:0 ]              rw_address      ;
   wire  [31:0]              read_data       ;
   reg                       read_request    ;
   wire                      read_response   ;
@@ -135,7 +135,7 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #3...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     read_request    = 1'b1;
     #20;
     read_request    = 1'b0;
@@ -149,7 +149,7 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #4...");
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     read_request    = 1'b1;
     #20;
     read_request    = 1'b0;
@@ -163,7 +163,7 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #5...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -182,7 +182,7 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #6...");
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -201,7 +201,7 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #7...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'hffffffff;
     write_strobe    = 4'b1111;
     write_request   = 1'b1;
@@ -220,7 +220,7 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #8...");
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h12345678;
     write_strobe    = 4'b1101;
     write_request   = 1'b1;
@@ -239,7 +239,7 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #9...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -258,7 +258,7 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #10...");
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -278,7 +278,7 @@ module unit_tests();
     $display("Running unit test #11...");
     for (i = 0; i < NUM_CS_LINES; i=i+1) begin
       #20;
-      rw_address      = 32'h80030008;
+      rw_address      = 5'h08;
       write_data      = i;
       write_strobe    = 4'b0001;
       write_request   = 1'b1;
@@ -299,7 +299,7 @@ module unit_tests();
       end
     end
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -325,22 +325,22 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #12...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h8003000c;
+    rw_address      = 5'h0c;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -349,7 +349,7 @@ module unit_tests();
       $display("[ERROR] CS line #0 expected to be logic LOW.");
       error_count = error_count + 1;
     end
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h000000f0;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -365,7 +365,7 @@ module unit_tests();
     #40 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #40 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #120;
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h0000000f;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -381,7 +381,7 @@ module unit_tests();
     #40 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #40 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #40;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -394,7 +394,7 @@ module unit_tests();
       $display("[ERROR] CS line #0 was expected to be asserted.");
     end
     #40;
-    rw_address      = 32'h80030014;
+    rw_address      = 5'h14;
     read_request   = 1'b1;
     #40;
     if (read_data !== 32'h000000f0) begin
@@ -407,22 +407,22 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #13...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h8003000c;
+    rw_address      = 5'h0c;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -431,7 +431,7 @@ module unit_tests();
       $display("[ERROR] CS line #1 expected to be logic LOW.");
       error_count = error_count + 1;
     end
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h000000f0;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -447,7 +447,7 @@ module unit_tests();
     #40 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #40 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #120;
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h0000000f;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -463,7 +463,7 @@ module unit_tests();
     #40 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #40 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #40;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -476,7 +476,7 @@ module unit_tests();
       $display("[ERROR] CS line #1 was expected to be asserted.");
     end
     #40;
-    rw_address      = 32'h80030014;
+    rw_address      = 5'h14;
     read_request   = 1'b1;
     #40;
     if (read_data !== 32'h000000f0) begin
@@ -489,22 +489,22 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #14...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h8003000c;
+    rw_address      = 5'h0c;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -513,7 +513,7 @@ module unit_tests();
       $display("[ERROR] CS line #1 expected to be logic LOW.");
       error_count = error_count + 1;
     end
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h000000f0;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -529,7 +529,7 @@ module unit_tests();
     #40 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #40 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #120;
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h0000000f;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -545,7 +545,7 @@ module unit_tests();
     #40 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #40 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #40;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -558,7 +558,7 @@ module unit_tests();
       $display("[ERROR] CS line #1 was expected to be asserted.");
     end
     #40;
-    rw_address      = 32'h80030014;
+    rw_address      = 5'h14;
     read_request   = 1'b1;
     #40;
     if (read_data !== 32'h000000f0) begin
@@ -571,22 +571,22 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #15...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h8003000c;
+    rw_address      = 5'h0c;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -595,7 +595,7 @@ module unit_tests();
       $display("[ERROR] CS line #0 expected to be logic LOW.");
       error_count = error_count + 1;
     end
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h000000f0;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -611,7 +611,7 @@ module unit_tests();
     #40 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #40 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #120;
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h0000000f;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -627,7 +627,7 @@ module unit_tests();
     #40 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #40 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #40;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -640,7 +640,7 @@ module unit_tests();
       $display("[ERROR] CS line #0 was expected to be asserted.");
     end
     #40;
-    rw_address      = 32'h80030014;
+    rw_address      = 5'h14;
     read_request   = 1'b1;
     #40;
     if (read_data !== 32'h000000f0) begin
@@ -653,22 +653,22 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #16...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h8003000c;
+    rw_address      = 5'h0c;
     write_data      = 32'h00000019;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -677,7 +677,7 @@ module unit_tests();
       $display("[ERROR] CS line #0 expected to be logic LOW.");
       error_count = error_count + 1;
     end
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h000000f0;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -693,7 +693,7 @@ module unit_tests();
     #1000 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #1000 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #2000;
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h0000000f;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -709,7 +709,7 @@ module unit_tests();
     #1000 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #1000 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #1000;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -722,7 +722,7 @@ module unit_tests();
       $display("[ERROR] CS line #0 was expected to be asserted.");
     end
     #40;
-    rw_address      = 32'h80030014;
+    rw_address      = 5'h14;
     read_request   = 1'b1;
     #40;
     if (read_data !== 32'h000000f0) begin
@@ -735,22 +735,22 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #17...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h8003000c;
+    rw_address      = 5'h0c;
     write_data      = 32'h00000019;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -759,7 +759,7 @@ module unit_tests();
       $display("[ERROR] CS line #1 expected to be logic LOW.");
       error_count = error_count + 1;
     end
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h000000f0;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -775,7 +775,7 @@ module unit_tests();
     #1000 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #1000 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #2000;
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h0000000f;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -791,7 +791,7 @@ module unit_tests();
     #1000 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #1000 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #1000;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -804,7 +804,7 @@ module unit_tests();
       $display("[ERROR] CS line #1 was expected to be asserted.");
     end
     #40;
-    rw_address      = 32'h80030014;
+    rw_address      = 5'h14;
     read_request   = 1'b1;
     #40;
     if (read_data !== 32'h000000f0) begin
@@ -817,22 +817,22 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #18...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h8003000c;
+    rw_address      = 5'h0c;
     write_data      = 32'h00000019;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -841,7 +841,7 @@ module unit_tests();
       $display("[ERROR] CS line #1 expected to be logic LOW.");
       error_count = error_count + 1;
     end
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h000000f0;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -857,7 +857,7 @@ module unit_tests();
     #1000 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #1000 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #2000;
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h0000000f;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -873,7 +873,7 @@ module unit_tests();
     #1000 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #1000 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #1000;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -886,7 +886,7 @@ module unit_tests();
       $display("[ERROR] CS line #1 was expected to be asserted.");
     end
     #40;
-    rw_address      = 32'h80030014;
+    rw_address      = 5'h14;
     read_request   = 1'b1;
     #40;
     if (read_data !== 32'h000000f0) begin
@@ -899,22 +899,22 @@ module unit_tests();
     error_flag = 0;
     $display("Running unit test #19...");
     #20;
-    rw_address      = 32'h80030000;
+    rw_address      = 5'h00;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030004;
+    rw_address      = 5'h04;
     write_data      = 32'h00000001;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h8003000c;
+    rw_address      = 5'h0c;
     write_data      = 32'h00000019;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
     #20;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h00000000;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -923,7 +923,7 @@ module unit_tests();
       $display("[ERROR] CS line #0 expected to be logic LOW.");
       error_count = error_count + 1;
     end
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h000000f0;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -939,7 +939,7 @@ module unit_tests();
     #1000 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #1000 if (pico !== 1'b0) begin $display("[ERROR] PICO pin expected to be logic LOW."); error_count = error_count + 1; end
     #2000;
-    rw_address      = 32'h80030010;
+    rw_address      = 5'h10;
     write_data      = 32'h0000000f;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -955,7 +955,7 @@ module unit_tests();
     #1000 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #1000 if (pico !== 1'b1) begin $display("[ERROR] PICO pin expected to be logic HIGH."); error_count = error_count + 1; end
     #1000;
-    rw_address      = 32'h80030008;
+    rw_address      = 5'h08;
     write_data      = 32'h000000ff;
     write_strobe    = 4'b0001;
     write_request   = 1'b1;
@@ -968,7 +968,7 @@ module unit_tests();
       $display("[ERROR] CS line #0 was expected to be asserted.");
     end
     #40;
-    rw_address      = 32'h80030014;
+    rw_address      = 5'h14;
     read_request   = 1'b1;
     #40;
     if (read_data !== 32'h000000f0) begin
