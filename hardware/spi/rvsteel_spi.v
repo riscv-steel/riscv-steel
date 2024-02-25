@@ -18,7 +18,7 @@ module rvsteel_spi #(
 
   // IO interface
 
-  input  wire   [31:0]              rw_address      ,
+  input  wire   [4:0 ]              rw_address      ,
   output reg    [31:0]              read_data       ,
   input  wire                       read_request    ,
   output reg                        read_response   ,
@@ -76,17 +76,17 @@ module rvsteel_spi #(
   always @(posedge clock) begin
     if (reset)
       read_data <= 32'hdeadbeef;
-    else if (rw_address == 32'h80030000 && read_request == 1'b1)
+    else if (rw_address == 5'h00 && read_request == 1'b1)
       read_data <= {31'b0, cpol};
-    else if (rw_address == 32'h80030004 && read_request == 1'b1)
+    else if (rw_address == 5'h04 && read_request == 1'b1)
       read_data <= {31'b0, cpha};
-    else if (rw_address == 32'h80030008 && read_request == 1'b1)
+    else if (rw_address == 5'h08 && read_request == 1'b1)
       read_data <= {24'b0, chip_select};
-    else if (rw_address == 32'h8003000c && read_request == 1'b1)
+    else if (rw_address == 5'h0c && read_request == 1'b1)
       read_data <= {24'b0, clock_div};
-    else if (rw_address == 32'h80030014 && read_request == 1'b1)
+    else if (rw_address == 5'h14 && read_request == 1'b1)
       read_data <= {24'b0, rx_reg};
-    else if (rw_address == 32'h80030018 && read_request == 1'b1)
+    else if (rw_address == 5'h18 && read_request == 1'b1)
       read_data <= {31'b0, busy_bit};
     else
       read_data <= 32'hdeadbeef;
@@ -95,7 +95,7 @@ module rvsteel_spi #(
   always @(posedge clock) begin
     if (reset)
       cpol <= 1'b0;
-    else if (rw_address == 32'h80030000 && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:1] == 31'b0)
+    else if (rw_address == 5'h00 && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:1] == 31'b0)
       cpol <= write_data[0];
     else
       cpol <= cpol;
@@ -104,7 +104,7 @@ module rvsteel_spi #(
   always @(posedge clock) begin
     if (reset)
       cpha <= 1'b0;
-    else if (rw_address == 32'h80030004 && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:1] == 31'b0)
+    else if (rw_address == 5'h04 && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:1] == 31'b0)
       cpha <= write_data[0];
     else
       cpha <= cpha;
@@ -113,7 +113,7 @@ module rvsteel_spi #(
   always @(posedge clock) begin
     if (reset)
       chip_select <= 8'hff;
-    else if (rw_address == 32'h80030008 && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:8] == 24'b0)
+    else if (rw_address == 5'h08 && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:8] == 24'b0)
       chip_select <= write_data[7:0];
     else
       chip_select <= chip_select;
@@ -122,7 +122,7 @@ module rvsteel_spi #(
   always @(posedge clock) begin
     if (reset)
       clock_div <= 8'h00;
-    else if (rw_address == 32'h8003000c && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:8] == 24'b0)
+    else if (rw_address == 5'h0c && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:8] == 24'b0)
       clock_div <= write_data[7:0];
     else
       clock_div <= clock_div;
@@ -133,7 +133,7 @@ module rvsteel_spi #(
       tx_reg <= 8'h00;
       tx_start <= 1'b0;
     end
-    else if (rw_address == 32'h80030010 && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:8] == 8'b0) begin
+    else if (rw_address == 5'h10 && write_request == 1'b1 && |write_strobe == 1'b1 && write_data[31:8] == 8'b0) begin
       tx_reg <= (curr_state == SPI_READY || curr_state == SPI_IDLE) ? write_data[7:0] : tx_reg;
       tx_start <= (curr_state == SPI_READY || curr_state == SPI_IDLE) ? 1'b1 : tx_start;
     end
