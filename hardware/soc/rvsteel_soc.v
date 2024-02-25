@@ -240,7 +240,7 @@ module rvsteel_soc #(
 
     // IO interface
 
-    .rw_address                     (device_rw_address                  ),
+    .rw_address                     (device_rw_address[4:0]             ),
     .read_data                      (device_read_data[32*D1_UART +: 32] ),
     .read_request                   (device_read_request[D1_UART]       ),
     .read_response                  (device_read_response[D1_UART]      ),
