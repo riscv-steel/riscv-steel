@@ -114,7 +114,7 @@ module rvsteel_mtimer (
   // mtimecmp
   always @(posedge clock) begin
     if (reset) begin
-      mtimecmp <= 'h0;
+      mtimecmp <= 64'hffff_ffff_ffff_ffff; // Initially, mtimecmp holds the biggest value so mtime is sure to be smaller than mtimecmp
     end else begin
       if (mtimecmp_l_update) begin
         mtimecmp[31:0] <= write_data;
