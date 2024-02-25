@@ -19,7 +19,7 @@ module rvsteel_uart #(
 
   // IO interface
 
-  input  wire   [31:0]  rw_address,
+  input  wire   [4:0 ]  rw_address,
   output reg    [31:0]  read_data,
   input  wire           read_request,
   output reg            read_response,
@@ -67,7 +67,7 @@ module rvsteel_uart #(
       tx_bit_counter <= 0;
     end
     else if (tx_bit_counter == 0 &&
-             rw_address == 32'h80000000 &&
+             rw_address == 5'h00 &&
              write_request == 1'b1) begin
       tx_cycle_counter <= 0;
       tx_register <= {1'b1, write_data[7:0], 1'b0};
@@ -176,9 +176,9 @@ module rvsteel_uart #(
   always @(posedge clock) begin
     if (reset_internal)
       read_data <= 32'h00000000;
-    else if (rw_address == 32'h80000000 && read_request == 1'b1)
+    else if (rw_address == 5'h00 && read_request == 1'b1)
       read_data <= {31'b0, tx_bit_counter == 0};
-    else if (rw_address == 32'h80000004 && read_request == 1'b1)
+    else if (rw_address == 5'h04 && read_request == 1'b1)
       read_data <= {24'b0, rx_data};
     else
       read_data <= 32'h00000000;
