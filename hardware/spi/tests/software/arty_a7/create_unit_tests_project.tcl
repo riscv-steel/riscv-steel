@@ -8,3 +8,5 @@ add_files -norecurse {./unit_tests.v ../../../../core/rvsteel_core.v ../../../..
 set_property file_type {Memory Initialization Files} [get_files $memory_init_files]
 # Suppress "Parallel synthesis criteria not met"
 set_msg_config -suppress -id {Synth 8-7080}
+# Supress harmless warning about high fanin/fanout nets
+set_msg_config -suppress -id {Pwropt 34-321}
