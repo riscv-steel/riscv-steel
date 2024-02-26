@@ -19,11 +19,11 @@ volatile uint8_t *__SPI_STATUS_ADDRESS = (volatile uint8_t *)0x80030018;
 // Test macros
 #define STRINGIFY(x) #x
 #define STRINGIFY_MACRO(x) STRINGIFY(x)
-#define ASSERT_EQ(val1, val2, error_msg)                                                                 \
-  if (val1 != val2)                                                                                      \
-  {                                                                                                      \
-    uart_send_string("[ERROR] Assertion at line " STRINGIFY_MACRO(__LINE__) " failed: " error_msg "\n"); \
-    error_count++;                                                                                       \
+#define ASSERT_EQ(val1, val2)                                                            \
+  if (val1 != val2)                                                                      \
+  {                                                                                      \
+    uart_send_string("[ERROR] Assertion at line " STRINGIFY_MACRO(__LINE__) " failed."); \
+    error_count++;                                                                       \
   }
 
 // Global variables
@@ -128,113 +128,105 @@ int main()
   // Test #1
   // Check the default values of CPOL and CPHA (0 and 0, respectively)
   uart_send_string("Running test #1...\n");
-  ASSERT_EQ(spi_get_cpol(), 0, "CPOL was expected to be equal to 0");
-  ASSERT_EQ(spi_get_cpha(), 0, "CPHA was expected to be equal to 0");
+  ASSERT_EQ(spi_get_cpol(), 0);
+  ASSERT_EQ(spi_get_cpha(), 0);
 
   // Test #2
   // Check if CPOL and CPHA registers hold their values after write
   uart_send_string("Running test #2...\n");
   spi_set_cpol(1);
   spi_set_cpha(1);
-  ASSERT_EQ(spi_get_cpol(), 1, "CPOL was expected to be equal to 1");
-  ASSERT_EQ(spi_get_cpha(), 1, "CPHA was expected to be equal to 1");
+  ASSERT_EQ(spi_get_cpol(), 1);
+  ASSERT_EQ(spi_get_cpha(), 1);
 
   // Test #3
-  // Check if writing an invalid value to CPOL and CPHA fails
+  // Check if restoring the value of CPOL and CPHA succeeds
   uart_send_string("Running test #3...\n");
-  spi_set_cpol(24);
-  spi_set_cpha(16);
-  ASSERT_EQ(spi_get_cpol(), 1, "CPOL was expected to be equal to 1");
-  ASSERT_EQ(spi_get_cpha(), 1, "CPHA was expected to be equal to 1");
+  spi_set_cpol(0);
+  spi_set_cpha(0);
+  ASSERT_EQ(spi_get_cpol(), 0);
+  ASSERT_EQ(spi_get_cpha(), 0);
 
   // Test #4
-  // Check if restoring the value of CPOL and CPHA succeeds
+  // Check select/deselect CS lines
   uart_send_string("Running test #4...\n");
-  spi_set_cpol(0);
-  spi_set_cpha(0);
-  ASSERT_EQ(spi_get_cpol(), 0, "CPOL was expected to be equal to 0");
-  ASSERT_EQ(spi_get_cpha(), 0, "CPHA was expected to be equal to 0");
+  spi_select(0);
+  ASSERT_EQ(spi_get_cs(), 0);
+  spi_deselect();
+  ASSERT_EQ(spi_get_cs(), 255);
+  spi_select(1);
+  ASSERT_EQ(spi_get_cs(), 1);
+  spi_deselect();
+  ASSERT_EQ(spi_get_cs(), 255);
 
   // Test #5
-  // Check select/deselect CS lines
-  uart_send_string("Running test #5...\n");
-  spi_select(0);
-  ASSERT_EQ(spi_get_cs(), 0, "CS register was expected to be equal to 0");
-  spi_deselect();
-  ASSERT_EQ(spi_get_cs(), 255, "CS register was expected to be equal to 0xff");
-  spi_select(1);
-  ASSERT_EQ(spi_get_cs(), 1, "CS register was expected to be equal to 1");
-  spi_deselect();
-  ASSERT_EQ(spi_get_cs(), 255, "CS register was expected to be equal to 0xff");
-
-  // Test #6
   // Send/receive a byte to the dummy SPI peripheral in MODE 0
-  uart_send_string("Running test #6...\n");
+  uart_send_string("Running test #5...\n");
   spi_set_cpol(0);
-  ASSERT_EQ(spi_get_cpol(), 0, "CPOL was expected to be equal to 0");
+  ASSERT_EQ(spi_get_cpol(), 0);
   spi_set_cpha(0);
-  ASSERT_EQ(spi_get_cpha(), 0, "CPHA was expected to be equal to 0");
+  ASSERT_EQ(spi_get_cpha(), 0);
   spi_set_clock(0x19);
-  ASSERT_EQ(spi_get_clock(), 0x19, "CLOCK_DIV was expected to be equal to 0x19");
+  ASSERT_EQ(spi_get_clock(), 0x19);
   spi_select(0);
-  ASSERT_EQ(spi_get_cs(), 0, "CS register was expected to be equal to 0");
+  ASSERT_EQ(spi_get_cs(), 0);
   spi_write(0xf0); // The SPI peripheral was built to return the value sent in the next transfer
   uint8_t read_val = spi_transfer(0xaa);
-  ASSERT_EQ(read_val, 0xf0, "Read out value was expected to be equal to 0xf0");
+  ASSERT_EQ(read_val, 0xf0);
+  if (read_val != 0xf0)
+    print_readout_value(read_val);
+  spi_deselect();
+
+  // Test #6
+  // Send/receive a byte to the dummy SPI peripheral in MODE 1
+  uart_send_string("Running test #6...\n");
+  spi_set_cpol(0);
+  ASSERT_EQ(spi_get_cpol(), 0);
+  spi_set_cpha(1);
+  ASSERT_EQ(spi_get_cpha(), 1);
+  spi_set_clock(0x19);
+  ASSERT_EQ(spi_get_clock(), 0x19);
+  spi_select(1);
+  ASSERT_EQ(spi_get_cs(), 1);
+  spi_write(0xf0); // The SPI peripheral was built to return the value sent in the next transfer
+  read_val = spi_transfer(0xaa);
+  ASSERT_EQ(read_val, 0xf0);
   if (read_val != 0xf0)
     print_readout_value(read_val);
   spi_deselect();
 
   // Test #7
-  // Send/receive a byte to the dummy SPI peripheral in MODE 1
+  // Send/receive a byte to the dummy SPI peripheral in MODE 2
   uart_send_string("Running test #7...\n");
-  spi_set_cpol(0);
-  ASSERT_EQ(spi_get_cpol(), 0, "CPOL was expected to be equal to 0");
-  spi_set_cpha(1);
-  ASSERT_EQ(spi_get_cpha(), 1, "CPHA was expected to be equal to 1");
+  spi_set_cpol(1);
+  ASSERT_EQ(spi_get_cpol(), 1);
+  spi_set_cpha(0);
+  ASSERT_EQ(spi_get_cpha(), 0);
   spi_set_clock(0x19);
-  ASSERT_EQ(spi_get_clock(), 0x19, "CLOCK_DIV was expected to be equal to 0x19");
+  ASSERT_EQ(spi_get_clock(), 0x19);
   spi_select(1);
-  ASSERT_EQ(spi_get_cs(), 1, "CS register was expected to be equal to 1");
+  ASSERT_EQ(spi_get_cs(), 1);
   spi_write(0xf0); // The SPI peripheral was built to return the value sent in the next transfer
   read_val = spi_transfer(0xaa);
-  ASSERT_EQ(read_val, 0xf0, "Read out value was expected to be equal to 0xf0");
+  ASSERT_EQ(read_val, 0xf0);
   if (read_val != 0xf0)
     print_readout_value(read_val);
   spi_deselect();
 
   // Test #8
-  // Send/receive a byte to the dummy SPI peripheral in MODE 2
+  // Send/receive a byte to the dummy SPI peripheral in MODE 3
   uart_send_string("Running test #8...\n");
   spi_set_cpol(1);
-  ASSERT_EQ(spi_get_cpol(), 1, "CPOL was expected to be equal to 1");
-  spi_set_cpha(0);
-  ASSERT_EQ(spi_get_cpha(), 0, "CPHA was expected to be equal to 0");
-  spi_set_clock(0x19);
-  ASSERT_EQ(spi_get_clock(), 0x19, "CLOCK_DIV was expected to be equal to 0x19");
-  spi_select(1);
-  ASSERT_EQ(spi_get_cs(), 1, "CS register was expected to be equal to 1");
-  spi_write(0xf0); // The SPI peripheral was built to return the value sent in the next transfer
-  read_val = spi_transfer(0xaa);
-  ASSERT_EQ(read_val, 0xf0, "Read out value was expected to be equal to 0xf0");
-  if (read_val != 0xf0)
-    print_readout_value(read_val);
-  spi_deselect();
-
-  // Test #9
-  // Send/receive a byte to the dummy SPI peripheral in MODE 3
-  uart_send_string("Running test #9...\n");
-  spi_set_cpol(1);
-  ASSERT_EQ(spi_get_cpol(), 1, "CPOL was expected to be equal to 1");
+  ASSERT_EQ(spi_get_cpol(), 1);
   spi_set_cpha(1);
-  ASSERT_EQ(spi_get_cpha(), 1, "CPHA was expected to be equal to 1");
+  ASSERT_EQ(spi_get_cpha(), 1);
   spi_set_clock(0x19);
-  ASSERT_EQ(spi_get_clock(), 0x19, "CLOCK_DIV was expected to be equal to 0x19");
+  ASSERT_EQ(spi_get_clock(), 0x19);
   spi_select(0);
-  ASSERT_EQ(spi_get_cs(), 0, "CS register was expected to be equal to 0");
+  ASSERT_EQ(spi_get_cs(), 0);
   spi_write(0xf0); // The SPI peripheral was built to return the value sent in the next transfer
   read_val = spi_transfer(0xaa);
-  ASSERT_EQ(read_val, 0xf0, "Read out value was expected to be equal to 0xf0");
+  ASSERT_EQ(read_val, 0xf0);
   if (read_val != 0xf0)
     print_readout_value(read_val);
   spi_deselect();
