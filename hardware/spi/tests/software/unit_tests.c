@@ -8,13 +8,13 @@
 #include "rvsteel_api.h"
 #include "stdint.h"
 
-volatile uint8_t *__SPI_CPOL_ADDRESS = (volatile uint8_t *)0x80030000;
-volatile uint8_t *__SPI_CPHA_ADDRESS = (volatile uint8_t *)0x80030004;
-volatile uint8_t *__SPI_CS_ADDRESS = (volatile uint8_t *)0x80030008;
-volatile uint8_t *__SPI_CLKDIV_ADDRESS = (volatile uint8_t *)0x8003000c;
-volatile uint8_t *__SPI_WDATA_ADDRESS = (volatile uint8_t *)0x80030010;
-volatile uint8_t *__SPI_RDATA_ADDRESS = (volatile uint8_t *)0x80030014;
-volatile uint8_t *__SPI_STATUS_ADDRESS = (volatile uint8_t *)0x80030018;
+volatile uint32_t *__SPI_CPOL_ADDRESS = (volatile uint32_t *)0x80030000;
+volatile uint32_t *__SPI_CPHA_ADDRESS = (volatile uint32_t *)0x80030004;
+volatile uint32_t *__SPI_CS_ADDRESS = (volatile uint32_t *)0x80030008;
+volatile uint32_t *__SPI_CLKDIV_ADDRESS = (volatile uint32_t *)0x8003000c;
+volatile uint32_t *__SPI_WDATA_ADDRESS = (volatile uint32_t *)0x80030010;
+volatile uint32_t *__SPI_RDATA_ADDRESS = (volatile uint32_t *)0x80030014;
+volatile uint32_t *__SPI_STATUS_ADDRESS = (volatile uint32_t *)0x80030018;
 
 // Test macros
 #define STRINGIFY(x) #x

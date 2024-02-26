@@ -59,7 +59,7 @@ module rvsteel_spi #(
   localparam SPI_CPOL_N       = 4'b1000;
 
   wire busy_bit = curr_state == SPI_CPOL || curr_state == SPI_CPOL_N;
-  wire valid_write_request = write_request == 1'b1 && |write_strobe == 1'b1;
+  wire valid_write_request = write_request == 1'b1 && &write_strobe == 1'b1;
 
   integer i;
 
