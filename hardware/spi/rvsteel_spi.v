@@ -30,7 +30,7 @@ module rvsteel_spi #(
   // SPI signals
 
   output reg                        sclk            ,
-  output wire                       pico            ,
+  output reg                        pico            ,
   input  wire                       poci            ,
   output reg    [NUM_CS_LINES-1:0]  cs
 
@@ -41,7 +41,6 @@ module rvsteel_spi #(
   reg cpha;
   reg clk_edge;
   reg sclk_internal;
-  reg pico_tristate;
   reg pico_internal;
   reg [NUM_CS_LINES-1:0] cs_internal;
   reg [3:0] curr_state;
@@ -218,23 +217,22 @@ module rvsteel_spi #(
   always @(posedge clock) begin
     if (reset) begin
       sclk <= 1'b0;
-      pico_tristate <= 1'b0;
+      pico <= 1'b0;
       cs <= {NUM_CS_LINES{1'b1}};
     end
     else begin
       sclk <= sclk_internal;
-      pico_tristate <= pico_internal;
+      pico <= pico_internal;
       cs <= cs_internal;
     end
   end
 
-  always @(posedge clock)
+  always @(posedge clock) begin
     clk_edge <= cpol ^ cpha ? !sclk_internal : sclk_internal;
+  end
 
   always @(posedge clk_edge) begin
     rx_reg[7:0] <= {rx_reg[6:0], poci};
   end
-
-  assign pico = curr_state == SPI_READY ? 1'bZ : pico_tristate;
 
 endmodule
