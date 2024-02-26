@@ -24,11 +24,8 @@ module unit_tests (
 
   // Divides the 100MHz board block by 4
   reg clock_50mhz;
-  reg clock_25mhz;
   initial clock_50mhz = 1'b0;
-  initial clock_25mhz = 1'b0;
   always @(posedge clock) clock_50mhz <= !clock_50mhz;
-  always @(posedge clock_50mhz) clock_25mhz <= !clock_25mhz;
 
   // Buttons debouncing
   reg reset_debounced;
@@ -40,16 +37,16 @@ module unit_tests (
 
   rvsteel_soc #(
 
-    .CLOCK_FREQUENCY          (25000000           ),
+    .CLOCK_FREQUENCY          (50000000           ),
     .UART_BAUD_RATE           (9600               ),
-    .MEMORY_SIZE              (16384              ),
+    .MEMORY_SIZE              (8192               ),
     .MEMORY_INIT_FILE         ("unit_tests.hex"   ),
     .BOOT_ADDRESS             (32'h00000000       ),
     .NUM_CS_LINES             (2                  )
 
   ) rvsteel_soc_instance (
 
-    .clock                    (clock_25mhz        ),
+    .clock                    (clock_50mhz        ),
     .reset                    (reset_debounced    ),
     .halt                     (halt_debounced     ),
     .uart_rx                  (uart_rx            ),
