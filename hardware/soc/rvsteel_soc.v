@@ -332,7 +332,7 @@ module rvsteel_soc #(
     .read_data                      (device_read_data[32*D4_SPI +: 32]  ),
     .read_request                   (device_read_request[D4_SPI]        ),
     .read_response                  (device_read_response[D4_SPI]       ),
-    .write_data                     (device_write_data                  ),
+    .write_data                     (device_write_data[7:0]             ),
     .write_strobe                   (device_write_strobe                ),
     .write_request                  (device_write_request[D4_SPI]       ),
     .write_response                 (device_write_response[D4_SPI]      ),
