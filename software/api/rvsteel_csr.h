@@ -9,7 +9,7 @@
 #define __RVSTEEL_CSR__
 
 #include <stdint.h>
-#include "rvsteel_gcc.h"
+#include "rvsteel_globals.h"
 
 #if __riscv_xlen != 32
 #error "Unsupported XLEN"

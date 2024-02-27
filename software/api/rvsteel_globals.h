@@ -5,8 +5,32 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __RVSTEEL_GCC__
-#define __RVSTEEL_GCC__
+#ifndef __RVSTEEL_GLOBALS__
+#define __RVSTEEL_GLOBALS__
+
+#define __NOP() __ASM_VOLATILE("nop")
+
+#define __ECALL() __ASM_VOLATILE("ecall")
+
+#define __EBREAK() __ASM_VOLATILE("ebreak")
+
+#define SET_FLAG(REG, FLAG) ((REG) |= (FLAG))
+
+#define CLR_FLAG(REG, FLAG) ((REG) &= ~(FLAG))
+
+#define INVERT_FLAG(REG, FLAG) ((REG) ^= (FLAG))
+
+#define SET_BIT(REG, BIT) ((REG) |= (1 << (BIT)))
+
+#define CLR_BIT(REG, BIT) ((REG) &= ~(1 << (BIT)))
+
+#define INVERT_BIT(REG, BIT) ((REG) ^= (1 << (BIT)))
+
+#define READ_BIT(REG, BIT) (((REG) >> BIT) & 1)
+
+#define MODIFY_REG(REG, CLEARMASK, SETMASK) ((REG) = (REG & (~(CLEARMASK))) | (SETMASK))
+
+#define NUMBER_OF(a) (sizeof a / sizeof a[0])
 
 #ifndef __ASM
 #define __ASM __asm
@@ -68,4 +92,4 @@
 #define __IRQ_M_WEAK_DEFAULT(vector) __WEAK_ALIAS("default_handler") void vector(void)
 #endif
 
-#endif // __RVSTEEL_GCC__
+#endif // __RVSTEEL_GLOBALS__
