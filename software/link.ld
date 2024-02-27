@@ -87,6 +87,8 @@ SECTIONS
     libc.a ( * )
     libm.a ( * )
     libgcc.a ( * )
+    *(.comment)
+    *(.riscv.attributes)
   }
 
   .riscv.attributes 0 : { *(.riscv.attributes) }
