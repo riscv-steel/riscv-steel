@@ -8,7 +8,6 @@
 #ifndef __RVSTEEL_CSR__
 #define __RVSTEEL_CSR__
 
-#include <stdint.h>
 #include "rvsteel_globals.h"
 
 #if __riscv_xlen != 32

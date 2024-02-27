@@ -8,6 +8,8 @@
 #ifndef __RVSTEEL_GLOBALS__
 #define __RVSTEEL_GLOBALS__
 
+#include <stdint.h>
+
 #define __NOP() __ASM_VOLATILE("nop")
 
 #define __ECALL() __ASM_VOLATILE("ecall")

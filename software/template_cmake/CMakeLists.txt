@@ -129,8 +129,7 @@ set(SOURCES
 
 
 set(HEADERS
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_gcc.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_def.h
+  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_globals.h
   ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_csr.h
   ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_soc.h
   ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_uart.h

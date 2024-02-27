@@ -8,7 +8,6 @@
 #ifndef __RVSTEEL_GPIO__
 #define __RVSTEEL_GPIO__
 
-#include <stdint.h>
 #include "rvsteel_globals.h"
 
 typedef struct
