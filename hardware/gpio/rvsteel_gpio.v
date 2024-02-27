@@ -36,13 +36,13 @@ module rvsteel_gpio #(
 );
 
   // Map registers
-  localparam REG_ADDR_WIDTH   = 'd3;
+  localparam REG_ADDR_WIDTH   = 2'd3;
 
-  localparam REG_IN           = 'd0;
-  localparam REG_OE           = 'd1;
-  localparam REG_OUT          = 'd2;
-  localparam REG_CLR          = 'd3;
-  localparam REG_SET          = 'd4;
+  localparam REG_IN           = 3'd0;
+  localparam REG_OE           = 3'd1;
+  localparam REG_OUT          = 3'd2;
+  localparam REG_CLR          = 3'd3;
+  localparam REG_SET          = 3'd4;
 
 
   // Output Enable
@@ -77,8 +77,8 @@ module rvsteel_gpio #(
 
   always @(posedge clock) begin
     if (reset) begin
-      oe <= 'h0;
-      out <= 'h0;
+      oe <= {GPIO_WIDTH{1'b0}};
+      out <= {GPIO_WIDTH{1'b0}};
     end else begin
       if (oe_update) begin
         oe <= write_data[0 +: GPIO_WIDTH];
@@ -102,8 +102,8 @@ module rvsteel_gpio #(
   // Bus: Response to request
   always @(posedge clock) begin
     if (reset) begin
-      read_response <= 'h0;
-      write_response <= 'h0;
+      read_response <= 1'b0;
+      write_response <= 1'b0;
     end else begin
       read_response <= read_request;
       write_response <= write_request;
@@ -114,15 +114,15 @@ module rvsteel_gpio #(
   // Bus: Read registers
   always @(posedge clock) begin
     if (reset) begin
-      read_data <= 'h0;
+      read_data <= 32'd0;
     end else begin
       if (read_request && address_aligned) begin
         case (address)
           REG_IN    : read_data <= {{32-GPIO_WIDTH{1'b0}}, gpio_input};
           REG_OE    : read_data <= {{32-GPIO_WIDTH{1'b0}}, oe};
           REG_OUT   : read_data <= {{32-GPIO_WIDTH{1'b0}}, out};
-          REG_CLR   : read_data <= 'd0;
-          REG_SET   : read_data <= 'd0;
+          REG_CLR   : read_data <= 32'd0;
+          REG_SET   : read_data <= 32'd0;
           default: begin end
         endcase
       end
@@ -132,17 +132,17 @@ module rvsteel_gpio #(
 
   // Bus: Update registers
   always @(*) begin
-    oe_update   = 'h0;
-    out_update  = 'h0;
-    clr_update  = 'h0;
-    set_update  = 'h0;
+    oe_update   = 1'b0;
+    out_update  = 1'b0;
+    clr_update  = 1'b0;
+    set_update  = 1'b0;
 
     if (write_request && address_aligned && write_word) begin
         case (address)
-            REG_OE    : oe_update   = 'h1;
-            REG_OUT   : out_update  = 'h1;
-            REG_CLR   : clr_update  = 'h1;
-            REG_SET   : set_update  = 'h1;
+            REG_OE    : oe_update   = 1'b1;
+            REG_OUT   : out_update  = 1'b1;
+            REG_CLR   : clr_update  = 1'b1;
+            REG_SET   : set_update  = 1'b1;
             default: begin end
         endcase
     end

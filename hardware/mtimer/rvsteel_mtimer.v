@@ -30,29 +30,23 @@ module rvsteel_mtimer (
   // Interrupt signaling
 
   output  reg           irq
-  //input   wire          irq_response
 
 );
 
-  // verilator lint_off UNUSED
-
-  localparam REG_ADDR_WIDTH   = 'd3;
+  localparam REG_ADDR_WIDTH   = 2'd3;
 
   // Map registers
-  localparam REG_CR           = 'd0;
-  localparam REG_MTIMEL       = 'd1;
-  localparam REG_MTIMEH       = 'd2;
-  localparam REG_MTIMECMPL    = 'd3;
-  localparam REG_MTIMECMPH    = 'd4;
+  localparam REG_CR           = 3'd0;
+  localparam REG_MTIMEL       = 3'd1;
+  localparam REG_MTIMEH       = 3'd2;
+  localparam REG_MTIMECMPL    = 3'd3;
+  localparam REG_MTIMECMPH    = 3'd4;
 
   // Map bits
   // CR
-  localparam BIT_CR_EN        = 'd0;
-  localparam BIT_CR_WIDTH     = 'd1;
-  localparam CR_PADDING       = {'d32-BIT_CR_WIDTH{1'd0}};
-
-  // verilator lint_on UNUSED
-
+  localparam BIT_CR_EN        = 5'd0;
+  localparam BIT_CR_WIDTH     = 5'd1;
+  localparam CR_PADDING       = {6'd32-BIT_CR_WIDTH{1'd0}};
 
   // Control register
   reg cr_update;
@@ -82,7 +76,7 @@ module rvsteel_mtimer (
   // Control register
   always @(posedge clock) begin
     if (reset) begin
-      cr_en <= 'h0;
+      cr_en <= 1'b0;
     end else begin
       if (cr_update) begin
         cr_en <= write_data[BIT_CR_EN];
@@ -94,10 +88,10 @@ module rvsteel_mtimer (
   // mtime
   always @(posedge clock) begin
     if (reset) begin
-      mtime <= 'h0;
+      mtime <= {64{1'b0}};
     end else begin
       if (cr_en) begin
-        mtime <= mtime + 'h1;
+        mtime <= mtime + 1'd1;
       end
 
       if (mtime_l_update) begin
@@ -130,7 +124,7 @@ module rvsteel_mtimer (
   // IRQ
   always @(posedge clock) begin
     if (reset) begin
-      irq <= 'h0;
+      irq <= 1'b0;
     end else begin
       // Don't update while there is an update
       if (~(mtime_l_update | mtime_h_update | mtimecmp_l_update | mtimecmp_h_update)) begin
@@ -145,9 +139,9 @@ module rvsteel_mtimer (
   // Bus: Response to request
   always @(posedge clock) begin
     if (reset) begin
-      read_response <= 'h0;
-      write_response <= 'h0;
-      // access_fault <= 'h0;
+      read_response <= 1'b0;
+      write_response <= 1'b0;
+      // access_fault <= 1'b0;
     end else begin
       read_response <= read_request;
       write_response <= write_request;
@@ -161,7 +155,7 @@ module rvsteel_mtimer (
   // Bus: Read registers
   always @(posedge clock) begin
     if (reset) begin
-      read_data <= 'h0;
+      read_data <= 32'd0;
     end else begin
       if (read_request && address_aligned) begin
         case (address)
@@ -179,19 +173,19 @@ module rvsteel_mtimer (
 
   // Bus: Update registers
   always @(*) begin
-    cr_update         = 'h0;
-    mtime_l_update    = 'h0;
-    mtime_h_update    = 'h0;
-    mtimecmp_l_update = 'h0;
-    mtimecmp_h_update = 'h0;
+    cr_update         = 1'b0;
+    mtime_l_update    = 1'b0;
+    mtime_h_update    = 1'b0;
+    mtimecmp_l_update = 1'b0;
+    mtimecmp_h_update = 1'b0;
 
     if (write_request && address_aligned && write_word) begin
         case (address)
-            REG_CR        : cr_update         = 'h1;
-            REG_MTIMEL    : mtime_l_update    = 'h1;
-            REG_MTIMEH    : mtime_h_update    = 'h1;
-            REG_MTIMECMPL : mtimecmp_l_update = 'h1;
-            REG_MTIMECMPH : mtimecmp_h_update = 'h1;
+            REG_CR        : cr_update         = 1'b1;
+            REG_MTIMEL    : mtime_l_update    = 1'b1;
+            REG_MTIMEH    : mtime_h_update    = 1'b1;
+            REG_MTIMECMPL : mtimecmp_l_update = 1'b1;
+            REG_MTIMECMPH : mtimecmp_h_update = 1'b1;
             default: begin end
         endcase
     end
