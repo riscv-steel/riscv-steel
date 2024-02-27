@@ -8,16 +8,16 @@
 module hello_world_cmod_a7 (
 
   input   wire clock,
-  input   wire reset,  
+  input   wire reset,
   input   wire halt,
   input   wire uart_rx,
   output  wire uart_tx
 
   );
-  
+
   // Buttons debouncing
   reg reset_debounced;
-  reg halt_debounced;  
+  reg halt_debounced;
   always @(posedge clock) begin
     reset_debounced <= reset;
     halt_debounced <= halt;
@@ -32,12 +32,19 @@ module hello_world_cmod_a7 (
     .BOOT_ADDRESS             (32'h00000000       )
 
   ) rvsteel_soc_instance (
-    
+
     .clock                    (clock              ),
     .reset                    (reset_debounced    ),
     .halt                     (halt_debounced     ),
     .uart_rx                  (uart_rx            ),
-    .uart_tx                  (uart_tx            )
+    .uart_tx                  (uart_tx            ),
+    .gpio_input               (1'b0               ),
+    .gpio_oe                  (), // unused
+    .gpio_output              (), // unused
+    .sclk                     (), // unused
+    .pico                     (), // unused
+    .poci                     (1'b0               ),
+    .cs                       ()  // unused
 
   );
 
