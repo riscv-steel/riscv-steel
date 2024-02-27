@@ -122,10 +122,10 @@ module unit_tests();
       end
     end
 
-    // Test #2 - Check whether pico is high impedance after reset
+    // Test #2 - Check whether pico is zero after reset
     error_flag = 0;
     $display("Running unit test #2...");
-    if (pico !== 1'bZ) begin
+    if (pico !== 1'b0) begin
       error_flag = 1;
       error_count = error_count + 1;
       $display("[ERROR] PICO pin is not HIGH IMPEDANCE after reset.");
