@@ -9,7 +9,7 @@
 #define __RVSTEEL_GPIO__
 
 #include <stdint.h>
-#include "rvsteel_def.h"
+#include "rvsteel_globals.h"
 
 typedef struct
 {
@@ -80,37 +80,37 @@ static inline void gpio_enable_input(GpioDevice *GPIOx, const uint32_t pin_mask)
 
 static inline uint32_t gpio_read(GpioDevice *GPIOx)
 {
-    return GPIOx->IN;
+  return GPIOx->IN;
 }
 
 static inline void gpio_write(GpioDevice *GPIOx, const uint32_t value)
 {
-    GPIOx->OUT = value;
+  GPIOx->OUT = value;
 }
 
 static inline void gpio_set(GpioDevice *GPIOx, const uint32_t pin_mask)
 {
-    GPIOx->SET = pin_mask;
+  GPIOx->SET = pin_mask;
 }
 
 static inline void gpio_clear(GpioDevice *GPIOx, const uint32_t pin_mask)
 {
-    GPIOx->CLR= pin_mask;
+  GPIOx->CLR = pin_mask;
 }
 
 static inline void gpio_toggle(GpioDevice *GPIOx, const uint32_t pin_mask)
 {
-    INVERT_FLAG(GPIOx->OUT, pin_mask);
+  INVERT_FLAG(GPIOx->OUT, pin_mask);
 }
 
 static inline int gpio_is_set(GpioDevice *GPIOx, const uint32_t pin_mask)
 {
-    return (GPIOx->IN & pin_mask) != 0;
+  return (GPIOx->IN & pin_mask) != 0;
 }
 
 static inline int gpio_is_clear(GpioDevice *GPIOx, const uint32_t pin_mask)
 {
-    return (GPIOx->IN & pin_mask) == 0;
+  return (GPIOx->IN & pin_mask) == 0;
 }
 
 #endif // __RVSTEEL_GPIO__
