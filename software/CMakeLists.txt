@@ -10,8 +10,8 @@ cmake_minimum_required(VERSION 3.15)
 
 set(APP_NAME            "template_cmake")
 set(CPU_FREQUENCY       50000000UL)
-set(RVSTEEL_ROOT        "../../")
-set(RVSTEEL_API         ${RVSTEEL_ROOT}/software/api)
+set(RVSTEEL_ROOT        "../")
+set(RVSTEEL_INC_DIR     ${CMAKE_SOURCE_DIR}/include/)
 
 set(APP_ARCH            rv32izicsr)
 set(APP_ABI             ilp32)
@@ -25,7 +25,7 @@ set(CMAKE_CXX_FLAGS     "-O2")
 set(CMAKE_C_STANDARD    11)
 set(CMAKE_C_FLAGS       "-O2")
 
-set(LINKER_SCRIPT       ${CMAKE_SOURCE_DIR}/startup/link.ld)
+set(LINKER_SCRIPT       ${CMAKE_SOURCE_DIR}/link.ld)
 
 
 # Set definitions
@@ -122,23 +122,23 @@ add_link_options(
 
 
 set(SOURCES
-  ${CMAKE_SOURCE_DIR}/startup/startup_reset.S
-  ${CMAKE_SOURCE_DIR}/startup/startup_init.c
+  ${CMAKE_SOURCE_DIR}/boot/startup_reset.S
+  ${CMAKE_SOURCE_DIR}/boot/startup_init.c
   ${CMAKE_SOURCE_DIR}/main.cpp
 )
 
 
 set(HEADERS
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_globals.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_csr.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_soc.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_uart.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_mtimer.h
+  ${RVSTEEL_INC_DIR}/rvsteel_globals.h
+  ${RVSTEEL_INC_DIR}/rvsteel_csr.h
+  ${RVSTEEL_INC_DIR}/rvsteel_soc.h
+  ${RVSTEEL_INC_DIR}/rvsteel_uart.h
+  ${RVSTEEL_INC_DIR}/rvsteel_mtimer.h
 )
 
 
 include_directories(
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}
+  ${RVSTEEL_INC_DIR}
 )
 
 

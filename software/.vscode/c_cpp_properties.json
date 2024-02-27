@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "name": "Linux",
+      "includePath": [
+        "${workspaceFolder}/include/**"
+      ],
+      "defines": [],
+      "compilerPath": "/opt/riscv/bin/riscv32-unknown-elf-gcc",
+      "intelliSenseMode": "linux-gcc-x64"
+    }
+  ],
+  "version": 4
+}
