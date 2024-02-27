@@ -8,7 +8,6 @@
 #ifndef __MTIMER__
 #define __MTIMER__
 
-#include <stdint.h>
 #include "rvsteel_globals.h"
 
 typedef struct
