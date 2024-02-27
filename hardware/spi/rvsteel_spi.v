@@ -183,7 +183,7 @@ module rvsteel_spi #(
 
   always @* begin
     for (i = 0; i < NUM_CS_LINES; i=i+1) begin
-      cs_internal[i] = (chip_select == i) ? 1'b0 : 1'b1;
+      cs_internal[i] = ({24'd0, chip_select} == i) ? 1'b0 : 1'b1;
     end
     case (curr_state)
       SPI_READY: begin
@@ -193,12 +193,12 @@ module rvsteel_spi #(
       end
       SPI_CPOL: begin
         sclk_internal = cpol;
-        pico_internal = tx_reg[bit_count];
+        pico_internal = tx_reg[bit_count[2:0]];
         next_state = cycle_counter < clock_div ? curr_state : (bit_count == 0 && cpha == 1'b1 ? SPI_IDLE : SPI_CPOL_N);
       end
       SPI_CPOL_N: begin
         sclk_internal = !cpol;
-        pico_internal = tx_reg[bit_count];
+        pico_internal = tx_reg[bit_count[2:0]];
         next_state = cycle_counter < clock_div ? curr_state : (bit_count == 0 && cpha == 1'b0 ? SPI_IDLE : SPI_CPOL);
       end
       SPI_IDLE: begin
