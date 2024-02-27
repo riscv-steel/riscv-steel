@@ -51,7 +51,7 @@ module unit_tests (
     .halt                     (halt_debounced     ),
     .uart_rx                  (uart_rx            ),
     .uart_tx                  (uart_tx            ),
-    .gpio_input               (                   ),
+    .gpio_input               (1'b0               ),
     .gpio_oe                  (                   ),
     .gpio_output              (                   ),
     .sclk                     (sclk               ),

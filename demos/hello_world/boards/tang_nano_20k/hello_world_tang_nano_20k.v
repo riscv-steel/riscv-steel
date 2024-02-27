@@ -23,11 +23,19 @@ module hello_world_tang_nano_20k (
     .BOOT_ADDRESS             (32'h00000000       )
 
   ) rvsteel_soc_instance (
-    
+
     .clock                    (clock              ),
     .reset                    (reset              ),
+    .halt                     (1'b0               ),
     .uart_rx                  (uart_rx            ),
-    .uart_tx                  (uart_tx            )
+    .uart_tx                  (uart_tx            ),
+    .gpio_input               (1'b0               ),
+    .gpio_oe                  (), // unused
+    .gpio_output              (), // unused
+    .sclk                     (), // unused
+    .pico                     (), // unused
+    .poci                     (1'b0               ),
+    .cs                       ()  // unused
 
   );
 
