@@ -38,10 +38,10 @@ module unit_tests #(
   wire          irq_timer;
   wire          irq_software;
 
-  assign        irq_fast      = 'd0;
-  assign        irq_external  = 'd0;
-  assign        irq_timer     = 'd0;
-  assign        irq_software  = 'd0;
+  assign        irq_fast      = 16'd0;
+  assign        irq_external  = 1'd0;
+  assign        irq_timer     = 1'd0;
+  assign        irq_software  = 1'd0;
 
   wire  [15:0]  irq_fast_response;
   wire          irq_external_response;

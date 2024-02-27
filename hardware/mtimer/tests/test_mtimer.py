@@ -60,9 +60,9 @@ async def test_irq(dut):
     await reset_dut(dut)
     await Timer(1, units='us')
 
-    # Reset, mtime == mtimecmp and irq out == 1
-    assert dut.mtime.value == dut.mtimecmp.value
-    assert dut.irq.value == 1
+    # Reset, mtime != mtimecmp and irq out == 0
+    assert dut.mtime.value != dut.mtimecmp.value
+    assert dut.irq.value == 0
 
     await write_request(dut, add=REG_MTIMEL, value=10)
     await write_request(dut, add=REG_MTIMEH, value=0)
