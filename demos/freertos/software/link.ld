@@ -8,7 +8,7 @@ __HEAP_SIZE  = 0;
 
 MEMORY
 {
-  RAM (wx)  : ORIGIN = 0x00000000, LENGTH = 32K
+  RAM (wx)  : ORIGIN = 0x00000000, LENGTH = 16K
 }
 
 
@@ -66,7 +66,6 @@ SECTIONS
   } > RAM
 
 /*
-  Delete this comment when you need a bunch
   .heap : ALIGN(4)
   {
     PROVIDE ( end = . );
@@ -81,15 +80,16 @@ SECTIONS
     . = ALIGN(4);
   } > RAM
 
-  /* Remove information from the standard libraries */
+  /* Discarded Sections */
   /DISCARD/ :
   {
     libc.a ( * )
     libm.a ( * )
     libgcc.a ( * )
+    *(.comment)
+    *(.riscv.attributes)
   }
 
-  .riscv.attributes 0 : { *(.riscv.attributes) }
 }
 
 
