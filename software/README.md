@@ -11,13 +11,15 @@ To be able to build this project you need the [RISC-V GNU Toolchain](https://git
 For a `debug` build:
 
 ```console
-make debug RISCV_PREFIX=/your/toolchain/riscv32-unknown-elf-
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Debug -DTOOLCHAIN_PREFIX=/your/toolchain/riscv32-unknown-elf-
+cmake --build build
 ```
 
 For a `release` build:
 
 ```console
-make release RISCV_PREFIX=/your/toolchain/riscv32-unknown-elf-
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DTOOLCHAIN_PREFIX=/your/toolchain/riscv32-unknown-elf-
+cmake --build build
 ```
 
-If ommited, `RISCV_PREFIX` is automatically set to `/opt/riscv/bin/riscv32-unknown-elf-`.
+By default, `riscv32-unknown-elf-` is used if it is found in `PATH`. To change you need to set `-DTOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-`
