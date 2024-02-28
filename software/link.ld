@@ -66,7 +66,6 @@ SECTIONS
   } > RAM
 
 /*
-  Delete this comment when you need a bunch
   .heap : ALIGN(4)
   {
     PROVIDE ( end = . );
@@ -81,7 +80,7 @@ SECTIONS
     . = ALIGN(4);
   } > RAM
 
-  /* Remove information from the standard libraries */
+  /* Discarded Sections */
   /DISCARD/ :
   {
     libc.a ( * )
@@ -91,7 +90,6 @@ SECTIONS
     *(.riscv.attributes)
   }
 
-  .riscv.attributes 0 : { *(.riscv.attributes) }
 }
 
 
