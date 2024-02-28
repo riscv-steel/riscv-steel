@@ -8,18 +8,16 @@ To be able to build this project you need the [RISC-V GNU Toolchain](https://git
 
 ## How to build
 
-If you have added the RISC-V binaries to your `PATH`, simply run `make debug` for a debug build or `make release` for a release build.
-
-If the RISC-V binaries are not in your `PATH` you can specify the location of the toolchain by setting `TOOLCHAIN_PREFIX`.
-
 For a `debug` build:
 
 ```console
-make debug TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
+make debug TOOLCHAIN_PREFIX=/path/to/riscv/binaries/riscv32-unknown-elf-
 ```
 
 For a `release` build:
 
 ```console
-make release TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
+make release TOOLCHAIN_PREFIX=/path/to/riscv/binaries/riscv32-unknown-elf-
 ```
+
+You can omit `TOOLCHAIN_PREFIX` if you have added the RISC-V binaries to your `PATH`.
