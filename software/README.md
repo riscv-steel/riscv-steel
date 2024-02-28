@@ -8,18 +8,18 @@ To be able to build this project you need the [RISC-V GNU Toolchain](https://git
 
 ## How to build
 
+If you have added the RISC-V binaries to your `PATH`, simply run `make debug` for a debug build or `make release` for a release build.
+
+If the RISC-V binaries are not in your `PATH` you can specify the location of the toolchain by setting `TOOLCHAIN_PREFIX`.
+
 For a `debug` build:
 
 ```console
-cmake -B build -S . -DCMAKE_BUILD_TYPE=Debug -DTOOLCHAIN_PREFIX=/your/toolchain/riscv32-unknown-elf-
-cmake --build build
+make debug TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
 ```
 
 For a `release` build:
 
 ```console
-cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DTOOLCHAIN_PREFIX=/your/toolchain/riscv32-unknown-elf-
-cmake --build build
+make release TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
 ```
-
-By default, `riscv32-unknown-elf-` is used if it is found in `PATH`. To change you need to set `-DTOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-`
