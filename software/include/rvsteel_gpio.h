@@ -99,7 +99,7 @@ static inline void gpio_clear(GpioDevice *GPIOx, const uint32_t pin_mask)
 
 static inline void gpio_toggle(GpioDevice *GPIOx, const uint32_t pin_mask)
 {
-  INVERT_FLAG(GPIOx->OUT, pin_mask);
+  INV_FLAG(GPIOx->OUT, pin_mask);
 }
 
 static inline int gpio_is_set(GpioDevice *GPIOx, const uint32_t pin_mask)
