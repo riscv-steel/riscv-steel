@@ -2,7 +2,7 @@ OUTPUT_ARCH("riscv")
 ENTRY(reset_handler)
 
 
-__STACK_SIZE = 1024;
+__STACK_SIZE = 1K;
 __HEAP_SIZE  = 0;
 
 
@@ -66,7 +66,6 @@ SECTIONS
   } > RAM
 
 /*
-  Delete this comment when you need a bunch
   .heap : ALIGN(4)
   {
     PROVIDE ( end = . );
@@ -81,15 +80,16 @@ SECTIONS
     . = ALIGN(4);
   } > RAM
 
-  /* Remove information from the standard libraries */
+  /* Discarded Sections */
   /DISCARD/ :
   {
     libc.a ( * )
     libm.a ( * )
     libgcc.a ( * )
+    *(.comment)
+    *(.riscv.attributes)
   }
 
-  .riscv.attributes 0 : { *(.riscv.attributes) }
 }
 
 
