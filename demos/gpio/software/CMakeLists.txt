@@ -10,8 +10,8 @@ cmake_minimum_required(VERSION 3.15)
 
 set(APP_NAME            "example_gpio")
 set(CPU_FREQUENCY       50000000UL)
-set(RVSTEEL_ROOT        "../../../../")
-set(RVSTEEL_API         ${RVSTEEL_ROOT}/software/api)
+set(RVSTEEL_ROOT        "../../../")
+set(RVSTEEL_INC_DIR     ${RVSTEEL_ROOT}/software/include/)
 
 set(APP_ARCH            rv32izicsr)
 set(APP_ABI             ilp32)
@@ -25,7 +25,11 @@ set(CMAKE_CXX_FLAGS     "-O2")
 set(CMAKE_C_STANDARD    11)
 set(CMAKE_C_FLAGS       "-O2")
 
-set(LINKER_SCRIPT       ${CMAKE_SOURCE_DIR}/startup/link.ld)
+set(LINKER_SCRIPT       ${CMAKE_SOURCE_DIR}/link.ld)
+
+
+# Set definitions
+add_compile_definitions(CPU_FREQUENCY=${CPU_FREQUENCY})
 
 
 # Cross-Compiling for a Microcontroller
@@ -45,7 +49,7 @@ if(NOT DEFINED TOOLCHAIN_PREFIX)
 endif()
 
 
-set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}as     )
+set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}gcc    )
 set(CMAKE_C_COMPILER   ${TOOLCHAIN_PREFIX}gcc    )
 set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}g++    )
 set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}objcopy)
@@ -57,6 +61,10 @@ find_program(PATH_CMAKE_C_COMPILER
   PATHS ENV PATH
   REQUIRED
 )
+
+
+# Set the name of the project
+project(${APP_NAME} LANGUAGES C CXX ASM)
 
 
 if(NOT PATH_CMAKE_C_COMPILER)
@@ -114,31 +122,26 @@ add_link_options(
 
 
 set(SOURCES
-  ${CMAKE_SOURCE_DIR}/startup/startup_reset.S
-  ${CMAKE_SOURCE_DIR}/startup/startup_init.c
+  ${CMAKE_SOURCE_DIR}/boot/startup_reset.S
+  ${CMAKE_SOURCE_DIR}/boot/startup_init.c
   ${CMAKE_SOURCE_DIR}/main.cpp
 )
 
 
 set(HEADERS
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_globals.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_csr.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_soc.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_uart.h
-  ${CMAKE_SOURCE_DIR}/${RVSTEEL_API}/rvsteel_mtimer.h
+  ${RVSTEEL_INC_DIR}/rvsteel_globals.h
+  ${RVSTEEL_INC_DIR}/rvsteel_csr.h
+  ${RVSTEEL_INC_DIR}/rvsteel_soc.h
+  ${RVSTEEL_INC_DIR}/rvsteel_uart.h
+  ${RVSTEEL_INC_DIR}/rvsteel_mtimer.h
 )
-
-
-set_source_files_properties(${CMAKE_SOURCE_DIR}/startup/startup_reset.S PROPERTIES LANGUAGE C)
 
 
 include_directories(
-  ${RVSTEEL_API}
+  ${RVSTEEL_INC_DIR}
 )
 
 
-# Set the name of the project
-project(${APP_NAME} LANGUAGES C CXX)
 add_executable(${APP_NAME}.elf ${SOURCES} ${HEADERS})
 
 
