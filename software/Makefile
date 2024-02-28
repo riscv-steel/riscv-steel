@@ -1,9 +1,5 @@
 MAKEFLAGS += --no-print-directory
 
-ifndef TOOLCHAIN_PREFIX
-  TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
-endif
-
 all: debug
 
 debug:
