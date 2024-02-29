@@ -3,9 +3,9 @@ MAKEFLAGS += --no-print-directory
 all: debug
 
 debug:
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX:+-DTOOLCHAIN_PREFIX= "${TOOLCHAIN_PREFIX}"}..
-	@make -C build
+	mkdir -p build
+	cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX:+-DTOOLCHAIN_PREFIX= "${TOOLCHAIN_PREFIX}"} ..
+	make -C build
 
 release:
 	@mkdir -p build
