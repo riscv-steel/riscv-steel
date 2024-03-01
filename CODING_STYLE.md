@@ -1,6 +1,6 @@
 # RISC-V Steel Coding Style
 
-**Table of Contents**
+## Table of Contents
 
 - [RISC-V Steel Verilog Style Guide](#risc-v-steel-verilog-style-guide)
   - [Introduction](#introduction)
@@ -10,6 +10,8 @@
   - [Language features](#language-features)
 - [RISC-V Steel C Style Guide](#risc-v-steel-c-style-guide)
   - [Introduction](#introduction-1)
+  - [Basic style elements](#basic-style-elements-1)
+  - [Naming conventions](#naming-conventions-1)
 - [License notice](#license-notice)
 
 ## RISC-V Steel Verilog Style Guide
