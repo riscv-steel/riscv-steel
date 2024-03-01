@@ -12,6 +12,13 @@ MEMORY
 }
 
 
+PHDRS
+{
+  text PT_LOAD FLAGS(5); /* PF_R+PF_X (Read, execute) */
+  data PT_LOAD FLAGS(6); /* PF_R+PF_W (Read, write) */
+}
+
+
 SECTIONS
 {
   .text :
@@ -39,7 +46,7 @@ SECTIONS
 
     . = ALIGN(4);
     *(.srodata*)
-  } > RAM
+  } > RAM :text
 
   .data : ALIGN(4)
   {
@@ -52,7 +59,7 @@ SECTIONS
     *(.gnu.linkonce.s.*)
 
     . = ALIGN(4);
-  } > RAM
+  } > RAM :data
 
   .bss : ALIGN(4)
   {
@@ -63,7 +70,7 @@ SECTIONS
     *(COMMON)
 
     . = ALIGN(4);
-  } > RAM
+  } > RAM :data
 
 /*
   .heap : ALIGN(4)
@@ -71,14 +78,14 @@ SECTIONS
     PROVIDE ( end = . );
     PROVIDE ( _end = . );
     . = . + __HEAP_SIZE;
-  } > RAM
+  } > RAM :data
 */
 
   .stack : ALIGN(4)
   {
     . += __STACK_SIZE;
     . = ALIGN(4);
-  } > RAM
+  } > RAM :data
 
   /* Discarded Sections */
   /DISCARD/ :
