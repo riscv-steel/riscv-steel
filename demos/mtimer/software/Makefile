@@ -32,10 +32,10 @@ release:
 
 run_sim: all
 	@mkdir -p dump
-	$(MAKE) -C ../../../hardware/soc/tests/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
+	@$(MAKE) -C ../../../hardware/soc/tests/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
 
 clean:
 	@rm -rf build dump
 	@echo "Build directory deleted."
 
-.PHONY: clean debug release
+.PHONY: debug release run_sim clean
