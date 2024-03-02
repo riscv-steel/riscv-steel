@@ -9,16 +9,13 @@ To run the simulation using Verilator do:
 ```bash
 cd verilator
 make # build soc verilator
-make run # running the simulation
+make run RUN_FLAGS="--log-level=QUIET" # running the simulation
 ```
 
 For the available options run:
 
 ```bash
-cd obj_dir
-soc_sim --help
+make run RUN_FLAGS="--help"
 ```
 
 > Verilator version 5.0 or higher is required.
-
-
