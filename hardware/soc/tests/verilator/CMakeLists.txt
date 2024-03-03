@@ -16,7 +16,10 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 project(${APP_NAME})
 
-find_package(verilator HINTS $ENV{VERILATOR_ROOT} ${VERILATOR_ROOT})
+find_package(verilator
+  HINTS $ENV{VERILATOR_ROOT} ${VERILATOR_ROOT}
+  PATHS "/usr/local/bin"
+)
 if (NOT verilator_FOUND)
   message(FATAL_ERROR "Verilator was not found. Set the VERILATOR_ROOT environment variable")
 endif()
