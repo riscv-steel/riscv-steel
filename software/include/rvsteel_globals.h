@@ -8,6 +8,7 @@
 #ifndef __RVSTEEL_GLOBALS__
 #define __RVSTEEL_GLOBALS__
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #ifndef __ASM
