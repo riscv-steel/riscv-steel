@@ -7,7 +7,7 @@ SIM ?= verilator
 TOPLEVEL_LANG ?= verilog
 
 # Or --trace-fst
-EXTRA_ARGS ?= --trace
+EXTRA_ARGS ?= --trace -GGPIO_WIDTH=8
 
 VERILOG_SOURCES += $(PWD)/../rvsteel_gpio.v
 

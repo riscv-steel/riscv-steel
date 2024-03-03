@@ -18,7 +18,7 @@ module rvsteel_soc #(
   // Address of the first instruction to fetch from memory
   parameter BOOT_ADDRESS = 32'h00000000 ,
   // Number of available I/O ports
-  parameter GPIO_WIDTH = 2              ,
+  parameter GPIO_WIDTH = 1              ,
   // Number of CS (Chip Select) pins for the SPI controller
   parameter NUM_CS_LINES = 1
 
