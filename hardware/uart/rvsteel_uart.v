@@ -44,7 +44,7 @@ module rvsteel_uart #(
   // Register Map
   localparam REG_WDATA = 5'h00;
   localparam REG_RDATA = 5'h04;
-  localparam REG_STATUS = 5'h08;
+  localparam REG_READY = 5'h08;
 
   reg [31:0] tx_cycle_counter = 0;
   reg [31:0] rx_cycle_counter = 0;
@@ -183,7 +183,7 @@ module rvsteel_uart #(
       read_data <= 32'h00000000;
     else if (rw_address == REG_RDATA && read_request == 1'b1)
       read_data <= {24'b0, rx_data};
-    else if (rw_address == REG_STATUS && read_request == 1'b1)
+    else if (rw_address == REG_READY && read_request == 1'b1)
       read_data <= {31'b0, tx_bit_counter == 0};
     else
       read_data <= 32'h00000000;

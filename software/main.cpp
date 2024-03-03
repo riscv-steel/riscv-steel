@@ -9,6 +9,7 @@
 
 int main(void)
 {
-  uart_send_string(UART0, "Hello World!\n");
-  while (1);
+  uart_write_string(UART0, "Hello World!\n");
+  while (1)
+    ;
 }

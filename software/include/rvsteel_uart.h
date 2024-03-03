@@ -5,49 +5,71 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __UART__
-#define __UART__
+#ifndef __RVSTEEL_UART__
+#define __RVSTEEL_UART__
 
 #include "rvsteel_globals.h"
 
+// UART Device Memory Map
 typedef struct
 {
-  volatile uint32_t TX;
-  volatile uint32_t RX;
+  volatile uint32_t WDATA;
+  volatile uint32_t RDATA;
+  volatile uint32_t READY;
 } UartDevice;
 
-static inline uint8_t uart_read(UartDevice *UARTx)
+/**
+ * @brief Read register READY from a UART device. Return true if the device is ready to send
+ * data, false otherwise.
+ *
+ * @param uart Pointer to a UartDevice
+ * @return true
+ * @return false
+ */
+inline bool uart_ready(UartDevice *uart)
 {
-  return UARTx->RX;
+  return uart->READY == 1;
 }
 
-static inline void uart_write(UartDevice *UARTx, uint8_t data)
+/**
+ * @brief Read register RDATA of a UART device. The UART requests an interrupt when it
+ * completes receiving new data. The new data can be read by calling this function.
+ *
+ * @param uart Pointer to a UartDevice
+ * @return uint8_t
+ */
+inline uint8_t uart_read(UartDevice *uart)
 {
-  UARTx->TX = data;
+  return uart->RDATA;
 }
 
-static inline int uart_write_busy(UartDevice *UARTx)
+/**
+ * @brief Write a single byte to register WDATA of a UART device. It awaits the UART to be ready
+ * before writing to the register.
+ *
+ * @param uart Pointer to a UartDevice
+ * @param data A byte as uint8_t
+ */
+inline void uart_write(UartDevice *uart, uint8_t data)
 {
-  return UARTx->TX != 1;
+  while (!uart_ready(uart))
+    ;
+  uart->WDATA = data;
 }
 
-static inline void uart_send_char(UartDevice *UARTx, const char c)
-{
-  while ((UARTx->TX != 1))
-  {
-    __NOP();
-  }
-
-  UARTx->TX = c;
-}
-
-static inline void uart_send_string(UartDevice *UARTx, const char *str)
+/**
+ * @brief Send a C-string over a UART device.
+ *
+ * @param uart Pointer to a UartDevice
+ * @param str A null-terminated C-string
+ */
+inline void uart_write_string(UartDevice *uart, const char *str)
 {
   while (*(str) != '\0')
   {
-    uart_send_char(UARTx, *(str));
+    uart_write(uart, *(str));
     str++;
   }
 }
 
-#endif // __UART__
+#endif // __RVSTEEL_UART__
