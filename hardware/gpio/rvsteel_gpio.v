@@ -7,7 +7,7 @@
 
 module rvsteel_gpio #(
 
-  parameter GPIO_WIDTH = 2
+  parameter GPIO_WIDTH = 1
 
 ) (
 
@@ -22,7 +22,7 @@ module rvsteel_gpio #(
   output  reg   [31:0]            read_data     ,
   input   wire                    read_request  ,
   output  reg                     read_response ,
-  input   wire  [1:0 ]            write_data    ,
+  input   wire  [GPIO_WIDTH-1:0]  write_data    ,
   input   wire  [3:0 ]            write_strobe  ,
   input   wire                    write_request ,
   output  reg                     write_response,
