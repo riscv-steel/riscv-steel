@@ -41,6 +41,11 @@ module rvsteel_uart #(
 
   localparam CYCLES_PER_BAUD = CLOCK_FREQUENCY / UART_BAUD_RATE;
 
+  // Register Map
+  localparam REG_WDATA = 5'h00;
+  localparam REG_RDATA = 5'h04;
+  localparam REG_STATUS = 5'h08;
+
   reg [31:0] tx_cycle_counter = 0;
   reg [31:0] rx_cycle_counter = 0;
   reg [3:0]  tx_bit_counter;
@@ -67,7 +72,7 @@ module rvsteel_uart #(
       tx_bit_counter <= 0;
     end
     else if (tx_bit_counter == 0 &&
-             rw_address == 5'h00 &&
+             rw_address == REG_WDATA &&
              write_request == 1'b1) begin
       tx_cycle_counter <= 0;
       tx_register <= {1'b1, write_data[7:0], 1'b0};
@@ -176,10 +181,10 @@ module rvsteel_uart #(
   always @(posedge clock) begin
     if (reset_internal)
       read_data <= 32'h00000000;
-    else if (rw_address == 5'h00 && read_request == 1'b1)
-      read_data <= {31'b0, tx_bit_counter == 0};
-    else if (rw_address == 5'h04 && read_request == 1'b1)
+    else if (rw_address == REG_RDATA && read_request == 1'b1)
       read_data <= {24'b0, rx_data};
+    else if (rw_address == REG_STATUS && read_request == 1'b1)
+      read_data <= {31'b0, tx_bit_counter == 0};
     else
       read_data <= 32'h00000000;
   end
