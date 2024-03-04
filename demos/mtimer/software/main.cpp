@@ -7,10 +7,10 @@
 
 #include "rvsteel_soc.h"
 
-extern "C" __IRQ_M(IRQ_MTIMER0_VECTOR)
+__IRQ_M(IRQ_MTIMER0_VECTOR)
 {
   mtimer_clear_counter(MTIMER0);
-  uart_send_string(UART0, "5ms\n");
+  uart_write_string(UART0, "5ms\n");
 }
 
 int main(void)
