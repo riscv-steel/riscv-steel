@@ -1,19 +1,21 @@
-## Building and Compilation
+## How to build
 
 For `debug` build:
 
 ```console
-mkdir debug
-cd debug
-cmake -DCMAKE_BUILD_TYPE=Debug -DTOOLCHAIN_PREFIX=/your/toolchain/riscv32-unknown-elf- ..
-make
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Debug -DTOOLCHAIN_PREFIX=/path/to/riscv/binaries/riscv32-unknown-elf-
+cmake --build build
 ```
 
 For `release` build:
 
 ```console
-mkdir release
-cd release
-cmake -DCMAKE_BUILD_TYPE=Release -DTOOLCHAIN_PREFIX=/your/toolchain/riscv32-unknown-elf- ..
-make
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DTOOLCHAIN_PREFIX=/path/to/riscv/binaries/riscv32-unknown-elf-
+cmake --build build
+```
+
+Or quickly:
+
+```console
+make debug TOOLCHAIN_PREFIX=/path/to/riscv/binaries/riscv32-unknown-elf-
 ```
