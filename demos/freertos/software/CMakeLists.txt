@@ -111,7 +111,6 @@ add_link_options(
   -Wl,--start-group
   -Wl,--end-group
   -Wl,--gc-sections
-  -Wl,--no-warn-rwx-segments
   -Wl,--print-memory-usage
   -Wl,--cref
   -Wl,-Map=${APP_NAME}.map
