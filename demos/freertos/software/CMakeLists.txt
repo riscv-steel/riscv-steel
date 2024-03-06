@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.15)
 
 
 set(APP_NAME            "example_freertos")
-set(CPU_FREQUENCY       50000000UL)
+set(CPU_FREQUENCY       12000000UL)
 set(RVSTEEL_ROOT        "../../../")
 set(RVSTEEL_INC_DIR     ${RVSTEEL_ROOT}/software/include/)
 

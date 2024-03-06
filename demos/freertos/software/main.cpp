@@ -22,9 +22,9 @@ void vTaskCode( void * pvParameters )
 
   for( ;; )
   {
-    vTaskDelay(1);
+    vTaskDelay(500);
     gpio_set(GPIO0, GPIO_PIN0_MASK);
-    vTaskDelay(1);
+    vTaskDelay(500);
     gpio_clear(GPIO0, GPIO_PIN0_MASK);
   }
 }
@@ -38,9 +38,9 @@ void vTaskCode1( void * pvParameters )
 
   for( ;; )
   {
-    vTaskDelay(2);
+    vTaskDelay(1000);
     gpio_set(GPIO0, GPIO_PIN1_MASK);
-    vTaskDelay(2);
+    vTaskDelay(1000);
     gpio_clear(GPIO0, GPIO_PIN1_MASK);
   }
 }
