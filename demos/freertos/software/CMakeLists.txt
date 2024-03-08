@@ -5,149 +5,159 @@
 # SPDX-License-Identifier: MIT
 # -----------------------------------------------------------------------------
 
+# Minimal CMake version required
 cmake_minimum_required(VERSION 3.15)
 
+# Name of the executable to be generated
+set(APP_NAME "example_freertos")
 
-set(APP_NAME            "example_freertos")
-set(CPU_FREQUENCY       12000000UL)
-set(RVSTEEL_ROOT        "../../../")
-set(RVSTEEL_INC_DIR     ${RVSTEEL_ROOT}/software/include/)
+# Frequency of the clock signal (needed for FreeRTOS)
+set(CPU_FREQUENCY 12000000UL)
 
-set(APP_ARCH            rv32izicsr)
-set(APP_ABI             ilp32)
-set(APP_MACHINE         riscv)
+# Points to root folder of RISC-V Steel repository
+set(RVSTEEL_ROOT "../../../")
 
+# Path to the folder with RISC-V Steel header files
+set(RVSTEEL_INC_DIR ${RVSTEEL_ROOT}/software/include/)
 
-set(STACK_USAGE         1024)
-set(CMAKE_CXX_STANDARD  11)
-set(CMAKE_CXX_FLAGS     "-O2")
+# RISC-V ISA features present in RISC-V Steel
+set(APP_ARCH rv32izicsr)
 
-set(CMAKE_C_STANDARD    11)
-set(CMAKE_C_FLAGS       "-O2")
+# Application Binary Interface in use: 32-bit Generic ELF, Soft Floating-Point
+set(APP_ABI ilp32)
 
-set(LINKER_SCRIPT       ${CMAKE_SOURCE_DIR}/link.ld)
+# C++ standard in use
+set(CMAKE_CXX_STANDARD 11)
 
+# C++ optimization level
+set(CMAKE_CXX_FLAGS "-O2")
 
-# Set definitions
-add_compile_definitions(CPU_FREQUENCY=${CPU_FREQUENCY})
+# C standard in use
+set(CMAKE_C_STANDARD 11)
 
+# C optimization level
+set(CMAKE_C_FLAGS "-O2")
 
-# Cross-Compiling for a Microcontroller
+# Path to RISC-V Steel linker script
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/link.ld)
+
+# Cross-Compiling for a generic microcontroller
 set(CMAKE_SYSTEM_NAME Generic)
+
 # Tell CMake not to try to link executables during its checks
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
 # The suffix for executables on this platform.
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
+
 # Get more verbose output from Makefile builds
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-
-# Toolchain prefix (cmake -DTOOLCHAIN_PREFIX=toolchain-prefix)
+# Give TOOLCHAIN_PREFIX a default value if its definition is missing
 if(NOT DEFINED TOOLCHAIN_PREFIX)
-  message(STATUS "NOT DEFINED TOOLCHAIN_PREFIX")
+  message(STATUS "[INFO] TOOLCHAIN_PREFIX set to default value: riscv32-unknown-elf-")
   set(TOOLCHAIN_PREFIX riscv32-unknown-elf-)
 endif()
 
+# RISC-V Assembler
+set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}gcc)
 
-set(CMAKE_ASM_COMPILER ${TOOLCHAIN_PREFIX}gcc    )
-set(CMAKE_C_COMPILER   ${TOOLCHAIN_PREFIX}gcc    )
-set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}g++    )
-set(CMAKE_OBJCOPY      ${TOOLCHAIN_PREFIX}objcopy)
-set(CMAKE_OBJDUMP      ${TOOLCHAIN_PREFIX}objdump)
+# RISC-V C Compiler
+set(CMAKE_C_COMPILER ${TOOLCHAIN_PREFIX}gcc)
 
+# RISC-V C++ Compiler
+set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}g++)
 
+# RISC-V Object Copy
+set(CMAKE_OBJCOPY ${TOOLCHAIN_PREFIX}objcopy)
+
+# RISC-V Object Dump
+set(CMAKE_OBJDUMP ${TOOLCHAIN_PREFIX}objdump)
+
+# Find GCC
 find_program(PATH_CMAKE_C_COMPILER
   ${CMAKE_C_COMPILER}
   PATHS ENV PATH
   REQUIRED
 )
 
-
+# Print whether GCC was found
 if(NOT PATH_CMAKE_C_COMPILER)
-  message(FATAL_ERROR "NOT DEFINED CMAKE_C_COMPILER: " ${PATH_CMAKE_C_COMPILER})
+  message(FATAL_ERROR "[ERROR] Could not find CMAKE_C_COMPILER: " ${PATH_CMAKE_C_COMPILER})
 else()
-  message(STATUS "PATH CMAKE_C_COMPILER: " ${PATH_CMAKE_C_COMPILER})
+  message(STATUS "[INFO] Compiling with GCC: " ${PATH_CMAKE_C_COMPILER})
 endif()
 
-
-# Set the name of the project
+# Create the project and set languages used
 project(${APP_NAME} LANGUAGES C CXX ASM)
 
+# Set compiler definitions
+add_compile_definitions(CPU_FREQUENCY=${CPU_FREQUENCY})
 
-set(ARCH_FLAGS
-  -march=${APP_ARCH}
-  -mabi=${APP_ABI}
-)
-
-
-set(SPECS
-  --specs=nano.specs
-  --specs=nosys.specs
-)
-
-
+# Set GCC flags
 add_compile_options(
+  # Enables all the warnings about constructions that some users consider questionable
   -Wall
+  # Enables some extra warning flags that are not enabled by -Wall
   -Wextra
-  -Wstack-usage=${STACK_USAGE}
+  # Issue all the warnings demanded by strict ISO C and ISO C++
+  -Wpedantic
+  # Do not generate unaligned memory accesses (RISC-V Steel does not support unaligned accesses)
   -mstrict-align
-  -pedantic
+  # Specify the supported RISC-V features present in RISC-V Steel
+  -march=${APP_ARCH}
+  # Specify the Application Binary Interface supported by RISC-V Steel
+  -mabi=${APP_ABI}
+  # Tells GCC that this project does not run on top of an operating system
   -ffreestanding
+  # Create sections for functions
   -ffunction-sections
+  # Create sections for data
   -fdata-sections
-  -fno-exceptions
-  $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
-  ${SPECS}
-  ${ARCH_FLAGS}
 )
 
-
+# Set GNU ld flags
 add_link_options(
-  -nostartfiles
-  -nostdlib
-  -nodefaultlibs
-  -mstrict-align
-  -Wl,-lm
-  -Wl,--start-group
-  -Wl,--end-group
-  -Wl,--gc-sections
-  -Wl,--print-memory-usage
-  -Wl,--cref
-  -Wl,-Map=${APP_NAME}.map
+  # Specify the linker script for RISC-V Steel
   -T ${LINKER_SCRIPT}
-  ${SPECS}
-  ${ARCH_FLAGS}
+  # Do not link with libraries linked by default such as libc
+  -nodefaultlibs
+  # Do not link standard startup code since it is not needed for bare-metal (freestanding) software
+  -nostartfiles
+  # Enable garbage colletion (removal of sections never used)
+  -Wl,--gc-sections
+  # Generate a Map file with linking information
+  -Wl,-Map=${APP_NAME}.map
+  # Do not generate unaligned memory accesses (RISC-V Steel does not support it)
+  -mstrict-align
+  # Specify the supported RISC-V features present in RISC-V Steel
+  -march=${APP_ARCH}
+  # Specify the Application Binary Interface supported by RISC-V Steel
+  -mabi=${APP_ABI}
+  # Print memory usage summary
+  -Wl,--print-memory-usage
 )
 
-
+# Fetch FreeRTOS
 include(cmake/freertos.cmake)
 
-
+# Source files
 set(SOURCES
   ${CMAKE_SOURCE_DIR}/boot/startup_reset.S
   ${CMAKE_SOURCE_DIR}/boot/startup_init.c
   ${CMAKE_SOURCE_DIR}/main.cpp
 )
 
-
-set(HEADERS
-  ${RVSTEEL_INC_DIR}/rvsteel_globals.h
-  ${RVSTEEL_INC_DIR}/rvsteel_csr.h
-  ${RVSTEEL_INC_DIR}/rvsteel_soc.h
-  ${RVSTEEL_INC_DIR}/rvsteel_uart.h
-  ${RVSTEEL_INC_DIR}/rvsteel_mtimer.h
-  ${CMAKE_SOURCE_DIR}/include/FreeRTOSConfig.h
-)
-
-
+# Instruct the compiler where to find RISC-V Steel and FreeRTOS header files
 include_directories(
   ${RVSTEEL_INC_DIR}
   ${CMAKE_SOURCE_DIR}/include
 )
 
+# The executable
+add_executable(${APP_NAME}.elf ${SOURCES} ${CMAKE_SOURCE_DIR}/include/FreeRTOSConfig.h)
 
-add_executable(${APP_NAME}.elf ${SOURCES} ${HEADERS})
-
+# Link to FreeRTOS
 target_link_libraries(${APP_NAME}.elf freertos_kernel freertos_config)
 
 # Set dependency on linker script
@@ -155,18 +165,18 @@ set_target_properties(${APP_NAME}.elf PROPERTIES
   LINK_DEPENDS "${LINKER_SCRIPT}"
 )
 
-
-add_custom_command(TARGET ${APP_NAME}.elf POST_BUILD
-  COMMAND ${CMAKE_OBJCOPY} -O binary      ${APP_NAME}.elf ${APP_NAME}.bin
-  COMMAND ${CMAKE_OBJCOPY} -O verilog     ${APP_NAME}.elf --verilog-data-width=4 ${APP_NAME}.hex
-  COMMAND ${CMAKE_OBJDUMP} -D             ${APP_NAME}.elf > ${APP_NAME}.objdump
-)
-
-
+# Set additional files that needs to be removed when cleaning
 set_property(TARGET ${APP_NAME}.elf
   APPEND PROPERTY ADDITIONAL_CLEAN_FILES
   ${APP_NAME}.bin
   ${APP_NAME}.hex
   ${APP_NAME}.objdump
   ${APP_NAME}.map
+)
+
+# Generate Memory Init File (.hex) and disassembly after build
+add_custom_command(TARGET ${APP_NAME}.elf POST_BUILD
+  COMMAND ${CMAKE_OBJCOPY} -O binary      ${APP_NAME}.elf ${APP_NAME}.bin
+  COMMAND ${CMAKE_OBJCOPY} -O verilog     ${APP_NAME}.elf --verilog-data-width=4 ${APP_NAME}.hex
+  COMMAND ${CMAKE_OBJDUMP} -D             ${APP_NAME}.elf > ${APP_NAME}.objdump
 )
