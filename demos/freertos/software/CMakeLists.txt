@@ -17,7 +17,7 @@ set(CPU_FREQUENCY 12000000UL)
 # Points to root folder of RISC-V Steel repository
 set(RVSTEEL_ROOT "../../../")
 
-# Path to the folder with RISC-V Steel header files
+# Path to the folder with RISC-V Steel include files
 set(RVSTEEL_INC_DIR ${RVSTEEL_ROOT}/software/include/)
 
 # RISC-V ISA features present in RISC-V Steel
@@ -39,7 +39,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS "-O2")
 
 # Path to RISC-V Steel linker script
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/link.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/source/link.ld)
 
 # Cross-Compiling for a generic microcontroller
 set(CMAKE_SYSTEM_NAME Generic)
@@ -120,8 +120,6 @@ add_compile_options(
 add_link_options(
   # Specify the linker script for RISC-V Steel
   -T ${LINKER_SCRIPT}
-  # Do not link with libraries linked by default such as libc
-  -nodefaultlibs
   # Do not link standard startup code since it is not needed for bare-metal (freestanding) software
   -nostartfiles
   # Enable garbage colletion (removal of sections never used)
@@ -143,12 +141,11 @@ include(cmake/freertos.cmake)
 
 # Source files
 set(SOURCES
-  ${CMAKE_SOURCE_DIR}/boot/startup_reset.S
-  ${CMAKE_SOURCE_DIR}/boot/startup_init.c
-  ${CMAKE_SOURCE_DIR}/main.cpp
+  ${CMAKE_SOURCE_DIR}/source/boot.S
+  ${CMAKE_SOURCE_DIR}/source/main.cpp
 )
 
-# Instruct the compiler where to find RISC-V Steel and FreeRTOS header files
+# Instruct the compiler where to find RISC-V Steel and this project include files
 include_directories(
   ${RVSTEEL_INC_DIR}
   ${CMAKE_SOURCE_DIR}/include
