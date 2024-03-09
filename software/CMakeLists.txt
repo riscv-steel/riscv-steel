@@ -11,10 +11,16 @@ cmake_minimum_required(VERSION 3.15)
 # Name of the executable to be generated
 set(APP_NAME "myapp")
 
-# Frequency of the clock signal (needed for FreeRTOS)
-set(CPU_FREQUENCY 50000000UL)
+# Frequency of the clock signal
+set(CPU_FREQUENCY 12000000UL)
 
-# Path to the folder with RISC-V Steel header files
+# Set this variable to the same value of the MEMORY_SIZE parameter of the SoC IP
+set(MEMORY_SIZE 8K)
+
+# Space reserved for the stack (in bytes)
+set(STACK_SIZE 1K)
+
+# Path to the folder with RISC-V Steel include files
 set(RVSTEEL_INC_DIR ${CMAKE_SOURCE_DIR}/include/)
 
 # RISC-V ISA features present in RISC-V Steel
@@ -36,7 +42,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS "-O2")
 
 # Path to RISC-V Steel linker script
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/link.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/source/link.ld)
 
 # Cross-Compiling for a generic microcontroller
 set(CMAKE_SYSTEM_NAME Generic)
@@ -107,16 +113,16 @@ add_compile_options(
   -mabi=${APP_ABI}
   # Tells GCC that this project does not run on top of an operating system
   -ffreestanding
+  # Create sections for functions
+  -ffunction-sections
+  # Create sections for data
+  -fdata-sections
 )
 
 # Set GNU ld flags
 add_link_options(
   # Specify the linker script for RISC-V Steel
   -T ${LINKER_SCRIPT}
-  # Do not link with libraries linked by default such as libc
-  -nodefaultlibs
-  # Do not link standard startup code since it is not needed for bare-metal (freestanding) software
-  -nostartfiles
   # Enable garbage colletion (removal of sections never used)
   -Wl,--gc-sections
   # Generate a Map file with linking information
@@ -127,18 +133,23 @@ add_link_options(
   -march=${APP_ARCH}
   # Specify the Application Binary Interface supported by RISC-V Steel
   -mabi=${APP_ABI}
+  # Print memory usage summary
+  -Wl,--print-memory-usage
+  # Memory size
+  -Wl,--defsym=__RAM_MEMORY_SIZE=${MEMORY_SIZE}
+  # Stack size
+  -Wl,--defsym=__RAM_STACK_SIZE=${STACK_SIZE}
 )
 
 # Source files
 set(SOURCES
-  ${CMAKE_SOURCE_DIR}/boot/startup_reset.S
-  ${CMAKE_SOURCE_DIR}/boot/startup_init.c
-  ${CMAKE_SOURCE_DIR}/main.cpp
+  ${CMAKE_SOURCE_DIR}/source/boot.S
+  ${CMAKE_SOURCE_DIR}/source/main.cpp
 )
 
-# Instruct the compiler where to find RISC-V Steel header files
+# Include files folder
 include_directories(
-  ${RVSTEEL_INC_DIR}
+  ${CMAKE_SOURCE_DIR}/include
 )
 
 # The executable

@@ -1,6 +1,6 @@
 # Template Project for Software Development
 
-This folder is intended to be used as a template for new software projects. It contains RISC-V Steel header files, boot code, linking scripts and an example source file that can be used as the starting point for development. Please check our [Software Guide](https://riscv-steel.github.io/riscv-steel/softwareguide/) for detailed information on software development for RISC-V Steel.
+This folder is intended to be used as a template for new software projects. It contains RISC-V Steel include files, boot code, linking scripts and an example source file that can be used as the starting point for development. Please check our [Software Guide](https://riscv-steel.github.io/riscv-steel/softwareguide/) for detailed information on software development for RISC-V Steel.
 
 ## Dependencies
 
@@ -20,4 +20,4 @@ For a `release` build:
 make release TOOLCHAIN_PREFIX=/path/to/riscv/binaries/riscv32-unknown-elf-
 ```
 
-You can omit `TOOLCHAIN_PREFIX` if you have added the RISC-V binaries to your `PATH`.
+**Tip:** You can omit `TOOLCHAIN_PREFIX` if you have added the RISC-V binaries to your `PATH`.
