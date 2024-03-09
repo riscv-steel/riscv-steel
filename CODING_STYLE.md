@@ -98,7 +98,7 @@ This style guide aims to promote readability for RISC-V Steel software source co
 
 * Use **lower\_snake\_case** for variables, functions and arguments
 * Use **UpperCamelCase** for structs
-* Use **ALL\_CAPS** for enums, constants and compiler macros
+* Use **ALL\_CAPS** for enums, constants, register addresses and compiler macros
 * Names should be descriptive and be consistent. Avoid abbreviations
 
 ## License notice
