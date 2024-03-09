@@ -5,15 +5,15 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-.globl _start
+.globl __rvsteel_boot
 .section ".rvsteel_boot"
 .option norvc;
-_start:
+__rvsteel_boot:
   la ra, _start
-  la sp, __stack_top
+  la sp, __freertos_irq_stack_top
   la t0, trap_vector
   csrw mtvec, t0
-  j main
+  j _start
   ecall
 
 .weak rvsteel_default_irq_handler

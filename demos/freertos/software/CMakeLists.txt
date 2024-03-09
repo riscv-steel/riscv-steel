@@ -14,6 +14,12 @@ set(APP_NAME "example_freertos")
 # Frequency of the clock signal (needed for FreeRTOS)
 set(CPU_FREQUENCY 12000000UL)
 
+# Set this variable to the same value of the MEMORY_SIZE parameter of the SoC IP
+set(MEMORY_SIZE 16K)
+
+# Space reserved for the stack (in bytes)
+set(STACK_SIZE 1K)
+
 # Points to root folder of RISC-V Steel repository
 set(RVSTEEL_ROOT "../../../")
 
@@ -120,8 +126,6 @@ add_compile_options(
 add_link_options(
   # Specify the linker script for RISC-V Steel
   -T ${LINKER_SCRIPT}
-  # Do not link standard startup code since it is not needed for bare-metal (freestanding) software
-  -nostartfiles
   # Enable garbage colletion (removal of sections never used)
   -Wl,--gc-sections
   # Generate a Map file with linking information
@@ -134,6 +138,10 @@ add_link_options(
   -mabi=${APP_ABI}
   # Print memory usage summary
   -Wl,--print-memory-usage
+  # Memory size
+  -Wl,--defsym=__RAM_MEMORY_SIZE=${MEMORY_SIZE}
+  # Stack size
+  -Wl,--defsym=__RAM_STACK_SIZE=${STACK_SIZE}
 )
 
 # Fetch FreeRTOS
