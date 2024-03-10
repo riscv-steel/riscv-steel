@@ -19,7 +19,7 @@ typedef struct
 } UartDevice;
 
 /**
- * @brief Read register READY from a UART device. Return true if the device is ready to send
+ * @brief Read register READY from the UART device. Return true if the device is ready to send
  * data, false otherwise.
  *
  * @param uart Pointer to a UartDevice
@@ -32,7 +32,7 @@ inline bool uart_ready(UartDevice *uart)
 }
 
 /**
- * @brief Read register RDATA of a UART device. The UART requests an interrupt when it
+ * @brief Read register RDATA of the UART device. The UART requests an interrupt when it
  * completes receiving new data. The new data can be read by calling this function.
  *
  * @param uart Pointer to a UartDevice
@@ -44,7 +44,7 @@ inline uint8_t uart_read(UartDevice *uart)
 }
 
 /**
- * @brief Write a single byte to register WDATA of a UART device. It awaits the UART to be ready
+ * @brief Write a single byte to register WDATA of the UART device. It awaits the UART to be ready
  * before writing to the register.
  *
  * @param uart Pointer to a UartDevice
@@ -58,7 +58,7 @@ inline void uart_write(UartDevice *uart, uint8_t data)
 }
 
 /**
- * @brief Send a C-string over a UART device.
+ * @brief Send a C-string over the UART device.
  *
  * @param uart Pointer to a UartDevice
  * @param str A null-terminated C-string
