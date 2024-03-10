@@ -55,7 +55,7 @@ module rvsteel_soc #(
   assign device_region_size   [32*D0_RAM      +: 32]  = MEMORY_SIZE;
 
   assign device_start_address [32*D1_UART     +: 32]  = 32'h8000_0000;
-  assign device_region_size   [32*D1_UART     +: 32]  = 8;
+  assign device_region_size   [32*D1_UART     +: 32]  = 16;
 
   assign device_start_address [32*D2_MTIMER   +: 32]  = 32'h8001_0000;
   assign device_region_size   [32*D2_MTIMER   +: 32]  = 32;
@@ -302,7 +302,7 @@ module rvsteel_soc #(
     .read_data                      (device_read_data[32*D3_GPIO +: 32]     ),
     .read_request                   (device_read_request[D3_GPIO]           ),
     .read_response                  (device_read_response[D3_GPIO]          ),
-    .write_data                     (device_write_data[1:0]                 ),
+    .write_data                     (device_write_data[GPIO_WIDTH-1:0]      ),
     .write_strobe                   (device_write_strobe                    ),
     .write_request                  (device_write_request[D3_GPIO]          ),
     .write_response                 (device_write_response[D3_GPIO]         ),
