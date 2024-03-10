@@ -20,6 +20,9 @@ set(MEMORY_SIZE 8K)
 # Space reserved for the stack (in bytes)
 set(STACK_SIZE 1K)
 
+# Space reserved for the heap (in bytes)
+set(HEAP_SIZE 0K)
+
 # Path to the folder with RISC-V Steel include files
 set(RVSTEEL_INC_DIR ${CMAKE_SOURCE_DIR}/include/)
 
@@ -121,8 +124,8 @@ add_compile_options(
 
 # Set GNU ld flags
 add_link_options(
-  # Specify the linker script for RISC-V Steel
-  -T ${LINKER_SCRIPT}
+  # The linker script
+  -T${LINKER_SCRIPT}
   # Enable garbage colletion (removal of sections never used)
   -Wl,--gc-sections
   # Generate a Map file with linking information
@@ -135,10 +138,12 @@ add_link_options(
   -mabi=${APP_ABI}
   # Print memory usage summary
   -Wl,--print-memory-usage
-  # Memory size
-  -Wl,--defsym=__RAM_MEMORY_SIZE=${MEMORY_SIZE}
-  # Stack size
-  -Wl,--defsym=__RAM_STACK_SIZE=${STACK_SIZE}
+  # Set symbol needed by FreeRTOS
+  -Wl,--defsym=__memory_size=${MEMORY_SIZE}
+  # Set symbol needed by FreeRTOS
+  -Wl,--defsym=__stack_size=${STACK_SIZE}
+  # Set symbol needed by FreeRTOS
+  -Wl,--defsym=__heap_size=${HEAP_SIZE}
 )
 
 # Source files
