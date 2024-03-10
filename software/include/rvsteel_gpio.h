@@ -82,7 +82,7 @@ enum GpioLogicValue
  */
 inline void gpio_set_output(GpioDevice *gpio, const uint32_t pin_id)
 {
-  SET_FLAG(gpio->OE, 0x1U << pin_id);
+  SET_BIT(gpio->OE, pin_id);
 }
 
 /**
@@ -93,7 +93,7 @@ inline void gpio_set_output(GpioDevice *gpio, const uint32_t pin_id)
  */
 inline void gpio_set_input(GpioDevice *gpio, const uint32_t pin_id)
 {
-  CLR_FLAG(gpio->OE, pin_id);
+  CLR_BIT(gpio->OE, pin_id);
 }
 
 /**
@@ -105,7 +105,7 @@ inline void gpio_set_input(GpioDevice *gpio, const uint32_t pin_id)
  */
 inline uint32_t gpio_read(GpioDevice *gpio, const uint32_t pin_id)
 {
-  return (gpio->IN) & (0x1U << pin_id);
+  return READ_BIT(gpio->IN, pin_id);
 }
 
 /**
@@ -158,7 +158,7 @@ inline void gpio_clear(GpioDevice *gpio, const uint32_t pin_id)
  */
 inline void gpio_toggle(GpioDevice *gpio, const uint32_t pin_id)
 {
-  INV_FLAG(gpio->OUT, 0x1U << pin_id);
+  INV_BIT(gpio->OUT, pin_id);
 }
 
 /**
@@ -171,7 +171,7 @@ inline void gpio_toggle(GpioDevice *gpio, const uint32_t pin_id)
  */
 inline bool gpio_is_set(GpioDevice *gpio, const uint32_t pin_id)
 {
-  return (gpio->IN & 0x1U << pin_id) != 0;
+  return READ_BIT(gpio->IN, pin_id) != 0;
 }
 
 /**
@@ -184,7 +184,7 @@ inline bool gpio_is_set(GpioDevice *gpio, const uint32_t pin_id)
  */
 inline bool gpio_is_clear(GpioDevice *gpio, const uint32_t pin_id)
 {
-  return (gpio->IN & 0x1U << pin_id) == 0;
+  return READ_BIT(gpio->IN, pin_id) == 0;
 }
 
 /**
