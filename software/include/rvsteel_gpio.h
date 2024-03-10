@@ -10,6 +10,7 @@
 
 #include "rvsteel_globals.h"
 
+// GPIO Device Memory Map
 typedef struct
 {
   volatile uint32_t IN;
@@ -18,6 +19,12 @@ typedef struct
   volatile uint32_t CLR;
   volatile uint32_t SET;
 } GpioDevice;
+
+enum GpioLogicValue
+{
+  LOW = 0,
+  HIGH = 1
+};
 
 #define GPIO_PIN0_OFFSET 0U
 #define GPIO_PIN0_MASK (0x1U << GPIO_PIN0_OFFSET)
@@ -67,49 +74,209 @@ typedef struct
 #define GPIO_PIN15_OFFSET 15U
 #define GPIO_PIN15_MASK (0x1U << GPIO_PIN15_OFFSET)
 
-static inline void gpio_enable_output(GpioDevice *GPIOx, const uint32_t pin_mask)
+/**
+ * @brief Set a GPIO pin to work as an output.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id The ID of the GPIO pin to set as an output. Note that IDs start at 0.
+ */
+inline void gpio_set_output(GpioDevice *gpio, const uint32_t pin_id)
 {
-  SET_FLAG(GPIOx->OE, pin_mask);
+  SET_FLAG(gpio->OE, 0x1U << pin_id);
 }
 
-static inline void gpio_enable_input(GpioDevice *GPIOx, const uint32_t pin_mask)
+/**
+ * @brief Set a GPIO pin to work as an input.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id The ID of the GPIO pin to set as an input. Note that IDs start at 0.
+ */
+inline void gpio_set_input(GpioDevice *gpio, const uint32_t pin_id)
 {
-  CLR_FLAG(GPIOx->OE, pin_mask);
+  CLR_FLAG(gpio->OE, pin_id);
 }
 
-static inline uint32_t gpio_read(GpioDevice *GPIOx)
+/**
+ * @brief Return the current logic state of a GPIO pin, either 0 or 1.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id The ID of the GPIO pin to read. Note that IDs start at 0.
+ * @return uint32_t
+ */
+inline uint32_t gpio_read(GpioDevice *gpio, const uint32_t pin_id)
 {
-  return GPIOx->IN;
+  return (gpio->IN) & (0x1U << pin_id);
 }
 
-static inline void gpio_write(GpioDevice *GPIOx, const uint32_t value)
+/**
+ * @brief Set the logic value for a GPIO pin. The value can be either LOW (0) or HIGH (1). An
+ * attempt to write to a pin set as input, or a value other than LOW or HIGH, is gracefully ignored
+ * (no errors are given).
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id The ID of the GPIO pin to write. Note that IDs start at 0.
+ * @param value Either LOW (0) or HIGH (1)
+ */
+inline void gpio_write(GpioDevice *gpio, const uint32_t pin_id, GpioLogicValue value)
 {
-  GPIOx->OUT = value;
+  if (value == LOW)
+    gpio->CLR = 0x1U << pin_id;
+  else if (value == HIGH)
+    gpio->SET = 0x1U << pin_id;
 }
 
-static inline void gpio_set(GpioDevice *GPIOx, const uint32_t pin_mask)
+/**
+ * @brief Set the value of a GPIO pin to logic 1. An attempt to set a pin configured as input is
+ * gracefully ignored (no errors are given).
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id The ID of the GPIO pin to set. Note that IDs start at 0.
+ */
+inline void gpio_set(GpioDevice *gpio, const uint32_t pin_id)
 {
-  GPIOx->SET = pin_mask;
+  gpio->SET = 0x1U << pin_id;
 }
 
-static inline void gpio_clear(GpioDevice *GPIOx, const uint32_t pin_mask)
+/**
+ * @brief Set the value of a GPIO pin to logic 0. An attempt to clear a pin configured as input is
+ * gracefully ignored (no errors are given).
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id The ID of the GPIO pin to clear. Note that IDs start at 0.
+ */
+inline void gpio_clear(GpioDevice *gpio, const uint32_t pin_id)
 {
-  GPIOx->CLR = pin_mask;
+  gpio->CLR = 0x1U << pin_id;
 }
 
-static inline void gpio_toggle(GpioDevice *GPIOx, const uint32_t pin_mask)
+/**
+ * @brief Toggle the value of a GPIO pin. An attempt to toggle a pin configured as input is
+ * gracefully ignored (no errors are given).
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id The ID of the GPIO pin to toggle. Note that IDs start at 0.
+ */
+inline void gpio_toggle(GpioDevice *gpio, const uint32_t pin_id)
 {
-  INV_FLAG(GPIOx->OUT, pin_mask);
+  INV_FLAG(gpio->OUT, 0x1U << pin_id);
 }
 
-static inline int gpio_is_set(GpioDevice *GPIOx, const uint32_t pin_mask)
+/**
+ * @brief Test whether a GPIO pin is logic HIGH (1). Both input and output pins can be tested.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id
+ * @return true
+ * @return false
+ */
+inline bool gpio_is_set(GpioDevice *gpio, const uint32_t pin_id)
 {
-  return (GPIOx->IN & pin_mask) != 0;
+  return (gpio->IN & 0x1U << pin_id) != 0;
 }
 
-static inline int gpio_is_clear(GpioDevice *GPIOx, const uint32_t pin_mask)
+/**
+ * @brief Test whether a GPIO pin is logic LOW (0). Both input and output pins can be tested.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param pin_id
+ * @return true
+ * @return false
+ */
+inline bool gpio_is_clear(GpioDevice *gpio, const uint32_t pin_id)
 {
-  return (GPIOx->IN & pin_mask) == 0;
+  return (gpio->IN & 0x1U << pin_id) == 0;
+}
+
+/**
+ * @brief Set a group of GPIO pins to work as outputs at once. A bit mask is used to select
+ * the appropriate pins.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param bit_mask A bit mask indicating which GPIO pins to set as outputs. Example:
+ * 0b00010010 sets gpio[1] and gpio[4] as outputs.
+ */
+inline void gpio_set_output_group(GpioDevice *gpio, const uint32_t bit_mask)
+{
+  SET_FLAG(gpio->OE, bit_mask);
+}
+
+/**
+ * @brief Set a group of GPIO pins to work as inputs at once. A bit mask is used to select the
+ * appropriate pins.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param bit_mask A bit mask indicating which GPIO pins to set as inputs. Example:
+ * 0b00001100 sets gpio[2] and gpio[3] as inputs.
+ */
+inline void gpio_set_input_group(GpioDevice *gpio, const uint32_t bit_mask)
+{
+  CLR_FLAG(gpio->OE, bit_mask);
+}
+
+/**
+ * @brief Return a bit vector with the current logic state of all GPIO pins.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @return uint32_t
+ */
+inline uint32_t gpio_read_all(GpioDevice *gpio)
+{
+  return gpio->IN;
+}
+
+/**
+ * @brief Set the logic values for a group of GPIO pins. The values for the output pins are
+ * set at once from the value mask provided. Pins set as inputs will hold their values and are not
+ * affected.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param value_mask A bit mask with the logic values for the GPIO pins. Example: 0b00010000
+ * sets gpio[4] to 1 and all remaining pins to 0 (assuming GPIO pins 0 to 7 were previously set as
+ * outputs).
+ */
+inline void gpio_write_group(GpioDevice *gpio, const uint32_t value_mask)
+{
+  gpio->OUT = value_mask;
+}
+
+/**
+ * @brief Set a group of GPIO pins to logic 1. The output pins are set to 1 at once and selected
+ * from the bit mask provided. Pins set as inputs will hold their values and are not affected.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param bit_mask A bit mask indicating which GPIO pins must have their values set to logic 1.
+ * Example: 0b00010000 sets gpio[4] to 1, all remaining pins keep their current values.
+ */
+inline void gpio_set_group(GpioDevice *gpio, const uint32_t bit_mask)
+{
+  gpio->SET = bit_mask;
+}
+
+/**
+ * @brief Set a group of GPIO pins to logic 0. The output pins are set to 0 at once and selected
+ * from the bit mask provided. Pins set as inputs will hold their values and are not affected.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param bit_mask A bit mask indicating which GPIO pins must have their values set to logic 0.
+ * Example: 0b00010000 sets gpio[4] to 0, all remaining pins keep their current values.
+ */
+inline void gpio_clear_group(GpioDevice *gpio, const uint32_t bit_mask)
+{
+  gpio->CLR = bit_mask;
+}
+
+/**
+ * @brief Toggle the value of a group of GPIO pins. The output pins are toggled at once and selected
+ * from the bit mask provided. Pins set as inputs will hold their values and are not affected.
+ *
+ * @param gpio Pointer to a GpioDevice
+ * @param bit_mask A bit mask indicating which GPIO pins must have their values toggled.
+ * Example: 0b00010000 toggles gpio[4] from 0->1 or 1->0, depending on its current value. All
+ * remaining pins keep their current values.
+ */
+inline void gpio_toggle_group(GpioDevice *gpio, const uint32_t bit_mask)
+{
+  INV_FLAG(gpio->OUT, bit_mask);
 }
 
 #endif // __RVSTEEL_GPIO__
