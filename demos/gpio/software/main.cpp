@@ -9,10 +9,10 @@
 
 int main(void)
 {
-  gpio_enable_output(GPIO0, GPIO_PIN0_MASK);
+  gpio_set_output(GPIO0, 0);
 
   while (1)
   {
-    gpio_toggle(GPIO0, GPIO_PIN0_MASK);
+    gpio_toggle(GPIO0, 0);
   }
 }

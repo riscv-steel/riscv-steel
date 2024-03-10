@@ -21,9 +21,9 @@ void vTaskCode(void *pvParameters)
   for (;;)
   {
     vTaskDelay(500);
-    gpio_set(GPIO0, GPIO_PIN0_MASK);
+    gpio_set(GPIO0, 0);
     vTaskDelay(500);
-    gpio_clear(GPIO0, GPIO_PIN0_MASK);
+    gpio_clear(GPIO0, 0);
   }
 }
 
@@ -37,9 +37,9 @@ void vTaskCode1(void *pvParameters)
   for (;;)
   {
     vTaskDelay(1000);
-    gpio_set(GPIO0, GPIO_PIN1_MASK);
+    gpio_set(GPIO0, 1);
     vTaskDelay(1000);
-    gpio_clear(GPIO0, GPIO_PIN1_MASK);
+    gpio_clear(GPIO0, 1);
   }
 }
 
@@ -47,8 +47,8 @@ int main(void)
 {
   enable_vector_mod_irq();
   mtimer_enable(MTIMER0);
-  gpio_enable_output(GPIO0, GPIO_PIN0_MASK);
-  gpio_enable_output(GPIO0, GPIO_PIN1_MASK);
+  gpio_set_output(GPIO0, 0);
+  gpio_set_output(GPIO0, 1);
 
   /* Create the task without using any dynamic memory allocation. */
   xTaskCreateStatic(vTaskCode,     /* Function that implements the task. */
