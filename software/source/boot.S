@@ -13,7 +13,7 @@ __rvsteel_boot:
   .option norelax
   la    gp, __global_pointer$
   .option pop
-  la sp, __freertos_irq_stack_top
+  la sp, __stack_top
   la t0, trap_vector
   csrw mtvec, t0
 #ifdef STARTUP_DATA_ROM
