@@ -16,8 +16,15 @@ __rvsteel_boot:
   la sp, __freertos_irq_stack_top
   la t0, trap_vector
   csrw mtvec, t0
-  j _start
-  ecall
+#ifdef STARTUP_DATA_ROM
+  la a0, __data_target_start
+  la a2, __data_target_end
+  sub a2, a2, a0
+  li a1, __data_source_start
+  call memcpy
+#endif
+  call _start
+  j .
 
 .weak rvsteel_default_irq_handler
 rvsteel_default_irq_handler:
