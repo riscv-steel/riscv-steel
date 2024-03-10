@@ -124,8 +124,10 @@ add_compile_options(
 
 # Set GNU ld flags
 add_link_options(
-  # Specify the linker script for RISC-V Steel
-  -T ${LINKER_SCRIPT}
+  # Place .init section (with boot code) at the lowest address
+  -Wl,--section-start=.init=0x00000000
+  # Set the entry point
+  -e __rvsteel_boot
   # Enable garbage colletion (removal of sections never used)
   -Wl,--gc-sections
   # Generate a Map file with linking information
@@ -138,10 +140,8 @@ add_link_options(
   -mabi=${APP_ABI}
   # Print memory usage summary
   -Wl,--print-memory-usage
-  # Memory size
-  -Wl,--defsym=__RAM_MEMORY_SIZE=${MEMORY_SIZE}
-  # Stack size
-  -Wl,--defsym=__RAM_STACK_SIZE=${STACK_SIZE}
+  # Set symbol needed by FreeRTOS
+  -Wl,--defsym=__freertos_irq_stack_top=${MEMORY_SIZE}
 )
 
 # Fetch FreeRTOS
