@@ -46,15 +46,15 @@ module rvsteel_uart #(
   localparam REG_RDATA = 5'h04;
   localparam REG_READY = 5'h08;
 
-  reg [31:0] tx_cycle_counter = 0;
-  reg [31:0] rx_cycle_counter = 0;
-  reg [3:0]  tx_bit_counter;
-  reg [3:0]  rx_bit_counter;
-  reg [9:0]  tx_register;
-  reg [7:0]  rx_register;
-  reg [7:0]  rx_data;
-  reg        rx_active;
-  reg        reset_reg;
+  reg [31:0] tx_cycle_counter = 32'b0;
+  reg [31:0] rx_cycle_counter = 32'b0;
+  reg [3:0]  tx_bit_counter = 4'b0;
+  reg [3:0]  rx_bit_counter = 4'b0;
+  reg [9:0]  tx_register = 10'b1111111111;
+  reg [7:0]  rx_register = 8'b0;
+  reg [7:0]  rx_data = 8'b0;
+  reg        rx_active = 1'b0;
+  reg        reset_reg = 1'b0;
 
   wire       reset_internal;
 
