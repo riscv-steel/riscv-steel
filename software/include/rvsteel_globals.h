@@ -87,7 +87,7 @@
 
 #define CLR_BIT(REG, BIT) ((REG) &= ~(1 << (BIT)))
 
-#define INC_BIT(REG, BIT) ((REG) ^= (1 << (BIT)))
+#define INV_BIT(REG, BIT) ((REG) ^= (1 << (BIT)))
 
 #define READ_BIT(REG, BIT) (((REG) >> BIT) & 1)
 
