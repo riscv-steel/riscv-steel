@@ -6,15 +6,25 @@
 // ----------------------------------------------------------------------------
 
 .globl __rvsteel_boot
-.section ".rvsteel_boot"
+.section ".init"
 .option norvc;
 __rvsteel_boot:
-  la ra, _start
-  la sp, __stack_top
+  .option push
+  .option norelax
+  la    gp, __global_pointer$
+  .option pop
+  la sp, __freertos_irq_stack_top
   la t0, trap_vector
   csrw mtvec, t0
-  j _start
-  ecall
+#ifdef STARTUP_DATA_ROM
+  la a0, __data_target_start
+  la a2, __data_target_end
+  sub a2, a2, a0
+  li a1, __data_source_start
+  call memcpy
+#endif
+  call _start
+  j .
 
 .weak rvsteel_default_irq_handler
 rvsteel_default_irq_handler:
@@ -42,7 +52,7 @@ rvsteel_default_irq_handler:
 .weakref irq_fast_15,     rvsteel_default_irq_handler
 
 
-.section ".trap_vector"
+.section ".init"
 trap_vector:
   .option norvc
   j rvsteel_default_irq_handler               // 0  - Trap
