@@ -20,6 +20,9 @@ set(MEMORY_SIZE 16K)
 # Space reserved for the stack (in bytes)
 set(STACK_SIZE 1K)
 
+# Space reserved for the heap (in bytes)
+set(HEAP_SIZE 0K)
+
 # Points to root folder of RISC-V Steel repository
 set(RVSTEEL_ROOT "../../../")
 
@@ -124,10 +127,8 @@ add_compile_options(
 
 # Set GNU ld flags
 add_link_options(
-  # Place .init section (with boot code) at the lowest address
-  -Wl,--section-start=.init=0x00000000
-  # Set the entry point
-  -e __rvsteel_boot
+  # The linker script
+  -T${LINKER_SCRIPT}
   # Enable garbage colletion (removal of sections never used)
   -Wl,--gc-sections
   # Generate a Map file with linking information
@@ -141,7 +142,11 @@ add_link_options(
   # Print memory usage summary
   -Wl,--print-memory-usage
   # Set symbol needed by FreeRTOS
-  -Wl,--defsym=__freertos_irq_stack_top=${MEMORY_SIZE}
+  -Wl,--defsym=__memory_size=${MEMORY_SIZE}
+  # Set symbol needed by FreeRTOS
+  -Wl,--defsym=__stack_size=${STACK_SIZE}
+  # Set symbol needed by FreeRTOS
+  -Wl,--defsym=__heap_size=${HEAP_SIZE}
 )
 
 # Fetch FreeRTOS
