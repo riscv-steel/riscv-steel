@@ -86,20 +86,19 @@ module rvsteel_mtimer (
 
 
   // mtime
+  wire [63:0] mtime_plus_1 = mtime + 1'd1;
   always @(posedge clock) begin
     if (reset) begin
       mtime <= {64{1'b0}};
     end else begin
-      if (cr_en) begin
-        mtime <= mtime + 1'd1;
-      end
-
       if (mtime_l_update) begin
         mtime[31:0] <= write_data;
-      end
-
-      if (mtime_h_update) begin
+        mtime[63:32] <= mtime_plus_1[63:32];
+      end else if (mtime_h_update) begin
+        mtime[31:0] <= mtime_plus_1[31:0];
         mtime[63:32] <= write_data;
+      end else if (cr_en) begin
+        mtime <= mtime_plus_1;
       end
     end
   end
