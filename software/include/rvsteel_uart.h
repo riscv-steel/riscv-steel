@@ -10,11 +10,14 @@
 
 #include "rvsteel_globals.h"
 
-// UART Device Memory Map
+// Struct providing access to RISC-V Steel UART Device registers
 typedef struct
 {
+  // Write Data (WDATA) Register. Address offset: 0x00
   volatile uint32_t WDATA;
+  // Read Data (RDATA) Register. Address offset: 0x04
   volatile uint32_t RDATA;
+  // Ready (READY) Register. Address offset: 0x08
   volatile uint32_t READY;
 } UartDevice;
 
