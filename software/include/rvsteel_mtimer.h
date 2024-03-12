@@ -5,11 +5,12 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __MTIMER__
-#define __MTIMER__
+#ifndef __RVSTEEL_MTIMER__
+#define __RVSTEEL_MTIMER__
 
 #include "rvsteel_globals.h"
 
+// MTimerDevice Memory Map
 typedef struct
 {
   volatile uint32_t CR;
@@ -19,45 +20,85 @@ typedef struct
   volatile uint32_t MTIMECMPH;
 } MTimerDevice;
 
-// CR
-// MTIMER Enable
 #define MTIMER_CR_EN_OFFSET 0U
 #define MTIMER_CR_EN_MASK (0x1U << MTIMER_CR_EN_OFFSET)
 #define MTIMER_CR_EN (MTIMER_CR_EN_MASK)
 
-static inline void mtimer_enable(MTimerDevice *MTIMERx)
+/**
+ * @brief Enable MTIMER register counting. When counting is enabled, the value of MTIMER is
+ * incremented by 1 at every rising edge of the `clock` signal.
+ *
+ * @param mtimer Pointer to the MTimerDevice
+ */
+inline void mtimer_enable(MTimerDevice *mtimer)
 {
-  SET_FLAG(MTIMERx->CR, MTIMER_CR_EN);
+  SET_FLAG(mtimer->CR, MTIMER_CR_EN);
 }
 
-static inline void mtimer_disable(MTimerDevice *MTIMERx)
+/**
+ * @brief Disable MTIMER register counting. When counting is disabled, the value of MTIMER is held
+ * constant.
+ *
+ * @param mtimer Pointer to the MTimerDevice
+ */
+inline void mtimer_disable(MTimerDevice *mtimer)
 {
-  CLR_FLAG(MTIMERx->CR, MTIMER_CR_EN);
+  CLR_FLAG(mtimer->CR, MTIMER_CR_EN);
 }
 
-static inline void mtimer_set_counter(MTimerDevice *MTIMERx, uint64_t val)
+/**
+ * @brief Assign a new value for MTIMER register. The value can be assigned whether counting is
+ * enabled or not.
+ *
+ * @param mtimer Pointer to the MTimerDevice
+ * @param new_value The new 64-bit value for the MTIMER register
+ */
+inline void mtimer_set_counter(MTimerDevice *mtimer, uint64_t new_value)
 {
-  MTIMERx->MTIMEL = val & 0xFFFFFFFF;
-  MTIMERx->MTIMEH = val >> 32;
+  mtimer->MTIMEL = new_value & 0xFFFFFFFF;
+  mtimer->MTIMEH = new_value >> 32;
 }
 
-static inline uint64_t mtimer_get_counter(MTimerDevice *MTIMERx)
+/**
+ * @brief Read the value of the MTIMER register.
+ *
+ * @param mtimer Pointer to the MTimerDevice
+ * @return uint64_t
+ */
+inline uint64_t mtimer_get_counter(MTimerDevice *mtimer)
 {
-  uint32_t cnt_l = MTIMERx->MTIMEL;
-  uint64_t cnt_h = MTIMERx->MTIMEH;
+  uint32_t cnt_l = mtimer->MTIMEL;
+  uint64_t cnt_h = mtimer->MTIMEH;
   return (cnt_h << 31) | cnt_l;
 }
 
-static inline void mtimer_clear_counter(MTimerDevice *MTIMERx)
+/**
+ * @brief Set the value of the MTIMER register to 0 (zero).
+ *
+ * @param mtimer Pointer to the MTimerDevice
+ */
+inline void mtimer_clear_counter(MTimerDevice *mtimer)
 {
-  MTIMERx->MTIMEL = 0;
-  MTIMERx->MTIMEH = 0;
+  mtimer->MTIMEL = 0;
+  mtimer->MTIMEH = 0;
 }
 
-static inline void mtimer_set_compare(MTimerDevice *MTIMERx, uint64_t val)
+/**
+ * @brief Assign a new value for MTIMERCMP register.
+ *
+ * @param mtimer Pointer to the MTimerDevice
+ * @param new_value The new 64-bit value for the MTIMERCMP register
+ */
+inline void mtimer_set_compare(MTimerDevice *mtimer, uint64_t new_value)
 {
-  MTIMERx->MTIMECMPL = val & 0xFFFFFFFF;
-  MTIMERx->MTIMECMPH = val >> 32;
+  /* Writing -1 to MTIMECMPL, writing the MSB word first and finally writing the LSB word prevents
+   * spurious interrupts to be triggered due to the intermediate value held by the register during
+   * the update.
+   *
+   * See RISC-V Specifications, v.2 (privileged architecture) pp. 45-46 */
+  mtimer->MTIMECMPL = -1;
+  mtimer->MTIMECMPH = new_value >> 32;
+  mtimer->MTIMECMPL = new_value & 0xFFFFFFFF;
 }
 
-#endif // __MTIMER__
+#endif // __RVSTEEL_MTIMER__
