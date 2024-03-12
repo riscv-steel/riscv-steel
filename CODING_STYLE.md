@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [License Notice](#license-notice)
 - [RISC-V Steel Verilog Style Guide](#risc-v-steel-verilog-style-guide)
   - [Introduction](#introduction)
   - [Basic style elements](#basic-style-elements)
@@ -12,7 +13,12 @@
   - [Introduction](#introduction-1)
   - [Basic style elements](#basic-style-elements-1)
   - [Naming conventions](#naming-conventions-1)
-- [License notice](#license-notice)
+
+## License Notice
+
+This work, "RISC-V Steel Coding Styles", is adapted from "[lowRISC Verilog Coding Style Guide](https://github.com/lowRISC/style-guides)" by [lowRISC](https://lowrisc.org/), used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed).
+
+RISC-V Steel Coding Styles is licensed under the [MIT License](LICENSE).
 
 ## RISC-V Steel Verilog Style Guide
 
@@ -100,9 +106,3 @@ This style guide aims to promote readability for RISC-V Steel software source co
 * Use **UpperCamelCase** for structs
 * Use **ALL\_CAPS** for enums, constants, register addresses and compiler macros
 * Names should be descriptive and be consistent. Avoid abbreviations
-
-## License notice
-
-This work, "RISC-V Steel Coding Styles", is adapted from "[lowRISC Verilog Coding Style Guide](https://github.com/lowRISC/style-guides)" by [lowRISC](https://lowrisc.org/), used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed).
-
-RISC-V Steel Coding Styles is licensed under the [MIT License](LICENSE).
