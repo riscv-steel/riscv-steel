@@ -117,7 +117,7 @@ inline uint32_t gpio_read(GpioDevice *gpio, const uint32_t pin_id)
  * @param pin_id The ID of the GPIO pin to write. Note that IDs start at 0.
  * @param value Either LOW (0) or HIGH (1)
  */
-inline void gpio_write(GpioDevice *gpio, const uint32_t pin_id, GpioLogicValue value)
+inline void gpio_write(GpioDevice *gpio, const uint32_t pin_id, enum GpioLogicValue value)
 {
   if (value == LOW)
     gpio->CLR = 0x1U << pin_id;
