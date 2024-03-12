@@ -10,19 +10,26 @@
 
 #include "rvsteel_globals.h"
 
-// MTimerDevice Memory Map
+// Struct providing access to RISC-V Steel MTimer Device registers
 typedef struct
 {
+  // Control Register (CR). Address offset: 0x00
   volatile uint32_t CR;
+  // Machine Time (MTIME) Register lowest 32 bits. Address offset: 0x04
   volatile uint32_t MTIMEL;
+  // Machine Time (MTIME) Register highest 32 bits. Address offset: 0x08
   volatile uint32_t MTIMEH;
+  // Machine Time Compare (MTIMECMP) Register lowest 32 bits. Address offset: 0x0c
   volatile uint32_t MTIMECMPL;
+  // Machine Time Compare (MTIMECMP) Register highest 32 bits. Address offset: 0x10
   volatile uint32_t MTIMECMPH;
 } MTimerDevice;
 
+// Offset of the Counter Enable (EN) bit of the MTIME register
 #define MTIMER_CR_EN_OFFSET 0U
+
+// Mask used to read/set/clear the Counter Enable (EN) bit of the MTIME register
 #define MTIMER_CR_EN_MASK (0x1U << MTIMER_CR_EN_OFFSET)
-#define MTIMER_CR_EN (MTIMER_CR_EN_MASK)
 
 /**
  * @brief Enable MTIMER register counting. When counting is enabled, the value of MTIMER is
@@ -32,7 +39,7 @@ typedef struct
  */
 inline void mtimer_enable(MTimerDevice *mtimer)
 {
-  SET_FLAG(mtimer->CR, MTIMER_CR_EN);
+  SET_FLAG(mtimer->CR, MTIMER_CR_EN_MASK);
 }
 
 /**
@@ -43,7 +50,7 @@ inline void mtimer_enable(MTimerDevice *mtimer)
  */
 inline void mtimer_disable(MTimerDevice *mtimer)
 {
-  CLR_FLAG(mtimer->CR, MTIMER_CR_EN);
+  CLR_FLAG(mtimer->CR, MTIMER_CR_EN_MASK);
 }
 
 /**
