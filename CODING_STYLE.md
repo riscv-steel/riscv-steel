@@ -18,7 +18,7 @@
 
 This work, "RISC-V Steel Coding Style Guides", is adapted from "[lowRISC Verilog Coding Style Guide](https://github.com/lowRISC/style-guides)" by [lowRISC](https://lowrisc.org/), used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed).
 
-RISC-V Steel Coding Styles is licensed under the [MIT License](LICENSE).
+RISC-V Steel Coding Style Guides is licensed under the [MIT License](LICENSE).
 
 ## RISC-V Steel Verilog Style Guide
 
