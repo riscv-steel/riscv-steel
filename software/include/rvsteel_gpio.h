@@ -10,68 +10,124 @@
 
 #include "rvsteel_globals.h"
 
-// GPIO Device Memory Map
+// Struct providing access to RISC-V Steel GPIO Device registers
 typedef struct
 {
+  // IN (Input) Register. Address offset: 0x00.
   volatile uint32_t IN;
+  // OE (Output Enable) Register. Address offset: 0x04.
   volatile uint32_t OE;
+  // OUT (Output) Register. Address offset: 0x08.
   volatile uint32_t OUT;
+  // CLR (Clear) Register. Address offset: 0x0c.
   volatile uint32_t CLR;
+  // SET (Set) Register. Address offset: 0x10.
   volatile uint32_t SET;
 } GpioDevice;
 
+// Enumeration with the possible logic values of a GPIO pin (`LOW` or `HIGH`)
 enum GpioLogicValue
 {
+  // Logic `LOW` (0)
   LOW = 0,
+  // Logic `HIGH` (1)
   HIGH = 1
 };
 
+// Offset of GPIO pin 0 in the GPIO Device registers
 #define GPIO_PIN0_OFFSET 0U
+
+// Bit mask used to read/set/clear GPIO pin 0 in the GPIO Device registers
 #define GPIO_PIN0_MASK (0x1U << GPIO_PIN0_OFFSET)
 
+// Offset of GPIO pin 1 in the GPIO Device registers
 #define GPIO_PIN1_OFFSET 1U
+
+// Bit mask used to read/set/clear GPIO pin 1 in the GPIO Device registers
 #define GPIO_PIN1_MASK (0x1U << GPIO_PIN1_OFFSET)
 
+// Offset of GPIO pin 2 in the GPIO Device registers
 #define GPIO_PIN2_OFFSET 2U
+
+// Bit mask used to read/set/clear GPIO pin 2 in the GPIO Device registers
 #define GPIO_PIN2_MASK (0x1U << GPIO_PIN2_OFFSET)
 
+// Offset of GPIO pin 3 in the GPIO Device registers
 #define GPIO_PIN3_OFFSET 3U
+
+// Bit mask used to read/set/clear GPIO pin 3 in the GPIO Device registers
 #define GPIO_PIN3_MASK (0x1U << GPIO_PIN3_OFFSET)
 
+// Offset of GPIO pin 4 in the GPIO Device registers
 #define GPIO_PIN4_OFFSET 4U
+
+// Bit mask used to read/set/clear GPIO pin 4 in the GPIO Device registers
 #define GPIO_PIN4_MASK (0x1U << GPIO_PIN4_OFFSET)
 
+// Offset of GPIO pin 5 in the GPIO Device registers
 #define GPIO_PIN5_OFFSET 5U
+
+// Bit mask used to read/set/clear GPIO pin 5 in the GPIO Device registers
 #define GPIO_PIN5_MASK (0x1U << GPIO_PIN5_OFFSET)
 
+// Offset of GPIO pin 6 in the GPIO Device registers
 #define GPIO_PIN6_OFFSET 6U
+
+// Bit mask used to read/set/clear GPIO pin 6 in the GPIO Device registers
 #define GPIO_PIN6_MASK (0x1U << GPIO_PIN6_OFFSET)
 
+// Offset of GPIO pin 7 in the GPIO Device registers
 #define GPIO_PIN7_OFFSET 7U
+
+// Bit mask used to read/set/clear GPIO pin 7 in the GPIO Device registers
 #define GPIO_PIN7_MASK (0x1U << GPIO_PIN7_OFFSET)
 
+// Offset of GPIO pin 8 in the GPIO Device registers
 #define GPIO_PIN8_OFFSET 8U
+
+// Bit mask used to read/set/clear GPIO pin 8 in the GPIO Device registers
 #define GPIO_PIN8_MASK (0x1U << GPIO_PIN8_OFFSET)
 
+// Offset of GPIO pin 9 in the GPIO Device registers
 #define GPIO_PIN9_OFFSET 9U
+
+// Bit mask used to read/set/clear GPIO pin 9 in the GPIO Device registers
 #define GPIO_PIN9_MASK (0x1U << GPIO_PIN9_OFFSET)
 
+// Offset of GPIO pin 10 in the GPIO Device registers
 #define GPIO_PIN10_OFFSET 10U
+
+// Bit mask used to read/set/clear GPIO pin 10 in the GPIO Device registers
 #define GPIO_PIN10_MASK (0x1U << GPIO_PIN10_OFFSET)
 
+// Offset of GPIO pin 11 in the GPIO Device registers
 #define GPIO_PIN11_OFFSET 11U
+
+// Bit mask used to read/set/clear GPIO pin 11 in the GPIO Device registers
 #define GPIO_PIN11_MASK (0x1U << GPIO_PIN11_OFFSET)
 
+// Offset of GPIO pin 12 in the GPIO Device registers
 #define GPIO_PIN12_OFFSET 12U
+
+// Bit mask used to read/set/clear GPIO pin 12 in the GPIO Device registers
 #define GPIO_PIN12_MASK (0x1U << GPIO_PIN12_OFFSET)
 
+// Offset of GPIO pin 13 in the GPIO Device registers
 #define GPIO_PIN13_OFFSET 13U
+
+// Bit mask used to read/set/clear GPIO pin 13 in the GPIO Device registers
 #define GPIO_PIN13_MASK (0x1U << GPIO_PIN13_OFFSET)
 
+// Offset of GPIO pin 14 in the GPIO Device registers
 #define GPIO_PIN14_OFFSET 14U
+
+// Bit mask used to read/set/clear GPIO pin 14 in the GPIO Device registers
 #define GPIO_PIN14_MASK (0x1U << GPIO_PIN14_OFFSET)
 
+// Offset of GPIO pin 15 in the GPIO Device registers
 #define GPIO_PIN15_OFFSET 15U
+
+// Bit mask used to read/set/clear GPIO pin 15 in the GPIO Device registers
 #define GPIO_PIN15_MASK (0x1U << GPIO_PIN15_OFFSET)
 
 /**
