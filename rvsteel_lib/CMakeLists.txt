@@ -24,7 +24,7 @@ set(STACK_SIZE 1K)
 set(HEAP_SIZE 0K)
 
 # Path to the folder with RISC-V Steel include files
-set(RVSTEEL_INC_DIR ${CMAKE_SOURCE_DIR}/include/)
+set(RVSTEEL_INC_DIR ${CMAKE_SOURCE_DIR})
 
 # RISC-V ISA features present in RISC-V Steel
 set(APP_ARCH rv32izicsr)
@@ -45,7 +45,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS "-O2")
 
 # Path to RISC-V Steel linker script
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/source/link.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/rvsteel_link.ld)
 
 # Cross-Compiling for a generic microcontroller
 set(CMAKE_SYSTEM_NAME Generic)
@@ -148,13 +148,12 @@ add_link_options(
 
 # Source files
 set(SOURCES
-  ${CMAKE_SOURCE_DIR}/source/boot.S
-  ${CMAKE_SOURCE_DIR}/source/main.cpp
+  ${CMAKE_SOURCE_DIR}/rvsteel_boot.S
 )
 
 # Include files folder
 include_directories(
-  ${CMAKE_SOURCE_DIR}/include
+  ${CMAKE_SOURCE_DIR}
 )
 
 # The executable
