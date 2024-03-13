@@ -142,7 +142,7 @@ add_link_options(
 )
 
 # Steel lib
-include(${RVSTEEL_ROOT}/libsteel/CMakeLists.txt)
+include(${RVSTEEL_ROOT}/libsteel/libsteel.cmake)
 
 # Path to RISC-V Steel linker script
 set(LINKER_SCRIPT ${LIBSTEEL_LINKER_SCRIPT})
