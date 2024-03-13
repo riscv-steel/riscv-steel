@@ -26,9 +26,6 @@ set(HEAP_SIZE 0K)
 # Points to root folder of RISC-V Steel repository
 set(RVSTEEL_ROOT "../../../")
 
-# Path to the folder with RISC-V Steel include files
-set(RVSTEEL_INC_DIR ${RVSTEEL_ROOT}/software/include/)
-
 # RISC-V ISA features present in RISC-V Steel
 set(APP_ARCH rv32izicsr)
 
@@ -46,9 +43,6 @@ set(CMAKE_C_STANDARD 11)
 
 # C optimization level
 set(CMAKE_C_FLAGS "-O2")
-
-# Path to RISC-V Steel linker script
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/source/link.ld)
 
 # Cross-Compiling for a generic microcontroller
 set(CMAKE_SYSTEM_NAME Generic)
@@ -127,8 +121,6 @@ add_compile_options(
 
 # Set GNU ld flags
 add_link_options(
-  # The linker script
-  -T${LINKER_SCRIPT}
   # Enable garbage colletion (removal of sections never used)
   -Wl,--gc-sections
   # Generate a Map file with linking information
@@ -149,23 +141,31 @@ add_link_options(
   -Wl,--defsym=__heap_size=${HEAP_SIZE}
 )
 
+# Steel lib
+include(${RVSTEEL_ROOT}/libsteel/CMakeLists.txt)
+
+# The linker script
+add_link_options(-T${LIBSTEEL_LD})
+
 # Fetch FreeRTOS
 include(cmake/freertos.cmake)
 
 # Source files
 set(SOURCES
-  ${CMAKE_SOURCE_DIR}/source/boot.S
+  ${LIBSTEEL_BOOT}
   ${CMAKE_SOURCE_DIR}/source/main.cpp
 )
 
 # Instruct the compiler where to find RISC-V Steel and this project include files
 include_directories(
-  ${RVSTEEL_INC_DIR}
   ${CMAKE_SOURCE_DIR}/include
 )
 
 # The executable
 add_executable(${APP_NAME}.elf ${SOURCES} ${CMAKE_SOURCE_DIR}/include/FreeRTOSConfig.h)
+
+# Link to libsteel
+target_link_libraries(${APP_NAME}.elf libsteel)
 
 # Link to FreeRTOS
 target_link_libraries(${APP_NAME}.elf freertos_kernel freertos_config)
