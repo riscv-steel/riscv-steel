@@ -23,7 +23,11 @@ __rvsteel_boot:
   li a1, __data_source_start
   call memcpy
 #endif
+#ifdef NO_STARTUP_FILES
+  call main
+#else
   call _start
+#endif
   j .
 
 .weak rvsteel_default_irq_handler
