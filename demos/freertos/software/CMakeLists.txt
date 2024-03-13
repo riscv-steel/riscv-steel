@@ -144,15 +144,18 @@ add_link_options(
 # Steel lib
 include(${RVSTEEL_ROOT}/libsteel/CMakeLists.txt)
 
+# Path to RISC-V Steel linker script
+set(LINKER_SCRIPT ${LIBSTEEL_LINKER_SCRIPT})
+
 # The linker script
-add_link_options(-T${LIBSTEEL_LD})
+add_link_options(-T${LINKER_SCRIPT})
 
 # Fetch FreeRTOS
 include(cmake/freertos.cmake)
 
 # Source files
 set(SOURCES
-  ${LIBSTEEL_BOOT}
+  ${CMAKE_SOURCE_DIR}/source/boot.S
   ${CMAKE_SOURCE_DIR}/source/main.cpp
 )
 
