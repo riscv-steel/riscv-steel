@@ -7,8 +7,8 @@
 
 cmake_minimum_required(VERSION 3.15)
 
-set(LIBSTEEL_LD   ${CMAKE_CURRENT_LIST_DIR}/rvsteel_link.ld)
-set(LIBSTEEL_BOOT ${CMAKE_CURRENT_LIST_DIR}/rvsteel_boot.S)
+set(LIBSTEEL_BOOT           ${CMAKE_CURRENT_LIST_DIR}/rvsteel_boot.S)
+set(LIBSTEEL_LINKER_SCRIPT  ${CMAKE_CURRENT_LIST_DIR}/rvsteel_link.ld)
 
 add_library(libsteel INTERFACE)
 
