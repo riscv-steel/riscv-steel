@@ -45,7 +45,7 @@ void vTaskCode1(void *pvParameters)
 
 int main(void)
 {
-  enable_vector_mod_irq();
+  csr_enable_vectored_mode_irq();
   mtimer_enable(MTIMER0);
   gpio_set_output(GPIO0, 0);
   gpio_set_output(GPIO0, 1);
