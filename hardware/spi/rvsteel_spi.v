@@ -62,10 +62,10 @@ module rvsteel_spi #(
   localparam REG_CPOL           = 5'h00;
   localparam REG_CPHA           = 5'h04;
   localparam REG_CHIP_SELECT    = 5'h08;
-  localparam REG_CLOCK_DIV      = 5'h0c;
+  localparam REG_CLOCK_CONF     = 5'h0c;
   localparam REG_WDATA          = 5'h10;
   localparam REG_RDATA          = 5'h14;
-  localparam REG_STATUS         = 5'h18;
+  localparam REG_BUSY           = 5'h18;
 
   wire busy_bit = curr_state == SPI_CPOL || curr_state == SPI_CPOL_N;
   wire valid_write_request = write_request == 1'b1 && &write_strobe == 1'b1;
@@ -91,9 +91,9 @@ module rvsteel_spi #(
         REG_CPOL:         read_data <= {31'b0, cpol};
         REG_CPHA:         read_data <= {31'b0, cpha};
         REG_CHIP_SELECT:  read_data <= {24'b0, chip_select};
-        REG_CLOCK_DIV:    read_data <= {24'b0, clock_div};
+        REG_CLOCK_CONF:   read_data <= {24'b0, clock_div};
         REG_RDATA:        read_data <= {24'b0, rx_reg};
-        REG_STATUS:       read_data <= {31'b0, busy_bit};
+        REG_BUSY:         read_data <= {31'b0, busy_bit};
         default:          read_data <= 32'hdeadbeef;
       endcase
     end
@@ -131,7 +131,7 @@ module rvsteel_spi #(
   always @(posedge clock) begin
     if (reset)
       clock_div <= 8'h00;
-    else if (rw_address == REG_CLOCK_DIV && valid_write_request == 1'b1)
+    else if (rw_address == REG_CLOCK_CONF && valid_write_request == 1'b1)
       clock_div <= write_data[7:0];
     else
       clock_div <= clock_div;
