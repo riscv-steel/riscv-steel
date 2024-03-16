@@ -9,9 +9,10 @@
 #define __RVSTEEL_SOC__
 
 #include "rvsteel_csr.h"
-#include "rvsteel_uart.h"
-#include "rvsteel_mtimer.h"
 #include "rvsteel_gpio.h"
+#include "rvsteel_mtimer.h"
+#include "rvsteel_spi.h"
+#include "rvsteel_uart.h"
 
 // Base address
 #define MAIN_BASE_ADDR 0x00000000U
