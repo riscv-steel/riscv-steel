@@ -37,7 +37,8 @@ inline void spi_set_cpol(SpiDevice *spi, const uint8_t cpol)
  */
 inline void spi_set_cpha(SpiDevice *spi, const uint8_t cpha)
 {
-  spi->CPHA = cpha;
+  if (cpha <= 1)
+    spi->CPHA = cpha;
 }
 
 /**
