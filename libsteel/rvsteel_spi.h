@@ -15,6 +15,18 @@ typedef struct
   volatile uint32_t BUSY;        // Busy register.                             Address offset: 0x18.
 } SpiDevice;
 
+enum SpiMode
+{
+  // SPI Mode 0, equivalent to CPOL=0 CPHA=0
+  SPI_MODE0_CPOL0_CPHA0 = 0,
+  // SPI Mode 1, equivalent to CPOL=0 CPHA=1
+  SPI_MODE1_CPOL0_CPHA1 = 1,
+  // SPI Mode 2, equivalent to CPOL=1 CPHA=0
+  SPI_MODE2_CPOL1_CPHA0 = 2,
+  // SPI Mode 3, equivalent to CPOL=1 CPHA=1
+  SPI_MODE3_CPOL1_CPHA1 = 3
+};
+
 /**
  * @brief Set the clock polarity of the SPI Controller. An attempt to set CPOL to a value other than
  * 0 or 1 is gracefully ignored (no errors are given).
@@ -63,6 +75,55 @@ inline uint32_t spi_get_cpol(SpiDevice *spi)
 inline uint32_t spi_get_cpha(SpiDevice *spi)
 {
   return spi->CPHA;
+}
+
+/**
+ * @brief Set the SPI device to operate on a given mode.
+ *
+ * The four possible modes are:
+ *
+ *   - MODE 0: equivalent to CPOL=0 and CPHA=0
+ *   - MODE 1: equivalent to CPOL=0 and CPHA=1
+ *   - MODE 2: equivalent to CPOL=1 and CPHA=0
+ *   - MODE 3: equivalent to CPOL=1 and CPHA=1
+ *
+ * @param spi Pointer to the SpiDevice.
+ * @param mode The operation mode, chosen from `enum SpiMode.`
+ */
+inline void spi_set_mode(SpiDevice *spi, enum SpiMode mode)
+{
+  switch (mode)
+  {
+  case SPI_MODE0_CPOL0_CPHA0:
+    spi_set_cpol(spi, 0);
+    spi_set_cpha(spi, 0);
+    break;
+  case SPI_MODE1_CPOL0_CPHA1:
+    spi_set_cpol(spi, 0);
+    spi_set_cpha(spi, 1);
+    break;
+  case SPI_MODE2_CPOL1_CPHA0:
+    spi_set_cpol(spi, 1);
+    spi_set_cpha(spi, 0);
+    break;
+  case SPI_MODE3_CPOL1_CPHA1:
+    spi_set_cpol(spi, 1);
+    spi_set_cpha(spi, 1);
+    break;
+  default:
+    break;
+  }
+}
+
+/**
+ * @brief Read the current SPI operation mode.
+ *
+ * @param spi Pointer to the SpiDevice.
+ * @return enum SpiMode
+ */
+inline enum SpiMode spi_get_mode(SpiDevice *spi)
+{
+  return ((enum SpiMode)((spi->CPHA << 1) | spi->CPOL));
 }
 
 /**
