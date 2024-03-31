@@ -5,10 +5,10 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __RVSTEEL_MTIMER__
-#define __RVSTEEL_MTIMER__
+#ifndef __LIBSTEEL_MTIMER__
+#define __LIBSTEEL_MTIMER__
 
-#include "rvsteel_globals.h"
+#include "libsteel/globals.h"
 
 // Struct providing access to RISC-V Steel MTimer Device registers
 typedef struct
@@ -108,4 +108,4 @@ inline void mtimer_set_compare(MTimerDevice *mtimer, uint64_t new_value)
   mtimer->MTIMECMPL = new_value & 0xFFFFFFFF;
 }
 
-#endif // __RVSTEEL_MTIMER__
+#endif // __LIBSTEEL_MTIMER__

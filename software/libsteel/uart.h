@@ -5,10 +5,10 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __RVSTEEL_UART__
-#define __RVSTEEL_UART__
+#ifndef __LIBSTEEL_UART__
+#define __LIBSTEEL_UART__
 
-#include "rvsteel_globals.h"
+#include "libsteel/globals.h"
 
 // Struct providing access to RISC-V Steel UART Device registers
 typedef struct
@@ -75,4 +75,4 @@ inline void uart_write_string(UartDevice *uart, const char *str)
   }
 }
 
-#endif // __RVSTEEL_UART__
+#endif // __LIBSTEEL_UART__
