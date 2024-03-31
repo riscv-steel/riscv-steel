@@ -5,10 +5,10 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __RVSTEEL_GPIO__
-#define __RVSTEEL_GPIO__
+#ifndef __LIBSTEEL_GPIO__
+#define __LIBSTEEL_GPIO__
 
-#include "rvsteel_globals.h"
+#include "libsteel/globals.h"
 
 // Struct providing access to RISC-V Steel GPIO Device registers
 typedef struct
@@ -335,4 +335,4 @@ inline void gpio_toggle_group(GpioDevice *gpio, const uint32_t bit_mask)
   INV_FLAG(gpio->OUT, bit_mask);
 }
 
-#endif // __RVSTEEL_GPIO__
+#endif // __LIBSTEEL_GPIO__

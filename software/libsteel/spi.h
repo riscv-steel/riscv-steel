@@ -1,7 +1,7 @@
-#ifndef __RVSTEEL_SPI__
-#define __RVSTEEL_SPI__
+#ifndef __LIBSTEEL_SPI__
+#define __LIBSTEEL_SPI__
 
-#include "rvsteel_globals.h"
+#include "libsteel/globals.h"
 
 // Struct providing access to RISC-V Steel SPI Device registers
 typedef struct

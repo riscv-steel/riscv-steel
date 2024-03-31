@@ -5,10 +5,10 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __RVSTEEL_CSR__
-#define __RVSTEEL_CSR__
+#ifndef __LIBSTEEL_CSR__
+#define __LIBSTEEL_CSR__
 
-#include "rvsteel_globals.h"
+#include "libsteel/globals.h"
 
 #if __riscv_xlen != 32
 #error "Unsupported XLEN"
@@ -527,4 +527,4 @@ inline void csr_enable_direct_mode_irq()
   CSR_CLEAR(CSR_MTVEC, 1U);
 }
 
-#endif // __RVSTEEL_CSR__
+#endif // __LIBSTEEL_CSR__

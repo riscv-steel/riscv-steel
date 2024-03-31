@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __RVSTEEL_GLOBALS__
-#define __RVSTEEL_GLOBALS__
+#ifndef __LIBSTEEL_GLOBALS__
+#define __LIBSTEEL_GLOBALS__
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -37,6 +37,10 @@
 
 #ifndef __WEAK
 #define __WEAK __attribute__((weak))
+#endif
+
+#ifndef __ALIAS
+#define __ALIAS(weak_alias) __attribute__((alias(weak_alias)))
 #endif
 
 #ifndef __WEAK_ALIAS
@@ -95,4 +99,4 @@
 
 #define NUMBER_OF(a) (sizeof a / sizeof a[0])
 
-#endif // __RVSTEEL_GLOBALS__
+#endif // __LIBSTEEL_GLOBALS__
