@@ -9,7 +9,7 @@ MAKEFLAGS += --no-print-directory
 
 RUN_FLAGS  = "
 RUN_FLAGS += --log-level=DEBUG
-RUN_FLAGS += --ram-init-h32=$$PWD/build/example_freertos.hex
+RUN_FLAGS += --ram-init-h32=$$PWD/build/freertos_demo.hex
 RUN_FLAGS += --out-wave=$$PWD/dump/wave.fst
 RUN_FLAGS += --cycles=1000000
 RUN_FLAGS += --freq-ns=20
