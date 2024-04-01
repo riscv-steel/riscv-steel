@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include "rvsteel_soc.h"
+#include "libsteel/soc.h"
 #include <FreeRTOS.h>
 #include <task.h>
 
@@ -21,9 +21,9 @@ void vTaskCode(void *pvParameters)
   for (;;)
   {
     vTaskDelay(500);
-    gpio_set(GPIO0, 0);
+    gpio_set(RVSTEEL_GPIO, 0);
     vTaskDelay(500);
-    gpio_clear(GPIO0, 0);
+    gpio_clear(RVSTEEL_GPIO, 0);
   }
 }
 
@@ -37,18 +37,18 @@ void vTaskCode1(void *pvParameters)
   for (;;)
   {
     vTaskDelay(1000);
-    gpio_set(GPIO0, 1);
+    gpio_set(RVSTEEL_GPIO, 1);
     vTaskDelay(1000);
-    gpio_clear(GPIO0, 1);
+    gpio_clear(RVSTEEL_GPIO, 1);
   }
 }
 
 int main(void)
 {
   csr_enable_vectored_mode_irq();
-  mtimer_enable(MTIMER0);
-  gpio_set_output(GPIO0, 0);
-  gpio_set_output(GPIO0, 1);
+  mtimer_enable(RVSTEEL_MTIMER);
+  gpio_set_output(RVSTEEL_GPIO, 0);
+  gpio_set_output(RVSTEEL_GPIO, 1);
 
   /* Create the task without using any dynamic memory allocation. */
   xTaskCreateStatic(vTaskCode,     /* Function that implements the task. */
@@ -99,3 +99,25 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
   configMINIMAL_STACK_SIZE is specified in words, not bytes. */
   *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
 }
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+  /* Trap handler for Machine Timer Interrupts.
+     Calls FreeRTOS MTimer interrupt handler and return. */
+  __attribute__((naked)) void mti_irq_handler()
+  {
+    __ASM_VOLATILE("call freertos_risc_v_mtimer_interrupt_handler");
+    __ASM_VOLATILE("mret");
+  }
+  /* The default trap handler (for non-vectored mode).
+     Calls FreeRTOS exception handler and return. */
+  __attribute__((naked)) void default_trap_handler()
+  {
+    __ASM_VOLATILE("call freertos_risc_v_exception_handler");
+    __ASM_VOLATILE("mret");
+  }
+#ifdef __cplusplus
+}
+#endif
