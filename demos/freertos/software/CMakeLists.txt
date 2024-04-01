@@ -9,13 +9,13 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Name of the executable to be generated
-set(APP_NAME "example_freertos")
+set(APP_NAME "freertos_demo")
 
-# Frequency of the clock signal (needed for FreeRTOS)
-set(CPU_FREQUENCY 12000000UL)
+# Inform the same value provided for the CLOCK_FREQUENCY parameter of the SoC IP
+set(CLOCK_FREQUENCY 12000000UL)
 
-# Set this variable to the same value of the MEMORY_SIZE parameter of the SoC IP
-set(MEMORY_SIZE 16K)
+# Inform the same value provided for the MEMORY_SIZE parameter of the SoC IP
+set(MEMORY_SIZE 32K)
 
 # Space reserved for the stack (in bytes)
 set(STACK_SIZE 1K)
@@ -23,8 +23,8 @@ set(STACK_SIZE 1K)
 # Space reserved for the heap (in bytes)
 set(HEAP_SIZE 0K)
 
-# Points to root folder of RISC-V Steel repository
-set(RVSTEEL_ROOT "../../../")
+# Path to RISC-V Steel linker script
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/link.ld)
 
 # RISC-V ISA features present in RISC-V Steel
 set(APP_ARCH rv32izicsr)
@@ -95,10 +95,31 @@ endif()
 project(${APP_NAME} LANGUAGES C CXX ASM)
 
 # Set compiler definitions
-add_compile_definitions(CPU_FREQUENCY=${CPU_FREQUENCY})
+add_compile_definitions(CPU_FREQUENCY=${CLOCK_FREQUENCY})
+
+# libsteel
+include(libsteel.cmake)
+
+# FreeRTOS
+include(FreeRTOS.cmake)
+
+# Source files
+set(SOURCES
+  ${CMAKE_SOURCE_DIR}/include/FreeRTOSConfig.h
+  ${CMAKE_SOURCE_DIR}/main.cpp
+)
+
+# Instruct the compiler where to find the include files for this project
+include_directories(
+  ${CMAKE_SOURCE_DIR}/include
+)
+
+# The executable
+add_executable(${APP_NAME}.elf ${SOURCES})
 
 # Set GCC flags
-add_compile_options(
+target_compile_options(${APP_NAME}.elf
+  PRIVATE
   # Enables all the warnings about constructions that some users consider questionable
   -Wall
   # Enables some extra warning flags that are not enabled by -Wall
@@ -120,7 +141,10 @@ add_compile_options(
 )
 
 # Set GNU ld flags
-add_link_options(
+target_link_options(${APP_NAME}.elf
+  PRIVATE
+  # Linker script for this project
+  -T${LINKER_SCRIPT}
   # Enable garbage colletion (removal of sections never used)
   -Wl,--gc-sections
   # Generate a Map file with linking information
@@ -140,32 +164,6 @@ add_link_options(
   # Set symbol needed by FreeRTOS
   -Wl,--defsym=__heap_size=${HEAP_SIZE}
 )
-
-# Steel lib
-include(${RVSTEEL_ROOT}/libsteel/libsteel.cmake)
-
-# Path to RISC-V Steel linker script
-set(LINKER_SCRIPT ${LIBSTEEL_LINKER_SCRIPT})
-
-# The linker script
-add_link_options(-T${LINKER_SCRIPT})
-
-# Fetch FreeRTOS
-include(cmake/freertos.cmake)
-
-# Source files
-set(SOURCES
-  ${CMAKE_SOURCE_DIR}/source/boot.S
-  ${CMAKE_SOURCE_DIR}/source/main.cpp
-)
-
-# Instruct the compiler where to find RISC-V Steel and this project include files
-include_directories(
-  ${CMAKE_SOURCE_DIR}/include
-)
-
-# The executable
-add_executable(${APP_NAME}.elf ${SOURCES} ${CMAKE_SOURCE_DIR}/include/FreeRTOSConfig.h)
 
 # Link to libsteel
 target_link_libraries(${APP_NAME}.elf libsteel)
