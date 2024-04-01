@@ -11,9 +11,6 @@ cmake_minimum_required(VERSION 3.15)
 # Name of the executable to be generated
 set(APP_NAME "freertos_demo")
 
-# Inform the same value provided for the CLOCK_FREQUENCY parameter of the SoC IP
-set(CLOCK_FREQUENCY 12000000UL)
-
 # Inform the same value provided for the MEMORY_SIZE parameter of the SoC IP
 set(MEMORY_SIZE 32K)
 
@@ -83,6 +80,11 @@ find_program(PATH_CMAKE_C_COMPILER
   PATHS ENV PATH
   REQUIRED
 )
+
+# Check whether the clock frequency is defined
+if(NOT DEFINED CLOCK_FREQUENCY)
+  message(FATAL_ERROR "[ERROR] CLOCK_FREQUENCY is not defined. Please call CMake with -DCLOCK_FREQUENCY=<target_freq>.")
+endif()
 
 # Print whether GCC was found
 if(NOT PATH_CMAKE_C_COMPILER)
