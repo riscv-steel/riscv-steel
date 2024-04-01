@@ -12,7 +12,7 @@
  * value saved in the Machine Prior Interrupt Enable bit.
  *
  */
-__attribute__((naked)) void rvsteel_return_from_trap()
+__NAKED void rvsteel_return_from_trap()
 {
   __ASM_VOLATILE("mret");
 }

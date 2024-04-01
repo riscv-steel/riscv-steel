@@ -39,6 +39,10 @@
 #define __WEAK __attribute__((weak))
 #endif
 
+#ifndef __NAKED
+#define __NAKED __attribute__((naked))
+#endif
+
 #ifndef __ALIAS
 #define __ALIAS(weak_alias) __attribute__((alias(weak_alias)))
 #endif

@@ -27,41 +27,23 @@ SECTIONS
 
   .text :
   {
-    KEEP (*(.init.rvsteel_boot))
-    KEEP (*(.init.rvsteel_trap_vector))
-    KEEP (*(.text.rvsteel_return_from_trap))
-    KEEP (*(.text.default_trap_handler))
-    KEEP (*(.text.msi_irq_handler))
-    KEEP (*(.text.mti_irq_handler))
-    KEEP (*(.text.mei_irq_handler))
-    KEEP (*(.text.fast0_irq_handler))
-    KEEP (*(.text.fast1_irq_handler))
-    KEEP (*(.text.fast2_irq_handler))
-    KEEP (*(.text.fast3_irq_handler))
-    KEEP (*(.text.fast4_irq_handler))
-    KEEP (*(.text.fast5_irq_handler))
-    KEEP (*(.text.fast6_irq_handler))
-    KEEP (*(.text.fast7_irq_handler))
-    KEEP (*(.text.fast8_irq_handler))
-    KEEP (*(.text.fast9_irq_handler))
-    KEEP (*(.text.fast10_irq_handler))
-    KEEP (*(.text.fast11_irq_handler))
-    KEEP (*(.text.fast12_irq_handler))
-    KEEP (*(.text.fast13_irq_handler))
-    KEEP (*(.text.fast14_irq_handler))
-    KEEP (*(.text.fast15_irq_handler))
-    KEEP (*(SORT_NONE(.init)))
-    KEEP (*(SORT_NONE(.fini)))
+    *(.init.rvsteel_boot)
+    *(.init.rvsteel_trap_vector)
+    *(.text.rvsteel_return_from_trap)
+    *(.text.default_trap_handler)
+    *(.text.*_irq_handler)
+    *(SORT_NONE(.init))
+    *(SORT_NONE(.fini))
 
     . = ALIGN(4);
     PROVIDE_HIDDEN (__preinit_array_start = .);
-    KEEP (*(.preinit_array*))
+    *(.preinit_array*)
     PROVIDE_HIDDEN (__preinit_array_end = .);
 
     . = ALIGN(4);
     PROVIDE_HIDDEN (__init_array_start = .);
-    KEEP (*(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*)))
-    KEEP (*(.init_array .ctors))
+    *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+    *(.init_array .ctors)
     PROVIDE_HIDDEN (__init_array_end = .);
 
     . = ALIGN(4);
