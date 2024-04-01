@@ -19,16 +19,35 @@ ifdef TOOLCHAIN_PREFIX
 TOOLCHAIN_PREFIX_FLAG = -DTOOLCHAIN_PREFIX=${TOOLCHAIN_PREFIX}
 endif
 
-all: debug
+all:
+	@echo "\nUsage:\n\n  make <target>\n"
+	@echo "Available targets:\n"
+	@echo "  arty_debug\t\t Debug build for Digilent Arty A7 board"
+	@echo "  cmod_debug\t\t Debug build for Digilent Cmod A7 board"
+	@echo "  arty_release\t\t Release build for Digilent Arty A7 board"
+	@echo "  cmod_release\t\t Release build for Digilent Cmod A7 board"
+	@echo "  run_sim\t\t Run the built target on the SoC IP simulator"
+	@echo "  clean\t\t\t Remove the build/ folder\n"
 
-debug:
+
+arty_debug:
 	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} ..
+	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=50000000 ..
 	$(MAKE) -C build
 
-release:
+arty_release:
 	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} ..
+	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=50000000 ..
+	$(MAKE) -C build
+
+cmod_debug:
+	@mkdir -p build
+	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=12000000 ..
+	$(MAKE) -C build
+
+cmod_release:
+	@mkdir -p build
+	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=12000000 ..
 	$(MAKE) -C build
 
 run_sim: all
