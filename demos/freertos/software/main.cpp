@@ -104,19 +104,19 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
 extern "C"
 {
 #endif
+  extern void freertos_risc_v_mtimer_interrupt_handler();
+  extern void freertos_risc_v_exception_handler();
   /* Trap handler for Machine Timer Interrupts.
-     Calls FreeRTOS MTimer interrupt handler and return. */
-  __attribute__((naked)) void mti_irq_handler()
+     Call FreeRTOS MTimer interrupt handler. */
+  __NAKED void mti_irq_handler()
   {
-    __ASM_VOLATILE("call freertos_risc_v_mtimer_interrupt_handler");
-    __ASM_VOLATILE("mret");
+    freertos_risc_v_mtimer_interrupt_handler();
   }
   /* The default trap handler (for non-vectored mode).
-     Calls FreeRTOS exception handler and return. */
-  __attribute__((naked)) void default_trap_handler()
+     Call FreeRTOS exception handler. */
+  __NAKED void default_trap_handler()
   {
-    __ASM_VOLATILE("call freertos_risc_v_exception_handler");
-    __ASM_VOLATILE("mret");
+    freertos_risc_v_exception_handler();
   }
 #ifdef __cplusplus
 }
