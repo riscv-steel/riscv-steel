@@ -29,7 +29,6 @@ all:
 	@echo "  run_sim\t\t Run the built target on the SoC IP simulator"
 	@echo "  clean\t\t\t Remove the build/ folder\n"
 
-
 arty_debug:
 	@mkdir -p build
 	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=50000000 ..
@@ -58,4 +57,4 @@ clean:
 	@rm -rf build dump
 	@echo "Build directory deleted."
 
-.PHONY: debug release run_sim clean
+.PHONY: arty_debug arty_release cmod_debug cmod_release run_sim clean
