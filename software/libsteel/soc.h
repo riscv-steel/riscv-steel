@@ -21,9 +21,9 @@
 #define RVSTEEL_SPI_ADDRESS 0x80030000U
 
 // RISC-V Steel Peripherals
-#define RVSTEEL_UART ((UartDevice *)RVSTEEL_UART_ADDRESS)
-#define RVSTEEL_MTIMER ((MTimerDevice *)RVSTEEL_MTIMER_ADDRESS)
-#define RVSTEEL_GPIO ((GpioDevice *)RVSTEEL_GPIO_ADDRESS)
-#define RVSTEEL_SPI ((SpiDevice *)RVSTEEL_SPI_ADDRESS)
+#define RVSTEEL_UART ((UartDevice *)RVSTEEL_UART_ADDRESS)       // RISC-V Steel UART
+#define RVSTEEL_MTIMER ((MTimerDevice *)RVSTEEL_MTIMER_ADDRESS) // RISC-V Steel MTimer
+#define RVSTEEL_GPIO ((GpioDevice *)RVSTEEL_GPIO_ADDRESS)       // RISC-V Steel GPIO
+#define RVSTEEL_SPI ((SpiDevice *)RVSTEEL_SPI_ADDRESS)          // RISC-V Steel SPI
 
 #endif // __LIBSTEEL_SOC__
