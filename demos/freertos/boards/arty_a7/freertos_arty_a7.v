@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-module hello_world_cmod_a7 (
+module freertos_arty_a7 (
 
   input   wire clock,
   input   wire reset,
