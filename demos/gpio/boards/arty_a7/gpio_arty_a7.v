@@ -19,6 +19,7 @@ module gpio_arty_a7 #(
 
   );
   
+  // GPIO signals
   wire [GPIO_WIDTH-1:0] gpio_input;
   wire [GPIO_WIDTH-1:0] gpio_oe;
   wire [GPIO_WIDTH-1:0] gpio_output;
