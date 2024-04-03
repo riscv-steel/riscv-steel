@@ -5,17 +5,29 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-module gpio_cmod_a7 (
+module gpio_cmod_a7 #( 
+
+  parameter GPIO_WIDTH = 3
+
+  )(
 
   input   wire clock,
   input   wire reset,
   input   wire uart_rx,
   output  wire uart_tx,
-  output  wire gpio0,
-  output  wire gpio1,
-  input   wire gpio2
+  inout   wire [GPIO_WIDTH-1:0] gpio
 
   );
+  
+  wire [GPIO_WIDTH-1:0] gpio_in;
+  wire [GPIO_WIDTH-1:0] gpio_oe;
+  wire [GPIO_WIDTH-1:0] gpio_out;
+
+  genvar i;
+  for (i = 0; i < GPIO_WIDTH; i=i+1) begin
+    assign gpio_in[i] = gpio_oe[i] == 1'b1 ? gpio_out[i] : gpio[i];
+    assign gpio[i] = gpio_oe[i] == 1'b1 ? gpio_out[i] : 1'bZ;
+  end
 
   // Divides the 100MHz board block by 2
   reg clock_50mhz;
@@ -44,9 +56,9 @@ module gpio_cmod_a7 (
     .halt                     (1'b0                   ),
     .uart_rx                  (uart_rx                ),
     .uart_tx                  (uart_tx                ),
-    .gpio_input               ({gpio2,2'b0}           ),
-    .gpio_oe                  (), // unused
-    .gpio_output              ({gpio1,gpio0}          ),
+    .gpio_input               (gpio_in                ),
+    .gpio_oe                  (gpio_oe                ),
+    .gpio_output              (gpio_out               ),
     .sclk                     (), // unused
     .pico                     (), // unused
     .poci                     (1'b0                   ),
