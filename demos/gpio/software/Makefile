@@ -22,31 +22,19 @@ endif
 all:
 	@echo "\nUsage:\n\n  make <target>\n"
 	@echo "Available targets:\n"
-	@echo "  arty_debug\t\t Debug build for Digilent Arty A7 board"
-	@echo "  cmod_debug\t\t Debug build for Digilent Cmod A7 board"
-	@echo "  arty_release\t\t Release build for Digilent Arty A7 board"
-	@echo "  cmod_release\t\t Release build for Digilent Cmod A7 board"
+	@echo "  debug\t\t\t Debug build"
+	@echo "  release\t\t Release build"
 	@echo "  run_sim\t\t Run the built target on the SoC IP simulator"
 	@echo "  clean\t\t\t Remove the build/ folder\n"
 
-arty_debug:
+debug:
 	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=50000000 ..
+	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} ..
 	$(MAKE) -C build
 
-arty_release:
+release:
 	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=50000000 ..
-	$(MAKE) -C build
-
-cmod_debug:
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=12000000 ..
-	$(MAKE) -C build
-
-cmod_release:
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=12000000 ..
+	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} ..
 	$(MAKE) -C build
 
 run_sim: all
@@ -57,4 +45,4 @@ clean:
 	@rm -rf build dump
 	@echo "Build directory deleted."
 
-.PHONY: arty_debug arty_release cmod_debug cmod_release run_sim clean
+.PHONY: debug release run_sim clean

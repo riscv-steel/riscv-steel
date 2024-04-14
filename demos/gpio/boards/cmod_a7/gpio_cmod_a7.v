@@ -30,14 +30,9 @@ module gpio_cmod_a7 #(
     assign gpio[i] = gpio_oe[i] == 1'b1 ? gpio_output[i] : 1'bZ;
   end
 
-  // Divides the 100MHz board block by 2
-  reg clock_50mhz;
-  initial clock_50mhz = 1'b0;
-  always @(posedge clock) clock_50mhz <= !clock_50mhz;
-
   // Buttons debouncing
   reg reset_debounced;
-  always @(posedge clock_50mhz) begin
+  always @(posedge clock) begin
     reset_debounced <= reset;
   end
 
@@ -52,7 +47,7 @@ module gpio_cmod_a7 #(
 
   ) rvsteel_soc_instance (
 
-    .clock                    (clock_50mhz            ),
+    .clock                    (clock                  ),
     .reset                    (reset_debounced        ),
     .halt                     (1'b0                   ),
     .uart_rx                  (uart_rx                ),
