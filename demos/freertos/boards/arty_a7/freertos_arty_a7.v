@@ -46,7 +46,7 @@ module freertos_arty_a7  #(
 
   rvsteel_soc #(
 
-    .CLOCK_FREQUENCY          (12000000               ),
+    .CLOCK_FREQUENCY          (50000000               ),
     .UART_BAUD_RATE           (9600                   ),
     .MEMORY_SIZE              (131072                 ),
     .MEMORY_INIT_FILE         ("freertos_demo.hex"    ),
