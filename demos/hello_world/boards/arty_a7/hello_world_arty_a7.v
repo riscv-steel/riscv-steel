@@ -9,8 +9,6 @@ module hello_world_arty_a7 (
 
   input   wire clock,
   input   wire reset,
-  input   wire halt,
-  input   wire uart_rx,
   output  wire uart_tx
 
   );
@@ -20,36 +18,36 @@ module hello_world_arty_a7 (
   initial clock_50mhz = 1'b0;
   always @(posedge clock) clock_50mhz <= !clock_50mhz;
 
-  // Buttons debouncing
+  // Push-button debouncing
   reg reset_debounced;
-  reg halt_debounced;
   always @(posedge clock_50mhz) begin
     reset_debounced <= reset;
-    halt_debounced <= halt;
   end
 
   rvsteel_soc #(
 
-    .CLOCK_FREQUENCY          (50000000           ),
-    .UART_BAUD_RATE           (9600               ),
-    .MEMORY_SIZE              (8192               ),
-    .MEMORY_INIT_FILE         ("hello_world.hex"  ),
-    .BOOT_ADDRESS             (32'h00000000       )
+  // Please adjust these two parameters accordingly
+
+  .CLOCK_FREQUENCY          (50000000                   ),
+  .MEMORY_INIT_FILE         ("hello_world.hex"          )
 
   ) rvsteel_soc_instance (
 
-    .clock                    (clock_50mhz        ),
-    .reset                    (reset_debounced    ),
-    .halt                     (halt_debounced     ),
-    .uart_rx                  (uart_rx            ),
-    .uart_tx                  (uart_tx            ),
-    .gpio_input               (1'b0               ),
-    .gpio_oe                  (), // unused
-    .gpio_output              (), // unused
-    .sclk                     (), // unused
-    .pico                     (), // unused
-    .poci                     (1'b0               ),
-    .cs                       ()  // unused
+  // Note that unused inputs are hardwired to zero,
+  // while unused outputs are left open.
+
+  .clock                    (clock_50mhz                ),
+  .reset                    (reset_debounced            ),
+  .halt                     (1'b0                       ),
+  .uart_rx                  (/* unused, leave open */   ),
+  .uart_tx                  (uart_tx                    ),
+  .gpio_input               (1'b0                       ),
+  .gpio_oe                  (/* unused, leave open */   ),
+  .gpio_output              (/* unused, leave open */   ),
+  .sclk                     (/* unused, leave open */   ),
+  .pico                     (/* unused, leave open */   ),
+  .poci                     (1'b0                       ),
+  .cs                       (/* unused, leave open */   )
 
   );
 
