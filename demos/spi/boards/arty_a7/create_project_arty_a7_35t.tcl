@@ -7,5 +7,7 @@ set_msg_config -suppress -id {Synth 8-6841}
 set_msg_config -suppress -id {Netlist 29-101}
 set_property simulator_language Verilog [current_project]
 add_files -fileset constrs_1 -norecurse { ./spi_arty_a7_constraints.xdc }
-add_files -norecurse { ./spi_arty_a7.v ../../../../hardware/core/rvsteel_core.v ../../../../hardware/ram/rvsteel_ram.v ../../../../hardware/soc/rvsteel_soc.v ../../../../hardware/bus/rvsteel_bus.v ../../../../hardware/uart/rvsteel_uart.v ../../../../hardware/gpio/rvsteel_gpio.v ../../../../hardware/spi/rvsteel_spi.v ../../../../hardware/mtimer/rvsteel_mtimer.v ../../software/build/spi_demo.hex }
+add_files -norecurse .
+add_files -norecurse { ../../../../hardware/soc/ }
+add_files -norecurse { ../../software/build/spi_demo.hex }
 set_property file_type {Memory Initialization Files} [get_files ../../software/build/spi_demo.hex]
