@@ -99,7 +99,7 @@ include(libsteel.cmake)
 
 # Source files
 set(SOURCES
-  ${CMAKE_SOURCE_DIR}/main.cpp
+  ${CMAKE_SOURCE_DIR}/main.c
 )
 
 # The executable
