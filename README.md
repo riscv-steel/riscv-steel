@@ -1,6 +1,6 @@
 <p align="center"><img src="docs/source/images/rvsteel_logo.drawio.svg" width="70"/></br><strong>RISC-V Steel</strong></p>
 
-RISC-V Steel is an open collection of RISC-V based Intellectual Property (IP) for FPGAs written in Verilog. It features two main IPs:
+RISC-V Steel is an open collection of RISC-V based Intellectual Property (IP) for FPGAs written in Verilog, featuring the following IPs:
 
 - **Steel Core**, a 32-bit RISC-V processor (RV32I + Zicsr + M-mode)
 - **Steel MCU**, a microcontroller unit integrating Steel Core + UART, GPIO, SPI, timer and memory modules.
@@ -9,7 +9,7 @@ RISC-V Steel is designed to make it easier to develop embedded applications with
 
 ## Getting Started
 
-In the next steps we will show you how to get Steel MCU working on your FPGA and run a Hello World program on it.
+In the next steps we will show you how to get Steel MCU working on your FPGA and run a Hello World program on it. Once you finish this guide you will have a basic working environment that you can use to create larger projects.
 
 ### 1. Download RISC-V Steel
 
@@ -52,7 +52,7 @@ make
 ```
 **Tip**: Change the `--prefix` argument to install the toolchain in a different folder.
 
-### Compile the demo Hello World program
+### 3. Compile the demo Hello World program
 
 RISC-V Steel provides a demo software project for Steel MCU in the `software/` folder of the repository. This software project uses CMake as its build system and contains:
 
@@ -71,20 +71,15 @@ void main(void) {
 }
 ```
 
-You can start a new software project for Steel MCU making a copy of this folder as follows:
+Assuming you have configured the RISC-V GNU Toolchain with `--prefix=/opt/riscv`, run the commands below to build the Hello World program:
 
 ```bash
 cp -r /path/to/riscv-steel/software/ hello_world/
-```
-
-Assuming you have configured the RISC-V GNU Toolchain with `--prefix=/opt/riscv`, run the command below to build the Hello World program:
-
-```bash
 cd hello_world/
 make release TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
 ```
 
-The build output will be saved to `hello_world/build/` and a file named `hello_world.hex` will be generated. You will use it next to initialize the memory module of Steel MCU.
+The build output will be saved to `hello_world/build/` and a file named `hello_world.hex` will be generated. You will use this file next to initialize the memory module of Steel MCU.
 
 ## License
 
