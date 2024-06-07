@@ -5,9 +5,8 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include "libsteel/soc.h"
+#include "libsteel.h"
 
-// A minimal Hello World! example
 void main(void)
 {
   uart_write_string(RVSTEEL_UART, "Hello World from RISC-V Steel!");

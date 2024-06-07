@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include "libsteel/soc.h"
+#include "libsteel.h"
 
 void main(void)
 {

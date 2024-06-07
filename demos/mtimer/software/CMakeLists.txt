@@ -159,7 +159,7 @@ target_link_options(${APP_NAME}.elf
 add_compile_definitions(CPU_FREQUENCY=${CLOCK_FREQUENCY})
 
 # Link to libsteel
-target_link_libraries(${APP_NAME}.elf libsteel)
+target_link_libraries(${APP_NAME}.elf steel)
 
 # Set dependency on linker script
 set_target_properties(${APP_NAME}.elf PROPERTIES

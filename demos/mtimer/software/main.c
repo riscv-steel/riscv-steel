@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include "libsteel/soc.h"
+#include "libsteel.h"
 
 // Overrides the standard interrupt handler for Machine Timer interrupts
 __NAKED void mti_irq_handler()
