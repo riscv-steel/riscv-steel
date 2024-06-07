@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include "libsteel/soc.h"
+#include "libsteel.h"
 
 // UART interrupt signal is connected to Fast IRQ #0
 __NAKED void fast0_irq_handler(void)

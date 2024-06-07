@@ -168,7 +168,7 @@ target_link_options(${APP_NAME}.elf
 )
 
 # Link to libsteel
-target_link_libraries(${APP_NAME}.elf libsteel)
+target_link_libraries(${APP_NAME}.elf steel)
 
 # Link to FreeRTOS
 target_link_libraries(${APP_NAME}.elf freertos_kernel freertos_config)

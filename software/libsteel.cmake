@@ -26,14 +26,14 @@ set(HEADERS
   ${CMAKE_CURRENT_LIST_DIR}/libsteel/globals.h
   ${CMAKE_CURRENT_LIST_DIR}/libsteel/gpio.h
   ${CMAKE_CURRENT_LIST_DIR}/libsteel/mtimer.h
-  ${CMAKE_CURRENT_LIST_DIR}/libsteel/soc.h
+  ${CMAKE_CURRENT_LIST_DIR}/libsteel/libsteel.h
   ${CMAKE_CURRENT_LIST_DIR}/libsteel/spi.h
   ${CMAKE_CURRENT_LIST_DIR}/libsteel/uart.h
 )
 
-add_library(libsteel STATIC ${SOURCES} ${HEADERS})
+add_library(steel STATIC ${SOURCES} ${HEADERS})
 
-target_compile_options(libsteel
+target_compile_options(steel
   PRIVATE
     -Wall
     -Wextra
@@ -46,7 +46,8 @@ target_compile_options(libsteel
     -fdata-sections
 )
 
-target_include_directories(libsteel
+target_include_directories(steel
   PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/libsteel/
 )

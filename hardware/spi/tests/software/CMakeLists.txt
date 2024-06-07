@@ -156,7 +156,7 @@ target_link_options(${APP_NAME}.elf
 )
 
 # Link to libsteel
-target_link_libraries(${APP_NAME}.elf libsteel)
+target_link_libraries(${APP_NAME}.elf steel)
 
 # Set dependency on linker script
 set_target_properties(${APP_NAME}.elf PROPERTIES

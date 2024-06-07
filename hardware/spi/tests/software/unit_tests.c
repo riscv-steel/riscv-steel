@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#include "libsteel/soc.h"
+#include "libsteel.h"
 #include "stdint.h"
 
 volatile uint32_t *__SPI_CPOL_ADDRESS = (volatile uint32_t *)0x80030000;
