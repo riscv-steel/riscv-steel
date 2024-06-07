@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/source/images/rvsteel_logo.drawio.svg" width="70"/></br><strong>RISC-V Steel</strong></p>
+<p align="center"><img src="docs/source/images/rvsteel_logo_circle.svg" width="70"/></br><strong>RISC-V Steel</strong></p>
 
 RISC-V Steel is an open source RISC-V microcontroller unit for FPGAs written in Verilog.
 
@@ -164,6 +164,17 @@ The specific steps to implement the `hello_world` design on your FPGA board vary
     - Assign the `uart_tx` pin to the **receiver** pin (rx) of your board's UART
 - Run synthesis, place and route, and any other intermediate step needed to generate a bitstream to program the FPGA
 - Upload the bitstream to your FPGA 
+
+### 4. Run the application
+
+The Hello World program starts running as soon as you finish uploading the bitstream to your FPGA. To visualize the *"Hello World!"* message, proceed as follows:
+
+- Connect the FPGA board to your computer (if not already connected)
+- Open a serial terminal emulator like PySerial to connect to your board's UART
+  - To install PySerial, run `python3 -m pip install pyserial`
+  - To open a PySerial terminal, run `python3 -m serial.tools.miniterm`
+  - PySerial will show the available UART serial ports, one of which is your board's UART. Choose it to connect.
+- Press the reset button. You should see the Hello World message!
 
 ## License
 
