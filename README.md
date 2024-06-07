@@ -1,15 +1,26 @@
-<p align="center"><img src="docs/source/images/rvsteel_logo.drawio.svg" width="70"/></br><strong>RISC-V Steel</strong></p>
+<p align="center"><img src="docs/source/images/rvsteel_logo.drawio.svg" width="70"/></p>
 
-RISC-V Steel is an open collection of RISC-V based Intellectual Property (IP) for FPGAs written in Verilog, featuring the following IPs:
+RISC-V Steel is an open source RISC-V microcontroller unit IP for FPGAs written in Verilog. 
 
-- **Steel Core**, a 32-bit RISC-V processor (RV32I + Zicsr + M-mode)
-- **Steel MCU**, a microcontroller unit integrating Steel Core + UART, GPIO, SPI, timer and memory modules.
+**Key features**
 
-RISC-V Steel is designed to make it easier to develop embedded applications with FPGA boards. Steel MCU can be easily ported to any FPGA and consumes few resources.
+- RISC-V processor core (RV32I + Zicsr + Machine mode)
+- UART, GPIO and SPI modules for communicating with external devices
+- Timer and memory modules
+- Runs real-time operating systems like FreeRTOS.
+- Software library that makes it simple to use the UART, GPIO, SPI and timer modules
 
+RISC-V Steel is designed to make it easier to develop embedded applications on FPGA boards and can be easily ported to any FPGA.
 ## Getting Started
 
-In the next steps we will show you how to get Steel MCU working on your FPGA and run a Hello World program on it. Once you finish this guide you will have a basic working environment that you can use to create larger projects.
+To demonstrate how to get RISC-V Steel working on your FPGA, this guide will show you how to:
+
+- start a new software project for RISC-V Steel and compile a Hello World program
+- implement RISC-V Steel on your FPGA board and run the program you compiled on it
+
+The Hello World program is a simple application that sends a *"Hello World!"* message over the UART device of your FPGA board.
+
+After you finish this guide you will have a basic working environment that you can use to create larger projects.
 
 ### 1. Download RISC-V Steel
 
@@ -52,30 +63,31 @@ make
 ```
 **Tip**: Change the `--prefix` argument to install the toolchain in a different folder.
 
-### 3. Compile the demo Hello World program
+### 2. Compile the Hello World program
 
-RISC-V Steel provides a demo software project for Steel MCU in the `software/` folder of the repository. This software project uses CMake as its build system and contains:
+RISC-V Steel provides a demo software project in the `software/` folder of its repository. This software project uses CMake as its build system and contains:
 
 - a Hello World program, `main.c`
-- **LibSteel**, which provides API calls to control Steel MCU
-- a linker script
+- `libsteel.h`, a software library to control RISC-V Steel modules
+- a linker script used to compile software for RISC-V Steel
 - a Makefile to automate building tasks
 
-The Hello World program uses the UART module of Steel MCU to send a "Hello World!" message. Its source code is reproduced below:
+The Hello World program is the simplest application you can build with RISC-V Steel. It calls `uart_write_string` from `libsteel.h` to send a *"Hello World!"* message to the UART controller. Its source code is reproduced below:
 
 ```c
-#include "libsteel/mcu.h"
+#include "libsteel.h"
 
 void main(void) {
   uart_write_string(RVSTEEL_UART, "Hello World from RISC-V Steel!");
 }
 ```
 
-Assuming you have configured the RISC-V GNU Toolchain with `--prefix=/opt/riscv`, run the commands below to build the Hello World program:
+To build the Hello World program, run:
 
 ```bash
 cp -r /path/to/riscv-steel/software/ hello_world/
 cd hello_world/
+# assuming you have configured the RISC-V GNU Toolchain with --prefix=/opt/riscv
 make release TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
 ```
 
