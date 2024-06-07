@@ -26,7 +26,7 @@ all:
 	@echo "  cmod_debug\t\t Debug build for Digilent Cmod A7 board"
 	@echo "  arty_release\t\t Release build for Digilent Arty A7 board"
 	@echo "  cmod_release\t\t Release build for Digilent Cmod A7 board"
-	@echo "  run_sim\t\t Run the built target on the SoC IP simulator"
+	@echo "  run_sim\t\t Run the built target on RISC-V Steel MCU simulator"
 	@echo "  clean\t\t\t Remove the build/ folder\n"
 
 arty_debug:
@@ -51,7 +51,7 @@ cmod_release:
 
 run_sim: all
 	@mkdir -p dump
-	@$(MAKE) -C ../../../hardware/soc/tests/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
+	@$(MAKE) -C ../../../hardware/mcu/tests/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
 
 clean:
 	@rm -rf build dump

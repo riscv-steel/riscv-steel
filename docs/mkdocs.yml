@@ -57,6 +57,6 @@ nav:
     - Homepage: 'index.md'
     - Get Started!: 'getstarted.md'
     - Processor Core: 'core.md'
-    - System-on-Chip: 'soc.md'
+    - Microcontroller: 'mcu.md'
     - Software Guide: 'softwareguide.md'
     - API Reference: 'api.md'

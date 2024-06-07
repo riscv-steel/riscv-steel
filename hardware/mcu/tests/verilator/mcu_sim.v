@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-module soc_sim #(
+module mcu_sim #(
 
     // Number of available I/O ports
     parameter GPIO_WIDTH    = 2,
@@ -28,7 +28,7 @@ module soc_sim #(
     output  wire  [NUM_CS_LINES-1:0]  cs
   );
 
-  rvsteel_soc #(
+  rvsteel_mcu #(
 
     .CLOCK_FREQUENCY          (50000000           ),
     .UART_BAUD_RATE           (9600               ),
@@ -37,7 +37,7 @@ module soc_sim #(
     .BOOT_ADDRESS             (32'h00000000       ),
     .GPIO_WIDTH               (GPIO_WIDTH         )
 
-  ) rvsteel_soc_instance (
+  ) rvsteel_mcu_instance (
 
     .clock                    (clock              ),
     .reset                    (reset              ),

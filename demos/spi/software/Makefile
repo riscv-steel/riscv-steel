@@ -24,7 +24,7 @@ all:
 	@echo "Available targets:\n"
 	@echo "  debug\t\t\t Debug build"
 	@echo "  release\t\t Release build"
-	@echo "  run_sim\t\t Run the built target on the SoC IP simulator"
+	@echo "  run_sim\t\t Run the built target on RISC-V Steel MCU simulator"
 	@echo "  clean\t\t\t Remove the build/ folder\n"
 
 debug:
@@ -39,7 +39,7 @@ release:
 
 run_sim: all
 	@mkdir -p dump
-	@$(MAKE) -C ../../../hardware/soc/tests/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
+	@$(MAKE) -C ../../../hardware/mcu/tests/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
 
 clean:
 	@rm -rf build dump

@@ -36,7 +36,7 @@ module gpio_cmod_a7 #(
     reset_debounced <= reset;
   end
 
-  rvsteel_soc #(
+  rvsteel_mcu #(
 
     .CLOCK_FREQUENCY          (12000000               ),
     .UART_BAUD_RATE           (9600                   ),
@@ -45,7 +45,7 @@ module gpio_cmod_a7 #(
     .BOOT_ADDRESS             (32'h00000000           ),
     .GPIO_WIDTH               (3                      )
 
-  ) rvsteel_soc_instance (
+  ) rvsteel_mcu_instance (
 
     .clock                    (clock                  ),
     .reset                    (reset_debounced        ),

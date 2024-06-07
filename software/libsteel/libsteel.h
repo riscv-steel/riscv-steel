@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-#ifndef __LIBSTEEL_SOC__
-#define __LIBSTEEL_SOC__
+#ifndef __LIBSTEEL_MCU__
+#define __LIBSTEEL_MCU__
 
 #include "libsteel/csr.h"
 #include "libsteel/gpio.h"
@@ -26,4 +26,4 @@
 #define RVSTEEL_GPIO ((GpioDevice *)RVSTEEL_GPIO_ADDRESS)       // RISC-V Steel GPIO
 #define RVSTEEL_SPI ((SpiDevice *)RVSTEEL_SPI_ADDRESS)          // RISC-V Steel SPI
 
-#endif // __LIBSTEEL_SOC__
+#endif // __LIBSTEEL_MCU__

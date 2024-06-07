@@ -35,7 +35,7 @@ module unit_tests (
     halt_debounced <= halt;
   end
 
-  rvsteel_soc #(
+  rvsteel_mcu #(
 
     .CLOCK_FREQUENCY          (50000000           ),
     .UART_BAUD_RATE           (9600               ),
@@ -44,7 +44,7 @@ module unit_tests (
     .BOOT_ADDRESS             (32'h00000000       ),
     .NUM_CS_LINES             (2                  )
 
-  ) rvsteel_soc_instance (
+  ) rvsteel_mcu_instance (
 
     .clock                    (clock_50mhz        ),
     .reset                    (reset_debounced    ),
