@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 3.15)
 # Name of the executable to be generated
 set(APP_NAME "uart_demo")
 
-# Inform the same value provided for the MEMORY_SIZE parameter of the SoC IP
+# Inform the same value provided for the MEMORY_SIZE parameter of rvsteel_mcu
 set(MEMORY_SIZE 8K)
 
 # Space reserved for the stack (in bytes)

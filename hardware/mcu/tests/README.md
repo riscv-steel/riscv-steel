@@ -1,4 +1,4 @@
-# SoC IP Simulations
+# MCU Simulations
 
 ## How do I run the simulation?
 
@@ -8,7 +8,7 @@ To run the simulation using Verilator do:
 
 ```bash
 cd verilator
-make # build soc verilator
+make # build MCU verilator
 make run RUN_FLAGS="--log-level=QUIET" # running the simulation
 ```
 

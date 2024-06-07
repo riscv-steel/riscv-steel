@@ -15,7 +15,7 @@ build:
 	@cmake --build build
 
 run: build
-	@build/soc_sim $(RUN_FLAGS)
+	@build/mcu_sim $(RUN_FLAGS)
 
 clean:
 	@rm -rf build

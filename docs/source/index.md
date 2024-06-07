@@ -25,6 +25,6 @@ RISC-V Steel Processor Core implements the RV32I ISA, the Zicsr extension and th
 
 RISC-V Steel System-on-Chip expands the Processor Core IP by adding memory and UART modules to its design. It features a toolchain for software development and demo projects.
 
-[:octicons-arrow-right-24: Documentation](soc.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:octicons-arrow-right-24: Software Guide](softwareguide.md)
+[:octicons-arrow-right-24: Documentation](mcu.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:octicons-arrow-right-24: Software Guide](softwareguide.md)
 
 </br></br>

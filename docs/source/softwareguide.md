@@ -52,7 +52,7 @@ make -j $(nproc)
 
 ## Make a copy of the template project
 
-Once you have installed the RISC-V GNU Toolchain you can start a new application. The easiest way to start is making a copy of the template project (located at `software/template_project/`). The template project comes with a Makefile to help you automate the tasks of compiling the software and generating a memory initialization file for the SoC IP.
+Once you have installed the RISC-V GNU Toolchain you can start a new application. The easiest way to start is making a copy of the template project (located at `software/template_project/`). The template project comes with a Makefile to help you automate the tasks of compiling the software and generating a memory initialization file for RISC-V Steel MCU.
 
 ## Configure your project
 
@@ -61,7 +61,7 @@ You configure the template project by editing the Makefile in it. The Makefile s
 | Variable            | Description                                                                                                       |
 | ------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | ``PROGRAM_NAME``    | The name of the ELF executable to be generated. Ex: *myapp*.                                                      |
-| ``MEMORY_SIZE``     | The size you set for the RAM memory of the SoC IP (the same value you provided </br>for the `MEMORY_SIZE` parameter when instantiating the `rvsteel_soc` module). |
+| ``MEMORY_SIZE``     | The size you set for the RAM memory of RISC-V Steel MCU (the same value you provided </br>for the `MEMORY_SIZE` parameter when instantiating the `rvsteel_mcu` module). |
 | ``RVSTEEL_API_DIR`` | Path to the directory containing the source files of the [Software API](api.md).                                  |
 | ``RISCV_PREFIX``    | Path to the RISC-V GNU Toolchain binaries in your machine + RISC-V binaries prefix.                               |
 
@@ -71,7 +71,7 @@ The template project comes with a `main.c` file containing a Hello World example
 
 You can add as many source files to the project as you want. The Makefile was written so that all `*.c` source files you add to the project get automatically compiled when you run `make`.
 
-The SoC IP has an API with functions you can call in your software to configure and control the devices in it. The [Software API](api.md) page contains the documentation for the available API calls.
+RISC-V Steel MCU has an API with functions you can call in your software to configure and control the devices in it. The [Software API](api.md) page contains the documentation for the available API calls.
 
 ## Compile and generate the memory init file
 
@@ -86,28 +86,28 @@ Generated files:
 The memory size is set to 8192 bytes.
 ```
 
-The `.hex` file can now be used to initialize RISC-V Steel SoC IP memory and run the application.
+The `.hex` file can now be used to initialize RISC-V Steel MCU memory and run the application.
 
 ## Run the application
 
-When you synthesize the SoC IP for your FPGA, the data to be loaded into the SoC IP memory gets embedded in the FPGA bitstream. Every time you power on your FPGA the memory gets initialized and your program runs immediately afterwards.
+When you synthesize RISC-V Steel MCU for your FPGA, the data to be loaded into RISC-V Steel MCU memory gets embedded in the FPGA bitstream. Every time you power on your FPGA the memory gets initialized and your program runs immediately afterwards.
 
-You define the initial content of the SoC IP memory through the `MEMORY_INIT_FILE` parameter. This parameter expects a string with the path to the memory initialization file you generated in the steps above.
+You define the initial content of RISC-V Steel MCU memory through the `MEMORY_INIT_FILE` parameter. This parameter expects a string with the path to the memory initialization file you generated in the steps above.
 
 ```verilog
-// This example shows an instantiation of the SoC IP top module
+// This example shows an instantiation of RISC-V Steel MCU top module
 // configured to load the contents of a file named `hello_world.hex`
 
-// The initial contents of the SoC IP memory gets embedded in the
+// The initial contents of RISC-V Steel MCU memory gets embedded in the
 // FPGA bitstream when the module is synthesized
 
-rvsteel_soc                  #(
+rvsteel_mcu                  #(
     .CLOCK_FREQUENCY          (50000000           ),
     .UART_BAUD_RATE           (9600               ),
     .MEMORY_SIZE              (8192               ),
     .MEMORY_INIT_FILE         ("hello_world.hex"  ),
     .BOOT_ADDRESS             (32'h00000000       ))
-rvsteel_soc_instance          (
+rvsteel_mcu_instance          (
     .clock                    (clock_50mhz        ),
     .reset                    (reset              ),
     .uart_rx                  (uart_rx            ),

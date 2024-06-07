@@ -2,9 +2,9 @@
 
 ## Introduction
 
-This guide shows how to synthesize the SoC IP demo project for two Digilent development boards: [Arty A7](https://digilent.com/reference/programmable-logic/arty-a7/reference-manual) and [Cmod A7](https://digilent.com/reference/programmable-logic/cmod-a7/reference-manual).
+This guide shows how to synthesize RISC-V Steel MCU demo project for two Digilent development boards: [Arty A7](https://digilent.com/reference/programmable-logic/arty-a7/reference-manual) and [Cmod A7](https://digilent.com/reference/programmable-logic/cmod-a7/reference-manual).
 
-The demo project is a Hello World application that makes the SoC IP send a "Hello World!" message to your computer via the board's UART interface. Its goal is to quickly introduce you to the SoC IP so that you can expand it and develop your own embedded applications.
+The demo project is a Hello World application that makes RISC-V Steel MCU send a "Hello World!" message to your computer via the board's UART interface. Its goal is to quickly introduce you to RISC-V Steel MCU so that you can expand it and develop your own embedded applications.
 
 !!! abstract ""
 
@@ -90,15 +90,15 @@ Now go back to PySerial terminal window. You should see the message below:
 
 ## Next steps
 
-If you've reached this point, congratulations! You have a working instance of the SoC IP. You can now change it to create your own embedded applications.
+If you've reached this point, congratulations! You have a working instance of RISC-V Steel MCU. You can now change it to create your own embedded applications.
 
 - **Run your own software**
 
-    The [SoC IP Software Guide](softwareguide.md) contains instructions on how to write, compile, and run software applications for the SoC IP.
+    The [RISC-V Steel MCU Software Guide](softwareguide.md) contains instructions on how to write, compile, and run software applications for RISC-V Steel MCU.
 
 - **Expand the design**
 
-    The [SoC IP Documentation](soc.md) contains detailed information about its design so that you can expand it to create larger projects.
+    The [RISC-V Steel MCU Documentation](mcu.md) contains detailed information about its design so that you can expand it to create larger projects.
 
 </br>
 </br>

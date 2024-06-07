@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.12)
 
 cmake_policy(SET CMP0074 NEW)
 
-set(APP_NAME "soc_sim")
+set(APP_NAME "mcu_sim")
 
 # Get more verbose output from Makefile builds
 set(CMAKE_VERBOSE_MAKEFILE OFF)
@@ -47,11 +47,11 @@ verilate(${APP_NAME}
     "../../../../hardware/ram"
     "../../../../hardware/uart"
     "../../../../hardware/mtimer"
-    "../../../../hardware/soc"
+    "../../../../hardware/mcu"
     "../../../../hardware/gpio"
     "../../../../hardware/spi"
 
-  SOURCES "soc_sim.v"
+  SOURCES "mcu_sim.v"
   TRACE_FST
   VERILATOR_ARGS
     vcfg.vlt
