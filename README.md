@@ -174,6 +174,7 @@ The Hello World program starts running as soon as you finish uploading the bitst
   - To install PySerial, run `python3 -m pip install pyserial`
   - To open a PySerial terminal, run `python3 -m serial.tools.miniterm`
   - PySerial will show the available UART serial ports, one of which is your board's UART. Choose it to connect.
+  - If you are not using PySerial, adjust the UART configuration to 9600 bauds/s, 8 data bits, no parity, no control and no stop bit
 - Press the reset button. You should see the Hello World message!
 
 ## License
