@@ -57,9 +57,9 @@ brew install python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat texinfo flock l
 
 *2.3. Configure it for RISC-V Steel and install it*
 
-```
+```bash
 cd riscv-gnu-toolchain
-./configure --prefix=/opt/riscv --with-arch=rv32i --with-abi=ilp32
+./configure --prefix=/opt/riscv --with-arch=rv32izicsr --with-abi=ilp32
 make
 ```
 **Tip**: Change the `--prefix` argument to install the toolchain in a different folder.
