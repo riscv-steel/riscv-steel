@@ -1,8 +1,8 @@
 <p align="center"><img src="docs/source/images/rvsteel_logo_circle.svg" width="70"/></br><strong>RISC-V Steel</strong></p>
 
-RISC-V Steel is an open source RISC-V microcontroller unit for FPGAs written in Verilog.
+RISC-V Steel is a RISC-V microcontroller unit for FPGAs written in Verilog intended for developing embedded applications. It is 100% free and open source and can be ported to any FPGA in just a few steps.
 
-**Top features**
+## Key Features
 
 - 32-bit RISC-V processor core (RV32I + Zicsr + Machine mode)
 - UART, GPIO and SPI modules for communication with external devices
@@ -10,16 +10,14 @@ RISC-V Steel is an open source RISC-V microcontroller unit for FPGAs written in 
 - Support for real-time operating systems like FreeRTOS
 - `libsteel` library, which makes it simple to use the UART, GPIO, SPI and timer modules
 
-RISC-V Steel is designed to make it easier to develop embedded applications on FPGA boards and can be easily ported to any FPGA.
-
 ## Getting Started
 
-To demonstrate how to get RISC-V Steel working on your FPGA, this guide will show you how to:
+To demonstrate how to get RISC-V Steel working on your FPGA this guide will show you how to:
 
-- start a new software project for RISC-V Steel and compile a Hello World program
+- compile a Hello World program for RISC-V Steel
 - implement RISC-V Steel on your FPGA board and run the program you compiled on it
 
-The Hello World program is a simple application that sends a *"Hello World!"* message over the UART device of your FPGA board.
+The Hello World program is a simple application that makes RISC-V Steel send a *"Hello World!"* message over the UART module. You can receive this message on your computer by connecting it to your board's UART and then view the message in a serial terminal emulator like PySerial.
 
 After you finish this guide you will have a basic working environment that you can use to create larger projects.
 
@@ -69,7 +67,7 @@ make
 RISC-V Steel provides a demo software project in the `software/` folder of its repository. This software project uses CMake as its build system and contains:
 
 - a Hello World program, `main.c`
-- `libsteel.h`, a software library to control RISC-V Steel modules
+- `libsteel`, a software library to control RISC-V Steel modules
 - a linker script used to compile software for RISC-V Steel
 - a Makefile to automate building tasks
 
@@ -92,7 +90,7 @@ cd hello_world/
 make release TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
 ```
 
-The build output will be saved to `hello_world/build/` and a file named `hello_world.hex` will be generated. You will use this file next to initialize the memory module of Steel MCU.
+The build output will be saved to `hello_world/build/` and a file named `hello_world.hex` will be generated. You will use this file next to initialize the memory module of RISC-V Steel.
 
 ### 3. Implement RISC-V Steel on your FPGA
 
@@ -167,15 +165,18 @@ The specific steps to implement the `hello_world` design on your FPGA board vary
 
 ### 4. Run the application
 
-The Hello World program starts running as soon as you finish uploading the bitstream to your FPGA. To visualize the *"Hello World!"* message, proceed as follows:
+The Hello World program starts running as soon as you finish uploading the bitstream to your FPGA.
 
-- Connect the FPGA board to your computer (if not already connected)
+You can visualize the *"Hello World!"* message on your computer screen by executing the following steps:
+
+- Connect the UART device of your FPGA board to your computer (if not already connected)
 - Open a serial terminal emulator like PySerial to connect to your board's UART
   - To install PySerial, run `python3 -m pip install pyserial`
   - To open a PySerial terminal, run `python3 -m serial.tools.miniterm`
   - PySerial will show the available UART serial ports, one of which is your board's UART. Choose it to connect.
   - If you are not using PySerial, adjust the UART configuration to 9600 bauds/s, 8 data bits, no parity, no control and no stop bit
-- Press the reset button. You should see the Hello World message!
+- Press the reset button
+- You should now see the Hello World message!
 
 ## License
 
