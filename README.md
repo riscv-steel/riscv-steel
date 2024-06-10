@@ -71,7 +71,7 @@ RISC-V Steel provides a demo software project in the `software/` folder of its r
 - a linker script used to compile software for RISC-V Steel
 - a Makefile to automate building tasks
 
-The Hello World program in the demo software project is the simplest application you can build with RISC-V Steel. Its source code is reproduced below. It calls `uart_write_string` from `libsteel.h` to send a *"Hello World!"* message to the UART controller. :
+The Hello World program in the demo software project is the simplest application you can build with RISC-V Steel. Its source code is reproduced below. It calls `uart_write_string` from `libsteel.h` to send a *"Hello World!"* message to the UART controller:
 
 ```c
 #include "libsteel.h"
@@ -86,8 +86,7 @@ To build the Hello World program, run:
 ```bash
 cp -r /path/to/riscv-steel/software/ hello_world/
 cd hello_world/
-# assuming you have configured the RISC-V GNU Toolchain with --prefix=/opt/riscv
-make release TOOLCHAIN_PREFIX=/opt/riscv/bin/riscv32-unknown-elf-
+make release PREFIX=/opt/riscv
 ```
 
 The build output will be saved to `hello_world/build/` and a file named `hello_world.hex` will be generated. You will use this file next to initialize the memory module of RISC-V Steel.
