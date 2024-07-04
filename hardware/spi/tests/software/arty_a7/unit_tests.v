@@ -15,12 +15,12 @@ module unit_tests (
 
   );
 
-  localparam NUM_CS_LINES = 2;
+  localparam SPI_NUM_CHIP_SELECT = 2;
 
   wire sclk;
   wire pico;
   wire poci;
-  wire [NUM_CS_LINES-1:0] cs;
+  wire [SPI_NUM_CHIP_SELECT-1:0] cs;
 
   // Divides the 100MHz board block by 4
   reg clock_50mhz;
@@ -42,7 +42,7 @@ module unit_tests (
     .MEMORY_SIZE              (8192               ),
     .MEMORY_INIT_FILE         ("unit_tests.hex"   ),
     .BOOT_ADDRESS             (32'h00000000       ),
-    .NUM_CS_LINES             (2                  )
+    .SPI_NUM_CHIP_SELECT      (2                  )
 
   ) rvsteel_mcu_instance (
 

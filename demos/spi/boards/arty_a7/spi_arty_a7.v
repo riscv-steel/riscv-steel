@@ -8,7 +8,7 @@
 module spi_arty_a7 #( 
 
   parameter GPIO_WIDTH = 1,
-  parameter NUM_CS_LINES = 1
+  parameter SPI_NUM_CHIP_SELECT = 1
 
   )(
 
@@ -42,7 +42,7 @@ module spi_arty_a7 #(
     .MEMORY_INIT_FILE         ("spi_demo.hex"         ),
     .BOOT_ADDRESS             (32'h00000000           ),
     .GPIO_WIDTH               (GPIO_WIDTH             ),
-    .NUM_CS_LINES             (NUM_CS_LINES           )
+    .SPI_NUM_CHIP_SELECT      (SPI_NUM_CHIP_SELECT    )
 
   ) rvsteel_mcu_instance (
 

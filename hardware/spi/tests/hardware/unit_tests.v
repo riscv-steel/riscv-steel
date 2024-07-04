@@ -9,34 +9,34 @@
 
 module unit_tests();
 
-  localparam NUM_CS_LINES = 8;
+  localparam SPI_NUM_CHIP_SELECT = 8;
 
   // Global signals
 
-  reg                       clock           ;
-  reg                       reset           ;
+  reg                             clock           ;
+  reg                             reset           ;
 
   // IO interface
 
-  reg   [4:0 ]              rw_address      ;
-  wire  [31:0]              read_data       ;
-  reg                       read_request    ;
-  wire                      read_response   ;
-  reg   [7:0 ]              write_data      ;
-  reg   [3:0 ]              write_strobe    ;
-  reg                       write_request   ;
-  wire                      write_response  ;
+  reg   [4:0 ]                    rw_address      ;
+  wire  [31:0]                    read_data       ;
+  reg                             read_request    ;
+  wire                            read_response   ;
+  reg   [7:0 ]                    write_data      ;
+  reg   [3:0 ]                    write_strobe    ;
+  reg                             write_request   ;
+  wire                            write_response  ;
 
   // SPI signals
 
-  wire                      sclk            ;
-  wire                      pico            ;
-  wire                      poci            ;
-  wire  [NUM_CS_LINES-1:0]  cs              ;
+  wire                            sclk            ;
+  wire                            pico            ;
+  wire                            poci            ;
+  wire  [SPI_NUM_CHIP_SELECT-1:0] cs              ;
 
   rvsteel_spi #(
 
-    .NUM_CS_LINES                   (NUM_CS_LINES                )
+    .SPI_NUM_CHIP_SELECT            (SPI_NUM_CHIP_SELECT         )
 
   ) rvsteel_spi_instance (
 
@@ -114,7 +114,7 @@ module unit_tests();
     // Test #1 - Check whether all CS lines are HIGH after reset
     error_flag = 0;
     $display("Running unit test #1...");
-    for (i = 0; i < NUM_CS_LINES; i=i+1) begin
+    for (i = 0; i < SPI_NUM_CHIP_SELECT; i=i+1) begin
       if (cs[i] !== 1'b1) begin
         error_flag = 1;
         error_count = error_count + 1;
@@ -276,7 +276,7 @@ module unit_tests();
     // Test #11 - Check deasserting and asserting CS lines
     error_flag = 0;
     $display("Running unit test #11...");
-    for (i = 0; i < NUM_CS_LINES; i=i+1) begin
+    for (i = 0; i < SPI_NUM_CHIP_SELECT; i=i+1) begin
       #20;
       rw_address      = 5'h08;
       write_data      = i;
@@ -313,7 +313,7 @@ module unit_tests();
       error_count = error_count + 1;
       $display("[ERROR] Writing to CS register failed. Expected value: 0x%h. Actual value: 0x%h", write_data, read_data);
     end
-    for (i = 0; i < NUM_CS_LINES; i=i+1) begin
+    for (i = 0; i < SPI_NUM_CHIP_SELECT; i=i+1) begin
       if (cs[i] !== 1'b1) begin
         error_flag = 1;
         error_count = error_count + 1;

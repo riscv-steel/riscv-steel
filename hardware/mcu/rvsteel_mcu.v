@@ -20,22 +20,22 @@ module rvsteel_mcu #(
   // Number of available I/O ports
   parameter GPIO_WIDTH = 1              ,
   // Number of CS (Chip Select) pins for the SPI controller
-  parameter NUM_CS_LINES = 1
+  parameter SPI_NUM_CHIP_SELECT = 1
 
   ) (
 
-  input   wire                      clock       ,
-  input   wire                      reset       ,
-  input   wire                      halt        ,
-  input   wire                      uart_rx     ,
-  output  wire                      uart_tx     ,
-  input   wire  [GPIO_WIDTH-1:0]    gpio_input  ,
-  output  wire  [GPIO_WIDTH-1:0]    gpio_oe     ,
-  output  wire  [GPIO_WIDTH-1:0]    gpio_output ,
-  output  wire                      sclk        ,
-  output  wire                      pico        ,
-  input   wire                      poci        ,
-  output  wire  [NUM_CS_LINES-1:0]  cs
+  input   wire                            clock       ,
+  input   wire                            reset       ,
+  input   wire                            halt        ,
+  input   wire                            uart_rx     ,
+  output  wire                            uart_tx     ,
+  input   wire  [GPIO_WIDTH-1:0]          gpio_input  ,
+  output  wire  [GPIO_WIDTH-1:0]          gpio_oe     ,
+  output  wire  [GPIO_WIDTH-1:0]          gpio_output ,
+  output  wire                            sclk        ,
+  output  wire                            pico        ,
+  input   wire                            poci        ,
+  output  wire  [SPI_NUM_CHIP_SELECT-1:0] cs
 
   );
 
@@ -317,7 +317,7 @@ module rvsteel_mcu #(
 
   rvsteel_spi #(
 
-    .NUM_CS_LINES                   (NUM_CS_LINES                       )
+    .SPI_NUM_CHIP_SELECT            (SPI_NUM_CHIP_SELECT                    )
 
   ) rvsteel_spi_instance (
 
