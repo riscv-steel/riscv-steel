@@ -7,32 +7,32 @@
 
 module rvsteel_spi #(
 
-  parameter NUM_CS_LINES = 1
+  parameter SPI_NUM_CHIP_SELECT = 1
 
   )(
 
   // Global signals
 
-  input   wire                      clock           ,
-  input   wire                      reset           ,
+  input   wire                            clock           ,
+  input   wire                            reset           ,
 
   // IO interface
 
-  input  wire   [4:0 ]              rw_address      ,
-  output reg    [31:0]              read_data       ,
-  input  wire                       read_request    ,
-  output reg                        read_response   ,
-  input  wire   [7:0 ]              write_data      ,
-  input  wire   [3:0 ]              write_strobe    ,
-  input  wire                       write_request   ,
-  output reg                        write_response  ,
+  input  wire   [4:0 ]                    rw_address      ,
+  output reg    [31:0]                    read_data       ,
+  input  wire                             read_request    ,
+  output reg                              read_response   ,
+  input  wire   [7:0 ]                    write_data      ,
+  input  wire   [3:0 ]                    write_strobe    ,
+  input  wire                             write_request   ,
+  output reg                              write_response  ,
 
   // SPI signals
 
-  output reg                        sclk            ,
-  output reg                        pico            ,
-  input  wire                       poci            ,
-  output reg    [NUM_CS_LINES-1:0]  cs
+  output reg                              sclk            ,
+  output reg                              pico            ,
+  input  wire                             poci            ,
+  output reg    [SPI_NUM_CHIP_SELECT-1:0] cs
 
   );
 
@@ -42,7 +42,7 @@ module rvsteel_spi #(
   reg clk_edge;
   reg sclk_internal;
   reg pico_internal;
-  reg [NUM_CS_LINES-1:0] cs_internal;
+  reg [SPI_NUM_CHIP_SELECT-1:0] cs_internal;
   reg [3:0] curr_state;
   reg [3:0] next_state;
   reg [3:0] bit_count;
@@ -182,7 +182,7 @@ module rvsteel_spi #(
   end
 
   always @* begin
-    for (i = 0; i < NUM_CS_LINES; i=i+1) begin
+    for (i = 0; i < SPI_NUM_CHIP_SELECT; i=i+1) begin
       cs_internal[i] = ({24'd0, chip_select} == i) ? 1'b0 : 1'b1;
     end
     case (curr_state)
@@ -218,7 +218,7 @@ module rvsteel_spi #(
     if (reset) begin
       sclk <= 1'b0;
       pico <= 1'b0;
-      cs <= {NUM_CS_LINES{1'b1}};
+      cs <= {SPI_NUM_CHIP_SELECT{1'b1}};
     end
     else begin
       sclk <= sclk_internal;
