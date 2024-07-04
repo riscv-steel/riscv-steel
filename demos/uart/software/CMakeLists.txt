@@ -53,6 +53,9 @@ set(CMAKE_EXECUTABLE_SUFFIX ".elf")
 # Get more verbose output from Makefile builds
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
+# Do not show target completion messages
+set(CMAKE_TARGET_MESSAGES OFF)
+
 # Give TOOLCHAIN_PREFIX a default value if its definition is missing
 if(NOT DEFINED TOOLCHAIN_PREFIX)
   message(STATUS "[INFO] TOOLCHAIN_PREFIX set to default value: riscv32-unknown-elf-")
@@ -95,7 +98,7 @@ project(${APP_NAME} LANGUAGES C CXX ASM)
 add_compile_definitions(NO_STARTUP_FILES=1)
 
 # Include libsteel
-include(libsteel.cmake)
+include(LibSteel.cmake)
 
 # Source files
 set(SOURCES
@@ -177,4 +180,11 @@ add_custom_command(TARGET ${APP_NAME}.elf POST_BUILD
   COMMAND ${CMAKE_OBJCOPY} -O binary      ${APP_NAME}.elf ${APP_NAME}.bin
   COMMAND ${CMAKE_OBJCOPY} -O verilog     ${APP_NAME}.elf --verilog-data-width=4 ${APP_NAME}.hex
   COMMAND ${CMAKE_OBJDUMP} -D             ${APP_NAME}.elf > ${APP_NAME}.objdump
+  COMMAND echo "-------------------------------------------------------"
+  COMMAND tput bold
+  COMMAND echo "Build outputs:"
+  COMMAND tput sgr0
+  COMMAND echo "-- Memory init file:   build/${APP_NAME}.hex"
+  COMMAND echo "-- Binary executable:  build/${APP_NAME}.elf"
+  COMMAND echo "-- Disassembly:        build/${APP_NAME}.objdump"
 )
