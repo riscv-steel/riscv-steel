@@ -32,11 +32,12 @@ markdown_extensions:
             - overrides/.icons
 theme:
     name: material
-    logo: images/rvsteel_logo_white.svg
+    logo: images/rvsteel_logo_circle.svg
     favicon: images/rvsteel_logo_circle.svg
     highlightjs: true
+    palette:
+        primary: white
     features:
-        - toc.integrate
         - navigation.tabs
         - navigation.expand
         - navigation.instant
@@ -55,8 +56,17 @@ remote_branch: docs
 copyright: Copyright (c) RISC-V Steel contributors
 nav:
     - Homepage: 'index.md'
-    - Get Started!: 'getstarted.md'
-    - Processor Core: 'core.md'
-    - Microcontroller: 'mcu.md'
-    - Software Guide: 'softwareguide.md'
-    - API Reference: 'api.md'
+    - Getting Started: 'gettingstarted.md'
+    - Hardware Docs:
+        - Microcontroller: 'mcu.md'
+        - Processor Core: 'core.md'
+    #- Software Guide: 
+    #    - Introduction: 'softwareguide.md'
+    #    - How to start a new project: 'newproject.md'
+    #    - LibSteel Reference:
+    #        - Introduction: 'libsteel.md'
+    #        - UART: 'uart.md'
+    #        - GPIO: 'gpio.md'
+    #        - Timer: 'timer.md'
+    #        - SPI: 'spi.md'
+    #        - CSR: 'csr.md'
