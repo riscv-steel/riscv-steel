@@ -1,16 +1,11 @@
-<p align="center"><img src="docs/source/images/rvsteel_logo_circle.svg" width="70"/></br><strong>RISC-V Steel</strong></p>
+---
+hide:
+  - navigation
+---
+
+# Getting Started Guide
 
 RISC-V Steel is a free collection of hardware modules written in Verilog intended for use in FPGAs and embedded systems. It features a 32-bit RISC-V processor core, UART, GPIO and SPI interfaces, and timer and memory modules. All modules are integrated into a tunable microcontroller design that can be easily ported to any FPGA in just a few steps.
-
-## Features
-
-- 32-bit RISC-V processor core (RV32I + Zicsr + Machine mode)
-- UART, GPIO and SPI interfaces
-- Timer and memory modules
-- Support for real-time operating systems like FreeRTOS
-- LibSteel library, which provides an API to control RISC-V Steel
-
-## Getting Started
 
 This getting started guide will show you how to use RISC-V Steel to create a Hello World system for your FPGA. This example system is a simple embedded application that sends a *Hello World!* message through the UART interface of RISC-V Steel. You will be able to see this message on your computer with the help of a serial terminal emulator (PySerial) after programming the FPGA.
 
@@ -34,21 +29,31 @@ The [RISC-V GNU Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) 
 git clone https://github.com/riscv/riscv-gnu-toolchain
 ```
 
-*2.2. Install dependencies on your operating system*
+*2.2. Install dependencies (choose your OS)*
 
-```bash
-# Ubuntu
-sudo apt-get install autoconf automake autotools-dev curl python3 python3-pip libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev ninja-build git cmake libglib2.0-dev libslirp-dev
+=== "Ubuntu"
 
-# Fedora/CentOS/Rocky/RHEL
-sudo yum install autoconf automake python3 libmpc-devel mpfr-devel gmp-devel gawk bison flex texinfo patchutils gcc gcc-c++ zlib-devel expat-devel libslirp-devel
+    ```
+    sudo apt-get install autoconf automake autotools-dev curl python3 python3-pip libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev ninja-build git cmake libglib2.0-dev libslirp-dev
+    ```
 
-# Arch Linux
-sudo pacman -Syyu autoconf automake curl python3 libmpc mpfr gmp gawk base-devel bison flex texinfo gperf libtool patchutils bc zlib expat libslirp
+=== "Fedora/CentOS/RHEL OS"
 
-# OS X
-brew install python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat texinfo flock libslirp
-```
+    ```
+    sudo yum install autoconf automake python3 libmpc-devel mpfr-devel gmp-devel gawk  bison flex texinfo patchutils gcc gcc-c++ zlib-devel expat-devel libslirp-devel
+    ```
+
+=== "Arch Linux"
+
+    ```
+    sudo pacman -Syyu autoconf automake curl python3 libmpc mpfr gmp gawk base-devel bison flex texinfo gperf libtool patchutils bc zlib expat libslirp
+    ```
+
+=== "OS X"
+
+    ```
+    brew install python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat texinfo flock libslirp
+    ```
 
 *2.3. Configure the toolchain for RISC-V Steel and install it*
 
@@ -168,15 +173,10 @@ To receive the *Hello World!* message on your computer you need a serial termina
 - Open a serial terminal emulator:
     - To install PySerial, run `python3 -m pip install pyserial`
     - To open a PySerial terminal, run `python3 -m serial.tools.miniterm`
-    - PySerial will show the available serial ports, one of which is the UART of your FPGA board. Choose it to connect.
+    - PySerial will show the available serial ports, one of which the UART of your FPGA board. Choose it to connect.
     - If you are not using PySerial, adjust the UART configuration to 9600 bauds/s, 8 data bits, no parity, no control and no stop bit
 - Press the reset button
 - You should now see the Hello World message!
 
-## License
-
-RISC-V Steel is distributed under the [MIT License](LICENSE).
-
-## Need help?
-
-Please open a [new issue](https://github.com/riscv-steel/riscv-steel/issues).
+</br>
+</br>

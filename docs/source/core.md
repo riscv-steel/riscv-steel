@@ -3,7 +3,7 @@
 
 ## Introduction
 
-RISC-V Steel Processor Core is a 32-bit processor core IP implementing the RV32I instruction set, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
+RISC-V Steel Processor Core is a 32-bit processor core implementing the RV32I instruction set, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
 
 RISC-V Steel Processor Core is a single-issue, in-order, unpipelined processor core.
 
@@ -21,31 +21,31 @@ RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in
 | -------------- | --------- | | -------------------- |
 | **Signal name** | **Direction** | **Size** | **Description** |
 | clock      | Input | 1 bit     | Clock input.         |
-| reset      | Input | 1 bit     | Reset (active-high). |
-| halt       | Input | 1 bit     | Halts the processor core (active-high). |
+| reset      | Input | 1 bit     | Reset signal (active-high). |
+| halt       | Input | 1 bit     | Halt signal (active-high). |
 | **I/O interface**{ class="rvsteel-core-io-table" } |
 | **Signal name** | **Direction** | **Size** | **Description** |
-| rw_address | Output | 32 bits     | The address for the read/write operation.  |
-| read_data | Input | 32 bits     | The data read from the external device.  |
-| read_request | Output | 1 bit     | This signal is set to logic `HIGH` when the processor requests to read from an external device.  |
-| read_response | Input | 1 bit | The response to the read request. |
-| write_data | Output | 32 bits | The data to write to the device.  |
-| write_strobe | Output | 4 bits | A signal indicating which byte lanes of **write_data** must be written. |
-| write_request | Output | 1 bit | This signal is set to logic `HIGH` when the processor requests to write to an external device.  |
-| write_response | Input | 1 bit | The response to the write request. |
+| rw_address | Output | 32 bits     | Address of the read/write operation.  |
+| read_data | Input | 32 bits     | Data read.  |
+| read_request | Output | 1 bit     | Read request.  |
+| read_response | Input | 1 bit | Response to the read request. |
+| write_data | Output | 32 bits | Data to be written.  |
+| write_strobe | Output | 4 bits | A signal indicating which byte lanes of **write_data** holds the data to be written. |
+| write_request | Output | 1 bit | Write request.  |
+| write_response | Input | 1 bit | Response to the write request. |
 | **Interrupt handling**{ class="rvsteel-core-io-table" } |
 | **Signal name** | **Direction** | **Size** | **Description** |
-| irq_fast | Input | 16 bit  | Provides 16 fast interrupt request lines to peripheral devices. The rightmost lines have higher priority. |
-| irq_fast_response | Output | 16 bit  | The responses to the fast interrupt requests. |
-| irq_external | Input | 1 bit  | Drive this signal to logic `HIGH` to request the processor an external interrupt. |
-| irq_external_response | Output | 1 bit  | The response to the external interrupt request. |
-| irq_timer | Input | 1 bit  | Drive this signal to logic `HIGH` to request the processor a timer interrupt. |
-| irq_timer_response | Output | 1 bit  | The response to the timer interrupt request. |
-| irq_software | Input | 1 bit  | Drive this signal to logic `HIGH` to request the processor a software interrupt. |
-| irq_software_response | Output | 1 bit  | The response to the software interrupt request. |
+| irq_fast | Input | 16 bit  | 16 fast interrupt request lines for peripheral devices. Priority increases in ascending order (line 0 has the highest priority, line 15 the lowest). |
+| irq_fast_response | Output | 16 bit  | 16 response lines for interrupt requests. |
+| irq_external | Input | 1 bit  | External interrupt request. |
+| irq_external_response | Output | 1 bit  | Response to the external interrupt request. |
+| irq_timer | Input | 1 bit  | Timer interrupt request. |
+| irq_timer_response | Output | 1 bit  | Response to the timer interrupt request. |
+| irq_software | Input | 1 bit  | Software interrupt request. |
+| irq_software_response | Output | 1 bit  | Response to the software interrupt request. |
 | **Real time clock**{ class="rvsteel-core-io-table" } |
 | **Signal name** | **Direction** | **Size** | **Description** |
-| real_time_clock | Input | 64 bits | The measured time from a real time clock. |
+| real_time_clock | Input | 64 bits | Real time clock, used to update the `mtime` CSR. |
 
 ## Configuration
 
@@ -101,15 +101,9 @@ rvsteel_core #(
 
 ## I/O operations
 
-RISC-V Steel Processor Core communicates with external devices (memory and peripherals) through its I/O interface signals (see [Table 1](#table-1)). In each clock cycle the processor either requests to read or write data (it never requests both operations in the same clock cycle).
+RISC-V Steel Processor Core communicates with external devices (memory and peripherals) through its I/O interface signals (see [Table 1](#table-1)). In each clock cycle the processor either requests to read or write data. It never requests both operations in the same clock cycle.
 
 As in all RISC-V systems, the processor address space is shared among all devices, both memory and peripherals. Each device is mapped to a region in the address space. Communication with a device takes place by reading and writing data at addresses assigned exclusively to that device.
-
-For example, a system with a 16 KB memory and a UART module could split the processor address space as follows:
-
-- the memory would be assigned the address range from 0x00000000 to 0x00003fff
-- the address 0x80000000 would be used to send and receive data from the UART module
-- all remaining addresses would be free to be used by other devices
 
 The two sections below explain how read and write operations are requested by the processor core and the expected response to these requests.
 
@@ -183,7 +177,7 @@ The exceptions and interrupts implemented in RISC-V Steel Processor Core are lis
 
 **Table 2**{#table-2} - RISC-V Steel Processor Core implemented exceptions and interrupts
 
-| Priority       | Type      | Value `mstatus[31]` | Value of `mstatus[30:0]` | Description |
+| Priority       | Type      | `mstatus[31]` | `mstatus[30:0]` | Description |
 | -------------- | --------- | ------------------- | ---------------------| ----------- |
 | highest        | Exception | 0 | 2 | Illegal instruction |
 |                | Exception | 0 | 0 | Misaligned instruction address |
@@ -214,7 +208,7 @@ The timing diagram below is an example of a valid interrupt request:
 
 ### Trap handling
 
-The processor proceeds as follows when a trap is taken:
+RISC-V Steel Processor Core proceeds as follows when a trap is taken:
 
 - the execution of the current instruction is aborted.
 
