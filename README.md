@@ -2,6 +2,8 @@
 
 RISC-V Steel is a free collection of hardware modules written in Verilog intended for use in FPGAs and embedded systems. It features a 32-bit RISC-V processor core, UART, GPIO and SPI interfaces, and timer and memory modules. All modules are integrated into a tunable microcontroller design that can be easily ported to any FPGA in just a few steps.
 
+- [Documentation Page](https://riscv-steel.github.io/riscv-steel)
+
 ## Features
 
 - 32-bit RISC-V processor core (RV32I + Zicsr + Machine mode)
