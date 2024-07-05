@@ -13,14 +13,12 @@
       
       
       
-        <link rel="prev" href="../getstarted/">
+        <link rel="prev" href="../mcu/">
       
-      
-        <link rel="next" href="../soc/">
       
       
       <link rel="icon" href="../images/rvsteel_logo_circle.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.26">
     
     
       
@@ -28,7 +26,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -69,7 +70,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -94,7 +100,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="RISC-V Steel" class="md-header__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
       
-  <img src="../images/rvsteel_logo_white.svg" alt="logo">
+  <img src="../images/rvsteel_logo_circle.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -118,8 +124,8 @@
       </div>
     </div>
     
+      
     
-      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -148,7 +154,7 @@
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -165,7 +171,7 @@
         <a href="https://github.com/riscv-steel/riscv-steel" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -209,12 +215,12 @@
   
   
     <li class="md-tabs__item">
-      <a href="../getstarted/" class="md-tabs__link">
+      <a href="../gettingstarted/" class="md-tabs__link">
         
   
     
   
-  Get Started!
+  Getting Started
 
       </a>
     </li>
@@ -227,67 +233,17 @@
     
   
   
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
-        
-  
     
-  
-  Processor Core
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../soc/" class="md-tabs__link">
-        
-  
     
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../mcu/" class="md-tabs__link">
+          
   
-  System-on-Chip
+  Hardware Docs
 
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../softwareguide/" class="md-tabs__link">
-        
-  
+        </a>
+      </li>
     
-  
-  Software Guide
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../api/" class="md-tabs__link">
-        
-  
-    
-  
-  API Reference
-
-      </a>
-    </li>
   
 
       
@@ -311,13 +267,11 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="RISC-V Steel" class="md-nav__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
       
-  <img src="../images/rvsteel_logo_white.svg" alt="logo">
+  <img src="../images/rvsteel_logo_circle.svg" alt="logo">
 
     </a>
     RISC-V Steel
@@ -327,7 +281,7 @@
       <a href="https://github.com/riscv-steel/riscv-steel" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -364,11 +318,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../getstarted/" class="md-nav__link">
+      <a href="../gettingstarted/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Get Started!
+    Getting Started
   </span>
   
 
@@ -379,6 +333,70 @@
     
       
       
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Hardware Docs
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Hardware Docs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microcontroller
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
   
   
     
@@ -565,63 +583,11 @@
     </li>
   
 
-    
+              
+            
+          </ul>
+        </nav>
       
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../soc/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    System-on-Chip
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../softwareguide/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Software Guide
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    API Reference
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -632,6 +598,161 @@
                 </div>
               </div>
             
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io-signals" class="md-nav__link">
+    <span class="md-ellipsis">
+      I/O signals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instantiation-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instantiation template
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      I/O operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="I/O operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Read operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Write operation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exceptions-interrupts-and-traps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exceptions, interrupts and traps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exceptions, interrupts and traps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interrupt-request-handshake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interrupt request handshake
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trap-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trap handling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-time-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real time clock
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
             
           
           
@@ -648,7 +769,7 @@
 <h2 class="main-section-subtitle">Documentation</h2>
 
 <h2 id="introduction">Introduction</h2>
-<p>RISC-V Steel Processor Core is a 32-bit processor core IP implementing the RV32I instruction set, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.</p>
+<p>RISC-V Steel Processor Core is a 32-bit processor core implementing the RV32I instruction set, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.</p>
 <p>RISC-V Steel Processor Core is a single-issue, in-order, unpipelined processor core.</p>
 <p>RISC-V Steel Processor Core can run real-time operating systems and bare-metal embedded software. It is designed to work as a processing unit in a wide variety of embedded applications.</p>
 <h2 id="source-files">Source files</h2>
@@ -681,13 +802,13 @@
 <td>reset</td>
 <td>Input</td>
 <td>1 bit</td>
-<td>Reset (active-high).</td>
+<td>Reset signal (active-high).</td>
 </tr>
 <tr>
 <td>halt</td>
 <td>Input</td>
 <td>1 bit</td>
-<td>Halts the processor core (active-high).</td>
+<td>Halt signal (active-high).</td>
 </tr>
 <tr>
 <td><strong class="rvsteel-core-io-table">I/O interface</strong></td>
@@ -705,49 +826,49 @@
 <td>rw_address</td>
 <td>Output</td>
 <td>32 bits</td>
-<td>The address for the read/write operation.</td>
+<td>Address of the read/write operation.</td>
 </tr>
 <tr>
 <td>read_data</td>
 <td>Input</td>
 <td>32 bits</td>
-<td>The data read from the external device.</td>
+<td>Data read.</td>
 </tr>
 <tr>
 <td>read_request</td>
 <td>Output</td>
 <td>1 bit</td>
-<td>This signal is set to logic <code>HIGH</code> when the processor requests to read from an external device.</td>
+<td>Read request.</td>
 </tr>
 <tr>
 <td>read_response</td>
 <td>Input</td>
 <td>1 bit</td>
-<td>The response to the read request.</td>
+<td>Response to the read request.</td>
 </tr>
 <tr>
 <td>write_data</td>
 <td>Output</td>
 <td>32 bits</td>
-<td>The data to write to the device.</td>
+<td>Data to be written.</td>
 </tr>
 <tr>
 <td>write_strobe</td>
 <td>Output</td>
 <td>4 bits</td>
-<td>A signal indicating which byte lanes of <strong>write_data</strong> must be written.</td>
+<td>A signal indicating which byte lanes of <strong>write_data</strong> holds the data to be written.</td>
 </tr>
 <tr>
 <td>write_request</td>
 <td>Output</td>
 <td>1 bit</td>
-<td>This signal is set to logic <code>HIGH</code> when the processor requests to write to an external device.</td>
+<td>Write request.</td>
 </tr>
 <tr>
 <td>write_response</td>
 <td>Input</td>
 <td>1 bit</td>
-<td>The response to the write request.</td>
+<td>Response to the write request.</td>
 </tr>
 <tr>
 <td><strong class="rvsteel-core-io-table">Interrupt handling</strong></td>
@@ -765,49 +886,49 @@
 <td>irq_fast</td>
 <td>Input</td>
 <td>16 bit</td>
-<td>Provides 16 fast interrupt request lines to peripheral devices. The rightmost lines have higher priority.</td>
+<td>16 fast interrupt request lines for peripheral devices. Priority increases in ascending order (line 0 has the highest priority, line 15 the lowest).</td>
 </tr>
 <tr>
 <td>irq_fast_response</td>
 <td>Output</td>
 <td>16 bit</td>
-<td>The responses to the fast interrupt requests.</td>
+<td>16 response lines for interrupt requests.</td>
 </tr>
 <tr>
 <td>irq_external</td>
 <td>Input</td>
 <td>1 bit</td>
-<td>Drive this signal to logic <code>HIGH</code> to request the processor an external interrupt.</td>
+<td>External interrupt request.</td>
 </tr>
 <tr>
 <td>irq_external_response</td>
 <td>Output</td>
 <td>1 bit</td>
-<td>The response to the external interrupt request.</td>
+<td>Response to the external interrupt request.</td>
 </tr>
 <tr>
 <td>irq_timer</td>
 <td>Input</td>
 <td>1 bit</td>
-<td>Drive this signal to logic <code>HIGH</code> to request the processor a timer interrupt.</td>
+<td>Timer interrupt request.</td>
 </tr>
 <tr>
 <td>irq_timer_response</td>
 <td>Output</td>
 <td>1 bit</td>
-<td>The response to the timer interrupt request.</td>
+<td>Response to the timer interrupt request.</td>
 </tr>
 <tr>
 <td>irq_software</td>
 <td>Input</td>
 <td>1 bit</td>
-<td>Drive this signal to logic <code>HIGH</code> to request the processor a software interrupt.</td>
+<td>Software interrupt request.</td>
 </tr>
 <tr>
 <td>irq_software_response</td>
 <td>Output</td>
 <td>1 bit</td>
-<td>The response to the software interrupt request.</td>
+<td>Response to the software interrupt request.</td>
 </tr>
 <tr>
 <td><strong class="rvsteel-core-io-table">Real time clock</strong></td>
@@ -825,7 +946,7 @@
 <td>real_time_clock</td>
 <td>Input</td>
 <td>64 bits</td>
-<td>The measured time from a real time clock.</td>
+<td>Real time clock, used to update the <code>mtime</code> CSR.</td>
 </tr>
 </tbody>
 </table>
@@ -876,14 +997,8 @@
 </span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="p">);</span>
 </span></code></pre></div>
 <h2 id="io-operations">I/O operations</h2>
-<p>RISC-V Steel Processor Core communicates with external devices (memory and peripherals) through its I/O interface signals (see <a href="#table-1">Table 1</a>). In each clock cycle the processor either requests to read or write data (it never requests both operations in the same clock cycle).</p>
+<p>RISC-V Steel Processor Core communicates with external devices (memory and peripherals) through its I/O interface signals (see <a href="#table-1">Table 1</a>). In each clock cycle the processor either requests to read or write data. It never requests both operations in the same clock cycle.</p>
 <p>As in all RISC-V systems, the processor address space is shared among all devices, both memory and peripherals. Each device is mapped to a region in the address space. Communication with a device takes place by reading and writing data at addresses assigned exclusively to that device.</p>
-<p>For example, a system with a 16 KB memory and a UART module could split the processor address space as follows:</p>
-<ul>
-<li>the memory would be assigned the address range from 0x00000000 to 0x00003fff</li>
-<li>the address 0x80000000 would be used to send and receive data from the UART module</li>
-<li>all remaining addresses would be free to be used by other devices</li>
-</ul>
 <p>The two sections below explain how read and write operations are requested by the processor core and the expected response to these requests.</p>
 <h3 id="read-operation">Read operation</h3>
 <p>The processor core drives the I/O interface signals as follows on a read request:</p>
@@ -970,8 +1085,8 @@
 <tr>
 <th>Priority</th>
 <th>Type</th>
-<th>Value <code>mstatus[31]</code></th>
-<th>Value of <code>mstatus[30:0]</code></th>
+<th><code>mstatus[31]</code></th>
+<th><code>mstatus[30:0]</code></th>
 <th>Description</th>
 </tr>
 </thead>
@@ -1079,7 +1194,7 @@
 <figcaption><strong>Figure 3</strong> - Interrupt request timing diagram</figcaption>
 </figure>
 <h3 id="trap-handling">Trap handling</h3>
-<p>The processor proceeds as follows when a trap is taken:</p>
+<p>RISC-V Steel Processor Core proceeds as follows when a trap is taken:</p>
 <ul>
 <li>
 <p>the execution of the current instruction is aborted.</p>
@@ -1179,10 +1294,10 @@
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["toc.integrate", "navigation.tabs", "navigation.expand", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.expand", "navigation.instant", "navigation.instant.progress", "content.code.copy", "content.code.select"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
+      <script src="../assets/javascripts/bundle.ad660dcc.min.js"></script>
       
     
   </body>

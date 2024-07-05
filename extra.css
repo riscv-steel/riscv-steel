@@ -158,3 +158,7 @@ body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul
   line-height: 0px !important;
   margin: 0px !important;
 }
+
+.md-typeset code {
+  word-break: normal;
+}
