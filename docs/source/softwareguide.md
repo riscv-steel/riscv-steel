@@ -4,9 +4,9 @@
 
 Developing software for RISC-V Steel requires the [RISC-V GNU Toolchain](https://github.com/riscv/riscv-gnu-toolchain), a suite of compilers and software development tools for the RISC-V architecture.
 
-You can install and configure the toolchain for use with RISC-V Steel by following the steps below:
+Follow the steps below to download, install and configure the RISC-V GNU Toolchain for RISC-V Steel:
 
-### 1. Get the source files
+### 1. Download the RISC-V GNU Toolchain
 
 ```
 git clone https://github.com/riscv-collab/riscv-gnu-toolchain
@@ -50,8 +50,6 @@ cd riscv-gnu-toolchain
 ```
 make -j $(nproc)
 ```
-
-</br>
 
 </br>
 </br>
