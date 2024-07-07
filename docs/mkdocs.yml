@@ -60,13 +60,14 @@ nav:
     - Hardware Docs:
         - Microcontroller: 'mcu.md'
         - Processor Core: 'core.md'
-    #- Software Guide: 
-    #    - Introduction: 'softwareguide.md'
-    #    - How to start a new project: 'newproject.md'
-    #    - LibSteel Reference:
-    #        - Introduction: 'libsteel.md'
-    #        - UART: 'uart.md'
-    #        - GPIO: 'gpio.md'
-    #        - Timer: 'timer.md'
-    #        - SPI: 'spi.md'
-    #        - CSR: 'csr.md'
+    - Software Guide: 
+        - Introduction: 'softwareguide.md'
+        - Starting a new project: 'newproject.md'
+    #- LibSteel Reference:
+    #    - Introduction: 'libsteel.md'
+    #    - UART: 'uart.md'
+    #    - SPI Controller: 'spi.md'
+    #    - General Purpose Input/Output: 'gpio.md'
+    #    - Timer: 'timer.md'        
+    #    - Control and Status Registers: 'csr.md'
+    #    - Interrupt Handling: 'irqhandling.md'
