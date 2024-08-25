@@ -4,27 +4,31 @@ hide:
   - toc
 ---
 
-# RISC-V Steel Documentation
+# RISC-V Steel Docs
 
 Welcome to RISC-V Steel documentation page.
 
 [**:octicons-arrow-right-24: Getting Started Guide**](gettingstarted.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[:material-git: GitHub](https://github.com/riscv-steel/riscv-steel/)
 
-## About RISC-V Steel
+### About RISC-V Steel
 
-RISC-V Steel is a free collection of hardware modules written in Verilog intended for use in FPGAs and embedded systems. It features a 32-bit RISC-V processor core, UART, GPIO and SPI interfaces, and timer and memory modules. All modules are integrated into a tunable microcontroller design that can be easily ported to any FPGA in just a few steps.
+RISC-V Steel is a portfolio of RISC-V-based hardware modules written in Verilog for building embedded systems, systems-on-chip or FPGA implementation. RISC-V Steel modules are free and open, can be easily integrated into any project and come with documentation and examples.
 
-## Features
+### What's in?
 
-- 32-bit RISC-V processor core (RV32I + Zicsr + Machine mode)
-- UART, GPIO and SPI interfaces
+- 32-bit RISC-V processor core (RV32I + Zicsr and M-mode)
+- UART, GPIO and SPI controllers
 - Timer and memory modules
-- Support for real-time operating systems like FreeRTOS
-- LibSteel library, which provides an API to control RISC-V Steel
+- A RISC-V microcontroller integrating all the modules above
 
-## License
+### Features
 
-RISC-V Steel is distributed under the **MIT License**.
+- The microcontroller and the processor core support running real-time operating systems (FreeRTOS)
+- Software examples and template projects
+
+### License
+
+RISC-V Steel is licensed under the **MIT License**.
 
 </br>
 </br>
