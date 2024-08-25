@@ -5,15 +5,15 @@ hide:
 
 # Getting Started Guide
 
-RISC-V Steel is a free collection of hardware modules written in Verilog intended for use in FPGAs and embedded systems. It features a 32-bit RISC-V processor core, UART, GPIO and SPI interfaces, and timer and memory modules. All modules are integrated into a tunable microcontroller design that can be easily ported to any FPGA in just a few steps.
+In this guide we will show you how create a Hello World example system for FPGA implementation with RISC-V Steel.
 
-This getting started guide will show you how to use RISC-V Steel to create a Hello World system for your FPGA. This example system is a simple embedded application that sends a *Hello World!* message through the UART interface of RISC-V Steel. You will be able to see this message on your computer with the help of a serial terminal emulator (PySerial) after programming the FPGA.
+This example is a simple embedded application that makes your FPGA board send a Hello World message to your computer through its UART interface. With the help of a serial terminal emulator (PySerial), you will be able to see this message on your computer screen after programming the FPGA.
 
-After you finish this guide you will have a basic environment that you can use to create larger projects.
+Once you have completed this guide you will have a basic environment that you can use to create larger applications.
 
 ### 1. Download RISC-V Steel
 
-First of all, download RISC-V Steel by running:
+First, download RISC-V Steel by running:
 
 ```
 git clone https://github.com/riscv-steel/riscv-steel
@@ -21,7 +21,7 @@ git clone https://github.com/riscv-steel/riscv-steel
 
 ### 2. Download and install the RISC-V GNU Toolchain
 
-The [RISC-V GNU Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) is a set of compilers and software development tools for the RISC-V architecture. You need it to compile the C program written for the Hello World system.
+The [RISC-V GNU Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) is a set of compilers and software development tools for the RISC-V architecture. You need it to compile the C program written for the Hello World system. Follow the steps below:
 
 *2.1. Get the RISC-V GNU Toolchain*
 
@@ -29,7 +29,7 @@ The [RISC-V GNU Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) 
 git clone https://github.com/riscv/riscv-gnu-toolchain
 ```
 
-*2.2. Install dependencies (choose your OS)*
+*2.2. Install dependencies*
 
 === "Ubuntu"
 
@@ -66,15 +66,14 @@ make
 
 ### 3. Build the Hello World example
 
-The software project for the Hello World system is saved in `examples/hello_world/software/`. This folder contains:
+The software project for this Hello World example is saved in `examples/hello_world/software/`. This folder contains:
 
-- a Hello World example program, `main.c`
+- the Hello World program, `main.c`
 - a linker script for RISC-V Steel
 - a Makefile to automate building tasks
 - a `CMakeLists.txt` file with build instructions for CMake
-- LibSteel library, which provides an API to control RISC-V Steel
 
-The Hello World program in `main.c` is perhaps the simplest application you can build with RISC-V Steel. Its source code is reproduced below.
+The program in `main.c` is very simple. It calls `uart_write_string` from `libsteel.h` to send a message to the UART controller. Its source code is reproduced below:
 
 ```c
 #include "libsteel.h"
@@ -84,20 +83,18 @@ void main(void) {
 }
 ```
 
-As you can see, this program calls `uart_write_string` from `libsteel.h` to send a *Hello World!* message to the UART controller.
-
-To build the project, run:
+To build the program above, run:
 
 ```bash
 cd riscv-steel/examples/hello_world/software/
 make release PREFIX=/opt/riscv
 ```
 
-The build output will be saved to `build/` and contain a file named `hello_world.hex`. You will use this file in the next step to initialize the memory of RISC-V Steel.
+The build process will generate, among others, a file named `hello_world.hex` (saved to `build/`). This file will be used in the next step to initialize the memory of RISC-V Steel.
 
-### 4. Port RISC-V Steel to your FPGA
+### 4. Implement RISC-V Steel on your FPGA
 
-*4.1. Create a new hardware module `hello_world` with an instance of RISC-V Steel*
+*4.1. Create a hardware module named `hello_world` with an instance of RISC-V Steel top module*
 
 Using your preferred text editor, create a new Verilog file named `hello_world.v` and add the code below.
 
@@ -118,7 +115,7 @@ module hello_world (
 
   rvsteel_mcu #(
 
-    // Change to the frequency (in Hertz) of your FPGA board clock source
+    // Change to the frequency (in Hertz) of your FPGA board's clock
     .CLOCK_FREQUENCY          (50000000                   ),
     // Change to the absolute path to the .hex file generated in the previous step
     .MEMORY_INIT_FILE         ("/path/to/hello_world.hex" ),
@@ -148,7 +145,7 @@ module hello_world (
 endmodule
 ```
 
-*4.2. Implement the new `hello_world` design on your FPGA*
+*4.2. Implement the design created above on your FPGA*
 
 The specific steps to implement the `hello_world` design you created above vary depending on the vendor and model of your FPGA. However, they can be broken down into the following general steps:
 
@@ -157,26 +154,24 @@ The specific steps to implement the `hello_world` design you created above vary 
     - The Verilog file you just created, `hello_world.v`
     - All Verilog files saved in `riscv-steel/hardware/mcu/`. You don't need to add the `tests` folder and its contents.
 - Create a design constraints file
-    - Assign the `clock` pin of `hello_world.v` to a clock source
-    - Assign the `reset` pin of `hello_world.v` to a push-button or switch
-    - Assign the `uart_tx` pin to the **receiver** pin (rx) of the UART of your FPGA board
+    - Assign the `clock` pin to a clock source
+    - Assign the `reset` pin to a push-button or switch
+    - Assign the `uart_tx` pin to the **receiver** pin (rx) of your FPGA board's UART
 - Run synthesis, place and route, and any other intermediate step needed to generate a bitstream for the FPGA
 - Upload the bitstream to your FPGA 
 
 ### 5. Run the application
 
-The Hello World program starts running as soon as you finish uploading the bitstream.
+The program you built in step 3 will start running as soon as the EDA tool finishes uploading the bitstream to the FPGA.
 
-To receive the *Hello World!* message on your computer you need a serial terminal emulator like [PySerial](https://pythonhosted.org/pyserial/), which we show how to install below:
+To see the Hello World message on your computer screen you need a serial terminal emulator like [PySerial](https://pythonhosted.org/pyserial/), which we show how to install below:
 
-- Connect the UART of your FPGA board to your computer (if not already connected)
-- Open a serial terminal emulator:
-    - To install PySerial, run `python3 -m pip install pyserial`
-    - To open a PySerial terminal, run `python3 -m serial.tools.miniterm`
-    - PySerial will show the available serial ports, one of which the UART of your FPGA board. Choose it to connect.
-    - If you are not using PySerial, adjust the UART configuration to 9600 bauds/s, 8 data bits, no parity, no control and no stop bit
+- Connect the UART of the FPGA board to your computer (if not already connected)
+- Install PySerial by running `python3 -m pip install pyserial`
+- Open a PySerial terminal by running `python3 -m serial.tools.miniterm`
+- PySerial will show the available serial ports, one of which is the UART of your FPGA. Choose it to connect.
 - Press the reset button
-- You should now see the Hello World message!
+- You should now see a Hello World message!
 
 </br>
 </br>

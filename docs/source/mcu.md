@@ -18,7 +18,7 @@ The Verilog source files of RISC-V Steel Microcontroller Unit are saved in the `
 ``` systemverilog
 rvsteel_mcu #(
 
-  // See Configuration paramaters below for more information.
+  // See 'Configuration paramaters' below for more information.
 
   .CLOCK_FREQUENCY      (50000000       ),
   .UART_BAUD_RATE       (9600           ),
@@ -30,7 +30,7 @@ rvsteel_mcu #(
 
   rvsteel_mcu_instance  (
 
-  // See I/O signals below for more information.
+  // See 'I/O signals' below for more information.
 
   .clock                (),
   .reset                (),
@@ -53,7 +53,7 @@ rvsteel_mcu #(
 | **BOOT_ADDRESS**</br>Memory address of the first instruction to be fetched and executed.  | 32-bit hexadecimal   | `32'h00000000`   |
 | **CLOCK_FREQUENCY**</br>Frequency (in Hertz) of the `clock` signal.  | Integer | `50000000`       |
 | **UART_BAUD_RATE**</br>Baud rate of the UART module (in bauds per second).   | Integer | `9600`           | 
-| **MEMORY_SIZE**</br>Size of the Memory module (in bytes).     | Integer | `8192`           | 
+| **MEMORY_SIZE**</br>Size of the memory module (in bytes).     | Integer | `8192`           | 
 | **MEMORY_INIT_FILE**</br>Absolute path to the memory initialization file. | String | `(empty string)` |
 | **GPIO_WIDTH**</br>Number of general-purpose I/O pins.     | Integer | `1`           | 
 | **SPI_NUM_CHIP_SELECT**</br>Number of Chip Select (CS) lines for the SPI controller. | Integer | `1` |
@@ -87,7 +87,7 @@ rvsteel_mcu #(
 
 ## Adding new devices
 
-*1. Open `rvsteel_mcu.v` and look for the system bus configuration*
+*1. Open `rvsteel_mcu.v` and search for the system bus configuration*
 
 ``` systemverilog
   // System bus configuration
@@ -122,7 +122,7 @@ The system bus configuration should look as follows:
   localparam D5_NEW_DEVICE  = 5; // your new device
 ```
 
-*4. Assign the new device a memory region*
+*4. Assign the new device to a memory region*
 
 You can assign the new device to any free region (see [Memory Map](#memory-map)). The region cannot overlap the address space of other devices and its size must be a power of 2. 
 
@@ -155,17 +155,17 @@ In the example below, the new device `D5_NEW_DEVICE` is assigned a 32KB region s
 
 *5. Instantiate the new device*
 
-Finally, you have to instantiate the new device in the `rvsteel_mcu` module and connect it to the system bus interface.
+Finally, instantiate the new device and connect it to the system bus interface. A template for doing this is provided below:
 
-A template for instantiating and connecting the new device to the system bus is provided below:
+!!!info
+
+     RISC-V Steel Processor Core will issue read and write requests to the new device as described in the [I/O Operations](core.md#io-operations) section. The new device must comply with this protocol.
 
 ``` systemverilog
-  // Instantiate the new device in the rvsteel_mcu.v module like this:
+  // The new device instantiation should look like this:
 
   new_device
   new_device_instance (
-
-    // I/O interface of the new device
 
     .new_device_rw_address      (device_rw_address                        ),
     .new_device_read_data       (device_read_data[32*D2_NEW_DEVICE +: 32] ),
@@ -174,14 +174,8 @@ A template for instantiating and connecting the new device to the system bus is 
     .new_device_write_data      (device_write_data                        ),
     .new_device_write_strobe    (device_write_strobe                      ),
     .new_device_write_request   (device_write_request[D2_NEW_DEVICE]      ),
-    .new_device_write_response  (device_write_response[D2_NEW_DEVICE]     )
-
-  );
+    .new_device_write_response  (device_write_response[D2_NEW_DEVICE]     ));
 ```
-
-!!!info
-
-     RISC-V Steel Processor Core will issue read and write requests to the new device as described in the [I/O Operations](core.md#io-operations) section. The new device must comply with this protocol.
 
 </br>
 </br>
