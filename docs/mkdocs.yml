@@ -1,4 +1,4 @@
-site_name: RISC-V Steel
+site_name: RISC-V Steel Documentation
 site_author: Rafael Calcada
 site_description: RISC-V Steel is a free and open collection of RISC-V IP that is simple, robust and easy to use.
 repo_url: https://github.com/riscv-steel/riscv-steel
@@ -55,19 +55,8 @@ docs_dir: source/
 remote_branch: docs
 copyright: Copyright (c) RISC-V Steel contributors
 nav:
-    - Homepage: 'index.md'
-    - Getting Started: 'gettingstarted.md'
+    - Homepage: 'index.md'    
+    - User Guide: 'userguide.md'
     - Hardware Docs:
-        - Microcontroller: 'mcu.md'
-        - Processor Core: 'core.md'
-    - Software Guide: 
-        - Introduction: 'softwareguide.md'
-        - Starting a new project: 'newproject.md'
-    #- LibSteel Reference:
-    #    - Introduction: 'libsteel.md'
-    #    - UART: 'uart.md'
-    #    - SPI Controller: 'spi.md'
-    #    - General Purpose Input/Output: 'gpio.md'
-    #    - Timer: 'timer.md'        
-    #    - Control and Status Registers: 'csr.md'
-    #    - Interrupt Handling: 'irqhandling.md'
+        - Microcontroller: 'hardware/mcu.md'
+        - Processor Core: 'hardware/core.md'

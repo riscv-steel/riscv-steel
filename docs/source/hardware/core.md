@@ -1,21 +1,18 @@
-# RISC-V Steel Processor Core { class="main-section-title" }
-<h2 class="main-section-subtitle">Documentation</h2>
+# RISC-V Steel Processor Core IP
 
 ## Introduction
 
-RISC-V Steel Processor Core is a 32-bit processor core implementing the RV32I instruction set, the Zicsr extension and the Machine-mode privileged architecture of RISC-V.
+RISC-V Steel Processor Core IP is a 32-bit processor core implementing the RV32I instruction set, the Zicsr extension and the Machine-Mode privileged architecture of RISC-V.
 
-RISC-V Steel Processor Core is a single-issue, in-order, unpipelined processor core.
+The Processor Core IP is a single-issue, in-order, unpipelined processor core.
 
-RISC-V Steel Processor Core can run real-time operating systems and bare-metal embedded software. It is designed to work as a processing unit in a wide variety of embedded applications.
+The Processor Core IP can run real-time operating systems and bare-metal embedded software. It is designed to work as a processing unit in a wide variety of embedded applications.
 
 ## Source files
 
-RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in the `hardware/core/` folder.
+The Processor Core IP has a single source file, `rvsteel_core.v`, saved in `hardware/core/`.
 
 ## I/O signals
-
-**Table 1**{#table-1} - RISC-V Steel Processor Core input and output signals
 
 | **Global signals**{ class="rvsteel-core-io-table" }  |  |  |  |
 | -------------- | --------- | | -------------------- |
@@ -49,11 +46,11 @@ RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in
 
 ## Configuration
 
-The only configuration parameter of RISC-V Steel Processor Core is the boot address (`BOOT_ADDRESS`). In case you leave this parameter blank the boot address is automatically set to `32'h00000000`.
+The only configuration parameter is the boot address (`BOOT_ADDRESS`). If you leave this parameter blank the boot address is automatically set to `32'h00000000`.
 
 ## Instantiation template
 
-An instantiation template for RISC-V Steel Processor Core top module is provided below.
+An instantiation template for the Processor Core IP is provided below.
 
 ``` systemverilog
 rvsteel_core #(
@@ -101,7 +98,7 @@ rvsteel_core #(
 
 ## I/O operations
 
-RISC-V Steel Processor Core communicates with external devices (memory and peripherals) through its I/O interface signals (see [Table 1](#table-1)). In each clock cycle the processor either requests to read or write data. It never requests both operations in the same clock cycle.
+The Processor Core IP communicates with external devices (memory and peripherals) through its I/O interface signals. In each clock cycle the processor either requests to read or write data. It never requests both operations in the same clock cycle.
 
 As in all RISC-V systems, the processor address space is shared among all devices, both memory and peripherals. Each device is mapped to a region in the address space. Communication with a device takes place by reading and writing data at addresses assigned exclusively to that device.
 
@@ -128,7 +125,7 @@ The response to the read request from the external device must observe these rul
 The timing diagram below contains examples of valid read operations:
 
 <figure markdown>
-  ![](images/read_timing.svg)
+  ![](../images/read_timing.svg)
   <figcaption><strong>Figure 1</strong> - Read operation timing diagram</figcaption>
 </figure>
 
@@ -157,7 +154,7 @@ The response to the write request from the external device must observe these ru
 The timing diagram below contains examples of valid write operations:
 
 <figure markdown>
-  ![](images/write_timing.svg)
+  ![](../images/write_timing.svg)
   <figcaption><strong>Figure 2</strong> - Write operation timing diagram</figcaption>
 </figure>
 
@@ -173,9 +170,7 @@ An exception always causes a trap to be taken. An interrupt causes a trap to be 
 
 - the corresponding interrupt type is enabled (fields **meie**, **mtie** and **msie** in the **mie** CSR).
 
-The exceptions and interrupts implemented in RISC-V Steel Processor Core are listed in the table below. They are listed in descending priority order, that is, the topmost has the highest priority.
-
-**Table 2**{#table-2} - RISC-V Steel Processor Core implemented exceptions and interrupts
+The implemented exceptions and interrupts are listed in the table below. They are listed in descending priority order, that is, the topmost has the highest priority.
 
 | Priority       | Type      | `mstatus[31]` | `mstatus[30:0]` | Description |
 | -------------- | --------- | ------------------- | ---------------------| ----------- |
@@ -197,18 +192,18 @@ The exceptions and interrupts implemented in RISC-V Steel Processor Core are lis
 
 A device can request an interrupt by driving the corresponding **irq_\*** signal to logic `HIGH` and holding it `HIGH` until the request is accepted. The processor accepts the request by driving the **irq_\*_response** signal to logic `HIGH` for one clock cycle. The requesting device can drive the **irq_\*** signal to logic `LOW` in the clock cycle that follows the response, or keep it `HIGH` to make a new request.
 
-RISC-V Steel Processor Core provides 16 fast interrupt request lines and one additional line for each of the standard RISC-V interrupt types: external, timer, and software.
+The Processor Core IP provides 16 fast interrupt request lines and one additional line for each of the standard RISC-V interrupt types: external, timer, and software.
 
 The timing diagram below is an example of a valid interrupt request:
 
 <figure markdown>
-  ![](images/irq.svg)
+  ![](../images/irq.svg)
   <figcaption><strong>Figure 3</strong> - Interrupt request timing diagram</figcaption>
 </figure>
 
 ### Trap handling
 
-RISC-V Steel Processor Core proceeds as follows when a trap is taken:
+The Processor Core IP proceeds as follows when a trap is taken:
 
 - the execution of the current instruction is aborted.
 
@@ -216,7 +211,7 @@ RISC-V Steel Processor Core proceeds as follows when a trap is taken:
 
 - the program counter is set to the value of the **mtvec** CSR.
 
-- the **mcause** CSR is set to a value encoding the type of the interrupt (see [Table 2](#table-2) above).
+- the **mcause** CSR is set to a value encoding the type of the interrupt.
 
 - the current value of the global interrupt enable bit **mstatus.mie** is saved in **mstatus.mpie** (prior interrupt enable bit).
 
