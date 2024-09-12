@@ -14,7 +14,7 @@ RISC-V Steel features a 32-bit RISC-V processor core, memory, timers, and UART, 
 
 The quickest way to get started is to implement one of the example projects on your FPGA. Try it out:
 
-- Hello World Example 
+- [Hello World Example](examples/helloworld.md) 
 - FreeRTOS Example
 
 See the [User Guide](userguide.md) to learn how to create new applications.

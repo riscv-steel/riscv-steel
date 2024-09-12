@@ -10,22 +10,21 @@ Check out [RISC-V Steel Documentation][1].
 
 The quickest way to get started is to implement one of the example projects on your FPGA. Try it out!
 
-- Hello World Example 
+- [Hello World Example][2]
 - FreeRTOS Example
 
-See the [User Guide][2] to learn how to create new applications.
+See the [User Guide][3] to learn how to create new applications.
 
 ## License
 
-RISC-V Steel is distributed under the [MIT License][5].
+RISC-V Steel is distributed under the [MIT License][4].
 
 ## Need help?
 
-Please open a [new issue][6].
+Please open a [new issue][5].
 
 [1]: https://riscv-steel.github.io/riscv-steel
-[2]: https://riscv-steel.github.io/riscv-steel/userguide/
-[3]: https://riscv-steel.github.io/riscv-steel/mcu/
-[4]: https://riscv-steel.github.io/riscv-steel/core/
-[5]: LICENSE
-[6]: https://github.com/riscv-steel/riscv-steel/issues
+[3]: https://riscv-steel.github.io/riscv-steel/examples/helloworld
+[3]: https://riscv-steel.github.io/riscv-steel/userguide/
+[4]: LICENSE
+[5]: https://github.com/riscv-steel/riscv-steel/issues
