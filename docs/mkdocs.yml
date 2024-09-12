@@ -60,3 +60,5 @@ nav:
     - Hardware Docs:
         - Microcontroller: 'hardware/mcu.md'
         - Processor Core: 'hardware/core.md'
+    - Examples:
+        - Hello World: 'examples/helloworld.md'
