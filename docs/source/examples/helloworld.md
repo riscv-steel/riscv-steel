@@ -28,7 +28,7 @@ The building process will generate a `hello_world.hex` file in the `build/` fold
 Using your preferred text editor, create a Verilog file name `hello_world.v` and add the source code below. Change the source code as follow:
 
 - Fill in the `MEMORY_INIT_FILE` parameter with the absolute path to the `hello_world.hex` file (generated in the previous step).
-- Fill in the `CLOCK_FREQUENCY` parameter with the frequency (in Hertz) of your FPGA board's clock source.
+- Fill in the `CLOCK_FREQUENCY` parameter with the frequency (in Hertz) of your FPGA board clock source.
 
 ```verilog
 module hello_world (
