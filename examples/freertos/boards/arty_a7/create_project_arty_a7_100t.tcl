@@ -18,5 +18,5 @@ add_files -norecurse { ../../../../hardware/mtimer/rvsteel_mtimer.v }
 add_files -norecurse { ../../../../hardware/gpio/rvsteel_gpio.v }
 add_files -norecurse { ../../../../hardware/spi/rvsteel_spi.v }
 add_files -norecurse { ../../../../hardware/ram/rvsteel_ram.v }
-add_files -norecurse { ../../software/build/freertos_demo.hex }
-set_property file_type {Memory Initialization Files} [get_files ../../software/build/freertos_demo.hex]
+add_files -norecurse { ../../software/build/freertos.hex }
+set_property file_type {Memory Initialization Files} [get_files ../../software/build/freertos.hex]
