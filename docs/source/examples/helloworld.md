@@ -80,6 +80,9 @@ To implement this module on an FPGA, follow the steps below:
     - The Verilog file you just created, `hello_world.v`.
     - All Microcontroller IP [source files](../hardware/mcu.md#source-files).
 - Create a design constraints file and map the ports of `hello_world.v` to the respective devices on the FPGA board.
+    - Map the `uart_tx` output to the UART-USB bridge
+    - Map the `reset` input to a push-button or switch on the board
+    - Map the `clock` input to a clock source
 - Run synthesis, place and route, and any other intermediate step needed to generate a bitstream for the FPGA.
 - Generate the bitstream and program the FPGA with it.
 
