@@ -62,3 +62,4 @@ nav:
         - Processor Core: 'hardware/core.md'
     - Examples:
         - Hello World: 'examples/helloworld.md'
+        - FreeRTOS: 'examples/freertos.md'
