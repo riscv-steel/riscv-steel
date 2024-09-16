@@ -13,7 +13,7 @@ The quickest way to get started is to implement one of the example projects on y
 - [Hello World Example][2]
 - FreeRTOS Example
 
-See the [User Guide][3] to learn how to create new applications.
+See the [User Guide][3] to learn how to create your own applications.
 
 ## License
 
