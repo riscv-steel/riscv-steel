@@ -36,7 +36,19 @@ theme:
     favicon: images/rvsteel_logo_circle.svg
     highlightjs: true
     palette:
-        primary: white
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: white
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
     features:
         - navigation.tabs
         - navigation.expand
