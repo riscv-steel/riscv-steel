@@ -7,7 +7,9 @@
 
 #include "libsteel.h"
 
+#define UART_CONTROLLER_ADDR (UartController *)0x80000000
+
 void main(void)
 {
-  uart_write_string(RVSTEEL_UART, "Hello World from RISC-V Steel!");
+  uart_write_string(UART_CONTROLLER_ADDR, "Hello World from RISC-V Steel!");
 }

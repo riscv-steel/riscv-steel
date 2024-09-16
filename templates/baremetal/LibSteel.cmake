@@ -5,11 +5,11 @@
 # SPDX-License-Identifier: MIT
 # -----------------------------------------------------------------------------
 
-include (FetchContent)
+include(FetchContent)
 
 FetchContent_Declare(steel
   GIT_REPOSITORY https://github.com/riscv-steel/libsteel.git
-  GIT_TAG        v1.0
+  GIT_TAG v1.2
 )
 
 FetchContent_MakeAvailable(steel)
