@@ -11,7 +11,7 @@ tr:has(.rvsteel-core-io-table) {
   --md-primary-fg-color--light: #526cfe;
   --md-primary-fg-color--dark: #283481;
   --md-accent-fg-color: #526cfe;
-  --md-accent-fg-color--light: #526cfe;
+  --md-accent-fg-color--light: #4287ff;
   --md-accent-fg-color--dark: #303fa1;
 }
 
@@ -33,12 +33,12 @@ tr:has(.rvsteel-core-io-table) {
 }
 
 .md-typeset a {
-  color: var(--md-accent-fg-color--light);
+  color: var(--md-accent-fg-color);
   word-break: break-word;
 }
 
 .md-typeset a:hover {
-  color: var(--md-accent-fg-color--dark);
+  color: var(--md-accent-fg-color--light);
   word-break: break-word;
 }
 
