@@ -20,7 +20,7 @@ To build software for RISC-V Steel you need the [RISC-V GNU Toolchain](https://g
 
 Run the commands below to install and configure the toolchain for RISC-V Steel:
 
-!!! note ""
+!!! quote ""
 
     __Important!__ The `--prefix` option defines the installation folder. You need to set it to a folder where you have `rwx` permissions. The commands below assume you have `rwx` permissions on `/opt`.
 
@@ -90,17 +90,31 @@ Run the commands below to install and configure the toolchain for RISC-V Steel:
 
 ## Writing the application
 
-The quickest way to start a new application is to make a copy of the `template/` folder and edit the `main.c` file in it. 
+To make it easier to develop new applications, RISC-V Steel provides two template projects: one for bare-metal embedded software and a more sophisticated one based on FreeRTOS. Both provide a `main.c` template file where the application source code can be added.
 
-The `template/` folder consists of a CMake project that preconfigures the RISC-V GNU Toolchain to compile and link software for RISC-V Steel, so you can start writing the application right away without having to worry about configuring the compiler.
+The template projects use CMake to configure the RISC-V GNU Toolchain to compile and link software for RISC-V Steel, so you can start writing your application right away, without having to configure anything.
 
+To copy one of the template projects, run the following commands:
+
+=== "Bare-metal"
+
+    ```
     # Clone RISC-V Steel repository (if not cloned yet)
     git clone https://github.com/riscv-steel/riscv-steel
     
-    # Make a copy of the template software project
-    cp riscv-steel/template/ new_project/
+    # Make a copy of the Bare-metal template project
+    cp riscv-steel/templates/baremetal new_project/
+    ```
 
-See the examples section to learn how to develop software for the features in the Microcontroller IP.
+=== "FreeRTOS"
+
+    ```
+    # Clone RISC-V Steel repository (if not cloned yet)
+    git clone https://github.com/riscv-steel/riscv-steel
+    
+    # Make a copy of the FreeRTOS template project
+    cp riscv-steel/templates/freertos new_project/
+    ```
 
 To build the application you wrote, simply run `make` from the project root folder:
 
@@ -131,7 +145,7 @@ Once you have generated the `.hex` file for the application, you can implement t
 
 Let's do the first part. Using your preferred text editor, create a Verilog file named `rvsteel_mcu_wrapper.v` and add the code below. 
 
-!!! note ""
+!!! quote ""
 
     __Important:__ Don't forget to change the file as instructed in the comments!
 
