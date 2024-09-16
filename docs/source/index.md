@@ -17,7 +17,7 @@ The quickest way to get started is to implement one of the example projects on y
 - [Hello World Example](examples/helloworld.md) 
 - FreeRTOS Example
 
-See the [User Guide](userguide.md) to learn how to create new applications.
+See the [User Guide](userguide.md) to learn how to create your own applications.
 
 </br>
 </br>
