@@ -4,11 +4,13 @@
 
 The Hello World example is a bare-metal application that uses the UART controller of the Microcontroller IP to send a Hello World message to a host computer.
 
+## Prerequisites
+
 To run this example you need an FPGA board with a UART-USB bridge, a common feature on most FPGAs.
 
-## Building the example
+Additionally, you need to have the RISC-V GNU Toolchain installed on your machine to build the example. You can find instructions on how to install the RISC-V GNU Toolchain in the [User Guide](../userguide.md#prerequisites).
 
-Make sure you have the RISC-V GNU Toolchain installed before building the example. You find instructions on how to install the RISC-V GNU Toolchain in the [Prerequisites](../userguide.md#prerequisites) section of the [User Guide](../userguide.md).
+## Building the example
 
 Run the commands below to build the example:
 
@@ -97,7 +99,7 @@ Now that the FPGA is programmed, you can see the Hello World message on a host c
     python3 -m pip install pyserial
     ```
 
-- Open a PySerial terminal
+- Open a serial terminal
 
     With PySerial, a serial terminal can be opened by running:
     
