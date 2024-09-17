@@ -24,8 +24,8 @@ RISC-V Steel is distributed under the [MIT License][5].
 Please open a [new issue][6].
 
 [1]: https://riscv-steel.github.io/riscv-steel
-[3]: https://riscv-steel.github.io/riscv-steel/examples/helloworld
-[4]: https://riscv-steel.github.io/riscv-steel/examples/freertos
-[5]: https://riscv-steel.github.io/riscv-steel/userguide/
-[6]: LICENSE
-[7]: https://github.com/riscv-steel/riscv-steel/issues
+[2]: https://riscv-steel.github.io/riscv-steel/examples/helloworld
+[3]: https://riscv-steel.github.io/riscv-steel/examples/freertos
+[4]: https://riscv-steel.github.io/riscv-steel/userguide/
+[5]: LICENSE
+[6]: https://github.com/riscv-steel/riscv-steel/issues
