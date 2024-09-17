@@ -7,54 +7,38 @@
 
 MAKEFLAGS += --no-print-directory
 
-RUN_FLAGS  = "
-RUN_FLAGS += --log-level=DEBUG
-RUN_FLAGS += --ram-init-h32=$$PWD/build/freertos.hex
-RUN_FLAGS += --out-wave=$$PWD/dump/wave.fst
-RUN_FLAGS += --cycles=1000000
-RUN_FLAGS += --freq-ns=20
-RUN_FLAGS += "
-
 ifdef TOOLCHAIN_PREFIX
 TOOLCHAIN_PREFIX_FLAG = -DTOOLCHAIN_PREFIX=${TOOLCHAIN_PREFIX}
 endif
 
-all:
-	@echo "\nUsage:\n\n  make <target>\n"
-	@echo "Available targets:\n"
-	@echo "  arty_debug\t\t Debug build for Digilent Arty A7 board"
-	@echo "  cmod_debug\t\t Debug build for Digilent Cmod A7 board"
-	@echo "  arty_release\t\t Release build for Digilent Arty A7 board"
-	@echo "  cmod_release\t\t Release build for Digilent Cmod A7 board"
-	@echo "  run_sim\t\t Run the built target on RISC-V Steel MCU simulator"
-	@echo "  clean\t\t\t Remove the build/ folder\n"
+ifdef PREFIX
+TOOLCHAIN_PREFIX_FLAG = -DTOOLCHAIN_PREFIX="${PREFIX}/bin/riscv32-unknown-elf-"
+endif
 
-arty_debug:
+all: debug
+
+check_usage:
+ifndef CLOCK_FREQUENCY
+	$(info Usage:     make [debug|release] CLOCK_FREQUENCY=<freq_in_hertz>)
+	$(info Example:   make debug CLOCK_FREQUENCY=50000000)
+	$(info ---)
+	$(info The FreeRTOS example contains timing functionality that needs to know the clock frequency to work properly.)
+	$(info ---)
+	$(error Exiting due to errors)
+endif
+
+debug: check_usage
 	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=50000000 ..
+	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=${CLOCK_FREQUENCY} ..
 	$(MAKE) -C build
 
-arty_release:
+release: check_usage
 	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=50000000 ..
+	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=${CLOCK_FREQUENCY} ..
 	$(MAKE) -C build
-
-cmod_debug:
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=12000000 ..
-	$(MAKE) -C build
-
-cmod_release:
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=12000000 ..
-	$(MAKE) -C build
-
-run_sim: all
-	@mkdir -p dump
-	@$(MAKE) -C ../../../hardware/mcu/tests/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
 
 clean:
 	@rm -rf build dump
 	@echo "Build directory deleted."
 
-.PHONY: arty_debug arty_release cmod_debug cmod_release run_sim clean
+.PHONY: check_usage debug release clean
