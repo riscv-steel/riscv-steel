@@ -116,10 +116,24 @@ To copy one of the template projects, run the following commands:
     cp riscv-steel/templates/freertos new_project/
     ```
 
-To build the application you wrote, simply run `make` from the project root folder:
+To build the application you wrote, run the commands below for the template you have chosen:
 
+=== "Bare-metal"
+
+    ```bash
+    # -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
     cd new_project/
-    make
+    make PREFIX=/opt/riscv
+    ```
+
+=== "FreeRTOS"
+
+    ```bash
+    # -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
+    # -- CLOCK_FREQUENCY: Frequency of the clock source connected to 'rvsteel_mcu' (see Running on FPGA below)
+    cd new_project/
+    make PREFIX=/opt/riscv CLOCK_FREQUENCY=<freq_in_hertz>
+    ```
 
 A successfull build ends with a message like this:
 
