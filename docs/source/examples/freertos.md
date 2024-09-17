@@ -2,23 +2,27 @@
 
 ## Introduction
 
-The FreeRTOS example is a more sophisticated application that runs on top of [FreeRTOS](https://www.freertos.org/), an open-source real-time operating system. The application uses the GPIO controller to make two LEDs blink in a specific pattern.
+The FreeRTOS example is a more sophisticated application that runs on top of [FreeRTOS](https://www.freertos.org/), an open-source real-time operating system. The application uses the GPIO controller to make 2 LEDs blink in a specific pattern.
 
-To run this example you need an FPGA board with at least two LEDs.
+## Prerequisites
+
+To run this example you need an FPGA board with at least 2 LEDs and 32KB of BRAM.
+
+Additionally, you need to have the RISC-V GNU Toolchain installed on your machine to build the example. You can find instructions on how to install the RISC-V GNU Toolchain in the [User Guide](../userguide.md#prerequisites).
 
 ## Building the example
 
-Make sure you have the RISC-V GNU Toolchain installed before building the example. You find instructions on how to install the RISC-V GNU Toolchain in the [Prerequisites](../userguide.md#prerequisites) section of the [User Guide](../userguide.md).
-
 Run the commands below to build the example:
 
-```
+```bash
 # Clone RISC-V Steel repository (if not cloned yet)
 git clone https://github.com/riscv-steel/riscv-steel
 
 # Build the software for the FreeRTOS example
+# -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
+# -- CLOCK_FREQUENCY: Frequency of the clock source connected to 'rvsteel_mcu'
 cd riscv-steel/examples/freertos/software
-make
+make PREFIX=/opt/riscv CLOCK_FREQUENCY=<freq_in_hertz>
 ```
 
 The building process will generate a `freertos.hex` file in the `build/` folder. This file is used in the next step to initialize the Microcontroller IP memory.
@@ -28,7 +32,7 @@ The building process will generate a `freertos.hex` file in the `build/` folder.
 Using your preferred text editor, create a Verilog file name `freertos.v` and add the source code below. Change the source code as follow:
 
 - Fill in the `MEMORY_INIT_FILE` parameter with the absolute path to the `freertos.hex` file (generated in the previous step).
-- Fill in the `CLOCK_FREQUENCY` parameter with the frequency (in Hertz) of your FPGA board clock source.
+- Fill in the `CLOCK_FREQUENCY` parameter with the frequency (in Hertz) of the clock source connected to `rvsteel_mcu`.
 
 ```verilog
 module freertos  #(
@@ -51,11 +55,11 @@ module freertos  #(
 
   rvsteel_mcu #(
 
-  // Please adjust these two parameters accordingly
+  // Please adjust these parameters accordingly
   .CLOCK_FREQUENCY          (50000000                   ),
-  .MEMORY_SIZE              (131072                     ),
+  .MEMORY_SIZE              (32768                      ),
   .MEMORY_INIT_FILE         ("/path/to/freertos.hex"    ),
-  .GPIO_WIDTH               (GPIO_WIDTH                 ),
+  .GPIO_WIDTH               (GPIO_WIDTH                 )
 
   ) rvsteel_mcu_instance (
 
@@ -65,12 +69,12 @@ module freertos  #(
 
   // Unused inputs need to be hardwired to zero
   .halt                     (1'b0                       ),
+  .uart_rx                  (1'b0                       ),
   .gpio_input               ({GPIO_WIDTH{1'b0}}         ),
   .poci                     (1'b0                       ),
 
   // Unused outputs can be left open
-  .uart_tx                  (                           ),
-  .uart_rx                  (                           ),
+  .uart_tx                  (                           ),  
   .gpio_oe                  (                           ),
   .sclk                     (                           ),
   .pico                     (                           ),  
@@ -102,7 +106,10 @@ If you have any of the FPGA boards below, follow the steps specific to your boar
 
 ### Arty A7
 
-- Build the FreeRTOS application as instructed in [Building the example](#building-the-example)
+- Build the FreeRTOS application as instructed in [Building the example](#building-the-example), using `CLOCK_FREQUENCY=50000000`
+
+    The Arty A7 100 MHz clock source is internally divided by 2 so that the design can meet timing constraints.
+
 - On AMD Vivado, click __Tools / Run Tcl Script__
 
     Select `examples/freertos/boards/arty_a7/create_project_arty_a7_<variant>t.tcl`, where &lt;variant&gt; is the variant of your board (either 35T or 100T).
@@ -112,7 +119,7 @@ If you have any of the FPGA boards below, follow the steps specific to your boar
 
 ### Cmod A7
 
-- Build the FreeRTOS application as instructed in [Building the example](#building-the-example)
+- Build the FreeRTOS application as instructed in [Building the example](#building-the-example), using `CLOCK_FREQUENCY=12000000`
 - On AMD Vivado, click __Tools / Run Tcl Script__
 
     Select `examples/freertos/boards/cmod_a7/create_project_cmod_a7.tcl`.
