@@ -14,13 +14,14 @@ Additionally, you need to have the RISC-V GNU Toolchain installed on your machin
 
 Run the commands below to build the example:
 
-```
+```bash
 # Clone RISC-V Steel repository (if not cloned yet)
 git clone https://github.com/riscv-steel/riscv-steel
 
 # Build the software for the Hello World example
+# -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
 cd riscv-steel/examples/hello_world/software
-make
+make PREFIX=/opt/riscv
 ```
 
 The building process will generate a `hello_world.hex` file in the `build/` folder. This file is used in the next step to initialize the Microcontroller IP memory.
@@ -30,7 +31,7 @@ The building process will generate a `hello_world.hex` file in the `build/` fold
 Using your preferred text editor, create a Verilog file name `hello_world.v` and add the source code below. Change the source code as follow:
 
 - Fill in the `MEMORY_INIT_FILE` parameter with the absolute path to the `hello_world.hex` file (generated in the previous step).
-- Fill in the `CLOCK_FREQUENCY` parameter with the frequency (in Hertz) of your FPGA board clock source.
+- Fill in the `CLOCK_FREQUENCY` parameter with the frequency (in Hertz) of the clock source connected to `rvsteel_mcu`.
 
 ```verilog
 module hello_world (
@@ -61,11 +62,11 @@ module hello_world (
 
   // Unused inputs need to be hardwired to zero
   .halt                     (1'b0                       ),
+  .uart_rx                  (1'b0                       ),
   .gpio_input               (1'b0                       ),
   .poci                     (1'b0                       ),
 
-  // Unused outputs can be left open
-  .uart_rx                  (                           ),
+  // Unused outputs can be left open  
   .gpio_oe                  (                           ),
   .gpio_output              (                           ),
   .sclk                     (                           ),
