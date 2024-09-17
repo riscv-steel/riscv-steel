@@ -2,7 +2,7 @@
 hide: navigation
 ---
 
-<h1 id="hidden-homepage-title">Hey</h1>
+<h1 id="hidden-homepage-title">RISC-V Steel Documentation</h1>
 
 <h2 id="h2-homepage-no-top-margin">About RISC-V Steel</h2>
 
