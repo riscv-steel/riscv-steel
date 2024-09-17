@@ -38,9 +38,9 @@ void task1(void *pvParameters)
   configASSERT((uint32_t)pvParameters == 1UL);
   for (;;)
   {
-    vTaskDelay(250);
+    vTaskDelay(500);
     gpio_set(GPIO_CONTROLLER_ADDR, 0);
-    vTaskDelay(250);
+    vTaskDelay(500);
     gpio_clear(GPIO_CONTROLLER_ADDR, 0);
   }
 }
