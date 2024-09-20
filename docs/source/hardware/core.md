@@ -188,11 +188,13 @@ The implemented exceptions and interrupts are listed in the table below. They ar
 |                | Interrupt | 1 | 3 | Software interrupt |
 | lowest         | Interrupt | 1 | 7 | Timer interrupt |
 
+### Fast Interrupts
+
+The Processor Core IP provides 16 fast interrupt request lines in addition to the standard RISC-V interrupts. These interrupt requests have higher priority over the standard interrupts, as shown in the table above.
+
 ### Interrupt request handshake
 
 A device can request an interrupt by driving the corresponding **irq_\*** signal to logic `HIGH` and holding it `HIGH` until the request is accepted. The processor accepts the request by driving the **irq_\*_response** signal to logic `HIGH` for one clock cycle. The requesting device can drive the **irq_\*** signal to logic `LOW` in the clock cycle that follows the response, or keep it `HIGH` to make a new request.
-
-The Processor Core IP provides 16 fast interrupt request lines and one additional line for each of the standard RISC-V interrupt types: external, timer, and software.
 
 The timing diagram below is an example of a valid interrupt request:
 
