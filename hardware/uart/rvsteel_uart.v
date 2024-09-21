@@ -45,6 +45,7 @@ module rvsteel_uart #(
   localparam REG_WDATA = 5'h00;
   localparam REG_RDATA = 5'h04;
   localparam REG_READY = 5'h08;
+  localparam REG_RXSTATUS = 5'h0c;
 
   reg [31:0] tx_cycle_counter = 32'b0;
   reg [31:0] rx_cycle_counter = 32'b0;
@@ -102,7 +103,9 @@ module rvsteel_uart #(
       rx_active <= 1'b0;
     end
     else if (uart_irq == 1'b1) begin
-      if (uart_irq_response == 1'b1) begin
+      if (uart_irq_response == 1'b1 || 
+          (rw_address == REG_RDATA &&
+           read_request == 1'b1)) begin
         rx_cycle_counter <= 0;
         rx_register <= 8'h00;
         rx_data <= rx_data;
@@ -185,6 +188,8 @@ module rvsteel_uart #(
       read_data <= {24'b0, rx_data};
     else if (rw_address == REG_READY && read_request == 1'b1)
       read_data <= {31'b0, tx_bit_counter == 0};
+    else if (rw_address == REG_RXSTATUS && read_request == 1'b1)
+      read_data <= {31'b0, uart_irq};
     else
       read_data <= 32'h00000000;
   end

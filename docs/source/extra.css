@@ -55,3 +55,15 @@ tr:has(.rvsteel-core-io-table) {
 .md-typeset code {
   word-break: normal;
 }
+
+.hide-api-call {
+  height: 0px;
+  visibility: hidden;
+  margin: 0px !important;
+}
+
+.api-call-title {
+  padding: 0px !important;
+  background-color: transparent !important;
+  font-size: .9em !important;
+}
