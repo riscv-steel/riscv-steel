@@ -7,23 +7,23 @@
 
 #include "libsteel.h"
 
-#define UART_CONTROLLER_ADDR (UartController *)0x80000000
-#define MTIMER_CONTROLLER_ADDR (MTimerController *)0x80010000
+#define DEFAULT_UART (UartController *)0x80000000
+#define DEFAULT_MTIMER (MTimerController *)0x80010000
 
 // Overrides the standard interrupt handler for Machine Timer interrupts
 __NAKED void mti_irq_handler()
 {
-  mtimer_clear_counter(MTIMER_CONTROLLER_ADDR);
-  uart_write_string(UART_CONTROLLER_ADDR, "Time elapsed: 1 sec\n");
+  mtimer_clear_counter(DEFAULT_MTIMER);
+  uart_write_string(DEFAULT_UART, "Time elapsed: 1 sec\n");
   __ASM_VOLATILE("mret");
 }
 
 int main(void)
 {
-  uart_write_string(UART_CONTROLLER_ADDR, "MTimer demo started running...\n");
-  mtimer_set_compare(MTIMER_CONTROLLER_ADDR, CPU_FREQUENCY);
-  mtimer_clear_counter(MTIMER_CONTROLLER_ADDR);
-  mtimer_enable(MTIMER_CONTROLLER_ADDR);
+  uart_write_string(DEFAULT_UART, "MTimer demo started running...\n");
+  mtimer_set_compare(DEFAULT_MTIMER, CPU_FREQUENCY);
+  mtimer_clear_counter(DEFAULT_MTIMER);
+  mtimer_enable(DEFAULT_MTIMER);
   csr_enable_vectored_mode_irq();
   CSR_SET(CSR_MIE, MIP_MIE_MASK_MTI);
   csr_global_enable_irq();
