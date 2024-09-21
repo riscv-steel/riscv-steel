@@ -72,6 +72,9 @@ nav:
     - Hardware Docs:
         - Microcontroller: 'hardware/mcu.md'
         - Processor Core: 'hardware/core.md'
+    - LibSteel Docs:
+        - Introduction: 'libsteel.md'
+        - UART Controller: 'libsteel/uart.md'
     - Examples:
         - Hello World: 'examples/helloworld.md'
         - FreeRTOS: 'examples/freertos.md'
