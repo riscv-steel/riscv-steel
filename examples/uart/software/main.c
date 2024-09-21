@@ -7,21 +7,21 @@
 
 #include "libsteel.h"
 
-#define UART_CONTROLLER_ADDR (UartController *)0x80000000
+#define DEFAULT_UART (UartController *)0x80000000
 
 void main(void)
 {
-  uart_write_string(UART_CONTROLLER_ADDR, "RISC-V Steel - UART example"
-                                          "\n\nType something and press Enter:\n");
+  uart_write_string(DEFAULT_UART, "RISC-V Steel - UART example"
+                                  "\n\nType something and press Enter:\n");
   while (1)
   {
-    if (uart_data_received(UART_CONTROLLER_ADDR))
+    if (uart_data_received(DEFAULT_UART))
     {
-      char rx = uart_read(UART_CONTROLLER_ADDR);
+      char rx = uart_read(DEFAULT_UART);
       if (rx == '\r') // Enter key
-        uart_write_string(UART_CONTROLLER_ADDR, "\n\nType something else and press Enter again: ");
+        uart_write_string(DEFAULT_UART, "\n\nType something else and press Enter again: ");
       else if (rx < 127) // Echo back printable characters
-        uart_write(UART_CONTROLLER_ADDR, rx);
+        uart_write(DEFAULT_UART, rx);
     }
   }
 }

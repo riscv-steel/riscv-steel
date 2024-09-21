@@ -10,8 +10,8 @@
 #include <task.h>
 
 #define STACK_SIZE 800
-#define MTIMER_CONTROLLER_ADDR (MTimerController *)0x80010000
-#define GPIO_CONTROLLER_ADDR (GpioController *)0x80020000
+#define DEFAULT_MTIMER (MTimerController *)0x80010000
+#define DEFAULT_GPIO (GpioController *)0x80020000
 
 StaticTask_t xTaskBuffer;
 StackType_t xStack[STACK_SIZE];
@@ -23,9 +23,9 @@ void vTaskCode(void *pvParameters)
   for (;;)
   {
     vTaskDelay(500);
-    gpio_set(GPIO_CONTROLLER_ADDR, 0);
+    gpio_set(DEFAULT_GPIO, 0);
     vTaskDelay(500);
-    gpio_clear(GPIO_CONTROLLER_ADDR, 0);
+    gpio_clear(DEFAULT_GPIO, 0);
   }
 }
 
@@ -39,18 +39,18 @@ void vTaskCode1(void *pvParameters)
   for (;;)
   {
     vTaskDelay(1000);
-    gpio_set(GPIO_CONTROLLER_ADDR, 1);
+    gpio_set(DEFAULT_GPIO, 1);
     vTaskDelay(1000);
-    gpio_clear(GPIO_CONTROLLER_ADDR, 1);
+    gpio_clear(DEFAULT_GPIO, 1);
   }
 }
 
 int main(void)
 {
   csr_enable_vectored_mode_irq();
-  mtimer_enable(MTIMER_CONTROLLER_ADDR);
-  gpio_set_output(GPIO_CONTROLLER_ADDR, 0);
-  gpio_set_output(GPIO_CONTROLLER_ADDR, 1);
+  mtimer_enable(DEFAULT_MTIMER);
+  gpio_set_output(DEFAULT_GPIO, 0);
+  gpio_set_output(DEFAULT_GPIO, 1);
 
   /* Create the task without using any dynamic memory allocation. */
   xTaskCreateStatic(vTaskCode,     /* Function that implements the task. */
