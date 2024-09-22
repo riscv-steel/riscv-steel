@@ -9,19 +9,24 @@
 
 #define DEFAULT_UART (UartController *)0x80000000
 
+// UART interrupt signal is connected to Fast IRQ #0
+__NAKED void fast0_irq_handler(void)
+{
+  char rx = uart_read(DEFAULT_UART);
+  if (rx == '\r') // Enter key
+    uart_write_string(DEFAULT_UART, "\n\nType something else and press enter: ");
+  else if (rx < 127)
+    uart_write(DEFAULT_UART, rx);
+  __ASM_VOLATILE("mret");
+}
+
 void main(void)
 {
-  uart_write_string(DEFAULT_UART, "RISC-V Steel - UART example"
-                                  "\n\nType something and press Enter:\n");
+  uart_write_string(DEFAULT_UART, "RISC-V Steel - UART demo");
+  uart_write_string(DEFAULT_UART, "\n\nType something and press Enter:\n");
+  csr_enable_vectored_mode_irq();
+  CSR_SET(CSR_MIE, MIP_MIE_MASK_F0I);
+  csr_global_enable_irq();
   while (1)
-  {
-    if (uart_data_received(DEFAULT_UART))
-    {
-      char rx = uart_read(DEFAULT_UART);
-      if (rx == '\r') // Enter key
-        uart_write_string(DEFAULT_UART, "\n\nType something else and press Enter again: ");
-      else if (rx < 127) // Echo back printable characters
-        uart_write(DEFAULT_UART, rx);
-    }
-  }
+    ;
 }
