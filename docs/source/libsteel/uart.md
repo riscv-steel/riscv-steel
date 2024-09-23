@@ -12,7 +12,7 @@ Additional UART controllers can be added to the Microcontroller IP by following 
 
 ## General information
 
-The `libsteel.h` header provides functions for sending and receiving data via UART protocol. All UART-related functions have names starting with `uart_*` and take as their first argument a pointer to the base address of the UART controller registers.
+The UART-related functions have names starting with `uart_*` and take as their first argument a pointer to the base address of the UART controller registers.
 
 For example:
 
