@@ -29,7 +29,7 @@ module spi_cmod_a7 #(
     reset_debounced <= reset;
   end
 
-  rvsteel_mcu #(
+  rvsteel #(
 
     .CLOCK_FREQUENCY          (12000000               ),
     .UART_BAUD_RATE           (9600                   ),
@@ -39,7 +39,7 @@ module spi_cmod_a7 #(
     .GPIO_WIDTH               (GPIO_WIDTH             ),
     .SPI_NUM_CHIP_SELECT      (SPI_NUM_CHIP_SELECT    )
 
-  ) rvsteel_mcu_instance (
+  ) rvsteel_instance (
 
     .clock                    (clock                  ),
     .reset                    (reset_debounced        ),

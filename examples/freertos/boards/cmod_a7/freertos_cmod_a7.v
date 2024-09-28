@@ -39,7 +39,7 @@ module freertos_cmod_a7 #(
     halt_debounced <= halt;
   end
 
-  rvsteel_mcu #(
+  rvsteel #(
 
     .CLOCK_FREQUENCY          (12000000               ),
     .UART_BAUD_RATE           (9600                   ),
@@ -48,7 +48,7 @@ module freertos_cmod_a7 #(
     .BOOT_ADDRESS             (32'h00000000           ),
     .GPIO_WIDTH               (2                      )
 
-  ) rvsteel_mcu_instance (
+  ) rvsteel_instance (
 
     .clock                    (clock                  ),
     .reset                    (reset_debounced        ),

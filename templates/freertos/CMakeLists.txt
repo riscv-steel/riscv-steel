@@ -14,7 +14,7 @@ set(APP_NAME "freertos")
 # Inform the frequency of the board clock, in Hertz
 set(CLOCK_FREQUENCY 50000000)
 
-# Inform the same value provided for the MEMORY_SIZE parameter of rvsteel_mcu
+# Inform the same value provided for the MEMORY_SIZE parameter of rvsteel
 set(MEMORY_SIZE 32K)
 
 # Space reserved for the stack (in bytes)

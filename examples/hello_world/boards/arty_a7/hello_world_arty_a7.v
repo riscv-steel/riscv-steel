@@ -24,14 +24,14 @@ module hello_world_arty_a7 (
     reset_debounced <= reset;
   end
 
-  rvsteel_mcu #(
+  rvsteel #(
 
   // Please adjust these two parameters accordingly
 
   .CLOCK_FREQUENCY          (50000000                   ),
   .MEMORY_INIT_FILE         ("hello_world.hex"          )
 
-  ) rvsteel_mcu_instance (
+  ) rvsteel_instance (
 
   // Note that unused inputs are hardwired to zero,
   // while unused outputs are left open.

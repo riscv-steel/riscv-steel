@@ -1,4 +1,4 @@
-module rvsteel_mcu_wrapper (
+module rvsteel_wrapper (
   
   input   wire          clock       ,
   input   wire          reset       ,
@@ -30,7 +30,7 @@ module rvsteel_mcu_wrapper (
   reg halt_debounced;
   always @(posedge clock) halt_debounced <= halt;
 
-  rvsteel_mcu #(
+  rvsteel #(
 
     // Change to the frequency (in Hertz) of your FPGA board's clock
     .CLOCK_FREQUENCY          (50000000                   ),
@@ -47,7 +47,7 @@ module rvsteel_mcu_wrapper (
     // Width of the cs port
     .SPI_NUM_CHIP_SELECT      (1                          ))
     
-    rvsteel_mcu_instance      (
+    rvsteel_instance      (
     
     .clock                    (clock                      ),
     .reset                    (reset_debounced            ),

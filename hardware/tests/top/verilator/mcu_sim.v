@@ -28,7 +28,7 @@ module mcu_sim #(
     output  wire  [SPI_NUM_CHIP_SELECT-1:0] cs
   );
 
-  rvsteel_mcu #(
+  rvsteel #(
 
     .CLOCK_FREQUENCY          (50000000           ),
     .UART_BAUD_RATE           (9600               ),
@@ -37,7 +37,7 @@ module mcu_sim #(
     .BOOT_ADDRESS             (32'h00000000       ),
     .GPIO_WIDTH               (GPIO_WIDTH         )
 
-  ) rvsteel_mcu_instance (
+  ) rvsteel_instance (
 
     .clock                    (clock              ),
     .reset                    (reset              ),

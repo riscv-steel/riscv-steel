@@ -2,7 +2,7 @@
 
 ## Introduction
 
-RISC-V Steel top module, `rvsteel_mcu`, is a RISC-V microcontroller unit written in Verilog comprising a [32-bit RISC-V processor core](core.md), memory and timer modules, as well as UART, GPIO, and SPI controllers.
+RISC-V Steel top module, `rvsteel`, is a RISC-V microcontroller unit written in Verilog comprising a [32-bit RISC-V processor core](core.md), memory and timer modules, as well as UART, GPIO, and SPI controllers.
 
 RISC-V Steel is targeted for use in embedded systems, systems-on-chip and FPGAs. Its UART, GPIO and SPI interfaces allow it to communicate with a wide variety of sensors and actuators commonly used in embedded projects.
 
@@ -27,7 +27,7 @@ The table below lists the Microcontroller IP source files.
 
 | Module name | Location | Description|
 | ----------- |-|-|
-| rvsteel_mcu  | `hardware/mcu/rvsteel_mcu.v` | Top module of the Microcontroller IP |
+| rvsteel  | `hardware/mcu/rvsteel.v` | Top module of the Microcontroller IP |
 | rvsteel_core | `hardware/core/rvsteel_core.v` | RISC-V Steel Processor Core IP |
 | rvsteel_bus | `hardware/bus/rvsteel_bus.v` | Bus controller |
 | rvsteel_ram | `hardware/ram/rvsteel_ram.v` | RAM memory |
@@ -39,7 +39,7 @@ The table below lists the Microcontroller IP source files.
 ## Instantiation template
 
 ``` systemverilog
-rvsteel_mcu #(
+rvsteel #(
 
   // See 'Configuration paramaters' below for more information.
 
@@ -51,7 +51,7 @@ rvsteel_mcu #(
   .GPIO_WIDTH           (1              ),
   .SPI_NUM_CHIP_SELECT  (1              ))
 
-  rvsteel_mcu_instance  (
+  rvsteel_instance  (
 
   // See 'I/O signals' below for more information.
 
@@ -114,7 +114,7 @@ You can add other devices to the Microcontroller IP by changing the system bus m
 
 The steps below show how to modify the Microcontroller IP source files to add a new device.
 
-<h4>1. Open <code>rvsteel_mcu.v</code> and search for the system bus configuration (lines 40-70)</h4>
+<h4>1. Open <code>rvsteel.v</code> and search for the system bus configuration (lines 40-70)</h4>
 
 ``` systemverilog
 // System bus configuration

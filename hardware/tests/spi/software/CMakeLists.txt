@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 3.15)
 # Name of the executable to be generated
 set(APP_NAME "unit_tests")
 
-# Inform the same value provided for the MEMORY_SIZE parameter of rvsteel_mcu
+# Inform the same value provided for the MEMORY_SIZE parameter of rvsteel
 set(MEMORY_SIZE 8K)
 
 # Space reserved for the stack (in bytes)
@@ -108,22 +108,31 @@ add_executable(${APP_NAME}.elf ${SOURCES})
 # Set GCC flags
 target_compile_options(${APP_NAME}.elf
   PRIVATE
+
   # Enables all the warnings about constructions that some users consider questionable
   -Wall
+
   # Enables some extra warning flags that are not enabled by -Wall
   -Wextra
+
   # Issue all the warnings demanded by strict ISO C and ISO C++
   -Wpedantic
+
   # Do not generate unaligned memory accesses (RISC-V Steel does not support unaligned accesses)
   -mstrict-align
+
   # Specify the supported RISC-V features present in RISC-V Steel
   -march=${APP_ARCH}
+
   # Specify the Application Binary Interface supported by RISC-V Steel
   -mabi=${APP_ABI}
+
   # Tells GCC that this project does not run on top of an operating system
   -ffreestanding
+
   # Create sections for functions
   -ffunction-sections
+
   # Create sections for data
   -fdata-sections
 )
@@ -131,26 +140,37 @@ target_compile_options(${APP_NAME}.elf
 # Set GNU ld flags
 target_link_options(${APP_NAME}.elf
   PRIVATE
+
   # Linker script for this project
   -T${LINKER_SCRIPT}
+
   # Enable garbage colletion (removal of sections never used)
   -Wl,--gc-sections
+
   # Generate a Map file with linking information
   -Wl,-Map=${APP_NAME}.map
+
   # Do not generate unaligned memory accesses (RISC-V Steel does not support it)
   -mstrict-align
+
   # Specify the supported RISC-V features present in RISC-V Steel
   -march=${APP_ARCH}
+
   # Specify the Application Binary Interface supported by RISC-V Steel
   -mabi=${APP_ABI}
+
   # Print memory usage summary
   -Wl,--print-memory-usage
+
   # Set symbol needed by FreeRTOS
   -Wl,--defsym=__memory_size=${MEMORY_SIZE}
+
   # Set symbol needed by FreeRTOS
   -Wl,--defsym=__stack_size=${STACK_SIZE}
+
   # Set symbol needed by FreeRTOS
   -Wl,--defsym=__heap_size=${HEAP_SIZE}
+
   # Do not link to startup libs like crt0
   -nostartfiles
 )
@@ -174,7 +194,7 @@ set_property(TARGET ${APP_NAME}.elf
 
 # Generate Memory Init File (.hex) and disassembly after build
 add_custom_command(TARGET ${APP_NAME}.elf POST_BUILD
-  COMMAND ${CMAKE_OBJCOPY} -O binary      ${APP_NAME}.elf ${APP_NAME}.bin
-  COMMAND ${CMAKE_OBJCOPY} -O verilog     ${APP_NAME}.elf --verilog-data-width=4 ${APP_NAME}.hex
-  COMMAND ${CMAKE_OBJDUMP} -D             ${APP_NAME}.elf > ${APP_NAME}.objdump
+  COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME}.elf ${APP_NAME}.bin
+  COMMAND ${CMAKE_OBJCOPY} -O verilog ${APP_NAME}.elf --verilog-data-width=4 ${APP_NAME}.hex
+  COMMAND ${CMAKE_OBJDUMP} -D ${APP_NAME}.elf > ${APP_NAME}.objdump
 )

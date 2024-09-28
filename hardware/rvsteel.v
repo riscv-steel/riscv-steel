@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT
 // ----------------------------------------------------------------------------
 
-module rvsteel_mcu #(
+module rvsteel #(
 
   // Frequency of 'clock' signal
   parameter CLOCK_FREQUENCY = 50000000  ,

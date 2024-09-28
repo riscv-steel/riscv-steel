@@ -20,7 +20,7 @@ git clone https://github.com/riscv-steel/riscv-steel
 
 # Build the software for the FreeRTOS example
 # -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
-# -- CLOCK_FREQUENCY: Frequency of the `clock` input of `rvsteel_mcu`
+# -- CLOCK_FREQUENCY: Frequency of the `clock` signal connected to RISC-V Steel
 cd riscv-steel/examples/freertos/software
 make PREFIX=/opt/riscv CLOCK_FREQUENCY=<freq_in_hertz>
 ```
@@ -53,7 +53,7 @@ module freertos  #(
     reset_debounced <= reset;
   end
 
-  rvsteel_mcu #(
+  rvsteel #(
 
   // Please adjust these parameters accordingly
   .CLOCK_FREQUENCY          (50000000                   ),
@@ -61,7 +61,7 @@ module freertos  #(
   .MEMORY_INIT_FILE         ("/path/to/freertos.hex"    ),
   .GPIO_WIDTH               (GPIO_WIDTH                 )
 
-  ) rvsteel_mcu_instance (
+  ) rvsteel_instance (
 
   .clock                    (clock                      ),
   .reset                    (reset_debounced            ),
