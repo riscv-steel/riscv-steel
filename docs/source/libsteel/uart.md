@@ -2,13 +2,13 @@
 
 ## Introduction
 
-RISC-V Steel [Microcontroller IP](../hardware/index.md) comes with a default UART controller that can be used to send and receive data via [UART protocol](https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter). This default UART is configured to send 1 start bit, 8 data bits, no parity bit and no stop bit. The base address of the default controller registers is `0x80000000`.
+RISC-V Steel comes with a default [UART Controller](../hardware/uart.md) that can be used to send and receive data via [UART Protocol](https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter). This default UART is configured to send 1 start bit, 8 data bits, no parity bit and no stop bit. The base address of the default controller registers is `0x80000000`.
 
-The default baud rate is 9600 bps. The baud rate can be increased or decreased by changing the [`UART_BAUD_RATE`](../hardware/index.md#configuration) parameter of the Microcontroller IP.
+The default baud rate is 9600 bps. The baud rate can be increased or decreased by changing the [`UART_BAUD_RATE`](../hardware/index.md#configuration) parameter of RISC-V Steel top module.
 
 The default UART is connected to [Fast Interrupt #0](../hardware/core.md#fast-interrupts). An interrupt is requested whenever a new byte of data is received.
 
-Additional UART controllers can be added to the Microcontroller IP by following the procedure described in [Adding Devices](../hardware/index.md#adding-devices).
+Additional UART controllers can be added to RISC-V Steel by following the procedure described in [Adding Devices](../hardware/index.md#adding-devices).
 
 ## General information
 
@@ -27,7 +27,7 @@ void main(void)
 }
 ```
 
-Macros can be defined to avoid having to type the controller addresses every time, an also to make it easier to distinguish between multiple UARTs:
+Macros can be defined to avoid having to type the controller address every time, an also to make it easier to distinguish between multiple UARTs:
 
 ```c
 #include "libsteel.h"
