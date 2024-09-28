@@ -70,11 +70,12 @@ nav:
     - Homepage: 'index.md'    
     - User Guide: 'userguide.md'
     - Hardware Docs:
-        - Microcontroller: 'hardware/mcu.md'
+        - Top Module: 'hardware/mcu.md'
         - Processor Core: 'hardware/core.md'
     - LibSteel Docs:
         - Introduction: 'libsteel.md'
         - UART Controller: 'libsteel/uart.md'
+        - GPIO Controller: 'libsteel/gpio.md'
     - Examples:
         - Hello World: 'examples/helloworld.md'
         - FreeRTOS: 'examples/freertos.md'
