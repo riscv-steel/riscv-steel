@@ -2,11 +2,11 @@
 
 ## Introduction
 
-RISC-V Steel [Microcontroller IP](../hardware/mcu.md) comes with a default [GPIO controller](https://en.wikipedia.org/wiki/General-purpose_input/output) providing up to 32 General Purpose Input/Output pins. 
+RISC-V Steel [Microcontroller IP](../hardware/index.md) comes with a default [GPIO controller](https://en.wikipedia.org/wiki/General-purpose_input/output) providing up to 32 General Purpose Input/Output pins. 
 
-The number of GPIO pins provided by the default GPIO controller can be adjusted by changing the [`GPIO_WIDTH`](../hardware/mcu.md#configuration-parameters) parameter of the Microcontroller IP. By default, the value of `GPIO_WIDTH` is 1. The base address of the default GPIO controller registers is `0x80020000`.
+The number of GPIO pins provided by the default GPIO controller can be adjusted by changing the [`GPIO_WIDTH`](../hardware/index.md#configuration) parameter of the Microcontroller IP. By default, the value of `GPIO_WIDTH` is 1. The base address of the default GPIO controller registers is `0x80020000`.
 
-Additional GPIO controllers can be added to the Microcontroller IP by following the procedure described in [Adding new devices](../hardware/mcu.md#adding-new-devices).
+Additional GPIO controllers can be added to the Microcontroller IP by following the procedure described in [Adding Devices](../hardware/index.md#adding-devices).
 
 ## General information
 

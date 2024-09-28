@@ -8,7 +8,7 @@ The Processor Core IP is a single-issue, in-order, unpipelined processor core.
 
 The Processor Core IP can run real-time operating systems and bare-metal embedded software. It is designed to work as a processing unit in a wide variety of embedded applications.
 
-## Source files
+## Source Files
 
 The Processor Core IP has a single source file, `rvsteel_core.v`, saved in the `hardware/` folder.
 
@@ -47,54 +47,6 @@ The Processor Core IP has a single source file, `rvsteel_core.v`, saved in the `
 ## Configuration
 
 The only configuration parameter is the boot address (`BOOT_ADDRESS`). If you leave this parameter blank the boot address is automatically set to `32'h00000000`.
-
-## Instantiation template
-
-An instantiation template for the Processor Core IP is provided below.
-
-``` systemverilog
-rvsteel_core #(
-
-  // Address of the first instruction to be fetched and executed
-
-  .BOOT_ADDRESS           ()  // defaults to 32'h00000000 if left blank
-
-) rvsteel_core_instance (
-
-  // Global signals
-
-  .clock                  (),
-  .reset                  (), // reset is active-high
-  .halt                   (), // halt is active-high
-
-  // IO interface
-
-  .rw_address             (),
-  .read_data              (),
-  .read_request           (),
-  .read_response          (),
-  .write_data             (),
-  .write_strobe           (),
-  .write_request          (),
-  .write_response         (),
-
-  // Interrupt signals
-
-  .irq_fast               (), // hardwire to 16'b0 if unused
-  .irq_fast_response      (), // leave blank if unused
-  .irq_external           (), // hardwire to 1'b0 if unused
-  .irq_external_response  (), // leave blank if unused
-  .irq_timer              (), // hardwire to 1'b0 if unused
-  .irq_timer_response     (), // leave blank if unused
-  .irq_software           (), // hardwire to 1'b0 if unused
-  .irq_software_response  (), // leave blank if unused
-
-  // Real Time Clock
-
-  .real_time_clock        ()  // hardwire to 64'b0 if unused
-
-);
-```
 
 ## I/O operations
 
