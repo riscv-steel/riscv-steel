@@ -2,17 +2,17 @@
 
 ## Introduction
 
-The FreeRTOS example is a more sophisticated application that runs on top of [FreeRTOS](https://www.freertos.org/), an open-source real-time operating system. The application uses the GPIO controller to make 2 LEDs blink in a specific pattern.
+The FreeRTOS example is a more sophisticated application that runs on top of [FreeRTOS](https://www.freertos.org/), an open-source real-time operating system. The application uses the GPIO controller of RISC-V Steel to make 2 LEDs blink in a specific pattern with the help of FreeRTOS task scheduler.
 
 ## Prerequisites
 
-To run this example you need an FPGA board with at least 2 LEDs and 32KB of BRAM.
+To run this example you need an FPGA board with at least 2 LEDs and 32KB of Block RAM.
 
-Additionally, you need to have the RISC-V GNU Toolchain installed on your machine to build the example. You can find instructions on how to install the RISC-V GNU Toolchain in the [User Guide](../userguide.md#prerequisites).
+Additionally, you need to have the [RISC-V GNU Toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) installed on your machine to build the example. You can find instructions on how to install the RISC-V GNU Toolchain in the [User Guide](../userguide.md#prerequisites).
 
 ## Building the example
 
-Run the commands below to build the example:
+Run the commands below to build the FreeRTOS example:
 
 ```bash
 # Clone RISC-V Steel repository (if not cloned yet)
@@ -20,19 +20,19 @@ git clone https://github.com/riscv-steel/riscv-steel
 
 # Build the software for the FreeRTOS example
 # -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
-# -- CLOCK_FREQUENCY: Frequency of the clock source connected to 'rvsteel_mcu'
+# -- CLOCK_FREQUENCY: Frequency of the `clock` input of `rvsteel_mcu`
 cd riscv-steel/examples/freertos/software
 make PREFIX=/opt/riscv CLOCK_FREQUENCY=<freq_in_hertz>
 ```
 
-The building process will generate a `freertos.hex` file in the `build/` folder. This file is used in the next step to initialize the Microcontroller IP memory.
+The building process will generate a `freertos.hex` file in the `build/` folder. This file is used in the next step to initialize the memory of RISC-V Steel.
 
 ## FPGA implementation
 
-Using your preferred text editor, create a Verilog file name `freertos.v` and add the source code below. Change the source code as follow:
+Using your preferred text editor, create a Verilog file name `freertos.v` and add the source code below. Change the source code as follows:
 
-- Fill in the `MEMORY_INIT_FILE` parameter with the absolute path to the `freertos.hex` file (generated in the previous step).
-- Fill in the `CLOCK_FREQUENCY` parameter with the frequency (in Hertz) of the clock source connected to `rvsteel_mcu`.
+- Fill in `MEMORY_INIT_FILE` with the absolute path to the `freertos.hex` file generated in the previous step.
+- Fill in `CLOCK_FREQUENCY` with the frequency (in Hertz) of the `clock` input.
 
 ```verilog
 module freertos  #(
@@ -83,15 +83,15 @@ module freertos  #(
 endmodule
 ```
 
-To implement this module on an FPGA, follow the steps below:
+To implement this module on FPGA, follow the steps below:
 
 - Start a new project on the EDA tool provided by your FPGA vendor (e.g. AMD Vivado, Intel Quartus, Lattice iCEcube)
 - Add the following files to the project:
     - The Verilog file you just created, `freertos.v`.
-    - All Microcontroller IP [source files](../hardware/mcu.md#source-files).
+    - All [source files](../hardware/mcu.md#source-files) of RISC-V Steel.
 - Create a design constraints file and map the ports of `freertos.v` to the respective devices on the FPGA board.
-    - Map the `gpio` outputs to 2 LEDs on the board
-    - Map the `reset` input to a push-button or switch on the board
+    - Map the `gpio` outputs to 2 LEDs
+    - Map the `reset` input to a push-button or switch
     - Map the `clock` input to a clock source
 - Run synthesis, place and route, and any other intermediate step needed to generate a bitstream for the FPGA.
 - Generate the bitstream and program the FPGA with it.
@@ -100,26 +100,29 @@ The LEDs should start blinking once you've finished programming the FPGA!
 
 ## Featured boards
 
-We provide a complete FreeRTOS example project for some featured FPGA boards.
+We provide specific projects for some featured FPGA boards.
 
-If you have any of the FPGA boards below, follow the steps specific to your board:
+Follow the steps specific to your board if you have any of the boards below:
 
 ### Arty A7
 
-- Build the FreeRTOS application as instructed in [Building the example](#building-the-example), using `CLOCK_FREQUENCY=50000000`
+- Build the FreeRTOS application as instructed in [Building the example](#building-the-example)
 
-    The Arty A7 100 MHz clock source is internally divided by 2 so that the design can meet timing constraints.
+    Use `CLOCK_FREQUENCY=50000000`.
 
 - On AMD Vivado, click __Tools / Run Tcl Script__
 
-    Select `examples/freertos/boards/arty_a7/create_project_arty_a7_<variant>t.tcl`, where &lt;variant&gt; is the variant of your board (either 35T or 100T).
+    Select `examples/freertos/boards/arty_a7/create_project_arty_a7_<variant>.tcl`, where `<variant>` is the variant of your board (either 35T or 100T).
 
 - Click **Generate Bitstream** and program the FPGA as usual
 - The LEDs should start blinking once you've finished programming the FPGA!
 
 ### Cmod A7
 
-- Build the FreeRTOS application as instructed in [Building the example](#building-the-example), using `CLOCK_FREQUENCY=12000000`
+- Build the FreeRTOS application as instructed in [Building the example](#building-the-example)
+
+    Use `CLOCK_FREQUENCY=12000000`.
+
 - On AMD Vivado, click __Tools / Run Tcl Script__
 
     Select `examples/freertos/boards/cmod_a7/create_project_cmod_a7.tcl`.
