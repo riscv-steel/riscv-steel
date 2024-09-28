@@ -27,14 +27,14 @@ The table below lists the Microcontroller IP source files.
 
 | Module name | Location | Description|
 | ----------- |-|-|
-| rvsteel  | `hardware/mcu/rvsteel.v` | Top module of the Microcontroller IP |
-| rvsteel_core | `hardware/core/rvsteel_core.v` | RISC-V Steel Processor Core IP |
-| rvsteel_bus | `hardware/bus/rvsteel_bus.v` | Bus controller |
-| rvsteel_ram | `hardware/ram/rvsteel_ram.v` | RAM memory |
-| rvsteel_mtimer | `hardware/mtimer/rvsteel_mtimer.v` | RISC-V memory-mapped timer registers |
-| rvsteel_uart | `hardware/uart/rvsteel_uart.v` | UART controller |
-| rvsteel_gpio | `hardware/gpio/rvsteel_gpio.v` | GPIO controller |
-| rvsteel_spi | `hardware/spi/rvsteel_spi.v` | SPI controller |
+| rvsteel  | `hardware/rvsteel.v` | Top module of the Microcontroller IP |
+| rvsteel_core | `hardware/rvsteel_core.v` | RISC-V Steel Processor Core IP |
+| rvsteel_bus | `hardware/rvsteel_bus.v` | Bus controller |
+| rvsteel_ram | `hardware/rvsteel_ram.v` | RAM memory |
+| rvsteel_mtimer | `hardware/rvsteel_mtimer.v` | RISC-V memory-mapped timer registers |
+| rvsteel_uart | `hardware/rvsteel_uart.v` | UART controller |
+| rvsteel_gpio | `hardware/rvsteel_gpio.v` | GPIO controller |
+| rvsteel_spi | `hardware/rvsteel_spi.v` | SPI controller |
 
 ## Instantiation template
 

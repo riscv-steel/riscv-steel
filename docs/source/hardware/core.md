@@ -10,7 +10,7 @@ The Processor Core IP can run real-time operating systems and bare-metal embedde
 
 ## Source files
 
-The Processor Core IP has a single source file, `rvsteel_core.v`, saved in `hardware/core/`.
+The Processor Core IP has a single source file, `rvsteel_core.v`, saved in the `hardware/` folder.
 
 ## I/O signals
 

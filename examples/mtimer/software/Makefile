@@ -51,7 +51,7 @@ cmod_release:
 
 run_sim: all
 	@mkdir -p dump
-	@$(MAKE) -C ../../../hardware/mcu/tests/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
+	@$(MAKE) -C ../../../hardware/tests/top/verilator/ run RUN_FLAGS=$(RUN_FLAGS)
 
 clean:
 	@rm -rf build dump
