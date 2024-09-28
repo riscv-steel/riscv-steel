@@ -10,7 +10,7 @@ set_msg_config -suppress -id {Device 21-2174}
 set_property simulator_language Verilog [current_project]
 add_files -fileset constrs_1 -norecurse { ./spi_cmod_a7_constraints.xdc }
 add_files -norecurse .
-add_files -norecurse { ../../../../hardware/mcu/rvsteel_mcu.v }
+add_files -norecurse { ../../../../hardware/mcu/rvsteel.v }
 add_files -norecurse { ../../../../hardware/core/rvsteel_core.v }
 add_files -norecurse { ../../../../hardware/bus/rvsteel_bus.v }
 add_files -norecurse { ../../../../hardware/uart/rvsteel_uart.v }

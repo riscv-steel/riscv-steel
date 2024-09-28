@@ -130,7 +130,7 @@ Next, add the source code of the new application in the `main.c` file. To build 
 
     ```bash
     # -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
-    # -- CLOCK_FREQUENCY: Frequency of the `clock` input of `rvsteel_mcu`
+    # -- CLOCK_FREQUENCY: Frequency (in Hertz) of the clock signal connected to RISC-V Steel
     cd new_project/
     make PREFIX=/opt/riscv CLOCK_FREQUENCY=<freq_in_hertz>
     ```
@@ -197,7 +197,7 @@ module rvsteel_wrapper (
   reg halt_debounced;
   always @(posedge clock) halt_debounced <= halt;
 
-  rvsteel_mcu #(
+  rvsteel #(
 
     // Frequency (in Hertz) of the `clock` pin
     .CLOCK_FREQUENCY          (50000000                   ),
@@ -214,7 +214,7 @@ module rvsteel_wrapper (
     // Width of the cs port
     .SPI_NUM_CHIP_SELECT      (1                          ))
     
-    rvsteel_mcu_instance      (
+    rvsteel_instance      (
     
     .clock                    (clock                      ),
     .reset                    (reset_debounced            ),

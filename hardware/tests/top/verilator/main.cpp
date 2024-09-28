@@ -7,8 +7,8 @@
 
 #include <stdlib.h>
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <signal.h>
 #include <string.h>
 
@@ -80,13 +80,13 @@ static void reset_dut()
 
 static void set_clock_frequency(Dut *dut, uint32_t frequency)
 {
-  uint32_t clock_dut = dut->rootp->mcu_sim__DOT__rvsteel_mcu_instance__DOT__CLOCK_FREQUENCY;
+  uint32_t clock_dut = dut->rootp->mcu_sim__DOT__rvsteel_instance__DOT__CLOCK_FREQUENCY;
 
   Log::warning("Dut clock frequency: %u (Hz)", clock_dut);
   Log::warning("MCU sim clock frequency: %u (ns)", frequency);
 
   // Set clock frequency (freq/2)
-  clk_half_cycles = frequency/2;
+  clk_half_cycles = frequency / 2;
 }
 
 static void exit_app(int sig)
@@ -104,20 +104,24 @@ static void ram_init(const char *path, RamInitVariants variants)
     return;
   }
 
-  uint32_t ram_size = dut->rootp->mcu_sim__DOT__rvsteel_mcu_instance__DOT__MEMORY_SIZE;
+  uint32_t ram_size = dut->rootp->mcu_sim__DOT__rvsteel_instance__DOT__MEMORY_SIZE;
 
   switch (args.ram_init_variants)
   {
-    case RamInitVariants::H32:
-      ram_init_h32(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
-      dut->rootp->mcu_sim__DOT__rvsteel_mcu_instance__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
-    });
+  case RamInitVariants::H32:
+    ram_init_h32(
+        args.ram_init_path, ram_size / 4,
+        [](uint32_t i, uint32_t v) {
+          dut->rootp->mcu_sim__DOT__rvsteel_instance__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
+        });
     break;
 
-    case RamInitVariants::BIN:
-      ram_init_bin(args.ram_init_path, ram_size/4, [](uint32_t i, uint32_t v) {
-      dut->rootp->mcu_sim__DOT__rvsteel_mcu_instance__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
-    });
+  case RamInitVariants::BIN:
+    ram_init_bin(
+        args.ram_init_path, ram_size / 4,
+        [](uint32_t i, uint32_t v) {
+          dut->rootp->mcu_sim__DOT__rvsteel_instance__DOT__rvsteel_ram_instance__DOT__ram[i] = v;
+        });
     break;
   }
 }
@@ -126,11 +130,16 @@ static bool is_host_out(uint32_t addr)
 {
   static bool is_pos_edg = false;
 
-  bool is_write = (addr != 0x0) &&
-                  (not is_pos_edg and dut->rootp->mcu_sim__DOT__rvsteel_mcu_instance__DOT__rvsteel_core_instance__DOT__write_request) &&
-                  (dut->rootp->mcu_sim__DOT__rvsteel_mcu_instance__DOT__rvsteel_core_instance__DOT__rw_address == addr);
+  bool is_write =
+      (addr != 0x0) &&
+      (not is_pos_edg and
+       dut->rootp
+           ->mcu_sim__DOT__rvsteel_instance__DOT__rvsteel_core_instance__DOT__write_request) &&
+      (dut->rootp->mcu_sim__DOT__rvsteel_instance__DOT__rvsteel_core_instance__DOT__rw_address ==
+       addr);
 
-  is_pos_edg = dut->rootp->mcu_sim__DOT__rvsteel_mcu_instance__DOT__rvsteel_core_instance__DOT__write_request;
+  is_pos_edg =
+      dut->rootp->mcu_sim__DOT__rvsteel_instance__DOT__rvsteel_core_instance__DOT__write_request;
 
   return is_write;
 }
@@ -173,7 +182,9 @@ int main(int argc, char *argv[])
     // --host-out
     if (is_host_out(args.host_out))
     {
-      Log::host_out((char)dut->rootp->mcu_sim__DOT__rvsteel_mcu_instance__DOT__rvsteel_core_instance__DOT__write_data);
+      Log::host_out(
+          (char)dut->rootp
+              ->mcu_sim__DOT__rvsteel_instance__DOT__rvsteel_core_instance__DOT__write_data);
     }
   }
 }
