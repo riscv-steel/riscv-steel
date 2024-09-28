@@ -79,7 +79,7 @@ nav:
             - Timers: 'hardware/mtimer.md'
             - Memory: 'hardware/memory.md'
     - LibSteel Docs:
-        - Introduction: 'libsteel.md'
+        - Introduction: 'libsteel/index.md'
         - UART Controller: 'libsteel/uart.md'
         - GPIO Controller: 'libsteel/gpio.md'
     - Examples:
