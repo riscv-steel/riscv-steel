@@ -1,12 +1,25 @@
-# RISC-V Steel Microcontroller IP
+# RISC-V Steel Top Module
 
 ## Introduction
 
-RISC-V Steel Microcontroller IP is a 32-bit RISC-V microcontroller written in Verilog that features the [Processor Core IP](core.md), memory and timer modules, and UART, GPIO, and SPI controllers.
+RISC-V Steel top module, `rvsteel_mcu`, is a RISC-V microcontroller unit written in Verilog comprising a [32-bit RISC-V processor core](core.md), memory and timer modules, as well as UART, GPIO, and SPI controllers.
 
-A top-level view of its architecture and the interconnection between its components is shown in the diagram below.
+RISC-V Steel is targeted for use in embedded systems, systems-on-chip and FPGAs. Its UART, GPIO and SPI interfaces allow it to communicate with a wide variety of sensors and actuators commonly used in embedded projects.
 
-![Image title](../images/rvsteel_mcu.svg){ width=100% }
+RISC-V Steel can run real-time operating systems (FreeRTOS) as well as bare-metal embedded software. 
+
+See the [User Guide](../userguide.md) for information on how to develop new applications for RISC-V Steel, or [LibSteel Docs](../libsteel.md) for a detailed description of the API used to control it.
+
+## Architecture
+
+A top-level view of the Microcontroller IP architecture showing the interconnection between its components is presented in the diagram below.
+
+</br>
+
+<figure markdown="span">
+![Image title](../images/rvsteel_architecture.svg){ width=80% }
+<figcaption><strong>Figure 1.</strong> Microcontroller IP Architecture</figcaption>
+</figure>
 
 ## Source files
 
