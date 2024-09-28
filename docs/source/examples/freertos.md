@@ -88,7 +88,7 @@ To implement this module on FPGA, follow the steps below:
 - Start a new project on the EDA tool provided by your FPGA vendor (e.g. AMD Vivado, Intel Quartus, Lattice iCEcube)
 - Add the following files to the project:
     - The Verilog file you just created, `freertos.v`.
-    - All [source files](../hardware/mcu.md#source-files) of RISC-V Steel.
+    - All [source files](../hardware/index.md#source-files) of RISC-V Steel.
 - Create a design constraints file and map the ports of `freertos.v` to the respective devices on the FPGA board.
     - Map the `gpio` outputs to 2 LEDs
     - Map the `reset` input to a push-button or switch

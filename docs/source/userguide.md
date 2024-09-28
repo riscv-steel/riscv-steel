@@ -237,7 +237,7 @@ Now you need to synthesize this module to finally run the application. The steps
 - Start a new project on the EDA tool provided by your FPGA vendor (e.g. AMD Vivado, Intel Quartus, Lattice iCEcube)
 - Add the following files to the project:
     - The Verilog file created above, `rvsteel_wrapper.v`.
-    - All [source files](hardware/mcu.md#source-files) of RISC-V Steel.
+    - All [source files](hardware/index.md#source-files) of RISC-V Steel.
 - Create a design constraints file and map the ports of `rvsteel_wrapper.v` to the respective devices on the FPGA board.
 - Run synthesis, place and route, and any other intermediate step needed to generate a bitstream for the FPGA.
 - Generate the bitstream and program the FPGA with it.

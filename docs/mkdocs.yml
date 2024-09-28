@@ -70,8 +70,14 @@ nav:
     - Homepage: 'index.md'    
     - User Guide: 'userguide.md'
     - Hardware Docs:
-        - Top Module: 'hardware/mcu.md'
-        - Processor Core: 'hardware/core.md'
+        - RISC-V Steel: 'hardware/index.md'
+        - Components:
+            - Processor Core: 'hardware/core.md'
+            - UART Controller: 'hardware/uart.md'
+            - GPIO Controller: 'hardware/gpio.md'
+            - SPI Controller: 'hardware/spi.md'
+            - Timers: 'hardware/mtimer.md'
+            - Memory: 'hardware/memory.md'
     - LibSteel Docs:
         - Introduction: 'libsteel.md'
         - UART Controller: 'libsteel/uart.md'
