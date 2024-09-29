@@ -20,11 +20,11 @@ The machine timer interrupt becomes pending whenever `MTIME` contains a value gr
 
 | Name                       | Offset | Bits  | Description            |
 |:---------------------------|:-------|------ |:-----------------------|
-| [`CR`](#cr)                | 0x0    |    32 | Control register       |
-| [`MTIMEL`](#mtimel)        | 0x4    |    32 | Timer value Low        |
-| [`MTIMEH`](#mtimeh)        | 0x8    |    32 | Timer value High       |
-| [`MTIMECMPL`](#mtimecmpl)  | 0xC    |    32 | Timer compare Low      |
-| [`MTIMECMPH`](#mtimecmph)  | 0x10   |    32 | Timer compare High     |
+| `CR`                       | 0x0    |    32 | Control register       |
+| `MTIMEL`                   | 0x4    |    32 | Timer value Low        |
+| `MTIMEH`                   | 0x8    |    32 | Timer value High       |
+| `MTIMECMPL`                | 0xC    |    32 | Timer compare Low      |
+| `MTIMECMPH`                | 0x10   |    32 | Timer compare High     |
 
 
 ### MTIMER control register (MTIMER_CR)
