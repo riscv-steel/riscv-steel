@@ -4,7 +4,7 @@
 
 RISC-V Steel is a RISC-V Microcontroller IP written in Verilog targeted for embedded systems, systems-on-chip and FPGAs.
 
-Its design comprises a 32-bit RISC-V processor core, memory and timers, as well as UART, GPIO and SPI controllers. The UART, GPIO and SPI interfaces allow RISC-V Steel to communicate with a wide variety of sensors and actuators commonly used in embedded systems.
+Its design comprises a 32-bit RISC-V processor core, memory and timers, as well as UART, GPIO and SPI controllers, which allow RISC-V Steel to communicate with a wide variety of sensors and actuators commonly used in embedded systems.
 
 RISC-V Steel can be easily integrated into any project and supports executing real-time operating systems (FreeRTOS) as well as bare-metal embedded software.
 
