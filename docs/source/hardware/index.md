@@ -87,7 +87,7 @@ You can add additional devices to RISC-V Steel by changing its bus module config
 
 !!!quote ""
 
-    **Important:**The new devices must comply with the protocol used by the Processor Core to issue read/write requests. In the [I/O Operations](core.md#io-operations) section of the Processor Core docs you find a detailed description of this protocol.
+    **Important!** The new devices must comply with the protocol used by the Processor Core to issue read/write requests. In the [I/O Operations](core.md#io-operations) section of the Processor Core docs you find a detailed description of this protocol.
 
 <h4>1. Open <code>rvsteel.v</code> and search for the system bus configuration (lines 40-70)</h4>
 
