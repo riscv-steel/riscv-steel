@@ -1,26 +1,35 @@
-# RISC-V Steel Processor Core IP
+# RISC-V Steel Processor Core
 
 ## Introduction
 
-RISC-V Steel Processor Core IP is a 32-bit processor core implementing the RV32I instruction set, the Zicsr extension and the Machine-Mode privileged architecture of RISC-V.
+RISC-V Steel Processor Core implements the following features of the RISC-V specifications:
 
-The Processor Core IP is a single-issue, in-order, unpipelined processor core.
+- the RV32I Base Integer Instruction Set, v2.1
+- the Zicsr Extension for Control and Status Register (CSR) Instructions, v2.0
+- the Machine-Level ISA, v1.13
 
-The Processor Core IP can run real-time operating systems and bare-metal embedded software. It is designed to work as a processing unit in a wide variety of embedded applications.
+RISC-V Steel Processor Core is a single-issue, in-order, unpipelined processor core, able to run real-time operating systems and bare-metal embedded software. It is designed to work as a processing unit in a wide range of embedded applications.
 
 ## Source Files
 
-The Processor Core IP has a single source file, `rvsteel_core.v`, saved in the `hardware/` folder.
+RISC-V Steel Processor Core has a single source file, `rvsteel_core.v`, saved in the `hardware/` folder.
 
-## I/O signals
 
-| **Global signals**{ class="rvsteel-core-io-table" }  |  |  |  |
+## Configuration
+
+RISC-V Steel Processor Core has a single configuration parameter, `BOOT_ADDRESS`. The default value of `BOOT_ADDRESS` is `32'h00000000`.
+
+## I/O Signals
+
+The input/output signals of RISC-V Steel Processor Core are listed in the table below:
+
+| **Global Signals**{ class="rvsteel-core-io-table" }  |  |  |  |
 | -------------- | --------- | | -------------------- |
 | **Signal name** | **Direction** | **Size** | **Description** |
 | clock      | Input | 1 bit     | Clock input.         |
 | reset      | Input | 1 bit     | Reset signal (active-high). |
 | halt       | Input | 1 bit     | Halt signal (active-high). |
-| **I/O interface**{ class="rvsteel-core-io-table" } |
+| **I/O Interface**{ id="io-interface" class="rvsteel-core-io-table" } |
 | **Signal name** | **Direction** | **Size** | **Description** |
 | rw_address | Output | 32 bits     | Address of the read/write operation.  |
 | read_data | Input | 32 bits     | Data read.  |
@@ -30,7 +39,7 @@ The Processor Core IP has a single source file, `rvsteel_core.v`, saved in the `
 | write_strobe | Output | 4 bits | A signal indicating which byte lanes of **write_data** holds the data to be written. |
 | write_request | Output | 1 bit | Write request.  |
 | write_response | Input | 1 bit | Response to the write request. |
-| **Interrupt handling**{ class="rvsteel-core-io-table" } |
+| **Interrupt Handling**{ class="rvsteel-core-io-table" } |
 | **Signal name** | **Direction** | **Size** | **Description** |
 | irq_fast | Input | 16 bit  | 16 fast interrupt request lines for peripheral devices. Priority increases in ascending order (line 0 has the highest priority, line 15 the lowest). |
 | irq_fast_response | Output | 16 bit  | 16 response lines for interrupt requests. |
@@ -40,25 +49,21 @@ The Processor Core IP has a single source file, `rvsteel_core.v`, saved in the `
 | irq_timer_response | Output | 1 bit  | Response to the timer interrupt request. |
 | irq_software | Input | 1 bit  | Software interrupt request. |
 | irq_software_response | Output | 1 bit  | Response to the software interrupt request. |
-| **Real time clock**{ class="rvsteel-core-io-table" } |
+| **Real Time Clock**{ class="rvsteel-core-io-table" } |
 | **Signal name** | **Direction** | **Size** | **Description** |
 | real_time_clock | Input | 64 bits | Real time clock, used to update the `mtime` CSR. |
 
-## Configuration
+## I/O Operations
 
-The only configuration parameter is the boot address (`BOOT_ADDRESS`). If you leave this parameter blank the boot address is automatically set to `32'h00000000`.
+RISC-V Steel Processor Core communicates with external devices (memory and peripherals) through its [I/O Interface](#io-interface) signals. In each clock cycle, the processor either requests to read or write data. It never requests both operations in the same cycle.
 
-## I/O operations
-
-The Processor Core IP communicates with external devices (memory and peripherals) through its I/O interface signals. In each clock cycle the processor either requests to read or write data. It never requests both operations in the same clock cycle.
-
-As in all RISC-V systems, the processor address space is shared among all devices, both memory and peripherals. Each device is mapped to a region in the address space. Communication with a device takes place by reading and writing data at addresses assigned exclusively to that device.
+As in all RISC-V systems, the processor address space is shared among all devices, both memory and peripherals. Communication with a device takes place by reading and writing to the device registers, which are mapped to a specific region in the address space (see [Memory Map](../hardware/index.md#memory-map)).
 
 The two sections below explain how read and write operations are requested by the processor core and the expected response to these requests.
 
-### Read operation
+### Read Operation
 
-The processor core drives the I/O interface signals as follows on a read request:
+The processor core drives the [I/O Interface](#io-interface) signals as follows on a read request:
 
 - the address is placed in the **rw_address** bus.
 
@@ -72,7 +77,7 @@ The response to the read request from the external device must observe these rul
 
 - the **read_response** signal must be driven to logic `HIGH` only when **read_data** holds valid data, and it must be held `HIGH` for only one clock cycle.
 
-- The read response must never be given in the same clock cycle that **read_request** was driven `HIGH`.
+- The response to a request must be given in the clock cycles after the request.
 
 The timing diagram below contains examples of valid read operations:
 
@@ -81,9 +86,9 @@ The timing diagram below contains examples of valid read operations:
   <figcaption><strong>Figure 1</strong> - Read operation timing diagram</figcaption>
 </figure>
 
-### Write operation
+### Write Operation
 
-The processor core drives the I/O interface signals as follows on a write request:
+The processor core drives the [I/O Interface](#io-interface) signals as follows on a write request:
 
 - the address is placed in the **rw_address** bus.
 
@@ -101,7 +106,7 @@ The response to the write request from the external device must observe these ru
 
 - the **write_response** signal must be driven to logic `HIGH` only if the write operation succeeded, and it must be held `HIGH` for only one clock cycle.
 
-- The write response must never be given in the same clock cycle that **write_request** was driven `HIGH`.
+- The response to a request must be given in the clock cycles after the request.
 
 The timing diagram below contains examples of valid write operations:
 
@@ -110,11 +115,11 @@ The timing diagram below contains examples of valid write operations:
   <figcaption><strong>Figure 2</strong> - Write operation timing diagram</figcaption>
 </figure>
 
-## Exceptions, interrupts and traps
+## Exceptions, Interrupts and Traps
 
 ### Overview
 
-In the RISC-V architeture, a trap refers to the transfer of control caused by either an exception or interrupt. A trap is said to be _taken_ when an exception or interrupt change the program normal execution order by writing to the program counter the start address of a trap handler software routine, as configured in the **mtvec** CSR.
+In the RISC-V architeture, a trap refers to the transfer of control caused by either an exception or interrupt. A trap is said to be _taken_ when an exception or interrupt change the program normal execution order by writing to the Program Counter (PC) the start address of a trap handler software routine.
 
 An exception always causes a trap to be taken. An interrupt causes a trap to be taken only if:
 
@@ -122,7 +127,7 @@ An exception always causes a trap to be taken. An interrupt causes a trap to be 
 
 - the corresponding interrupt type is enabled (fields **meie**, **mtie** and **msie** in the **mie** CSR).
 
-The implemented exceptions and interrupts are listed in the table below. They are listed in descending priority order, that is, the topmost has the highest priority.
+The exceptions and interrupts implemented on RISC-V Steel Processor Core are listed in the table below. They are listed in descending priority order, that is, the topmost has the highest priority.
 
 | Priority       | Type      | `mstatus[31]` | `mstatus[30:0]` | Description |
 | -------------- | --------- | ------------------- | ---------------------| ----------- |
@@ -142,9 +147,9 @@ The implemented exceptions and interrupts are listed in the table below. They ar
 
 ### Fast Interrupts
 
-The Processor Core IP provides 16 fast interrupt request lines in addition to the standard RISC-V interrupts. These interrupt requests have higher priority over the standard interrupts, as shown in the table above.
+RISC-V Steel Processor Core provides 16 fast interrupt request lines in addition to the standard RISC-V interrupts. These interrupt requests have higher priority over the standard interrupts, as shown in the table above.
 
-### Interrupt request handshake
+### Interrupt Request Handshake
 
 A device can request an interrupt by driving the corresponding **irq_\*** signal to logic `HIGH` and holding it `HIGH` until the request is accepted. The processor accepts the request by driving the **irq_\*_response** signal to logic `HIGH` for one clock cycle. The requesting device can drive the **irq_\*** signal to logic `LOW` in the clock cycle that follows the response, or keep it `HIGH` to make a new request.
 
@@ -155,9 +160,9 @@ The timing diagram below is an example of a valid interrupt request:
   <figcaption><strong>Figure 3</strong> - Interrupt request timing diagram</figcaption>
 </figure>
 
-### Trap handling
+### Trap Handling
 
-The Processor Core IP proceeds as follows when a trap is taken:
+The Processor Core proceeds as follows when a trap is taken:
 
 - the execution of the current instruction is aborted.
 
@@ -185,7 +190,7 @@ The **mret** instruction is used by software to return from the trap handler. Wh
 
 The value in the **mepc** register holds the address of the instruction aborted when the trap was taken, so normal execution is resumed.
 
-## Real time clock
+## Real Time Clock
 
 Systems that require a real time clock can connect the **time** CSR to an external clock device through the **real_time_clock** bus. By doing so, wall clock time can be obtained by reading the **time** CSR with the **csrrw** instruction.
 
