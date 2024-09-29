@@ -17,8 +17,8 @@ Registers are accessed via 32-bit access operations. Attempts to access an misal
 
 | Name                       | Offset | Bits  | Description            |
 |:---------------------------|:-------|------ |:-----------------------|
-| [`IN`](#IN)                | 0x0    |   32  | GPIO Input data        |
-| [`OE`](#OE)                | 0x4    |   32  | GPIO Output Enable     |
-| [`OUT`](#OUT)              | 0x8    |   32  | GPIO Output data       |
-| [`CLR`](#CLR)              | 0xC    |   32  | GPIO Clear mask        |
-| [`SET`](#SET)              | 0x10   |   32  | GPIO Set mask          |
+| `IN`                       | 0x0    |   32  | GPIO Input data        |
+| `OE`                       | 0x4    |   32  | GPIO Output Enable     |
+| `OUT`                      | 0x8    |   32  | GPIO Output data       |
+| `CLR`                      | 0xC    |   32  | GPIO Clear mask        |
+| `SET`                      | 0x10   |   32  | GPIO Set mask          |
