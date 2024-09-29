@@ -8,7 +8,7 @@ Its design comprises a 32-bit RISC-V processor core, memory and timers, as well 
 
 RISC-V Steel can be easily integrated into any project and supports executing real-time operating systems (FreeRTOS) as well as bare-metal embedded software.
 
-See the [User Guide](../userguide.md) for information on how to develop new applications with RISC-V Steel, or [LibSteel Docs](../libsteel.md) for a detailed description of the API used to control it.
+See the [User Guide](../userguide.md) for information on how to develop new applications with RISC-V Steel, or [LibSteel Docs](../libsteel/index.md) for a detailed description of the API used to control it.
 
 ## Architecture
 
