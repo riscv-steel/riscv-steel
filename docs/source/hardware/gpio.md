@@ -7,7 +7,7 @@
 3. Write `1<<PIN` to register `CLR` if you want to clear the port output to 0.
 4. Write `1<<PIN` to register `SET` if you want to set the port output to 1.
 
-![RISC-V Steel GPIO Diagram](doc/rvsteel_gpio_blockdiagram.svg)
+![RISC-V Steel GPIO Diagram](../images/rvsteel_gpio_blockdiagram.svg)
 
 ## Register Access
 
