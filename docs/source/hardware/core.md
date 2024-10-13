@@ -4,9 +4,9 @@
 
 RISC-V Steel Processor Core implements the following features of the RISC-V specifications:
 
-- the RV32I Base Integer Instruction Set, v2.1
-- the Zicsr Extension for Control and Status Register (CSR) Instructions, v2.0
-- the Machine-Level ISA, v1.13
+- the RV32I Base Integer Instruction Set, `v2.1`
+- the Zicsr Extension for Control and Status Register (CSR) Instructions, `v2.0`
+- the Machine-Level ISA, `v1.13`
 
 RISC-V Steel Processor Core is a single-issue, in-order, unpipelined processor core, able to run real-time operating systems and bare-metal embedded software. It is designed to work as a processing unit in a wide range of embedded applications.
 

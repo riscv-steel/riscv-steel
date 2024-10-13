@@ -4,17 +4,15 @@ hide: navigation
 
 <h1 id="hidden-homepage-title">RISC-V Steel Documentation</h1>
 
-<h2 id="h2-homepage-no-top-margin">About RISC-V Steel</h2>
+<h2 id="h2-homepage-no-top-margin">Welcome to RISC-V Steel Documentation</h2>
 
-RISC-V Steel is a RISC-V Microcontroller IP written in Verilog targeted for embedded systems, systems-on-chip and FPGAs.
+RISC-V Steel is a microcontroller design developed in Verilog that implements the RV32I instruction set of RISC-V. It is designed for easy, seamless integration into embedded systems, systems-on-chip (SoC), and FPGA designs, facilitating the rapid development of innovative RISC-V applications.
 
-Its design comprises a 32-bit RISC-V processor core, memory and timers, as well as UART, GPIO and SPI controllers, which allow RISC-V Steel to communicate with a wide variety of sensors and actuators commonly used in embedded systems.
+RISC-V Steel can run real-time operating systems such as FreeRTOS, as well as bare-metal embedded software. Its design includes components such as memory, timers, and interfaces for UART, GPIO, and SPI communication, enabling RISC-V Steel to integrate with a variety of sensors and actuators commonly used in embedded applications.
 
-RISC-V Steel can be easily integrated into any project and supports executing real-time operating systems (FreeRTOS) as well as bare-metal embedded software.
+<h2>Get Started</h2>
 
-<h2>Getting Started</h2>
-
-The quickest way to get started is to implement one of the example projects on your FPGA. Try it out:
+The quickest way to get started is to implement one of the example projects on your FPGA. Check it out:
 
 - [Hello World Example](examples/helloworld.md) 
 - [FreeRTOS Example](examples/freertos.md)
