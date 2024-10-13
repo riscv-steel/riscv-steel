@@ -66,4 +66,29 @@ tr:has(.rvsteel-core-io-table) {
   padding: 0px !important;
   background-color: transparent !important;
   font-size: .9em !important;
+  font-weight: 600;
+}
+
+.api-doc-text {
+  padding-left: .7720588235em;
+  padding-right: .7720588235em;
+}
+
+#api-reference>div.highlight>span.filename {
+  background-color: var(--md-code-bg-color);
+  border-bottom: .05rem solid var(--md-default-fg-color--lightest);
+  border-top-left-radius: .1rem;
+  border-top-right-radius: .1rem;
+  display: flow-root;
+  font-size: .9em;
+  font-family: var(--md-code-font-family);
+  font-weight: 700;
+  margin-top: 1em;
+  padding: .6617647059em 1.1764705882em;
+  position: relative;
+}
+
+#api-reference>div.highlight>span.filename {
+  background-color: #283481;
+  color: #f0f5f5;
 }

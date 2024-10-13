@@ -2,9 +2,9 @@
 
 ## Introduction
 
-LibSteel is a header-only software library providing an API for controlling RISC-V Steel, making it easy to develop new software applications for it.
+LibSteel is a lightweight, header-only software library that provides a convenient API for controlling RISC-V Steel, making it easy to develop new software applications for it.
 
-To use LibSteel you only need to include a single header file, `libsteel.h`, in the source code of your application. For example:
+To integrate LibSteel into your project, simply include the `libsteel.h` header file in your application’s source code, as demonstrated in the example below:
 
 === "myapp.c"
 
@@ -19,13 +19,13 @@ To use LibSteel you only need to include a single header file, `libsteel.h`, in 
 
 ## Compiling with LibSteel
 
-#### Template projects
+#### Using the template projects
 
-The [template projects](../userguide.md#building-the-application) are based on CMake and are already configured to include LibSteel. If you start a new application from them, just compile the application as instructed in the [User Guide](../userguide.md), i.e. running `make`.
+The provided [template projects](../userguide.md#building-the-application) are based on __CMake__ and are preconfigured to include LibSteel. If your application is based on one of these templates, follow the compilation instructions outlined in the [User Guide](../userguide.md).
 
-#### From scratch
+#### Starting from scratch
 
-In case you started a new application from scratch, you need to provide the path to LibSteel header files to RISC-V GCC using the `-I` switch. For example:
+If you are developing a new application from scratch, you will need to specify the path to the LibSteel header files when compiling with the RISC-V GCC compiler, using the `-I` option:
 
 ```bash
 # Obtain LibSteel header files

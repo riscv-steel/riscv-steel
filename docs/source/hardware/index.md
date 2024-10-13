@@ -1,14 +1,14 @@
-# RISC-V Steel</br><small>Hardware Documentation</small>
+# RISC-V Steel Hardware Docs
 
 ## Introduction
 
-RISC-V Steel is a RISC-V Microcontroller IP written in Verilog targeted for embedded systems, systems-on-chip and FPGAs.
+RISC-V Steel is a microcontroller design developed in Verilog that implements the RV32I instruction set of RISC-V. It is designed for easy, seamless integration into embedded systems, systems-on-chip (SoC), and FPGA designs, facilitating the rapid development of innovative RISC-V applications.
 
-Its design comprises a 32-bit RISC-V processor core, memory and timers, as well as UART, GPIO and SPI controllers, which allow RISC-V Steel to communicate with a wide variety of sensors and actuators commonly used in embedded systems.
+RISC-V Steel can run real-time operating systems such as FreeRTOS, as well as bare-metal embedded software. Its design includes components such as memory, timers, and interfaces for UART, GPIO, and SPI communication, enabling RISC-V Steel to integrate with a variety of sensors and actuators commonly used in embedded applications.
 
-RISC-V Steel can be easily integrated into any project and supports executing real-time operating systems (FreeRTOS) as well as bare-metal embedded software.
+For information on how to develop new applications with RISC-V Steel, see the [User Guide](../userguide.md).
 
-See the [User Guide](../userguide.md) for information on how to develop new applications with RISC-V Steel, or [LibSteel Docs](../libsteel/index.md) for a detailed description of the API used to control it.
+For a detailed description of the API used to control RISC-V Steel, see the [LibSteel Docs](../libsteel/index.md).
 
 ## Architecture
 
@@ -27,18 +27,18 @@ The source files of RISC-V Steel are listed in the table below:
 
 | Module          | Path                        | Description                                 |
 | --------------- | --------------------------- | ------------------------------------------- |
-| rvsteel         | `hardware/rvsteel.v`        | RISC-V Steel top module                     |
+| rvsteel         | `hardware/rvsteel.v`        | RISC-V Steel Top Module                     |
 | rvsteel_core    | `hardware/rvsteel_core.v`   | RISC-V Steel Processor Core                 |
-| rvsteel_bus     | `hardware/rvsteel_bus.v`    | Bus controller                              |
-| rvsteel_ram     | `hardware/rvsteel_ram.v`    | RAM memory                                  |
-| rvsteel_mtimer  | `hardware/rvsteel_mtimer.v` | RISC-V Steel memory-mapped timer registers  |
-| rvsteel_uart    | `hardware/rvsteel_uart.v`   | UART controller                             |
-| rvsteel_gpio    | `hardware/rvsteel_gpio.v`   | GPIO controller                             |
-| rvsteel_spi     | `hardware/rvsteel_spi.v`    | SPI controller                              |
+| rvsteel_bus     | `hardware/rvsteel_bus.v`    | Bus Controller                              |
+| rvsteel_ram     | `hardware/rvsteel_ram.v`    | RAM Memory                                  |
+| rvsteel_mtimer  | `hardware/rvsteel_mtimer.v` | RISC-V Steel Memory-Mapped Timer Registers  |
+| rvsteel_uart    | `hardware/rvsteel_uart.v`   | UART Controller                             |
+| rvsteel_gpio    | `hardware/rvsteel_gpio.v`   | GPIO Controller                             |
+| rvsteel_spi     | `hardware/rvsteel_spi.v`    | SPI Controller                              |
 
 ## Configuration
 
-The table below lists the configuration parameters of RISC-V Steel top module, `rvsteel.v`:
+The table below lists the configuration parameters of RISC-V Steel Top Module, `rvsteel.v`:
 
 | Parameter name and description                                                            | Value type          | Default value    |
 | ----------------------------------------------------------------------------------------- | ------------------- | ---------------- |
@@ -48,11 +48,11 @@ The table below lists the configuration parameters of RISC-V Steel top module, `
 | **MEMORY_SIZE**</br>Size of the memory module (in bytes).                                 | Integer             | `8192`           | 
 | **MEMORY_INIT_FILE**</br>Absolute path to the memory initialization file.                 | String              | `(empty string)` |
 | **GPIO_WIDTH**</br>Number of general-purpose I/O pins.                                    | Integer             | `1`              | 
-| **SPI_NUM_CHIP_SELECT**</br>Number of Chip Select (CS) lines for the SPI controller.      | Integer             | `1`              |
+| **SPI_NUM_CHIP_SELECT**</br>Number of Chip Select (CS) lines for the SPI Controller.      | Integer             | `1`              |
 
 ## I/O Signals
 
-The input/output signals of RISC-V Steel top module, `rvsteel.v`, are listed in the table below:
+The input/output signals of RISC-V Steel Top Module, `rvsteel.v`, are listed in the table below:
 
 | Pin name and description                        | Direction | Size                  |
 | ----------------------------------------------- | --------- | --------------------- |
@@ -71,7 +71,7 @@ The input/output signals of RISC-V Steel top module, `rvsteel.v`, are listed in 
 
 ## Memory Map
 
-The address range assigned to each device is shown in the table below:
+Peripheral devices in RISC-V Steel are mapped to memory addresses as detailed below:
 
 | Start address | Final address       | Range size (Bytes) | Device                     |
 | ------------- | ------------------- | ------------------ | -------------------------- |
