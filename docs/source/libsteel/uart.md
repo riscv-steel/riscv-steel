@@ -2,71 +2,65 @@
 
 ## Introduction
 
-RISC-V Steel comes with a default [UART Controller](../hardware/uart.md) that can be used to send and receive data via [UART Protocol](https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter). This default UART is configured to send 1 start bit, 8 data bits, no parity bit and no stop bit. The base address of the default controller registers is `0x80000000`.
+RISC-V Steel features a default [UART Controller](../hardware/uart.md) designed for sending and receiving data via the [UART Protocol](https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter). The configuration parameters for this default UART are as follows:
 
-The default baud rate is 9600 bps. The baud rate can be increased or decreased by changing the [`UART_BAUD_RATE`](../hardware/index.md#configuration) parameter of RISC-V Steel top module.
+- **Start Bits**: 1
+- **Data Bits**: 8
+- **Parity Bit**: None
+- **Stop Bits**: None
+- **Baud Rate**: 9600 bps
 
-The default UART is connected to [Fast Interrupt #0](../hardware/core.md#fast-interrupts). An interrupt is requested whenever a new byte of data is received.
+The baud rate can be increased or decreased by changing the [`UART_BAUD_RATE`](../hardware/index.md#configuration) parameter of RISC-V Steel top module.
 
-Additional UART controllers can be added to RISC-V Steel by following the procedure described in [Adding Devices](../hardware/index.md#adding-devices).
+The base address of the default UART registers is `0x80000000`. 
 
-## General information
+Additional UARTs can be added to RISC-V Steel by following the procedure described in the [Adding Devices](../hardware/index.md#adding-devices) section.
 
-The UART-related functions have names starting with `uart_*` and take as their first argument a pointer to the base address of the UART controller registers.
+The UART-related functions are prefixed with `uart_` and take a pointer of type `UartController*` as their first argument. This pointer must contain the base address of the UART registers.
 
-For example:
-
-```c
-#include "libsteel.h"
-
-void main(void)
-{
-    // 0x80000000 is the base address of the
-    // default UART controller registers
-    uart_write_string((UartController *)0x80000000, "Hello World!");
-}
-```
-
-Macros can be defined to avoid having to type the controller address every time, an also to make it easier to distinguish between multiple UARTs:
-
-```c
-#include "libsteel.h"
-
-#define DEFAULT_UART (UartController *)0x80000000
-
-// Suppose you added an extra UART mapped to address 0x90000000
-#define MY_EXTRA_UART (UartController *)0x90000000
-
-void main(void)
-{
-    uart_write_string(DEFAULT_UART, "Something.");
-    uart_write_string(MY_EXTRA_UART, "Something else.");
-}
-```
-
-To check if new data has been received, polling or interrupts can be used (see the examples in the description of [`uart_read`](#uart_read)).
-
-## UART API Reference 
-
-### uart_data_received { .hide-api-call }
-
-__Function `uart_data_received`{ .api-call-title }__
-
-```c
-bool uart_data_received(UartController *uart);
-```
-
-Checks whether the UART controller pointed by `uart` has received new data. Return `true` if new data has been received, and `false` otherwise.
-
-Use [`uart_read`](#uart_read) to read the new data.
-
-_Parameters:_
-
-`uart` - The base address of the UART controller registers.
+For improved code readability, it is recommended to define macros for the UART addresses as shown in the example below:
 
 === "Example"
 
-    ```c hl_lines="7"
+    ```c
+    #include "libsteel.h"
+
+    // The default UART of RISC-V Steel
+    #define DEFAULT_UART (UartController *)0x80000000
+
+    // Suppose you added an extra UART and mapped it to address 0x90000000
+    #define ADDITIONAL_UART (UartController *)0x90000000
+
+    void main(void)
+    {        
+        uart_write_string(DEFAULT_UART, "Hello World!");
+        uart_write_string(ADDITIONAL_UART, "Ola mundo!");
+    }
+    ```
+
+<div id="api-reference" markdown>
+
+## LibSteel UART API
+
+### uart_data_received { .hide-api-call }
+
+```c title="Function uart_data_received"
+bool uart_data_received(UartController *uart)
+```
+
+<div class="api-doc-text" markdown>
+
+Checks whether the UART has received new data. Return `true` if new data has been received, and `false` otherwise.
+
+_Parameters:_
+
+`uart` - The base address of the UART registers.
+
+</div>
+
+=== "Example"
+
+    ```c
     #include "libsteel.h"
 
     #define DEFAULT_UART (UartController *)0x80000000
@@ -85,25 +79,27 @@ _Parameters:_
     }
     ```
 
+---
+
 ### uart_read { .hide-api-call }
 
-__Function `uart_read`{ .api-call-title }__
-
-```c
-uint8_t uart_read(UartController *uart);
+```c title="Function uart_read"
+uint8_t uart_read(UartController *uart)
 ```
 
-Read the data byte received via the UART controller pointed by `uart`. To check whether new data has been received, use [`uart_data_received`](#uart_data_received).
+<div class="api-doc-text" markdown>
 
-The call to `uart_read` turns off pending interrupt requests made by the UART.
+Read the data byte received by the UART, turning off pending interrupt requests.
 
 _Parameters:_
 
-`uart` - The base address of the UART controller registers.
+`uart` - The base address of the UART registers.
+
+</div>
 
 === "Example (Polling)"
 
-    ```c hl_lines="14"
+    ```c
     #include "libsteel.h"
 
     #define DEFAULT_UART (UartController *)0x80000000
@@ -130,7 +126,7 @@ _Parameters:_
 
 === "Example (Interrupts)"
 
-    ```c hl_lines="9"
+    ```c
     #include "libsteel.h"
 
     #define DEFAULT_UART (UartController *)0x80000000
@@ -163,23 +159,27 @@ _Parameters:_
     }
     ```
 
+---
+
 ### uart_ready_to_send { .hide-api-call }
 
-__Function `uart_ready_to_send`{ .api-call-title }__
-
-```c
-bool uart_ready_to_send(UartController *uart);
+```c title="Function uart_ready_to_send"
+bool uart_ready_to_send(UartController *uart)
 ```
 
-Checks whether the UART controller pointed by `uart` is ready to send data. Return `true` if it is ready, and `false` otherwise.
+<div class="api-doc-text" markdown>
+
+Checks whether the UART is ready to send data. Return `true` if it is ready, and `false` otherwise.
 
 _Parameters:_
 
-`uart` - The base address of the UART controller registers.
+`uart` - The base address of the UART registers.
+
+</div>
 
 === "Example"
 
-    ```c hl_lines="7"
+    ```c
     #include "libsteel.h"
 
     #define DEFAULT_UART (UartController *)0x80000000
@@ -193,25 +193,29 @@ _Parameters:_
     }
     ```
 
+---
+
 ### uart_write { .hide-api-call }
 
-__Function `uart_write`{ .api-call-title }__
-
-```c
-void uart_write(UartController *uart, uint8_t data);
+```c title="Function uart_write"
+void uart_write(UartController *uart, uint8_t data)
 ```
 
-Send a single byte of data via the UART controller pointed by `uart`. If the UART is busy, it awaits for the current transfer to complete before sending the data.
+<div class="api-doc-text" markdown>
+
+Send a single byte of data. If the UART is busy, it awaits for the current transfer to complete before sending the data.
 
 _Parameters:_
 
-`uart` - The base address of the UART controller registers.
+`uart` - The base address of the UART registers.
 
 `data` - The byte of data to be sent.
 
+</div>
+
 === "Example"
 
-    ```c hl_lines="6"
+    ```c
     #include "libsteel.h"
 
     void main(void)
@@ -221,26 +225,31 @@ _Parameters:_
     }
     ```
 
+---
 
 ### uart_write_string { .hide-api-call }
 
-__Function `uart_write_string`{ .api-call-title }__
-
-```c
-void uart_write_string(UartController *uart, const char *str);
+```c title="Function uart_write_string"
+void uart_write_string(UartController *uart, const char *str)
 ```
 
-Send a C-string via the UART controller pointed by `uart`. If the UART is busy, it awaits for the current transfer to complete before sending the data.
+<div class="api-doc-text" markdown>
+
+Send a null-terminated C-string. If the UART is busy, it awaits for the current transfer to complete before sending the data.
+
+The string must be null-terminated, however, the null character at the end is not sent.
 
 _Parameters:_
 
-`uart` - The base address of the UART controller registers.
+`uart` - The base address of the UART registers.
 
-`str` - The C-string to be sent. The string must be null-terminated, however, the null character at the end is not sent.
+`str` - The C-string to be sent.
+
+</div>
 
 === "Example"
 
-    ```c hl_lines="5"
+    ```c
     #include "libsteel.h"
 
     void main(void)
@@ -248,6 +257,8 @@ _Parameters:_
       uart_write_string((UartController *)0x80000000, "Hello World!");
     }
     ```
+
+</div>
 
 </br>
 </br>
