@@ -45,7 +45,7 @@ module mtimer_arty_a7 #(
 
     .CLOCK_FREQUENCY          (50000000               ),
     .UART_BAUD_RATE           (9600                   ),
-    .MEMORY_SIZE              (131072                 ),
+    .MEMORY_SIZE              (8192                   ),
     .MEMORY_INIT_FILE         ("mtimer_demo.hex"      ),
     .BOOT_ADDRESS             (32'h00000000           ),
     .GPIO_WIDTH               (3                      )
