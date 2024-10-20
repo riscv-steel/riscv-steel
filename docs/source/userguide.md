@@ -82,13 +82,13 @@ git clone https://github.com/riscv-steel/riscv-steel
 === "Bare-metal"
 
     ```title="2. Copy the template project (Bare-metal)"
-    cp riscv-steel/templates/baremetal my_project/
+    cp -r riscv-steel/templates/baremetal my_project/
     ```
 
 === "FreeRTOS"
 
     ```title="2. Copy the template project (FreeRTOS)"
-    cp riscv-steel/templates/freertos my_project/
+    cp -r riscv-steel/templates/freertos my_project/
     ```
 
 <div class="api-doc-text" markdown>
