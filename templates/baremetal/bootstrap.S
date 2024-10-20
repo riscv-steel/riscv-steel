@@ -114,5 +114,3 @@ default_trap_handler:
 .set fast13_irq_handler, default_trap_handler
 .set fast14_irq_handler, default_trap_handler
 .set fast15_irq_handler, default_trap_handler
-
-

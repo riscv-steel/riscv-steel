@@ -71,3 +71,46 @@ rvsteel_trap_vector:
   j fast14_irq_handler      // Fast interrupt #14
   j fast15_irq_handler      // Fast interrupt #15
   .option pop
+
+.weak default_trap_handler
+default_trap_handler:
+  mret
+
+.weak msi_irq_handler
+.weak mti_irq_handler
+.weak mei_irq_handler
+.weak fast0_irq_handler
+.weak fast1_irq_handler
+.weak fast2_irq_handler
+.weak fast3_irq_handler
+.weak fast4_irq_handler
+.weak fast5_irq_handler
+.weak fast6_irq_handler
+.weak fast7_irq_handler
+.weak fast8_irq_handler
+.weak fast9_irq_handler
+.weak fast10_irq_handler
+.weak fast11_irq_handler
+.weak fast12_irq_handler
+.weak fast13_irq_handler
+.weak fast14_irq_handler
+.weak fast15_irq_handler
+.set msi_irq_handler, default_trap_handler
+.set mti_irq_handler, default_trap_handler
+.set mei_irq_handler, default_trap_handler
+.set fast0_irq_handler, default_trap_handler
+.set fast1_irq_handler, default_trap_handler
+.set fast2_irq_handler, default_trap_handler
+.set fast3_irq_handler, default_trap_handler
+.set fast4_irq_handler, default_trap_handler
+.set fast5_irq_handler, default_trap_handler
+.set fast6_irq_handler, default_trap_handler
+.set fast7_irq_handler, default_trap_handler
+.set fast8_irq_handler, default_trap_handler
+.set fast9_irq_handler, default_trap_handler
+.set fast10_irq_handler, default_trap_handler
+.set fast11_irq_handler, default_trap_handler
+.set fast12_irq_handler, default_trap_handler
+.set fast13_irq_handler, default_trap_handler
+.set fast14_irq_handler, default_trap_handler
+.set fast15_irq_handler, default_trap_handler
