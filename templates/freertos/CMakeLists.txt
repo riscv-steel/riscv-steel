@@ -93,6 +93,11 @@ else()
   message(STATUS "Using RISC-V GCC: " ${PATH_CMAKE_C_COMPILER})
 endif()
 
+# Check whether the clock frequency is defined
+if(NOT DEFINED CLOCK_FREQUENCY)
+  message(FATAL_ERROR "[ERROR] CLOCK_FREQUENCY is not defined.")
+endif()
+
 # Create the project and set languages used
 project(${APP_NAME} LANGUAGES C CXX ASM)
 
