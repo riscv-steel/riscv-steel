@@ -69,19 +69,7 @@ copyright: Copyright (c) RISC-V Steel contributors
 nav:
     - Homepage: 'index.md'    
     - User Guide: 'userguide.md'
-    - Hardware Docs:
-        - RISC-V Steel: 'hardware/index.md'
-        - Components:
-            - Processor Core: 'hardware/core.md'
-            - UART Controller: 'hardware/uart.md'
-            - GPIO Controller: 'hardware/gpio.md'
-            - SPI Controller: 'hardware/spi.md'
-            - Timers: 'hardware/mtimer.md'
-            - Memory: 'hardware/memory.md'
-    - LibSteel Docs:
-        - Introduction: 'libsteel/index.md'
-        - UART Controller: 'libsteel/uart.md'
-        - GPIO Controller: 'libsteel/gpio.md'
+    - Hardware Docs: 'hardware.md'
     - Examples:
         - Hello World: 'examples/helloworld.md'
         - FreeRTOS: 'examples/freertos.md'
