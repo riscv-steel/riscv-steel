@@ -133,7 +133,6 @@ set(SOURCES
   ${CMAKE_SOURCE_DIR}/FreeRTOSConfig.h
   ${CMAKE_SOURCE_DIR}/main.c
   ${CMAKE_SOURCE_DIR}/bootstrap.S
-  ${CMAKE_SOURCE_DIR}/trap_handlers.c
 )
 
 # Instruct the compiler where to find the include files for this project
