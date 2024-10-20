@@ -20,7 +20,7 @@
     
     
       
-        <title>RISC-V Steel</title>
+        <title>RISC-V Steel Documentation</title>
       
     
     
@@ -70,6 +70,8 @@
   
     
     
+      
+    
     
     
     
@@ -91,7 +93,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/." title="RISC-V Steel" class="md-header__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
+    <a href="/." title="RISC-V Steel Documentation" class="md-header__button md-logo" aria-label="RISC-V Steel Documentation" data-md-component="logo">
       
   <img src="/images/rvsteel_logo_circle.svg" alt="logo">
 
@@ -104,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            RISC-V Steel
+            RISC-V Steel Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -118,7 +120,33 @@
     </div>
     
       
+        <form class="md-header__option" data-md-component="palette">
+  
     
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -208,12 +236,29 @@
   
   
     <li class="md-tabs__item">
-      <a href="/gettingstarted/" class="md-tabs__link">
+      <a href="/userguide/" class="md-tabs__link">
         
   
     
   
-  Getting Started
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="/hardware/" class="md-tabs__link">
+        
+  
+    
+  
+  Hardware Docs
 
       </a>
     </li>
@@ -227,28 +272,10 @@
     
     
       <li class="md-tabs__item">
-        <a href="/mcu/" class="md-tabs__link">
+        <a href="/examples/helloworld/" class="md-tabs__link">
           
   
-  Hardware Docs
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="/softwareguide/" class="md-tabs__link">
-          
-  
-  Software Guide
+  Examples
 
         </a>
       </li>
@@ -278,12 +305,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/." title="RISC-V Steel" class="md-nav__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
+    <a href="/." title="RISC-V Steel Documentation" class="md-nav__button md-logo" aria-label="RISC-V Steel Documentation" data-md-component="logo">
       
   <img src="/images/rvsteel_logo_circle.svg" alt="logo">
 
     </a>
-    RISC-V Steel
+    RISC-V Steel Documentation
   </label>
   
     <div class="md-nav__source">
@@ -327,11 +354,11 @@
   
   
     <li class="md-nav__item">
-      <a href="/gettingstarted/" class="md-nav__link">
+      <a href="/userguide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Getting Started
+    User Guide
   </span>
   
 
@@ -346,85 +373,16 @@
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
+    <li class="md-nav__item">
+      <a href="/hardware/" class="md-nav__link">
         
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Hardware Docs
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Hardware Docs
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="/mcu/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Microcontroller
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="/core/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Processor Core
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -455,7 +413,7 @@
             
   
   <span class="md-ellipsis">
-    Software Guide
+    Examples
   </span>
   
 
@@ -465,7 +423,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            Software Guide
+            Examples
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -476,11 +434,11 @@
   
   
     <li class="md-nav__item">
-      <a href="/softwareguide/" class="md-nav__link">
+      <a href="/examples/helloworld/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Introduction
+    Hello World
   </span>
   
 
@@ -497,11 +455,11 @@
   
   
     <li class="md-nav__item">
-      <a href="/newproject/" class="md-nav__link">
+      <a href="/examples/freertos/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Starting a new project
+    FreeRTOS
   </span>
   
 

@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="gettingstarted/">
+        <link rel="next" href="userguide/">
       
       
       <link rel="icon" href="images/rvsteel_logo_circle.svg">
@@ -22,7 +22,7 @@
     
     
       
-        <title>RISC-V Steel</title>
+        <title>RISC-V Steel Documentation</title>
       
     
     
@@ -72,6 +72,8 @@
   
     
     
+      
+    
     
     
     
@@ -83,11 +85,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#risc-v-steel-documentation" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -98,7 +95,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="RISC-V Steel" class="md-header__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
+    <a href="." title="RISC-V Steel Documentation" class="md-header__button md-logo" aria-label="RISC-V Steel Documentation" data-md-component="logo">
       
   <img src="images/rvsteel_logo_circle.svg" alt="logo">
 
@@ -111,7 +108,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            RISC-V Steel
+            RISC-V Steel Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -125,7 +122,33 @@
     </div>
     
       
+        <form class="md-header__option" data-md-component="palette">
+  
     
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -217,12 +240,29 @@
   
   
     <li class="md-tabs__item">
-      <a href="gettingstarted/" class="md-tabs__link">
+      <a href="userguide/" class="md-tabs__link">
         
   
     
   
-  Getting Started
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="hardware/" class="md-tabs__link">
+        
+  
+    
+  
+  Hardware Docs
 
       </a>
     </li>
@@ -236,28 +276,10 @@
     
     
       <li class="md-tabs__item">
-        <a href="mcu/" class="md-tabs__link">
+        <a href="examples/helloworld/" class="md-tabs__link">
           
   
-  Hardware Docs
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="softwareguide/" class="md-tabs__link">
-          
-  
-  Software Guide
+  Examples
 
         </a>
       </li>
@@ -289,12 +311,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="RISC-V Steel" class="md-nav__button md-logo" aria-label="RISC-V Steel" data-md-component="logo">
+    <a href="." title="RISC-V Steel Documentation" class="md-nav__button md-logo" aria-label="RISC-V Steel Documentation" data-md-component="logo">
       
   <img src="images/rvsteel_logo_circle.svg" alt="logo">
 
     </a>
-    RISC-V Steel
+    RISC-V Steel Documentation
   </label>
   
     <div class="md-nav__source">
@@ -324,19 +346,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Homepage
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
         
@@ -348,52 +357,6 @@
 
       </a>
       
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#about-risc-v-steel" class="md-nav__link">
-    <span class="md-ellipsis">
-      About RISC-V Steel
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      License
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -405,11 +368,11 @@
   
   
     <li class="md-nav__item">
-      <a href="gettingstarted/" class="md-nav__link">
+      <a href="userguide/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Getting Started
+    User Guide
   </span>
   
 
@@ -424,85 +387,16 @@
   
   
   
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
+    <li class="md-nav__item">
+      <a href="hardware/" class="md-nav__link">
         
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
   
   <span class="md-ellipsis">
     Hardware Docs
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Hardware Docs
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="mcu/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Microcontroller
-  </span>
-  
-
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="core/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Processor Core
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -533,7 +427,7 @@
             
   
   <span class="md-ellipsis">
-    Software Guide
+    Examples
   </span>
   
 
@@ -543,7 +437,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            Software Guide
+            Examples
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -554,11 +448,11 @@
   
   
     <li class="md-nav__item">
-      <a href="softwareguide/" class="md-nav__link">
+      <a href="examples/helloworld/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Introduction
+    Hello World
   </span>
   
 
@@ -575,11 +469,11 @@
   
   
     <li class="md-nav__item">
-      <a href="newproject/" class="md-nav__link">
+      <a href="examples/freertos/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Starting a new project
+    FreeRTOS
   </span>
   
 
@@ -606,7 +500,7 @@
               
                 
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -615,43 +509,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#about-risc-v-steel" class="md-nav__link">
-    <span class="md-ellipsis">
-      About RISC-V Steel
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      Features
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      License
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -669,21 +526,20 @@
   
 
 
-<h1 id="risc-v-steel-documentation">RISC-V Steel Documentation</h1>
-<p>Welcome to RISC-V Steel documentation page.</p>
-<p><a href="gettingstarted/"><strong><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"/></svg></span> Getting Started Guide</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/riscv-steel/riscv-steel/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.6 10.59 8.38 4.8l1.69 1.7c-.24.85.15 1.78.93 2.23v5.54c-.6.34-1 .99-1 1.73a2 2 0 0 0 2 2 2 2 0 0 0 2-2c0-.74-.4-1.39-1-1.73V9.41l2.07 2.09c-.07.15-.07.32-.07.5a2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2c-.18 0-.35 0-.5.07L13.93 7.5a1.98 1.98 0 0 0-1.15-2.34c-.43-.16-.88-.2-1.28-.09L9.8 3.38l.79-.78c.78-.79 2.04-.79 2.82 0l7.99 7.99c.79.78.79 2.04 0 2.82l-7.99 7.99c-.78.79-2.04.79-2.82 0L2.6 13.41c-.79-.78-.79-2.04 0-2.82Z"/></svg></span> GitHub</a></p>
-<h2 id="about-risc-v-steel">About RISC-V Steel</h2>
-<p>RISC-V Steel is a free collection of hardware modules written in Verilog intended for use in FPGAs and embedded systems. It features a 32-bit RISC-V processor core, UART, GPIO and SPI interfaces, and timer and memory modules. All modules are integrated into a tunable microcontroller design that can be easily ported to any FPGA in just a few steps.</p>
-<h2 id="features">Features</h2>
+<h1 id="hidden-homepage-title">RISC-V Steel Documentation</h1>
+
+<h2 id="h2-homepage-no-top-margin">Welcome to RISC-V Steel Documentation</h2>
+
+<p>RISC-V Steel is a microcontroller design developed in Verilog that implements the RV32I instruction set of RISC-V. It is designed for easy, seamless integration into embedded systems, systems-on-chip (SoC), and FPGA designs, facilitating the rapid development of innovative RISC-V applications.</p>
+<p>RISC-V Steel can run real-time operating systems such as FreeRTOS, as well as bare-metal embedded software. Its design includes components such as memory, timers, and interfaces for UART, GPIO, and SPI communication, enabling RISC-V Steel to integrate with a variety of sensors and actuators commonly used in embedded applications.</p>
+<h2>Get Started</h2>
+
+<p>The quickest way to get started is to implement one of the example projects on your FPGA. Check it out:</p>
 <ul>
-<li>32-bit RISC-V processor core (RV32I + Zicsr + Machine mode)</li>
-<li>UART, GPIO and SPI interfaces</li>
-<li>Timer and memory modules</li>
-<li>Support for real-time operating systems like FreeRTOS</li>
-<li>LibSteel library, which provides an API to control RISC-V Steel</li>
+<li><a href="examples/helloworld/">Hello World Example</a> </li>
+<li><a href="examples/freertos/">FreeRTOS Example</a></li>
 </ul>
-<h2 id="license">License</h2>
-<p>RISC-V Steel is distributed under the <strong>MIT License</strong>.</p>
+<p>See the <a href="userguide/">User Guide</a> to learn how to create your own applications.</p>
 <p></br>
 </br></p>
 

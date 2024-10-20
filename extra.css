@@ -2,8 +2,20 @@
   color: var(--md-default-fg-color);
 }
 
-.md-nav__item .md-nav__link--active,
-.md-nav__item .md-nav__link--active code {
+tr:has(.rvsteel-core-io-table) {
+  background-color: #f5f5f5;
+}
+
+:root {
+  --md-primary-fg-color: #303fa1;
+  --md-primary-fg-color--light: #526cfe;
+  --md-primary-fg-color--dark: #283481;
+  --md-accent-fg-color: #526cfe;
+  --md-accent-fg-color--light: #4287ff;
+  --md-accent-fg-color--dark: #303fa1;
+}
+
+.md-nav__item .md-nav__link--active {
   color: var(--md-accent-fg-color);
 }
 
@@ -20,145 +32,63 @@
   color: var(--md-default-fg-color);
 }
 
-tr:has(.rvsteel-core-io-table) {
-  background-color: #f5f5f5;
-}
-
-body>div.md-container>main>div>div.md-sidebar.md-sidebar--primary>div>div>nav>ul>li.md-nav__item.md-nav__item--active {
-  padding: 0px;
-}
-
-:root {
-  --md-primary-fg-color: #303fa1;
-  --md-primary-fg-color--light: #526cfe;
-  --md-primary-fg-color--dark: #283481;
-  --md-accent-fg-color: #526cfe;
-  --md-accent-fg-color--light: #526cfe;
-  --md-accent-fg-color--dark: #303fa1;
-}
-
-.md-typeset .md-button {
-  border: 0.1rem solid;
-  border-radius: 0.1rem;
-  color: var(--md-primary-fg-color--dark);
-  cursor: pointer;
-  display: inline-block;
-  font-weight: 700;
-  padding: 0.625em 2em;
-  transition: color 125ms, background-color 125ms, border-color 125ms;
-}
-
-.md-typeset a.md-button:hover {
-  background-color: var(--md-primary-fg-color--light);
-  border-color: var(--md-primary-fg-color--light);
-  color: var(--md-primary-bg-color);
-}
-
-.md-typeset .md-button--primary {
-  background-color: var(--md-primary-fg-color);
-  border-color: var(--md-primary-fg-color);
-  color: var(--md-primary-bg-color);
-}
-
-.md-typeset a.md-button--primary:hover {
-  background-color: var(--md-primary-fg-color--light);
-  border-color: var(--md-primary-fg-color--light);
-  color: var(--md-primary-bg-color);
-}
-
 .md-typeset a {
-  color: var(--md-accent-fg-color--light);
+  color: var(--md-accent-fg-color);
   word-break: break-word;
 }
 
 .md-typeset a:hover {
-  color: var(--md-accent-fg-color--dark);
+  color: var(--md-accent-fg-color--light);
   word-break: break-word;
 }
 
-.md-typeset p>code,
-.md-typeset td>code,
-.md-typeset td>strong>code,
-.md-typeset p>strong>code {
-  /*color: #3b53df;*/
-  background-color: transparent;
-}
-
-/*.md-search__input {
-  background: #ffffff1a;
-  height: 100%;
-  width: 100%;
-  z-index: 2;
-  border-radius: .1em;
-}*/
-
-.home-title {
-  height: 60px;
-  line-height: 60px;
-}
-
-.home-title h1 {
-  display: inline-block;
-  vertical-align: middle;
-  margin-top: 0px !important;
-  margin: 0px !important;
-  line-height: 1.1em !important;
-  color: #222222 !important;
-}
-
-.md-content__inner:before {
-  content: "";
-  display: block;
-  height: 0px;
-}
-
-#risc-v-steelfree-and-open-risc-v-ip {
-  font-size: 1.5em;
-}
-
-#available-ip {
-  margin-bottom: -0.6em;
-}
-
-#what-is-risc-v-steel {
-  margin-bottom: -0.6em;
-}
-
-.md-typeset figcaption {
-  font-style: normal !important;
-}
-
-.api-call {
-  font-weight: bold;
-  font-size: 1.1em !important;
-}
-
-.api-call code {
-  margin-left: 0px;
-  padding-left: 0px;
-}
-
-.api-doc {
-  font-size: 1em;
-  margin-left: 2em;
-}
-
-.main-section-title {
-  margin: 0px !important;
-}
-
-.main-section-subtitle {
-  margin-top: 0px !important;
-}
-
-.api-hidden {
+#hidden-homepage-title {
   visibility: hidden;
   height: 0px;
-  font-size: 0px !important;
-  line-height: 0px !important;
-  margin: 0px !important;
+  margin: 0px;
+}
+
+#h2-homepage-no-top-margin {
+  margin-top: 0px;
 }
 
 .md-typeset code {
   word-break: normal;
+}
+
+.hide-api-call {
+  height: 0px;
+  visibility: hidden;
+  margin: 0px !important;
+}
+
+.api-call-title {
+  padding: 0px !important;
+  background-color: transparent !important;
+  font-size: .9em !important;
+  font-weight: 600;
+}
+
+.api-doc-text {
+  padding-left: .7720588235em;
+  padding-right: .7720588235em;
+}
+
+#api-reference>div.highlight>span.filename {
+  background-color: var(--md-code-bg-color);
+  border-bottom: .05rem solid var(--md-default-fg-color--lightest);
+  border-top-left-radius: .1rem;
+  border-top-right-radius: .1rem;
+  display: flow-root;
+  font-size: .9em;
+  font-family: var(--md-code-font-family);
+  font-weight: 700;
+  margin-top: 1em;
+  padding: .6617647059em 1.1764705882em;
+  position: relative;
+}
+
+#api-reference>div.highlight>span.filename {
+  background-color: #283481;
+  color: #f0f5f5;
 }
