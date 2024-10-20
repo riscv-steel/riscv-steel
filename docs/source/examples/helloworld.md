@@ -66,7 +66,7 @@ module hello_world (
 
   // Please adjust these two parameters accordingly
   .CLOCK_FREQUENCY          (50000000                   ),
-  .MEMORY_INIT_FILE         ("/path/to/hello_world.hex" ),
+  .MEMORY_INIT_FILE         ("/path/to/hello_world.hex" )
 
   ) rvsteel_instance (
 
