@@ -9,7 +9,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Name of the executable to be generated
-set(APP_NAME "hello_world")
+set(APP_NAME "gpio_demo")
 
 # Inform the same value provided for the MEMORY_SIZE parameter of rvsteel
 set(MEMORY_SIZE 8K)
