@@ -58,7 +58,6 @@ set(CMAKE_TARGET_MESSAGES OFF)
 
 # Give TOOLCHAIN_PREFIX a default value if its definition is missing
 if(NOT DEFINED TOOLCHAIN_PREFIX)
-  message(STATUS "[INFO] TOOLCHAIN_PREFIX set to default value: riscv32-unknown-elf-")
   set(TOOLCHAIN_PREFIX riscv32-unknown-elf-)
 endif()
 
@@ -88,20 +87,28 @@ find_program(PATH_CMAKE_C_COMPILER
 if(NOT PATH_CMAKE_C_COMPILER)
   message(FATAL_ERROR "[ERROR] Could not find CMAKE_C_COMPILER: " ${PATH_CMAKE_C_COMPILER})
 else()
-  message(STATUS "[INFO] Compiling with GCC: " ${PATH_CMAKE_C_COMPILER})
+  message(STATUS "Using RISC-V GCC: " ${PATH_CMAKE_C_COMPILER})
 endif()
 
 # Create the project and set languages used
 project(${APP_NAME} LANGUAGES C CXX ASM)
 
+# Obtain LibSteel
+include(FetchContent)
+
+FetchContent_Declare(steel
+  GIT_REPOSITORY https://github.com/riscv-steel/libsteel.git
+  GIT_TAG v2.0
+)
+
+FetchContent_MakeAvailable(steel)
+
 # Set compiler definitions
 add_compile_definitions(NO_STARTUP_FILES=1)
 
-# Include libsteel
-include(LibSteel.cmake)
-
 # Source files
 set(SOURCES
+  ${CMAKE_SOURCE_DIR}/bootstrap.S
   ${CMAKE_SOURCE_DIR}/main.c
 )
 
@@ -162,9 +169,6 @@ target_link_options(${APP_NAME}.elf
   # Specify the Application Binary Interface supported by RISC-V Steel
   -mabi=${APP_ABI}
 
-  # Print memory usage summary
-  -Wl,--print-memory-usage
-
   # Set symbol needed by FreeRTOS
   -Wl,--defsym=__memory_size=${MEMORY_SIZE}
 
@@ -196,15 +200,17 @@ set_property(TARGET ${APP_NAME}.elf
 )
 
 # Generate Memory Init File (.hex) and disassembly after build
-add_custom_command(TARGET ${APP_NAME}.elf POST_BUILD
+add_custom_target(rvsteel_mem_file_generation ALL
   COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME}.elf ${APP_NAME}.bin
   COMMAND ${CMAKE_OBJCOPY} -O verilog ${APP_NAME}.elf --verilog-data-width=4 ${APP_NAME}.hex
   COMMAND ${CMAKE_OBJDUMP} -D ${APP_NAME}.elf > ${APP_NAME}.objdump
-  COMMAND echo "-------------------------------------------------------"
-  COMMAND tput bold
-  COMMAND echo "Build outputs:"
-  COMMAND tput sgr0
-  COMMAND echo "-- Memory init file:   build/${APP_NAME}.hex"
-  COMMAND echo "-- Binary executable:  build/${APP_NAME}.elf"
-  COMMAND echo "-- Disassembly:        build/${APP_NAME}.objdump"
+  COMMAND echo ""
+  COMMAND echo "Memory init file:   build/${APP_NAME}.hex"
+  COMMAND echo "Binary executable:  build/${APP_NAME}.elf"
+  COMMAND echo "Disassembly:        build/${APP_NAME}.objdump"
+  COMMAND echo ""
+  COMMAND echo 'Memory usage report \(MEMORY_SIZE = ${MEMORY_SIZE}\)'
+  COMMAND ${TOOLCHAIN_PREFIX}size -G ${APP_NAME}.elf
+  COMMAND echo ""
+  DEPENDS ${APP_NAME}.elf
 )
