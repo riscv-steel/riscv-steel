@@ -17,25 +17,19 @@ endif
 
 all: debug
 
-check_usage:
+check_clock_is_defined:
 ifndef CLOCK_FREQUENCY
-	$(info Usage:     make [debug|release] CLOCK_FREQUENCY=<freq_in_hertz>)
-	$(info Example:   make debug CLOCK_FREQUENCY=50000000)
-	$(info ---)
-	$(info The FreeRTOS example contains timing functionality that needs to know the clock frequency to work properly.)
-	$(info ---)
-	$(error Exiting due to errors)
+	$(info Usage: make [debug|release] CLOCK_FREQUENCY=<freq_in_hertz>)
+	$(error To build the FreeRTOS example you need to inform the clock frequency)
 endif
 
-debug: check_usage
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=${CLOCK_FREQUENCY} ..
-	$(MAKE) -C build
+debug: check_clock_is_defined
+	@mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=${CLOCK_FREQUENCY} ..
+	@$(MAKE) -C build
 
-release: check_usage
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=${CLOCK_FREQUENCY} ..
-	$(MAKE) -C build
+release: check_clock_is_defined
+	@mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} -DCLOCK_FREQUENCY=${CLOCK_FREQUENCY} ..
+	@$(MAKE) -C build
 
 clean:
 	@rm -rf build dump

@@ -11,11 +11,14 @@ cmake_minimum_required(VERSION 3.15)
 # Name of the executable to be generated
 set(APP_NAME "freertos")
 
+# Inform the frequency of the board clock, in Hertz
+set(CLOCK_FREQUENCY 50000000)
+
 # Inform the same value provided for the MEMORY_SIZE parameter of rvsteel
 set(MEMORY_SIZE 32K)
 
 # Space reserved for the stack (in bytes)
-set(STACK_SIZE 1K)
+set(STACK_SIZE 0K)
 
 # Space reserved for the heap (in bytes)
 set(HEAP_SIZE 0K)
@@ -58,7 +61,6 @@ set(CMAKE_TARGET_MESSAGES OFF)
 
 # Give TOOLCHAIN_PREFIX a default value if its definition is missing
 if(NOT DEFINED TOOLCHAIN_PREFIX)
-  message(STATUS "[INFO] TOOLCHAIN_PREFIX set to default value: riscv32-unknown-elf-")
   set(TOOLCHAIN_PREFIX riscv32-unknown-elf-)
 endif()
 
@@ -84,34 +86,53 @@ find_program(PATH_CMAKE_C_COMPILER
   REQUIRED
 )
 
-# Check whether the clock frequency is defined
-if(NOT DEFINED CLOCK_FREQUENCY)
-  message(FATAL_ERROR "[ERROR] CLOCK_FREQUENCY is not defined. Please call CMake with -DCLOCK_FREQUENCY=<target_freq>.")
-endif()
-
 # Print whether GCC was found
 if(NOT PATH_CMAKE_C_COMPILER)
   message(FATAL_ERROR "[ERROR] Could not find CMAKE_C_COMPILER: " ${PATH_CMAKE_C_COMPILER})
 else()
-  message(STATUS "[INFO] Compiling with GCC: " ${PATH_CMAKE_C_COMPILER})
+  message(STATUS "Using RISC-V GCC: " ${PATH_CMAKE_C_COMPILER})
 endif()
 
 # Create the project and set languages used
 project(${APP_NAME} LANGUAGES C CXX ASM)
 
-# Set compiler definitions
-add_compile_definitions(CPU_FREQUENCY=${CLOCK_FREQUENCY})
+# Obtain FreeRTOS Kernel
+include(FetchContent)
 
-# libsteel
-include(LibSteel.cmake)
+FetchContent_Declare(freertos_kernel
+  GIT_REPOSITORY https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+  GIT_TAG V11.0.0
+)
 
-# FreeRTOS
-include(FreeRTOS.cmake)
+add_library(freertos_config INTERFACE)
+
+target_include_directories(freertos_config INTERFACE ${CMAKE_SOURCE_DIR})
+
+target_compile_definitions(freertos_config INTERFACE projCOVERAGE_TEST=0)
+
+target_compile_definitions(freertos_config INTERFACE CPU_FREQUENCY=${CLOCK_FREQUENCY})
+
+set(FREERTOS_HEAP "4" CACHE STRING "" FORCE)
+set(FREERTOS_PORT "GCC_RISC_V_GENERIC" CACHE STRING "" FORCE)
+set(FREERTOS_RISCV_EXTENSION RISCV_no_extensions CACHE STRING "")
+
+FetchContent_MakeAvailable(freertos_kernel)
+
+# Obtain LibSteel
+include(FetchContent)
+
+FetchContent_Declare(steel
+  GIT_REPOSITORY https://github.com/riscv-steel/libsteel.git
+  GIT_TAG v2.0
+)
+
+FetchContent_MakeAvailable(steel)
 
 # Source files
 set(SOURCES
-  ${CMAKE_SOURCE_DIR}/include/FreeRTOSConfig.h
-  ${CMAKE_SOURCE_DIR}/main.cpp
+  ${CMAKE_SOURCE_DIR}/FreeRTOSConfig.h
+  ${CMAKE_SOURCE_DIR}/main.c
+  ${CMAKE_SOURCE_DIR}/bootstrap.S
 )
 
 # Instruct the compiler where to find the include files for this project
@@ -176,9 +197,6 @@ target_link_options(${APP_NAME}.elf
   # Specify the Application Binary Interface supported by RISC-V Steel
   -mabi=${APP_ABI}
 
-  # Print memory usage summary
-  -Wl,--print-memory-usage
-
   # Set symbol needed by FreeRTOS
   -Wl,--defsym=__memory_size=${MEMORY_SIZE}
 
@@ -210,15 +228,17 @@ set_property(TARGET ${APP_NAME}.elf
 )
 
 # Generate Memory Init File (.hex) and disassembly after build
-add_custom_command(TARGET ${APP_NAME}.elf POST_BUILD
+add_custom_target(rvsteel_mem_file_generation ALL
   COMMAND ${CMAKE_OBJCOPY} -O binary ${APP_NAME}.elf ${APP_NAME}.bin
   COMMAND ${CMAKE_OBJCOPY} -O verilog ${APP_NAME}.elf --verilog-data-width=4 ${APP_NAME}.hex
   COMMAND ${CMAKE_OBJDUMP} -D ${APP_NAME}.elf > ${APP_NAME}.objdump
-  COMMAND echo "-------------------------------------------------------"
-  COMMAND tput bold
-  COMMAND echo "Build outputs:"
-  COMMAND tput sgr0
-  COMMAND echo "-- Memory init file:   build/${APP_NAME}.hex"
-  COMMAND echo "-- Binary executable:  build/${APP_NAME}.elf"
-  COMMAND echo "-- Disassembly:        build/${APP_NAME}.objdump"
+  COMMAND echo ""
+  COMMAND echo "Memory init file:   build/${APP_NAME}.hex"
+  COMMAND echo "Binary executable:  build/${APP_NAME}.elf"
+  COMMAND echo "Disassembly:        build/${APP_NAME}.objdump"
+  COMMAND echo ""
+  COMMAND echo 'Memory usage report \(MEMORY_SIZE = ${MEMORY_SIZE}\)'
+  COMMAND ${TOOLCHAIN_PREFIX}size -G ${APP_NAME}.elf
+  COMMAND echo ""
+  DEPENDS ${APP_NAME}.elf
 )
