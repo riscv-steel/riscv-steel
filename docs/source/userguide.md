@@ -8,7 +8,7 @@ The process of developing a new application with RISC-V Steel involves two main 
 
 1. Building the application
 
-    The first step is to write the source code for the new application and build it with the RISC-V GNU Toolchain. The build process generates a `.hex` file that is later used to initialize the memory of RISC-V Steel.
+    The first step is to write the source code for the new application and build it with the [RISC-V GNU Toolchain](https://github.com/riscv/riscv-gnu-toolchain). The build process generates a `.hex` file that is later used to initialize the memory of RISC-V Steel.
 
 2. Running on an FPGA
 
@@ -18,137 +18,108 @@ The process of developing a new application with RISC-V Steel involves two main 
 
 To build software for RISC-V you need the [RISC-V GNU Toolchain](https://github.com/riscv/riscv-gnu-toolchain), a suite of compilers and development tools for the RISC-V architecture. 
 
-Run the commands below to install and configure the toolchain for RISC-V Steel:
+Run the commands below to install and configure the RISC-V GNU Toolchain for RISC-V Steel:
 
-!!! quote ""
-
-    __Important!__ The `--prefix` option defines the installation folder. You need to set it to a folder where you have `rwx` permissions. The commands below assume you have `rwx` permissions on `/opt`.
+```title="1. Clone the RISC-V GNU Toolchain repository"
+git clone https://github.com/riscv-collab/riscv-gnu-toolchain
+```
 
 === "Ubuntu"
 
-    ```
-    # Clone the RISC-V GNU Toolchain repo
-    git clone https://github.com/riscv-collab/riscv-gnu-toolchain
-
-    # Install dependencies
-    sudo apt-get install autoconf automake autotools-dev curl python3 python3-pip libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev ninja-build git cmake libglib2.0-dev libslirp-dev
-
-    # Configure the toolchain for RISC-V Steel
-    cd riscv-gnu-toolchain && ./configure --with-arch=rv32izicsr --with-abi=ilp32 --prefix=/opt/riscv
-
-    # Compile and install
-    make -j $(nproc)
+    ```title="2. Install dependencies (Ubuntu)"
+    sudo apt-get install \
+        autoconf automake autotools-dev curl python3 python3-pip libmpc-dev libmpfr-dev \
+        libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc \
+        zlib1g-dev libexpat-dev ninja-build git cmake libglib2.0-dev libslirp-dev
     ```
 
 === "Fedora/CentOS/RHEL/Rocky"
 
-    ```
-    # Clone the RISC-V GNU Toolchain repo
-    git clone https://github.com/riscv-collab/riscv-gnu-toolchain
-
-    # Install dependencies
-    sudo yum install autoconf automake python3 libmpc-devel mpfr-devel gmp-devel gawk  bison flex texinfo patchutils gcc gcc-c++ zlib-devel expat-devel libslirp-devel
-
-    # Configure the toolchain for RISC-V Steel
-    cd riscv-gnu-toolchain && ./configure --with-arch=rv32izicsr --with-abi=ilp32 --prefix=/opt/riscv
-
-    # Compile and install
-    make -j $(nproc)
+    ```title="2. Install dependencies (Fedora/CentOS/RHEL/Rocky)"
+    sudo yum install \
+        autoconf automake python3 libmpc-devel mpfr-devel gmp-devel gawk  bison flex \
+        texinfo patchutils gcc gcc-c++ zlib-devel expat-devel libslirp-devel
     ```
 
 === "Arch Linux"
 
-    ```
-    # Clone the RISC-V GNU Toolchain repo
-    git clone https://github.com/riscv-collab/riscv-gnu-toolchain
-
-    # Install dependencies
-    sudo pacman -Syyu autoconf automake curl python3 libmpc mpfr gmp gawk base-devel bison flex texinfo gperf libtool patchutils bc zlib expat libslirp
-
-    # Configure the toolchain for RISC-V Steel
-    cd riscv-gnu-toolchain && ./configure --with-arch=rv32izicsr --with-abi=ilp32 --prefix=/opt/riscv
-
-    # Compile and install
-    make -j $(nproc)
+    ```title="2. Install dependencies (Arch Linux)"
+    sudo pacman -Syyu \
+        autoconf automake curl python3 libmpc mpfr gmp gawk base-devel bison flex texinfo \
+        gperf libtool patchutils bc zlib expat libslirp
     ```
 
 === "OS X"
 
-    ```
-    # Clone the RISC-V GNU Toolchain repo
-    git clone https://github.com/riscv-collab/riscv-gnu-toolchain
-
-    # Install dependencies
+    ```title="2. Install dependencies (OS X)"
     brew install python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat texinfo flock libslirp
-
-    # Configure the toolchain for RISC-V Steel
-    cd riscv-gnu-toolchain && ./configure --with-arch=rv32izicsr --with-abi=ilp32 --prefix=/opt/riscv
-
-    # Compile and install
-    make -j $(nproc)
     ```
+
+```title="3. Configure the RISC-V GNU Toolchain for RISC-V Steel"
+cd riscv-gnu-toolchain && ./configure --with-arch=rv32izicsr --with-abi=ilp32 --prefix=/opt/riscv
+```
+
+!!! quote ""
+
+    **Important:** The `--prefix` option defines the installation folder. You need to set it to a folder where you have `rwx` permissions. The command above assumes you have `rwx` permissions on `/opt`.
+
+```title="4. Compile and install"
+make -j $(nproc)
+```
 
 ## Building the application
 
-RISC-V Steel offers two template projects to help you start developing new applications:
-
-- A **Bare-metal** template for bare-metal software development.
-
-- A **FreeRTOS**-based template for more complex applications.
+RISC-V Steel offers two template projects to help you start developing new applications: a **bare-metal** template and a more sophisticated **FreeRTOS** template.
 
 Both templates include a `main.c` file where you place the source code for the new application. These projects use CMake to configure the RISC-V GNU Toolchain for RISC-V Steel, which simplifies the process of compiling and linking the software.
 
-Choose a template and run the commands to copy it:
+To start a new application, follow the steps below.
+
+```title="1. Clone RISC-V Steel repository"
+git clone https://github.com/riscv-steel/riscv-steel
+```
 
 === "Bare-metal"
 
-    ```
-    # Clone RISC-V Steel repository (if not cloned yet)
-    git clone https://github.com/riscv-steel/riscv-steel
-    
-    # Make a copy of the Bare-metal template project
-    cp riscv-steel/templates/baremetal new_project/
+    ```title="2. Copy the template project (Bare-metal)"
+    cp riscv-steel/templates/baremetal my_project/
     ```
 
 === "FreeRTOS"
 
-    ```
-    # Clone RISC-V Steel repository (if not cloned yet)
-    git clone https://github.com/riscv-steel/riscv-steel
-    
-    # Make a copy of the FreeRTOS template project
-    cp riscv-steel/templates/freertos new_project/
+    ```title="2. Copy the template project (FreeRTOS)"
+    cp riscv-steel/templates/freertos my_project/
     ```
 
-Next, add the source code of the new application in the `main.c` file. To build the application you developed, run:
+<div class="api-doc-text" markdown>
 
+Find the `main.c` file in the project folder and write the code for the new application in this file.
+
+</div>
 === "Bare-metal"
 
-    ```bash
-    # -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
-    cd new_project/
-    make PREFIX=/opt/riscv
+    ```bash title="3. Build the application (Bare-metal)"
+    cd my_project/ && make PREFIX=/opt/riscv
     ```
 
 === "FreeRTOS"
 
-    ```bash
-    # -- PREFIX: Absolute path to the RISC-V GNU Toolchain installation folder
-    # -- CLOCK_FREQUENCY: Frequency (in Hertz) of the clock signal connected to RISC-V Steel
-    cd new_project/
-    make PREFIX=/opt/riscv CLOCK_FREQUENCY=<freq_in_hertz>
+    ```bash title="3. Build the application (FreeRTOS)"
+    cd my_project/ && make PREFIX=/opt/riscv CLOCK_FREQUENCY=<freq_in_hertz>
     ```
+
+The `PREFIX` variable must specify the folder where the RISC-V GNU Toolchain is installed. For the FreeRTOS template, you also need to set the `CLOCK_FREQUENCY` variable to match the clock frequency of the FPGA board where the application will run.
 
 A successfull build ends with a message like this:
 
-```
-Memory region         Used Size  Region Size  %age Used
-             RAM:        1264 B         8 KB     15.43%
--------------------------------------------------------
-Build outputs:
--- ELF executable:    build/myapp.elf
--- Memory init file:  build/myapp.hex
--- Disassembly:       build/myapp.objdump
+```title="Successful build report"
+Memory init file:   build/freertos.hex
+Binary executable:  build/freertos.elf
+Disassembly:        build/freertos.objdump
+
+Memory usage report (MEMORY_SIZE = 32K)
+      text       data        bss      total filename
+     14092        304       9196      23592 freertos.elf
 ```
 
 The `.hex` file generated by the build process will be used in the next step to initialize the memory of RISC-V Steel.
@@ -157,15 +128,15 @@ The `.hex` file generated by the build process will be used in the next step to 
 
 Once you have generated the `.hex` file you can implement RISC-V Steel on an FPGA to run the application. This process consists of two steps:
 
-- First, create a wrapper module that includes an instance of RISC-V Steel. Configure this instance for the target FPGA and initialize it with the application to be run using the `.hex` file.
+- First, create a wrapper module that includes an instance of RISC-V Steel, configure it for the target FPGA, and initialize it with the application to be run using the `.hex` file.
 
-- Next, use the EDA software provided by your FPGA vendor to synthesize the wrapper module and program the FPGA.
+- Next, use the EDA software provided by your FPGA vendor to synthesize the wrapper module and program the FPGA with it.
 
-<h4>Creating the wrapper module</h4>
+<h4>1. Creating the wrapper module</h4>
 
-Using your preferred text editor, create a Verilog file named `rvsteel_wrapper.v`. Add the code below and modify it as instructed in the comments:
+Using your preferred text editor, create a Verilog file called `rvsteel_wrapper.v` and add the code provided below. Make sure to modify the file according to the instructions in the comments.
 
-```verilog
+```verilog title="rvsteel_wrapper.v"
 
 module rvsteel_wrapper (
   
@@ -240,19 +211,25 @@ module rvsteel_wrapper (
 endmodule
 ```
 
-<h4>Synthesizing the wrapper module</h4>
+---
 
-The steps to synthesize a Verilog module vary depending on the FPGA model and vendor, but generally follow this sequence:
+<h4>2. Synthesizing rvsteel_wrapper.v</h4>
 
-- Start a new project on the EDA tool provided by your FPGA vendor (e.g. AMD Vivado, Intel Quartus, Lattice iCEcube)
-- Add the following files to the project:
-    - The Verilog file created above, `rvsteel_wrapper.v`.
-    - All [source files](hardware/index.md#source-files) of RISC-V Steel.
-- Create a design constraints file and map the ports of `rvsteel_wrapper.v` to the respective devices on the FPGA board.
-- Run synthesis, place and route, and any other intermediate step needed to generate a bitstream for the FPGA.
-- Generate the bitstream and program the FPGA with it.
+The steps to synthesize a Verilog module can differ based on the FPGA model and vendor, but they generally follow this sequence:
 
-The application starts running immediately after programming the FPGA!
+1. *Start a new project*: Open the EDA tool provided by your FPGA vendor (e.g., AMD Vivado, Intel Quartus, Lattice iCEcube).
+
+2. *Add files to the project*: Include `rvsteel_wrapper.v` to the project and all files in the `hardware/` folder of RISC-V Steel repository.
+
+3. *Create a design constraints file*: Map the ports of `rvsteel_wrapper.v` to the corresponding devices on the FPGA board.
+
+4. *Run the synthesis process*: This includes placing and routing, as well as any other necessary steps to generate a bitstream for the FPGA.
+
+4. *Generate the bitstream*: Once completed, program the FPGA with the generated bitstream.
+
+The application will start running immediately after you program the FPGA!
+
+
 
 </br>
 </br>
