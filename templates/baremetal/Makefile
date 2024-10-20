@@ -18,14 +18,12 @@ endif
 all: debug
 
 debug:
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} ..
-	$(MAKE) -C build
+	@mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug ${TOOLCHAIN_PREFIX_FLAG} ..
+	@$(MAKE) -C build
 
 release:
-	@mkdir -p build
-	@cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} ..
-	$(MAKE) -C build
+	@mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ${TOOLCHAIN_PREFIX_FLAG} ..
+	@$(MAKE) -C build
 
 clean:
 	@rm -rf build dump
