@@ -7,7 +7,7 @@
 static void gpio_test_suite_set_up(RvxTestSuite *suite)
 {
   (void)suite;
-  rvx_uart_set_baud_rate(RVX_UART0, RVX_TEST_UART_BAUD_RATE);
+  rvx_uart_set_clock_divider(RVX_UART0, 50U);
 }
 
 static void gpio_test_output_register_reset(RvxTestSuite *suite)
