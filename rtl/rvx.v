@@ -119,7 +119,7 @@ module rvx #(
   assign irq_software = 1'b0;  // unused
 
   // UART is irq_sources[0], which the PLIC maps to source ID 1.
-  wire [15:0] plic_irq_source_lines = {15'b0, irq_uart};
+  wire [15:0] plic_irq_source_lines = {14'b0, irq_timer, irq_uart};
 
   // Interrupt signals
   // ---------------------------------------------------------------------------
