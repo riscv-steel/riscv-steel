@@ -21,7 +21,7 @@ module rvx_plic (
     input  wire        write_request,
     output reg         write_response,
 
-    // Interrupt request lines (16 external interrupt sources)
+    // Interrupt request lines for source IDs 1-16, mapped from irq_sources[0:15]
     input wire [15:0] irq_sources,
 
     // External interrupt request (asserted while a source is pending)
@@ -34,33 +34,30 @@ module rvx_plic (
 
   // One dedicated priority register per source. A priority of 0 disables
   // the source, matching the RISC-V PLIC convention.
-  reg     [ 3:0] priority_regs                             [0:15];
+  reg     [ 3:0] priority_regs                             [1:16];
   reg     [15:0] enable_reg;
 
   wire    [15:0] masked_pending = irq_sources & enable_reg;
 
-  // PRIORITY0..PRIORITY15 occupy addresses 0x00-0x3c (address bit 6 clear),
-  // ENABLE/PENDING/CLAIM occupy addresses 0x40-0x48 (address bit 6 set).
-  wire           is_priority_reg_addr = !rw_address[6];
-  wire    [ 3:0] priority_reg_index = rw_address[5:2];
+  // PRIORITY1..PRIORITY16 occupy addresses 0x00-0x3c.
+  // ENABLE, PENDING, and CLAIM occupy addresses 0x40, 0x44, and 0x48.
+  wire           is_priority_reg_addr = !rw_address[6] && rw_address[1:0] == 2'b00;
+  wire    [ 4:0] priority_reg_index = {1'b0, rw_address[5:2]} + 5'd1;
 
   // Priority arbitration logic
   // ---------------------------------------------------------------------------
 
   integer        i;
-  reg     [ 3:0] best_id;
+  reg     [ 4:0] best_id;
   reg     [ 3:0] best_priority;
-  reg            any_pending;
 
   always @* begin
-    best_id       = 4'd0;
+    best_id       = 5'd0;
     best_priority = 4'd0;
-    any_pending   = 1'b0;
-    for (i = 0; i < 16; i = i + 1) begin
-      if (masked_pending[i] && priority_regs[i] > best_priority) begin
-        best_id       = i[3:0];
+    for (i = 1; i <= 16; i = i + 1) begin
+      if (masked_pending[i - 1] && priority_regs[i] > best_priority) begin
+        best_id       = i[4:0];
         best_priority = priority_regs[i];
-        any_pending   = 1'b1;
       end
     end
   end
@@ -80,7 +77,7 @@ module rvx_plic (
         case (rw_address[6:0])
           `RVX_PLIC_ENABLE_REG_ADDR:  read_data <= {16'b0, enable_reg};
           `RVX_PLIC_PENDING_REG_ADDR: read_data <= {16'b0, masked_pending};
-          `RVX_PLIC_CLAIM_REG_ADDR:   read_data <= {{27{1'b0}}, any_pending, best_id};
+          `RVX_PLIC_CLAIM_REG_ADDR:   read_data <= {27'b0, best_id};
           default:                    read_data <= 32'h00000000;
         endcase
       end
@@ -97,12 +94,13 @@ module rvx_plic (
   always @(posedge clock) begin
     if (!reset_n) begin
       write_response <= 1'b0;
-      for (j = 0; j < 16; j = j + 1) priority_regs[j] <= 4'd0;
+      for (j = 1; j <= 16; j = j + 1) priority_regs[j] <= 4'd0;
       enable_reg <= 16'h0000;
     end
     else if (valid_write_request == 1'b1) begin
       write_response <= 1'b1;
-      if (is_priority_reg_addr) priority_regs[priority_reg_index] <= write_data[3:0];
+      if (is_priority_reg_addr)
+        priority_regs[priority_reg_index] <= write_data[3:0];
       else begin
         case (rw_address[6:0])
           `RVX_PLIC_ENABLE_REG_ADDR: enable_reg <= write_data[15:0];
@@ -121,7 +119,7 @@ module rvx_plic (
       irq_external <= 1'b0;
     end
     else begin
-      irq_external <= any_pending;
+      irq_external <= best_id != 5'd0;
     end
   end
 

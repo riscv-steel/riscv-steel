@@ -63,7 +63,6 @@ module rvx_plic_tb ();
     input [6:0] address;
     begin
       case (address)
-        `RVX_PLIC_PRIORITY0_REG_ADDR:  plic_reg_name = "PRIORITY0";
         `RVX_PLIC_PRIORITY1_REG_ADDR:  plic_reg_name = "PRIORITY1";
         `RVX_PLIC_PRIORITY2_REG_ADDR:  plic_reg_name = "PRIORITY2";
         `RVX_PLIC_PRIORITY3_REG_ADDR:  plic_reg_name = "PRIORITY3";
@@ -79,6 +78,7 @@ module rvx_plic_tb ();
         `RVX_PLIC_PRIORITY13_REG_ADDR: plic_reg_name = "PRIORITY13";
         `RVX_PLIC_PRIORITY14_REG_ADDR: plic_reg_name = "PRIORITY14";
         `RVX_PLIC_PRIORITY15_REG_ADDR: plic_reg_name = "PRIORITY15";
+        `RVX_PLIC_PRIORITY16_REG_ADDR: plic_reg_name = "PRIORITY16";
         `RVX_PLIC_ENABLE_REG_ADDR:     plic_reg_name = "ENABLE";
         `RVX_PLIC_PENDING_REG_ADDR:    plic_reg_name = "PENDING";
         `RVX_PLIC_CLAIM_REG_ADDR:      plic_reg_name = "CLAIM";
@@ -147,8 +147,8 @@ module rvx_plic_tb ();
     $display("Checking PLIC module state after reset...");
     $display("------------------------------------------");
 
-    for (i = 0; i < 16; i = i + 1) begin
-      read_plic_register(i[6:0] * 4);
+    for (i = 1; i <= 16; i = i + 1) begin
+      read_plic_register((i[6:0] - 1'b1) * 4);
       `RVX_ASSERT(read_data == 32'h00000000, "PRIORITY register not zero after reset.")
     end
     read_plic_register(`RVX_PLIC_ENABLE_REG_ADDR);
@@ -163,13 +163,13 @@ module rvx_plic_tb ();
     $display("Testing PRIORITY register writes/reads...");
     $display("------------------------------------------");
 
-    write_plic_register(`RVX_PLIC_PRIORITY0_REG_ADDR, 32'h0000000F);
-    read_plic_register(`RVX_PLIC_PRIORITY0_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h0000000F, "PRIORITY0 register did not update correctly.")
+    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h00000005);
+    read_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR);
+    `RVX_ASSERT(read_data == 32'h00000005, "PRIORITY1 register did not update correctly.")
 
-    write_plic_register(`RVX_PLIC_PRIORITY5_REG_ADDR, 32'h00000005);
-    read_plic_register(`RVX_PLIC_PRIORITY5_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h00000005, "PRIORITY5 register did not update correctly.")
+    write_plic_register(`RVX_PLIC_PRIORITY16_REG_ADDR, 32'h0000000F);
+    read_plic_register(`RVX_PLIC_PRIORITY16_REG_ADDR);
+    `RVX_ASSERT(read_data == 32'h0000000F, "PRIORITY16 register did not update correctly.")
 
     $display("");
     $display("Testing that only the lower 4 bits of PRIORITY registers are stored...");
@@ -194,11 +194,11 @@ module rvx_plic_tb ();
     irq_sources = 16'hFFFF;
     #(CLOCK_PERIOD);
     read_plic_register(`RVX_PLIC_PENDING_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h00001234, "PENDING register did not reflect irq_sources & ENABLE.")
+    `RVX_ASSERT(read_data == 32'h00001234, "PENDING register did not map source lines to IDs 1-16.")
 
     write_plic_register(`RVX_PLIC_ENABLE_REG_ADDR, 32'h0000FFFF);
     read_plic_register(`RVX_PLIC_PENDING_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h0000FFFF, "PENDING register did not update after ENABLE change.")
+    `RVX_ASSERT(read_data == 32'h0000FFFF, "PENDING register did not set pending bits 0-15 for source IDs 1-16.")
 
     irq_sources = 16'h0000;
     #(CLOCK_PERIOD);
@@ -211,14 +211,14 @@ module rvx_plic_tb ();
 
     reset_all_devices();
 
-    write_plic_register(`RVX_PLIC_PRIORITY0_REG_ADDR, 32'h00000005);
-    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h0000000A);
-    write_plic_register(`RVX_PLIC_PRIORITY2_REG_ADDR, 32'h00000003);
+    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h00000005);
+    write_plic_register(`RVX_PLIC_PRIORITY2_REG_ADDR, 32'h0000000A);
+    write_plic_register(`RVX_PLIC_PRIORITY3_REG_ADDR, 32'h00000003);
     write_plic_register(`RVX_PLIC_ENABLE_REG_ADDR, 32'h00000007);
     irq_sources = 16'h0007;
     #(CLOCK_PERIOD);
     read_plic_register(`RVX_PLIC_CLAIM_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h00000011, "CLAIM register did not select the highest priority source.")
+    `RVX_ASSERT(read_data == 32'h00000002, "CLAIM register did not return the winning source ID.")
 
     $display("");
     $display("Testing CLAIM register tie-break (lowest index wins on equal priority)...");
@@ -226,13 +226,13 @@ module rvx_plic_tb ();
 
     reset_all_devices();
 
-    write_plic_register(`RVX_PLIC_PRIORITY0_REG_ADDR, 32'h00000008);
-    write_plic_register(`RVX_PLIC_PRIORITY3_REG_ADDR, 32'h00000008);
+    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h00000008);
+    write_plic_register(`RVX_PLIC_PRIORITY4_REG_ADDR, 32'h00000008);
     write_plic_register(`RVX_PLIC_ENABLE_REG_ADDR, 32'h00000009);
     irq_sources = 16'h0009;
     #(CLOCK_PERIOD);
     read_plic_register(`RVX_PLIC_CLAIM_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h00000010, "CLAIM register did not break ties in favor of the lowest source index.")
+    `RVX_ASSERT(read_data == 32'h00000001, "CLAIM register did not break ties in favor of the lowest source ID.")
 
     $display("");
     $display("Testing that a priority of 0 disables a source from winning arbitration...");
@@ -240,13 +240,13 @@ module rvx_plic_tb ();
 
     reset_all_devices();
 
-    write_plic_register(`RVX_PLIC_PRIORITY0_REG_ADDR, 32'h00000000);
-    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h00000002);
+    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h00000000);
+    write_plic_register(`RVX_PLIC_PRIORITY2_REG_ADDR, 32'h00000002);
     write_plic_register(`RVX_PLIC_ENABLE_REG_ADDR, 32'h00000003);
     irq_sources = 16'h0003;
     #(CLOCK_PERIOD);
     read_plic_register(`RVX_PLIC_CLAIM_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h00000011, "CLAIM register selected a source with priority 0.")
+    `RVX_ASSERT(read_data == 32'h00000002, "CLAIM register selected a source with priority 0.")
 
     $display("");
     $display("Testing that all-zero priorities never assert any_pending, even if enabled and pending...");
@@ -266,19 +266,33 @@ module rvx_plic_tb ();
 
     reset_all_devices();
 
-    write_plic_register(`RVX_PLIC_PRIORITY0_REG_ADDR, 32'h00000005);
-    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h0000000A);
+    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h00000005);
+    write_plic_register(`RVX_PLIC_PRIORITY2_REG_ADDR, 32'h0000000A);
     write_plic_register(`RVX_PLIC_ENABLE_REG_ADDR, 32'h00000003);
     irq_sources = 16'h0003;
     #(CLOCK_PERIOD);
     read_plic_register(`RVX_PLIC_CLAIM_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h00000011, "CLAIM register did not select source 1 before it was disabled.")
+    `RVX_ASSERT(read_data == 32'h00000002, "CLAIM register did not select source ID 2 before source ID 2 was disabled.")
 
     write_plic_register(`RVX_PLIC_ENABLE_REG_ADDR, 32'h00000001);
     read_plic_register(`RVX_PLIC_PENDING_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h00000001, "PENDING register still reported the disabled source.")
+    `RVX_ASSERT(read_data == 32'h00000001, "PENDING register did not retain source ID 1 only.")
     read_plic_register(`RVX_PLIC_CLAIM_REG_ADDR);
-    `RVX_ASSERT(read_data == 32'h00000010, "CLAIM register did not fall back to the remaining enabled source.")
+    `RVX_ASSERT(read_data == 32'h00000001, "CLAIM register did not fall back to source ID 1.")
+
+    $display("");
+    $display("Testing source ID 16 fits in the claim register...");
+    $display("--------------------------------------------------");
+
+    reset_all_devices();
+    write_plic_register(`RVX_PLIC_PRIORITY16_REG_ADDR, 32'h00000001);
+    write_plic_register(`RVX_PLIC_ENABLE_REG_ADDR, 32'h00008000);
+    irq_sources = 16'h00008000;
+    #(CLOCK_PERIOD);
+    read_plic_register(`RVX_PLIC_CLAIM_REG_ADDR);
+    `RVX_ASSERT(read_data == 32'h00000010, "CLAIM register did not return source ID 16.")
+    read_plic_register(`RVX_PLIC_PENDING_REG_ADDR);
+    `RVX_ASSERT(read_data == 32'h00008000, "PENDING register did not set source ID 16 in bit 15.")
 
     $display("");
     $display("Testing irq_external follows arbitration result...");
@@ -287,7 +301,7 @@ module rvx_plic_tb ();
     reset_all_devices();
     `RVX_ASSERT(irq_external == 1'b0, "irq_external asserted with no pending interrupts.")
 
-    write_plic_register(`RVX_PLIC_PRIORITY0_REG_ADDR, 32'h00000001);
+    write_plic_register(`RVX_PLIC_PRIORITY1_REG_ADDR, 32'h00000001);
     write_plic_register(`RVX_PLIC_ENABLE_REG_ADDR, 32'h00000001);
     irq_sources = 16'h0001;
     #(CLOCK_PERIOD);

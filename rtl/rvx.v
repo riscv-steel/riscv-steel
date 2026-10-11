@@ -118,7 +118,7 @@ module rvx #(
 
   assign irq_software = 1'b0;  // unused
 
-  // PLIC interrupt source 0 is wired to UART; all other sources are unused.
+  // UART is irq_sources[0], which the PLIC maps to source ID 1.
   wire [15:0] plic_irq_source_lines = {15'b0, irq_uart};
 
   // Interrupt signals
@@ -323,7 +323,7 @@ module rvx #(
       .uart_tx(uart_tx),
       .uart_rx(uart_rx),
 
-      // UART interrupt request (connected to PLIC source 0)
+      // UART interrupt request (connected to PLIC source ID 1)
       .uart_irq(irq_uart)
 
   );
