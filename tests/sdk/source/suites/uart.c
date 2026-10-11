@@ -123,14 +123,14 @@ static void uart_test_busy_wait_transfer(RvxTestSuite *suite)
 
 static void uart_test_interrupt_transfer(RvxTestSuite *suite)
 {
-  rvx_irq_enable_m(RVX_IRQ_EXTERNAL_BITMASK);
+  rvx_interrupt_enable_m();
   transfer_byte_interrupt(suite, 0xa5);
   transfer_byte_interrupt(suite, 0x5a);
   transfer_byte_interrupt(suite, 0xff);
   transfer_byte_interrupt(suite, 0x00);
   transfer_byte_interrupt(suite, 0xc3);
   transfer_byte_interrupt(suite, 0x3c);
-  rvx_irq_disable_m(RVX_IRQ_EXTERNAL_BITMASK);
+  rvx_interrupt_disable_m();
   rvx_uart_print(RVX_UART0_BASE, "\n  All bytes transferred successfully. ");
 }
 
@@ -211,10 +211,10 @@ static void transfer_byte_interrupt(RvxTestSuite *suite, uint8_t tx_byte)
   rvx_uart_read(RVX_UART0_BASE);
   RVX_TEST_ASSERT(suite, !rvx_uart_rx_ready(RVX_UART0_BASE));
   uart_received_byte_flag = false;
-  rvx_irq_global_enable_m();
+  rvx_interrupt_enable_m();
   rvx_uart_write(RVX_UART0_BASE, tx_byte);
   const bool byte_received = wait_for_received_byte();
-  rvx_irq_global_disable_m();
+  rvx_interrupt_disable_m();
   RVX_TEST_ASSERT(suite, byte_received);
   if (!byte_received)
     return;

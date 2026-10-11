@@ -20,26 +20,32 @@ static const size_t rvx_sdk_test_suite_count = RVX_ARRAY_SIZE(rvx_sdk_test_suite
 
 const RvxSetup rvx_setup = {.clock_frequency = 50000000U, .trap_handler = RVX_DEFAULT_TRAP_HANDLER};
 
-extern void rvx_timer_interrupt_handler(void);
+extern void rvx_timer0_interrupt_handler(void);
 extern void rvx_uart0_interrupt_handler(void);
 
 // Interrupt handler for the SDK tests.
 // Dispatches to the appropriate peripheral-specific handler based on the cause code.
-void rvx_interrupt_handler(const uint32_t cause)
+void rvx_interrupt_handler(uint32_t interrupt_cause)
 {
-  if (cause == RVX_TRAP_CAUSE_TIMER_IRQ_M)
-    rvx_timer_interrupt_handler();
-  else if (cause == RVX_TRAP_CAUSE_EXTERNAL_IRQ_M)
+  if (interrupt_cause == RVX_CAUSE_EXTERNAL_IRQ_M)
   {
     const uint8_t source_id = rvx_plic_claim_source(RVX_PLIC0_BASE);
     if (source_id == RVX_PLIC0_SOURCE_UART0)
       rvx_uart0_interrupt_handler();
+    if (source_id == RVX_PLIC0_SOURCE_TIMER0)
+      rvx_timer0_interrupt_handler();
   }
 }
 
 int main(void)
 {
   rvx_init(&rvx_setup);
+
+  rvx_plic_enable_source(RVX_PLIC0_BASE, RVX_PLIC0_SOURCE_UART0);
+  rvx_plic_enable_source(RVX_PLIC0_BASE, RVX_PLIC0_SOURCE_TIMER0);
+  rvx_plic_set_priority(RVX_PLIC0_BASE, RVX_PLIC0_SOURCE_UART0, RVX_PLIC_MAX_PRIORITY);
+  rvx_plic_set_priority(RVX_PLIC0_BASE, RVX_PLIC0_SOURCE_TIMER0, RVX_PLIC_MAX_PRIORITY);
+
   const bool all_tests_passed = rvx_test_run_suites(rvx_sdk_test_suites, rvx_sdk_test_suite_count);
 
   if (all_tests_passed)

@@ -17,8 +17,8 @@ static void timer_test_counter_increments(RvxTestSuite *suite);
 static void timer_test_counter_stops(RvxTestSuite *suite);
 static void timer_test_interrupt(RvxTestSuite *suite);
 
-/// @brief Handle the machine timer interrupt during the timer test.
-void rvx_timer_interrupt_handler(void)
+/// @brief Interrupt handler for TIMER0.
+void rvx_timer0_interrupt_handler(void)
 {
   rvx_timer_stop_counter(RVX_TIMER0_BASE);
   rvx_timer_set_compare(RVX_TIMER0_BASE, 0xFFFFFFFFFFFFFFFFULL);
@@ -75,12 +75,10 @@ static void timer_test_interrupt(RvxTestSuite *suite)
   timer_interrupt_received = false;
   rvx_timer_reset_counter(RVX_TIMER0_BASE);
   rvx_timer_set_compare(RVX_TIMER0_BASE, 50);
-  rvx_irq_enable_m(RVX_IRQ_TIMER_BITMASK);
-  rvx_irq_global_enable_m();
+  rvx_interrupt_enable_m();
   rvx_timer_start_counter(RVX_TIMER0_BASE);
   timer_test_delay();
-  rvx_irq_global_disable_m();
-  rvx_irq_disable_m(RVX_IRQ_TIMER_BITMASK);
+  rvx_interrupt_disable_m();
   RVX_TEST_ASSERT(suite, timer_interrupt_received);
 }
 
