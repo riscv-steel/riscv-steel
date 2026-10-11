@@ -3,46 +3,47 @@
 
 #include "rvx.h"
 
+// RVX setup configuration (adjust clock frequency if needed)
+const RvxSetup rvx_setup = {.clock_frequency = 12000000U, .trap_handler = RVX_DEFAULT_TRAP_HANDLER};
+
+// Pointer to GPIO0 controller register block.
+RvxGpio *const gpio0 = RVX_GPIO0_BASE;
+
+// Pointer to UART0 controller register block.
+RvxUart *const uart0 = RVX_UART0_BASE;
+
 void main(void)
 {
-  // Pointer to the GPIO controller registers.
-  RvxGpioRegs *gpio_controller = (RvxGpioRegs *)RVX_GPIO_CONTROLLER_ADDRESS;
+  // RVX initialization
+  rvx_init(&rvx_setup);
 
-  // Pointer to the UART controller registers.
-  RvxUartRegs *uart_controller = (RvxUartRegs *)RVX_UART_CONTROLLER_ADDRESS;
-
-  // Initialize UART at 9600 baud (assuming clock frequency is 12 MHz)
-  rvx_uart_set_baud_rate(uart_controller, 9600, 12000000);
+  // Initialize UART at 9600 baud (12000000 / 9600 = 1250)
+  rvx_uart_set_clock_divider(uart0, 1250U);
 
   // Print welcome message
-  rvx_uart_send_string(uart_controller, "RVX GPIO Example Project\n\n");
-  rvx_uart_send_string(uart_controller, "To toggle LED 0 state, press push-button 1.\n");
+  rvx_uart_print(uart0, "RVX GPIO Example Project\n\n");
+  rvx_uart_print(uart0, "Press push-button 1 to toggle LED 0 on/off.\n");
 
-  // Configure pin 0 as output, pin 1 as input
-  rvx_gpio_pin_mode(gpio_controller, 0, RVX_GPIO_OUTPUT);
-  rvx_gpio_pin_mode(gpio_controller, 1, RVX_GPIO_INPUT);
+  // Configure pin 0 (LED 1) as output, pin 1 (push-button 1) as input
+  rvx_gpio_pin_direction(gpio0, 0, RVX_GPIO_OUTPUT);
+  rvx_gpio_pin_direction(gpio0, 1, RVX_GPIO_INPUT);
 
-  // Initial states
-  RvxGpioPinState led_state = RVX_GPIO_HIGH;         // HIGH = ON, LOW = OFF
-  rvx_gpio_pin_write(gpio_controller, 0, led_state); // Turn LED 0 ON initially
-  RvxGpioPinState button_last_state = RVX_GPIO_LOW;  // Last read state of the push-button
+  // Turn LED 0 ON initially
+  RvxGpioPinLevel led_level = RVX_GPIO_HIGH;
+  rvx_gpio_pin_write(gpio0, 0, led_level);
 
   while (true)
   {
-    // Read the current state of the push-button (pin 1)
-    RvxGpioPinState button_current_state = rvx_gpio_pin_read(gpio_controller, 1);
+    // Wait the push-button to be pressed
+    while (rvx_gpio_pin_read(gpio0, 1) == RVX_GPIO_LOW)
+      ;
 
-    // Check for a rising edge (button pressed)
-    if (button_current_state == RVX_GPIO_HIGH && button_last_state == RVX_GPIO_LOW)
-    {
-      // Toggle the LED state
-      led_state = !led_state;
+    // Toggle LED state
+    led_level = (led_level == RVX_GPIO_HIGH) ? RVX_GPIO_LOW : RVX_GPIO_HIGH;
+    rvx_gpio_pin_write(gpio0, 0, led_level);
 
-      // Update the LED (pin 0) based on the new state
-      rvx_gpio_pin_write(gpio_controller, 0, led_state);
-    }
-
-    // Update the last button state
-    button_last_state = button_current_state;
+    // Wait the push-button to be released
+    while (rvx_gpio_pin_read(gpio0, 1) == RVX_GPIO_HIGH)
+      ;
   }
 }

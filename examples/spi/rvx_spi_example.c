@@ -3,51 +3,59 @@
 
 #include "rvx.h"
 
-// Pointer to the UART controller registers.
-RvxUartRegs *uart_controller = (RvxUartRegs *)RVX_UART_CONTROLLER_ADDRESS;
+// RVX setup configuration (adjust clock frequency if needed)
+const RvxSetup rvx_setup = {.clock_frequency = 12000000U, .trap_handler = RVX_DEFAULT_TRAP_HANDLER};
 
-// Pointer to the SPI controller registers.
-RvxSpiRegs *spi_controller = (RvxSpiRegs *)RVX_SPI_CONTROLLER_ADDRESS;
+// Pointer to SPI0 controller register block.
+RvxSpi *const spi0 = RVX_SPI0_BASE;
 
+// Pointer to UART0 controller register block.
+RvxUart *const uart0 = RVX_UART0_BASE;
+
+// Custom utility to print a byte in hexadecimal format
 void print_byte(const uint8_t read_data);
 
 void main(void)
 {
-  // Initialize UART at 9600 baud (assuming RVX is connected to a 12 MHz clock source)
-  rvx_uart_set_baud_rate(uart_controller, 9600, 12000000);
+  // RVX initialization
+  rvx_init(&rvx_setup);
+
+  // Initialize UART at 9600 baud (12000000 / 1250 = 9600)
+  rvx_uart_set_clock_divider(uart0, 1250U);
 
   // Print welcome message
-  rvx_uart_send_string(uart_controller, "RVX SPI Example Project\n\n");
-  rvx_uart_send_string(uart_controller,
-                       "This example reads the manufacturer ID of the FPGA board's SPI flash memory.\n");
+  rvx_uart_print(uart0, "RVX SPI Example Project\n\n");
+  rvx_uart_print(uart0, "This example reads the manufacturer ID of the FPGA board's SPI flash memory.\n");
 
-  // Initialize the SPI controller to mode 0 and 1MHz frequency (assuming RVX is connected to a 12 MHz clock source)
-  rvx_spi_set_mode(spi_controller, RVX_SPI_MODE_0);
-  rvx_spi_set_divider(spi_controller, 12);
+  // Initialize the SPI controller to mode 0 and 1 MHz frequency (12000000 / 12 = 1000000)
+  rvx_spi_set_mode(spi0, RVX_SPI_MODE_0);
+  rvx_spi_set_clock_divider(spi0, 12U);
 
   // Read Manufacturer ID from SPI Flash
-  rvx_uart_send_string(uart_controller, "\nReading Manufacturer ID from SPI Flash...\n");
-  rvx_spi_assert_cs(spi_controller);
-  rvx_spi_write(spi_controller, 0x9F);                       // 0x9F = Read Manufacturer ID command
-  uint8_t read_val = rvx_spi_transfer(spi_controller, 0x00); // Read Manufacturer ID
-  rvx_spi_deassert_cs(spi_controller);
+  rvx_uart_print(uart0, "\nReading Manufacturer ID from SPI Flash...\n");
+  rvx_spi_assert_cs(spi0);
+  while (!rvx_spi_ready(spi0))
+    ;
+  rvx_spi_write(spi0, 0x9F);                       // 0x9F = Read Manufacturer ID command
+  uint8_t read_val = rvx_spi_transfer(spi0, 0x00); // Read Manufacturer ID
+  rvx_spi_deassert_cs(spi0);
 
   // Print Manufacturer ID
   print_byte(read_val);
-  rvx_uart_send_string(uart_controller, "Manufacturer: ");
+  rvx_uart_print(uart0, "Manufacturer: ");
   switch (read_val)
   {
   case 0x01:
-    rvx_uart_send_string(uart_controller, "Infineon\n");
+    rvx_uart_print(uart0, "Infineon\n");
     break;
   case 0xC2:
-    rvx_uart_send_string(uart_controller, "Macronix\n");
+    rvx_uart_print(uart0, "Macronix\n");
     break;
   case 0x20:
-    rvx_uart_send_string(uart_controller, "Micron\n");
+    rvx_uart_print(uart0, "Micron\n");
     break;
   default:
-    rvx_uart_send_string(uart_controller, "Unknown manufacturer\n");
+    rvx_uart_print(uart0, "Unknown manufacturer\n");
     break;
   }
 }
@@ -62,7 +70,7 @@ void print_byte(const uint8_t read_data)
   str_val[2] = high_nibble < 10 ? high_nibble + '0' : high_nibble - 10 + 'a';
   str_val[3] = low_nibble < 10 ? low_nibble + '0' : low_nibble - 10 + 'a';
   str_val[4] = '\0';
-  rvx_uart_send_string(uart_controller, "\nRead value: ");
-  rvx_uart_send_string(uart_controller, str_val);
-  rvx_uart_send_string(uart_controller, "\n");
+  rvx_uart_print(uart0, "\nRead value: ");
+  rvx_uart_print(uart0, str_val);
+  rvx_uart_print(uart0, "\n");
 }

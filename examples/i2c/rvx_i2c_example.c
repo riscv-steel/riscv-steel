@@ -3,32 +3,39 @@
 
 #include "rvx.h"
 
-// Pointer to the UART controller registers.
-RvxUartRegs *uart_controller = (RvxUartRegs *)RVX_UART_CONTROLLER_ADDRESS;
+// RVX setup configuration (adjust clock frequency if needed)
+const RvxSetup rvx_setup = {.clock_frequency = 12000000U, .trap_handler = RVX_DEFAULT_TRAP_HANDLER};
 
-// Pointer to the I2C controller registers.
-RvxI2cRegs *i2c_controller = (RvxI2cRegs *)RVX_I2C_CONTROLLER_ADDRESS;
+// Pointer to I2C0 controller register block.
+RvxI2c *const i2c0 = RVX_I2C0_BASE;
 
+// Pointer to UART0 controller register block.
+RvxUart *const uart0 = RVX_UART0_BASE;
+
+// Custom utility to print a byte in hexadecimal format
 void print_byte(const uint8_t read_data);
 
 void main(void)
 {
-  // Initialize UART at 9600 baud (assuming clock frequency is 12 MHz)
-  rvx_uart_set_baud_rate(uart_controller, 9600, 12000000);
+  // RVX initialization
+  rvx_init(&rvx_setup);
+
+  // Initialize UART at 9600 baud (12000000 / 1250 = 9600)
+  rvx_uart_set_clock_divider(uart0, 1250U);
 
   // Print welcome message
-  rvx_uart_send_string(uart_controller, "RVX I2C Example Project\n\n");
-  rvx_uart_send_string(uart_controller, "This example reads the ID from BME280 - Temperature Sensor\n");
+  rvx_uart_print(uart0, "RVX I2C Example Project\n\n");
+  rvx_uart_print(uart0, "This example reads the ID from BME280 - Temperature Sensor\n");
 
-  // Adjust I2C frequency by setting the clock divider (if RVX clock is 12 MHz, this sets I2C speed to 100 kHz)
-  rvx_i2c_set_divider(i2c_controller, 1200);
+  // Set I2C clock frequency to 100 kHz (12000000 / 120 = 100000)
+  rvx_i2c_set_clock_divider(i2c0, 120U);
 
   const uint8_t bme280_peripheral_address = 0b1110110;
   const uint8_t bme280_id_reg_address = 0xD0;
   uint8_t bme280_id_value = 0;
 
-  rvx_uart_send_string(uart_controller, "\nReading BME280 ID register over I2C...\n");
-  rvx_i2c_write_read(i2c_controller, bme280_peripheral_address, &bme280_id_reg_address, 1, &bme280_id_value, 1);
+  rvx_uart_print(uart0, "\nReading BME280 ID register over I2C...\n");
+  rvx_i2c_write_read(i2c0, bme280_peripheral_address, &bme280_id_reg_address, 1, &bme280_id_value, 1);
 
   // Print BME280 ID
   print_byte(bme280_id_value);
@@ -44,7 +51,7 @@ void print_byte(const uint8_t read_data)
   str_val[2] = high_nibble < 10 ? high_nibble + '0' : high_nibble - 10 + 'a';
   str_val[3] = low_nibble < 10 ? low_nibble + '0' : low_nibble - 10 + 'a';
   str_val[4] = '\0';
-  rvx_uart_send_string(uart_controller, "\nRead value: ");
-  rvx_uart_send_string(uart_controller, str_val);
-  rvx_uart_send_string(uart_controller, "\n");
+  rvx_uart_print(uart0, "\nRead value: ");
+  rvx_uart_print(uart0, str_val);
+  rvx_uart_print(uart0, "\n");
 }

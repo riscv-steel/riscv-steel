@@ -9,7 +9,7 @@ all: build
 
 build:
 	@test -d build || mkdir -p build
-	@cmake -B build --log-level=NOTICE -DCMAKE_BUILD_TYPE=Release
+	@cmake -B build --toolchain ../../sdk/RVXToolchain.cmake -DCMAKE_BUILD_TYPE=Release
 	@cmake --build build -j$(nproc)
 
 clean:

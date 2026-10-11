@@ -5,41 +5,40 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
+extern void freertos_risc_v_trap_handler(); ///< FreeRTOS trap handler (provided by FreeRTOS)
+
+// RVX setup configuration for FreeRTOS (uses same clock frequency from FreeRTOSConfig.h, installs FreeRTOS trap
+// handler)
+const RvxSetup rvx_setup = {.clock_frequency = configCPU_CLOCK_HZ, .trap_handler = &freertos_risc_v_trap_handler};
+
+// Pointer to UART0 controller register block.
+RvxUart *const uart0 = RVX_UART0_BASE;
+
+// Pointer to GPIO0 controller register block.
+RvxGpio *const gpio0 = RVX_GPIO0_BASE;
+
 void led_0_task(void *pvParameters); ///< FreeRTOS Task for blinking LED 0
 void led_1_task(void *pvParameters); ///< FreeRTOS Task for blinking LED 1
 
-extern void freertos_risc_v_trap_handler(); ///< FreeRTOS trap handler
-extern uint8_t __heap_start;                ///< Heap start symbol provided by RVX linker script
-extern uint8_t __heap_end;                  ///< Heap end symbol provided by RVX linker script
-
-// Pointer to the GPIO controller registers.
-RvxGpioRegs *gpio_controller = (RvxGpioRegs *)RVX_GPIO_CONTROLLER_ADDRESS;
-
-// Pointer to the UART controller registers.
-RvxUartRegs *uart_controller = (RvxUartRegs *)RVX_UART_CONTROLLER_ADDRESS;
+uint8_t ucHeap[configTOTAL_HEAP_SIZE]; ///< Application-owned heap for FreeRTOS (heap_4.c)
 
 void main(void)
 {
-  // Initialize UART at 9600 baud (RVX clock frequency is 12 MHz)
-  rvx_uart_set_baud_rate(uart_controller, 9600, 12000000);
+  // RVX initialization
+  rvx_init(&rvx_setup);
+
+  // Initialize UART at 9600 baud
+  rvx_uart_set_clock_divider(uart0, configCPU_CLOCK_HZ / 9600U);
 
   // Print welcome message
-  rvx_uart_send_string(uart_controller, "RVX FreeRTOS Example Project\n\n");
-  rvx_uart_send_string(
-      uart_controller,
-      "LEDs 0 and 1 will blink alternately at different rates with the help of FreeRTOS task scheduler.\n");
+  rvx_uart_print(uart0, "RVX FreeRTOS Example Project\n\n");
+  rvx_uart_print(uart0, "LEDs 0 and 1 will blink alternately at different rates.\n");
 
   // Configure pins 0 and 2 as outputs
-  rvx_gpio_pin_mode(gpio_controller, 0, RVX_GPIO_OUTPUT);
-  rvx_gpio_pin_mode(gpio_controller, 2, RVX_GPIO_OUTPUT);
+  rvx_gpio_pin_direction(gpio0, 0, RVX_GPIO_OUTPUT);
+  rvx_gpio_pin_direction(gpio0, 2, RVX_GPIO_OUTPUT);
 
-  // Configure FreeRTOS heap regions (this example uses FreeRTOS heap_5.c)
-  HeapRegion_t xHeapRegions[] = {{&__heap_start, (size_t)(&__heap_end - &__heap_start)}, {NULL, 0}};
-
-  // Initialize heap_5 with the regions
-  vPortDefineHeapRegions(xHeapRegions);
-
-  // Create 2 tasks for blinking LEDs
+  // Create 2 tasks for blinking the LEDs
   xTaskCreate(led_0_task, "LED 0 Task", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
   xTaskCreate(led_1_task, "LED 1 Task", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
 
@@ -47,62 +46,44 @@ void main(void)
   vTaskStartScheduler();
 }
 
-// FreeRTOS Task for blinking LED 0
+// FreeRTOS Task for blinking LED 0 (connected to GPIO pin 0)
 void led_0_task(void *pvParameters)
 {
   (void)pvParameters;
   for (;;)
   {
     vTaskDelay(pdMS_TO_TICKS(500)); // Delay 500 ms
-    rvx_gpio_pin_write(gpio_controller, 0, RVX_GPIO_HIGH);
+    rvx_gpio_pin_write(gpio0, 0, RVX_GPIO_HIGH);
     vTaskDelay(pdMS_TO_TICKS(500)); // Delay 500 ms
-    rvx_gpio_pin_write(gpio_controller, 0, RVX_GPIO_LOW);
+    rvx_gpio_pin_write(gpio0, 0, RVX_GPIO_LOW);
   }
 }
 
-// FreeRTOS Task for blinking LED 1
+// FreeRTOS Task for blinking LED 1 (connected to GPIO pin 2)
 void led_1_task(void *pvParameters)
 {
   (void)pvParameters;
   for (;;)
   {
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay 1000 ms
-    rvx_gpio_pin_write(gpio_controller, 2, RVX_GPIO_HIGH);
+    rvx_gpio_pin_write(gpio0, 2, RVX_GPIO_HIGH);
     vTaskDelay(pdMS_TO_TICKS(1000)); // Delay 1000 ms
-    rvx_gpio_pin_write(gpio_controller, 2, RVX_GPIO_LOW);
+    rvx_gpio_pin_write(gpio0, 2, RVX_GPIO_LOW);
   }
-}
-
-// Overrides RVX default trap handler implementation, delegating trap handling to FreeRTOS trap handler.
-RVX_NAKED void rvx_trap_handler_default(void)
-{
-  freertos_risc_v_trap_handler();
 }
 
 // This handler is called by FreeRTOS for all interrupts except timer interrupts.
 void freertos_risc_v_application_interrupt_handler(uint32_t interrupt_cause)
 {
-  (void)interrupt_cause;
-  rvx_uart_send_string(uart_controller, "Interrupt occurred!\n");
-
-  // Example
-
-  // if (interrupt_cause == RVX_TRAP_CAUSE_EXTERNAL_IRQ) // Machine External Interrupt
-  // {
-  //   // Handle external interrupt
-  // }
+  (void)interrupt_cause; // Suppress unused parameter warning
+  rvx_uart_print(uart0, "Interrupt occurred!\n");
+  // Handle here interrupts as needed
 }
 
 // This handler is called by FreeRTOS for all exceptions.
 void freertos_risc_v_application_exception_handler(uint32_t exception_cause)
 {
-  (void)exception_cause;
-  rvx_uart_send_string(uart_controller, "Exception occurred!\n");
-
-  // Example
-
-  // if (exception_cause == RVX_TRAP_CAUSE_BREAKPOINT)
-  // {
-  //   // Handle breakpoint exception
-  // }
+  (void)exception_cause; // Suppress unused parameter warning
+  rvx_uart_print(uart0, "Exception occurred!\n");
+  // Handle here exceptions as needed
 }

@@ -3,66 +3,50 @@
 
 #include "rvx.h"
 
-#define UART_RX_BUFFER_SIZE 32            // Size of the UART RX buffer
-char uart_rx_buffer[UART_RX_BUFFER_SIZE]; // Buffer to store bytes received via UART
-unsigned int uart_rx_buffer_count = 0;    // Number of bytes in the UART RX buffer
+// RVX setup configuration (adjust clock frequency if needed)
+const RvxSetup rvx_setup = {.clock_frequency = 12000000U, .trap_handler = RVX_DEFAULT_TRAP_HANDLER};
 
-// Pointer to the UART controller registers.
-RvxUartRegs *uart_controller = (RvxUartRegs *)RVX_UART_CONTROLLER_ADDRESS;
+// Pointer to UART0 controller register block.
+RvxUart *const uart0 = RVX_UART0_BASE;
+
+// Pointer to PLIC0 register block.
+RvxPlic *const plic0 = RVX_PLIC0_BASE;
+
+// Custom interrupt handler for the UART0 interrupt
+void rvx_interrupt_handler(const uint32_t interrupt_cause)
+{
+  if (interrupt_cause == RVX_CAUSE_EXTERNAL_IRQ_M)
+  {
+    uint32_t source_id = rvx_plic_claim_source(plic0);
+    if (source_id == RVX_PLIC0_SOURCE_UART0)
+    {
+      // Read received byte from UART
+      char rx_data = rvx_uart_read(RVX_UART0_BASE);
+
+      // Echo it back
+      rvx_uart_write(RVX_UART0_BASE, rx_data);
+    }
+  }
+}
 
 void main(void)
 {
-  // Initialize UART at 9600 baud (RVX clock frequency is 12 MHz)
-  rvx_uart_set_baud_rate(uart_controller, 9600, 12000000);
+  // RVX initialization
+  rvx_init(&rvx_setup);
+
+  // Initialize UART at 9600 baud (rvx_setup.clock_frequency / 1250 = 9600)
+  rvx_uart_set_clock_divider(uart0, 1250U);
 
   // Print welcome message
-  rvx_uart_send_string(uart_controller, "RVX UART Example Project\n\n");
-  rvx_uart_send_string(uart_controller, "Type something and press Enter to echo it back.\n");
+  rvx_uart_print(uart0, "RVX UART Example Project\n\n");
+  rvx_uart_print(uart0, "Type something to echo it back:\n");
 
-  // Enable vectored interrupt mode
-  rvx_irq_set_mode_m(RVX_IRQ_MODE_VECTORED);
+  // Enable UART0 interrupt in the PLIC and set it to maximum priority
+  rvx_plic_enable_source(plic0, RVX_PLIC0_SOURCE_UART0);
+  rvx_plic_set_priority(plic0, RVX_PLIC0_SOURCE_UART0, RVX_PLIC_MAX_PRIORITY);
 
-  // Enable UART interrupt
-  rvx_irq_enable_m(RVX_IRQ_UART_BITMASK);
-
-  // Enable interrupts in M-mode
-  rvx_irq_enable_global_m();
-
-  // Wait for a UART interrupt
-  rvx_wait_for_interrupt();
-}
-
-// Provide a trap handler for the UART interrupt
-RVX_TRAP_HANDLER_M(rvx_trap_handler_uart_m)
-{
-  // Read received byte from UART
-  char rx_data = rvx_uart_read(uart_controller);
-
-  // Predicate conditions for handling received byte
-  bool enter_key_pressed = (rx_data == '\n' || rx_data == '\r');
-  bool backspace_pressed = (rx_data == '\b' || rx_data == 127);
-  bool printable_char_pressed = (rx_data >= 32 && rx_data <= 126);
-  bool buffer_not_empty = (uart_rx_buffer_count > 0);
-  bool buffer_full = (uart_rx_buffer_count >= UART_RX_BUFFER_SIZE - 1);
-
-  // Handle received byte
-  if (backspace_pressed && buffer_not_empty)
-  {
-    uart_rx_buffer[--uart_rx_buffer_count] = '\0';
-    rvx_uart_send_string(uart_controller, "\b \b");
-  }
-  else if (printable_char_pressed && !buffer_full)
-  {
-    uart_rx_buffer[uart_rx_buffer_count++] = rx_data;
-    uart_rx_buffer[uart_rx_buffer_count] = '\0';
-    rvx_uart_send(uart_controller, rx_data);
-  }
-  else if ((enter_key_pressed && buffer_not_empty) || buffer_full)
-  {
-    rvx_uart_send_string(uart_controller, "\nYou typed: '");
-    rvx_uart_send_string(uart_controller, uart_rx_buffer);
-    rvx_uart_send_string(uart_controller, "'\n");
-    uart_rx_buffer_count = 0;
-    uart_rx_buffer[0] = '\0';
-  }
+  // Enable interrupts in M-mode and wait for UART interrupt
+  rvx_interrupt_enable_m();
+  while (1)
+    ;
 }

@@ -23,8 +23,8 @@ module rvx_cmod_a7 #(
 
 );
 
-  wire                  i2c_sda_output;
-  wire                  i2c_scl_output;
+  wire                      i2c_sda_output;
+  wire                      i2c_scl_output;
   wire [GPIO_PIN_COUNT-1:0] gpio_output_enable;
   wire [GPIO_PIN_COUNT-1:0] gpio_input;
   wire [GPIO_PIN_COUNT-1:0] gpio_output;
@@ -47,8 +47,8 @@ module rvx_cmod_a7 #(
   rvx #(
 
       .TCM_SIZE_IN_BYTES  (32768),
-      .TCM_BOOT_IMAGE_PATH("rvx_gpio_example.mem"),
-      .GPIO_PIN_COUNT         (GPIO_PIN_COUNT)
+      .TCM_BOOT_IMAGE_PATH("rvx_uart_example.mem"),
+      .GPIO_PIN_COUNT     (GPIO_PIN_COUNT)
 
   ) rvx_instance (
 

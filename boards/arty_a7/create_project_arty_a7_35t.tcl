@@ -38,6 +38,7 @@ add_files -norecurse { ../../rtl/peripherals/rvx_gpio.v }
 add_files -norecurse { ../../rtl/peripherals/rvx_timer.v }
 add_files -norecurse { ../../rtl/peripherals/rvx_spi.v }
 add_files -norecurse { ../../rtl/peripherals/rvx_uart.v }
+add_files -norecurse { ../../rtl/peripherals/rvx_plic.v }
 
 if { [file exists ../../examples/hello_world/build/rvx_hello_world_example.mem] } {
     add_files -norecurse { ../../examples/hello_world/build/rvx_hello_world_example.mem }
