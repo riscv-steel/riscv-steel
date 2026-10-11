@@ -22,7 +22,6 @@ module rvx_i2c_tb ();
   reg            scl_input;
   wire           sda_output;  // instance1 TX line, looped back into instance0's SDA input.
   wire           scl_output_probe;  // instance1 SCL line, observed only (SCL itself is driven externally by scl_input).
-  wire           i2c_irq;
 
   // Test variables
   integer        error_count;
@@ -59,10 +58,7 @@ module rvx_i2c_tb ();
       .sda_input (sda_output),
       .scl_input (scl_input),
       .sda_output(),
-      .scl_output(),
-
-      // Interrupt request
-      .i2c_irq(i2c_irq)
+      .scl_output()
   );
 
   // Loopback transmitter: receives the same register commands as instance0 and
@@ -87,10 +83,7 @@ module rvx_i2c_tb ();
       .sda_input (),
       .scl_input (scl_input),
       .sda_output(sda_output),
-      .scl_output(scl_output_probe),
-
-      // Interrupt request
-      .i2c_irq()
+      .scl_output(scl_output_probe)
   );
   // verilator lint_on PINCONNECTEMPTY
 
@@ -238,9 +231,8 @@ module rvx_i2c_tb ();
     `RVX_ASSERT(read_data === 32'h0, "Register RVX_I2C_COMMAND_REG_ADDR is not 0 after reset.")
 
     read_register(`RVX_I2C_STATUS_REG_ADDR);
-    `RVX_ASSERT(read_data === 32'h18, "Register RVX_I2C_STATUS_REG_ADDR is not 0x18 after reset.")
+    `RVX_ASSERT(read_data === 32'h0c, "Register RVX_I2C_STATUS_REG_ADDR is not 0x0c after reset.")
 
-    `RVX_ASSERT(i2c_irq === 1'b0, "Irq is not clear after reset.")
     `RVX_ASSERT(rvx_i2c_instance0.busy === 1'b0, "busy is not clear after reset.")
     `RVX_ASSERT(sda_output === 1'b1, "SDA line is not idle-high after reset.")
     `RVX_ASSERT(scl_output_probe === 1'b1, "SCL line is not idle-high after reset.")
@@ -311,9 +303,6 @@ module rvx_i2c_tb ();
     read_register(`RVX_I2C_STATUS_REG_ADDR);
     `RVX_ASSERT(read_data[`RVX_I2C_STATUS_BIT_ACK] === 1'b0,
                 "Received ACK bit is set even though the ACK bit was not driven.")
-    `RVX_ASSERT(read_data[`RVX_I2C_STATUS_BIT_IRQ] === 1'b1, "Irq is not set after transfer completion.")
-    `RVX_ASSERT(i2c_irq === 1'b1, "Irq output is not set after transfer completion.")
-
     $display("");
     $display("Testing data transfer (TX/RX loopback) with ACK...");
     $display("--------------------------------------------------");
@@ -326,16 +315,6 @@ module rvx_i2c_tb ();
     read_register(`RVX_I2C_STATUS_REG_ADDR);
     `RVX_ASSERT(read_data[`RVX_I2C_STATUS_BIT_ACK] === 1'b1,
                 "Received ACK bit is clear even though the ACK bit was driven.")
-
-    $display("");
-    $display("Testing that the irq flag is only cleared by an explicit write...");
-    $display("-----------------------------------------------------------------");
-    `RVX_ASSERT(i2c_irq === 1'b1, "Irq was unexpectedly cleared.")
-    write_register(`RVX_I2C_DATA_REG_ADDR, 16'h00);
-    `RVX_ASSERT(i2c_irq === 1'b1, "Irq was cleared by an unrelated register write.")
-    write_register(`RVX_I2C_STATUS_REG_ADDR, `RVX_I2C_STATUS_MASK_IRQ);
-    #(CLOCK_PERIOD);
-    `RVX_ASSERT(i2c_irq === 1'b0, "Irq was not cleared by writing the IRQ status bit.")
 
     $display("");
     $display("Testing that the SDA/SCL status bits track the live bus state...");
@@ -397,4 +376,3 @@ module rvx_i2c_tb ();
   end
 
 endmodule
-

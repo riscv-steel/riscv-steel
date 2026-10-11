@@ -118,9 +118,8 @@ module rvx #(
 
   assign irq_software = 1'b0;  // unused
 
-  // PLIC interrupt sources: UART and I2C are wired internally, the remaining
-  // 14 lines are exposed on the top-level plic_irq_sources port.
-  wire [15:0] plic_irq_source_lines = {14'b0, irq_i2c, irq_uart};
+  // PLIC interrupt source 0 is wired to UART; all other sources are unused.
+  wire [15:0] plic_irq_source_lines = {15'b0, irq_uart};
 
   // Interrupt signals
   // ---------------------------------------------------------------------------
@@ -129,7 +128,6 @@ module rvx #(
   wire        irq_timer;
   wire        irq_software;
   wire        irq_uart;
-  wire        irq_i2c;
 
   // Memory-mapped timer
   // ---------------------------------------------------------------------------
@@ -425,10 +423,7 @@ module rvx #(
       .sda_input (i2c_sda_input),
       .scl_input (i2c_scl_input),
       .sda_output(i2c_sda_output),
-      .scl_output(i2c_scl_output),
-
-      // I2C interrupt request (connected to PLIC source 1)
-      .i2c_irq(irq_i2c)
+      .scl_output(i2c_scl_output)
   );
 
   rvx_plic rvx_plic_instance (
