@@ -1,6 +1,4 @@
-<p align="center"><img src="docs/source/images/rvx_logo.png" width="100"/></p><p align="center"><strong>Open-source RISC-V Microcontroller IP</strong></p>
-
-<p align="center"></br><a href="https://github.com/rafaelcalcada/rvx/actions/workflows/tests.yml"><img src="https://github.com/rafaelcalcada/rvx/actions/workflows/tests.yml/badge.svg"></a></p>
+<p align="center"><img src="docs/source/images/rvx_logo.png" width="100"/></p><p align="center"><strong>RISC-V Microcontroller IP</strong></p>
 
 ### What Is RVX?
 
@@ -56,3 +54,5 @@ RVX is free and open source, distributed under the [MIT License][7].
 [5]: https://rafaelcalcada.github.io/rvx/examples/helloworld
 [6]: https://rafaelcalcada.github.io/rvx/examples/freertos
 [7]: LICENSE
+
+<p align="center"></br><a href="https://github.com/rafaelcalcada/rvx/actions/workflows/tests.yml"><img src="https://github.com/rafaelcalcada/rvx/actions/workflows/tests.yml/badge.svg"></a></p>
